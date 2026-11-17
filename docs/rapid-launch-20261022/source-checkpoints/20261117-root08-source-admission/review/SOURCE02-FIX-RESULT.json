@@ -1,0 +1,123 @@
+{
+  "actions": {
+    "approvedBusinessPayloadOrCredentialsRead": false,
+    "consumerOrOld66Revalidated": false,
+    "futureAuthorityCIDCepochRolesOrPositiveRuntimeFixturesCreated": false,
+    "ownerSourceOrOldFrozenReportsModified": false,
+    "purePatchPolicySha256": null,
+    "serverPGNodeNativeIssuerReaderCASWorkerClockCalls": 0
+  },
+  "actualDiagnosticBoundary": {
+    "SQLUpgradePerformed": false,
+    "allDatabaseEmptyClaimed": false,
+    "failedSubBatch": {
+      "committedCount": 0,
+      "receiptCount": 0
+    },
+    "functionDefinitionsObserved": null,
+    "namespace": {
+      "baselineBatchPresent": false,
+      "completedBatchCount": 0,
+      "documentBatchPresent": false,
+      "importedBatchCount": 0,
+      "matchingBatchCount": 0,
+      "namespaceRecordCount": 0
+    },
+    "preservedNonzeroTableCounts": {
+      "audit_change": 1,
+      "operation_receipt": 1,
+      "schema_migration": 27,
+      "staff": 1,
+      "user_account": 1
+    },
+    "readbackSha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf",
+    "recoveryDecisionSha256": "b07d9ba7ea9320e387ec43a2d99cd93a30faf99bfa95bb60915d8d3d59071b78",
+    "rootOperation": {
+      "committedCount": 0,
+      "count": 0,
+      "hasBatchedMarker": false,
+      "otherStatusCount": 0
+    },
+    "summarySha256": "bcceec1cdc67b6f70374cd68da483b944a43ec97f4d10aee4f04f242a7641bea"
+  },
+  "actualMaterializationVerified": false,
+  "actualRoot08RegistrationVerified": false,
+  "actualSQLUpgradeVerified": false,
+  "checkSummary": {
+    "consumerRevalidated": false,
+    "contractFixOnlyIndependentChecks": 13,
+    "independentRootPairChecks": 70,
+    "old66TransportRevalidated": false,
+    "reproducedActual109RootChecks": 88,
+    "root88And70And66Reused": true
+  },
+  "closedFindings": [
+    "R01"
+  ],
+  "consumerReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root08-materialization-joint-review-01/CONSUMER-RESULT.json",
+    "sha256": "abfa3e0957368558fd96c7e1130302621f63998eb0216fc3896196e7c1ef39af"
+  },
+  "consumerReviewSha256": "abfa3e0957368558fd96c7e1130302621f63998eb0216fc3896196e7c1ef39af",
+  "consumerSourcePinsSha256": "4fed5130c1566729ae4d57e4bf2d6ba32d201b7500fb7f18bf91e48cea6a71a2",
+  "currentExecutionCallArrangement": {
+    "allowedCall": "root08_cli.run_once(actual_cas_result_file) exactly once after actual CAS and separate Main instruction",
+    "authority": "Frozen Source02 contract, owner generator and handoff agree",
+    "existingRootstagePreparation": "Reuse exact existing prepared code; no prepare_local repeat",
+    "jobBundleMustNotBePrecreated": true,
+    "prepareCall": "Internal exactly once; standalone prepare is offline only and mutually exclusive",
+    "sourceWasNotChangedToAddIdempotence": true
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root08-materialization-joint-review-01/ROOT109-EVIDENCE.json",
+      "sha256": "4b35e00214a4e617d0e8aee3685ea7705275f201a7ac9fc69ba6eebd1e9fc3f1"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root08-materialization-joint-review-01/ROOT-PAIR-EVIDENCE.json",
+      "sha256": "c2ae5e76096e658ff09a0eddac872026bf4cee07d55ecc47195e970f286ab56a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root08-materialization-joint-review-01/CONTRACT-FIX-EVIDENCE.json",
+      "sha256": "330d785dd5e79edbdc0923296bcca1ff6cf6639b828052e5428315ac86f62697"
+    }
+  ],
+  "executionReady": false,
+  "findings": [],
+  "notVerified": [
+    "No actual Root08 fresh stage/read,Main issuer/clock,Root08CAS,root call,client request,source materialization or marker verified by QB. This is paired source PASS only.",
+    "Main/T45 must obtain actual fresh b401/root109,completed+cleaned diagnostic02 custody/lock/grant and Root08 key absence,then issue/register within the original finite controlled protocol. Direct run_once only; do not externally prepare then run.",
+    "Source materialization marker means SQL_UPGRADE_NOT_PERFORMED/importReadyfalse/oldlineage-not-installation. Newada8 remains source model; actual3prosrc observations are not definitions/owner/full canonical proof.",
+    "Original writer FAILED and diagnostic01 FAILED remain consumed. No writer replay,blind new import key,all-database-empty claim or publication/STAGED release.",
+    "Host H01 separately closed by QB ef7289 source-only fix; no actual upgrade or runtime closure thereby proved."
+  ],
+  "priorContractNeedFix": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root08-materialization-joint-review-01/CONTRACT-RESULT.json",
+    "preserved": true,
+    "sha256": "50c7c03516225e641988cd92870492ef804868da5f6782983193e9147caf3cf0"
+  },
+  "reviewKind": "Root increment of the original single Root08 joint review; consumer and66 accepted transport checks reused.",
+  "rootPairReviewComplete": true,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-root08-source-admission-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "059c0c0004a69742857eac93d9021fafb273f1062348f7d405134d1633e0d8d0",
+  "spec": {
+    "findings": [],
+    "scope": "Source02 exact calling contract plus inherited root/consumer paired scope"
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Exact frozen root delta,retained original worker/client/lock/CAS,actual diagnostic closure,source-only authority boundary."
+  },
+  "state": "SOURCE_PASS_ROOT08_SOURCE02_ADMISSION_AND_MATERIALIZER_PAIR_ONLY",
+  "verifiedScope": [
+    "Source02 fixes R01 in API ordered contract, handoff and generator.29 unaffected inherited files including all runtime and transport bytes reused. No old root88/70/66 or consumer rerun.",
+    "109 protected keys retained with onlyRoot08 appended110. All3 guards and old functions byte/AST preserved; diagnostic02 alone keeps-I/-S,Root08 and other Python use original-s. Root08 worker has no isolated/no_site entry requirement,so diagnostic01 mismatch is not repeated here.",
+    "Independent Root08 admission/module3ddf/template2174/CAS2055 and finite policy paths. OldRoot07,normal38/39,both diagnostic modules/policies,failed01 terminal/worker and consumed writer stay protected. None-policy template refuses execution.",
+    "Exact11 static members+one actual Main authority,all hashes/lengths/manifest names/finite scope checked before8 canonical asset aliases are O_EXCL written and fsynced. Largest977195B fits original4MiB/32MiB transport boundaries. Worker copies reviewed3changed+5added code only,never runs6c/Node/PG/SQL.",
+    "Actual diagnostic02 terminal68ef/result67e/cleanupefa and own stoppedCID5a815,child/descendant/clean-control lifecycle checks required. These are not diagnostic01 failure or a quiet-unit surrogate. Five auth snapshots only fullstat9; root/current DATA/no-active/28GiB checks retained.",
+    "Main7-argument issuer checks full frozen source/real paired report/Mainb07/two fresh basis/root/custody9/shared lock before one clock; both ages≤120s,policy900s/CAS300s and original grant upper bound checked before authority output. No role,maintenanceC/epoch,Root08 marker or authority fixture created.",
+    "Policy binds fresh closure+registry hashes and3 actual diagnostic receipt hashes. CAS rechecks closure at4 original shared-lock publication points; admission rereads3 receipt hashes before materializer. Original audit/UNKNOWN/no automatic replay retained.",
+    "Frozen source contract now directly specifies a sole run_once with internal prepare. Standalone prepare cannot be followed by run_once; exclusive mkdir and no replay unchanged."
+  ]
+}

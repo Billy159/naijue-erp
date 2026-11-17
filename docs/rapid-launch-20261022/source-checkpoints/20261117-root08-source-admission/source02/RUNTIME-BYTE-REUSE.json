@@ -1,0 +1,171 @@
+{
+  "state": "EXACT_SOURCE522_RUNTIME_AND_UNAFFECTED_BYTES_REUSED",
+  "predecessorSourcePinsSha256": "522be25769d2ef5d2eb64656b3afde8b7e216cc7ecb8e2f4ee9166841cbd8073",
+  "changedExistingFilesOnly": [
+    "HANDOFF.md",
+    "ROOT08-API-CONTRACT.json",
+    "freeze_source.py"
+  ],
+  "unchangedFiles": [
+    {
+      "path": "STATIC-INPUTS.json",
+      "bytes": 6851,
+      "sha256": "8094c1b56687907322945f9e7354398881f6ff1d172fd860947df5d09b93613b"
+    },
+    {
+      "path": "ACTUAL109-DISPATCHER.py",
+      "bytes": 50541,
+      "sha256": "b4013f9a04e35bfae287742a7d91b9c2a9daf1d06b0768262db01b8de40926de"
+    },
+    {
+      "path": "prepare_root.py",
+      "bytes": 6270,
+      "sha256": "3d7213e7202d544541c32e2a61844b4ff7a003e3c1b5761989d209a095b49274"
+    },
+    {
+      "path": "render_admission.py",
+      "bytes": 955,
+      "sha256": "1729982fc48a342dc347093b619e0cc8954aa55bab7df0e86ea5b2e4e5e3bdf7"
+    },
+    {
+      "path": "admission.template.py",
+      "bytes": 6264,
+      "sha256": "60bd893320aa9d3c74a5960f8154e095225daba0aa2da093350549b641aaa899"
+    },
+    {
+      "path": "r3_root08_source_admission.py",
+      "bytes": 8871,
+      "sha256": "3ddf6b72a9054babbc8121388241dcd6c005bb4b7fa8d5f3e67ba14ecd34ae64"
+    },
+    {
+      "path": "patch_dispatcher.py",
+      "bytes": 2882,
+      "sha256": "87a3228626a1bae0eb09e79f9904375b0a299525fd490bd82ab19661ce9d6977"
+    },
+    {
+      "path": "admin_exec.ROOT08-UNREGISTERED.py",
+      "bytes": 51546,
+      "sha256": "217477afb0802ed7f0cdfa0f160b514df2c1c83b9c61dac8bf22fbbba51f7534"
+    },
+    {
+      "path": "closure.template.py",
+      "bytes": 2972,
+      "sha256": "b5f7a2f9a3a2b9a5d4e20639568501720c300c18c46ff723107c863962c38869"
+    },
+    {
+      "path": "assemble_registration.py",
+      "bytes": 4873,
+      "sha256": "d44be1a87dbe04271ba8fa09b6ef3f5607d728487f6a20ba7be2e2783b0be759"
+    },
+    {
+      "path": "register_exact.py",
+      "bytes": 14567,
+      "sha256": "2055852dbde81425066f5d35839f95d8bdd6104c78d39c208c542ab2237647f6"
+    },
+    {
+      "path": "read_paired_basis.py",
+      "bytes": 801,
+      "sha256": "6ac0b2f9537b8c18c2b29cb93b0272c74f38f7d1237c753cce8baa554749e15c"
+    },
+    {
+      "path": "main_issuer.py",
+      "bytes": 7312,
+      "sha256": "28202dfd2c63e12169fc202ef7fe1563a74d618c2f634f81ef27c58e444b6f8d"
+    },
+    {
+      "path": "prepare_channel.py",
+      "bytes": 7090,
+      "sha256": "0730af8657e7fd34e0606c73d37c0b9b63adf8029b495705651c1bcd2f477f4d"
+    },
+    {
+      "path": "root08_cli.py",
+      "bytes": 4100,
+      "sha256": "789476309fc031f9f77da2af807596a6adbc1f86eb9cdd9efb69f5b9e646d622"
+    },
+    {
+      "path": "check_root109.py",
+      "bytes": 9998,
+      "sha256": "251256909f5dbdfa8ba894d57491adc06dd0cc8c323550b89c336aad3a7feeb2"
+    },
+    {
+      "path": "BASE109-CHECKS.json",
+      "bytes": 5057,
+      "sha256": "4b35e00214a4e617d0e8aee3685ea7705275f201a7ac9fc69ba6eebd1e9fc3f1"
+    },
+    {
+      "path": "ROOT109-TO-ROOT08.patch",
+      "bytes": 13079,
+      "sha256": "d0022ee9e268d87d4712ca05e2b7c545c95f0d2e9bfe162ae6b0e171a8a12b8e"
+    },
+    {
+      "path": "transport/delta-00.asset.json",
+      "bytes": 74255,
+      "sha256": "3647d994a1073dab052e74aeb02c28cffc90d67849414f27cb16898000234c58"
+    },
+    {
+      "path": "transport/delta-01.asset.json",
+      "bytes": 22126,
+      "sha256": "5dc3bd6b6d28d537ec27e306b7f2be329750fcbf57e8edacd0e83adcc09dafc3"
+    },
+    {
+      "path": "transport/delta-02.asset.json",
+      "bytes": 105967,
+      "sha256": "5e4f50a53cc93f96271b1fee3956b8f14f4607db5dbab46c28eb97f02e0d46aa"
+    },
+    {
+      "path": "transport/delta-03.asset.json",
+      "bytes": 7213,
+      "sha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184"
+    },
+    {
+      "path": "transport/delta-04.asset.json",
+      "bytes": 939487,
+      "sha256": "a49a6127ad7575c9739a2f130914afdd20fa73392e4f2c1160a17339d089a180"
+    },
+    {
+      "path": "transport/delta-05.asset.json",
+      "bytes": 975343,
+      "sha256": "af82ab642d959ecf731697e8bc97618e97ce6d30bb945205ee1c1314323363c9"
+    },
+    {
+      "path": "transport/delta-06.asset.json",
+      "bytes": 977195,
+      "sha256": "80c31dcb7ab64ab436e07c2e4a2a1297e11d2c22a58e4dec1ddacda704a9a2c8"
+    },
+    {
+      "path": "transport/delta-07.asset.json",
+      "bytes": 5692,
+      "sha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19"
+    },
+    {
+      "path": "transport/materialize-batched-source.py",
+      "bytes": 14019,
+      "sha256": "f144ef127c352801601d7b94968d3a99870ddfdbd6a08a9c0b93162eb3933c99"
+    },
+    {
+      "path": "transport/source-profile.json",
+      "bytes": 6928,
+      "sha256": "5445b6ba2363d4f59a04edb927d91ef145873ce31a8266ea781955618b746ec6"
+    },
+    {
+      "path": "transport/source-rows.json",
+      "bytes": 72609,
+      "sha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e"
+    }
+  ],
+  "runtimeCodeChanged": false,
+  "workerFactoryRegisterMain7parametersRootEntryWindowKeyPreserved": true,
+  "source02PathUsesExistingDynamicHERE": true,
+  "T45PreparedTwoCodeFilesUnchanged": {
+    "register_exact.py": {
+      "bytes": 14567,
+      "sha256": "2055852dbde81425066f5d35839f95d8bdd6104c78d39c208c542ab2237647f6"
+    },
+    "read_paired_basis.py": {
+      "bytes": 801,
+      "sha256": "6ac0b2f9537b8c18c2b29cb93b0272c74f38f7d1237c753cce8baa554749e15c"
+    }
+  },
+  "old522AndNeedFixEvidencePreserved": true,
+  "old88Or66OrConsumerRerun": false
+}

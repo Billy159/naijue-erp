@@ -1,0 +1,116 @@
+{
+  "state": "EXACT_THREE_FUNCTION_SOURCE_UPGRADE_SEAM_RUNTIME_BINDINGS_UNISSUED",
+  "sourceOnly": true,
+  "sourceDecisionSha256": "3b04898ea9050610f83295c51075c65dfeaf95c0566a1cd834b140df1085bef6",
+  "source768Sha256": "76864577847c0ab030aaa78881bc24ffd5d5db288b2af1034eb5fc26f2061c3b",
+  "sourceReviewSha256": "976ca7fd03741c81bab9d635c6577cbe5cc430b5e20ea9374621e8e530cb43bb",
+  "historicalCatalog35": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/catalog_update/ACTUAL-CATALOG35-RESULT.json",
+    "sha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e",
+    "rootTerminalSha256": "515874b0f761b6de9fef10396e2fdc5a4e2be70cd562d8707ed602708ba5d1eb",
+    "rootResultSha256": "a474d758af30d53a4154f90081066213df351a33cb1226f976d6231ed7fdb020",
+    "completionSha256": "fe89ee20df99555feec98782c7542730a199a9edffeb9e43b2c4f98388aa2207",
+    "catalogSha256": "a40adca8d4ce974967588bada4a40b0650800a0134a7cbea229429242027f9b4",
+    "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+    "usedAs": "HISTORICAL_BEFORE_ANCHOR_NOT_CURRENT_LIVE_FACT"
+  },
+  "historicalInstall32": {
+    "requestKey": "t45-r3-batched-install-20261116-02",
+    "terminalSha256": "01b46789810bde6d88f43cfddcce77d5bc6f28694fbb37b1b431e6caff69a4f2",
+    "rootResultSha256": "e14e9b649d9b4d4864360384e93e059cdda80c37e769de91f2452abd1af87792",
+    "completionSha256": "c10ffe419c2ef4cef52ed1c2e110d1b8f9b1d1d4d3974782836f8e9832de6d3f",
+    "usedAs": "REUSE_ACCEPTED_INSTALL_HISTORY_NO_13_LAYER_RERUN"
+  },
+  "operatorSourceRoot": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-batched-root08-20261117-01/operation",
+  "operatorSourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+  "operatorRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+  "sqlRelativePath": "adapters/postgres/patches/settlement24-current-wire-successor.sql",
+  "sqlSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+  "reviewedInputSha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+  "beforeModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+  "afterModelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+  "routinePins": [
+    {
+      "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)",
+      "beforeBodySha256": "cc11ea590f93b579a0e1286a2c28bd2fc7a6b423a366bc35ef54406a4cc46fba",
+      "beforeDefinitionSha256": "3bcc7f4bd796df962c6794e1fe2b63e1a92df269f78d431af7b0fefc7f3c97b6",
+      "afterBodySha256": "ed028cc873d9d4dd556dd60b790fca8ef912550b463a949736f214acefd5dcbd",
+      "afterDefinitionSha256": "ed9e5daa0797e7ced0caa920f4c6d8ad465c7edcf01ed20b903d5f3f1d4ee869",
+      "replacements": [
+        {
+          "before": "sr_wire->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b'",
+          "after": "(sr_wire->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' OR (sr_wire->>'sha256'='b97826567240e9509b60a263ba62d35bc08135b57cce84cc184debc83b1d6a05' AND (sr_approval->>'source_namespace') IS NOT DISTINCT FROM 'naijue:tplus:20261102' AND (request->>'package_manifest_sha256') IS NOT DISTINCT FROM '7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679'))"
+        },
+        {
+          "before": "CASE WHEN cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' THEN 24",
+          "after": "CASE WHEN (cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' OR (cfg->'historical_settlement_retention_approval'->>'sha256'='b97826567240e9509b60a263ba62d35bc08135b57cce84cc184debc83b1d6a05' AND (initial_request->>'namespace') IS NOT DISTINCT FROM 'naijue:tplus:20261102' AND (initial_request->>'package_manifest_sha256') IS NOT DISTINCT FROM '7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679')) THEN 24"
+        },
+        {
+          "before": "CASE WHEN cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' THEN 26",
+          "after": "CASE WHEN (cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' OR (cfg->'historical_settlement_retention_approval'->>'sha256'='b97826567240e9509b60a263ba62d35bc08135b57cce84cc184debc83b1d6a05' AND (initial_request->>'namespace') IS NOT DISTINCT FROM 'naijue:tplus:20261102' AND (initial_request->>'package_manifest_sha256') IS NOT DISTINCT FROM '7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679')) THEN 26"
+        }
+      ]
+    },
+    {
+      "signature": "naijue_erp.assert_document_migration(uuid)",
+      "beforeBodySha256": "508188784710a0bebaa7cf2d32e188f20ab82918e67a34b681d7b9d44951f5f4",
+      "beforeDefinitionSha256": "3b44e33fd7d32d1ba33b2b520a1c62ac93f04c55198475d404eb2cdadd3e31ce",
+      "afterBodySha256": "45269a5359a89ae4e36383cbf4dec7fea4017bc9677a90b96df0eaf0e011c39f",
+      "afterDefinitionSha256": "51f8516e6d82124fb440569ff7faae0c1eefff32c2d4b835b444eb190d2371eb",
+      "replacements": [
+        {
+          "before": "sr_wire->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b'",
+          "after": "(sr_wire->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' OR (sr_wire->>'sha256'='b97826567240e9509b60a263ba62d35bc08135b57cce84cc184debc83b1d6a05' AND (sr_approval->>'source_namespace') IS NOT DISTINCT FROM 'naijue:tplus:20261102' AND (sr_request->>'package_manifest_sha256') IS NOT DISTINCT FROM '7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679'))"
+        }
+      ]
+    },
+    {
+      "signature": "naijue_erp.standard_whole_package_verify_v2(jsonb,text)",
+      "beforeBodySha256": "8e490d4abdfaa1e8faa4a3ee3a7fe43d87c73521b1836818ae126db83acbbab8",
+      "beforeDefinitionSha256": "fcad22a97e86d0b4c0226dbd6014600a7fecd9fa4923785aaf2983ee89b53eca",
+      "afterBodySha256": "005f47f4925a9d4118d7dcc461a42fe2568a4cddd21b2e73f28bae18ba5892ee",
+      "afterDefinitionSha256": "5433d23324c4f4d999d086f22759363232ae5484de5591f0969dd37ede2b858c",
+      "replacements": [
+        {
+          "before": "sr_wire->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b'",
+          "after": "(sr_wire->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' OR (sr_wire->>'sha256'='b97826567240e9509b60a263ba62d35bc08135b57cce84cc184debc83b1d6a05' AND (sr_approval->>'source_namespace') IS NOT DISTINCT FROM 'naijue:tplus:20261102' AND (init_request->>'package_manifest_sha256') IS NOT DISTINCT FROM '7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679'))"
+        }
+      ]
+    }
+  ],
+  "existingHostEntry": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/catalog_update/bundle/batched161_command_update_host.py",
+  "existingNativeRunnerSha256": "e85116b983059257e6529a4008afeb4c304e49c5378b43810fa6ad6deb4fa129",
+  "successorRunnerSha256": "7a7593172a8c4b05d5f9e7855c1f8c9d78c2b2896b5e0bc84afb34f60cabf821",
+  "requiredActualExecutionInputs": {
+    "requestKey": null,
+    "actualRoot08MarkerSha256": null,
+    "actualDiagnostic02ResultSha256": null,
+    "actualDiagnosticThreeBeforeRoutineFacts": null,
+    "MainDurableRecoveryDecision": null,
+    "service": null,
+    "C": null,
+    "epoch": null,
+    "finiteAdminApply": null,
+    "roles": null,
+    "window": null,
+    "innerAuthority": null,
+    "outerAuthority": null
+  },
+  "hostMinimumAdaptation": [
+    "Reuse existing catalog_update host/current()/private-admin projection/child lifecycle and native PG driver; do not run old used KEY or6c runner.",
+    "Replace only fixed source root/rows/sourceSet/review/SQL/scope and single-routine descriptor with this exact3-routine descriptor; new job/service/apply/inner mount must be bound only after Main actual inputs.",
+    "Read actual Root08 marker: state SOURCE_PHYSICALLY_MATERIALIZED_SQL_UPGRADE_NOT_PERFORMED, rows3b8/sourceac85/392; require SQLUpgradePerformed=false/importReady=false, never interpret sourceModelada8 as installed model.",
+    "Keep install32/catalog35 immutable history; replace writerNeverSubmitted check with actual consumed FAILED and cleanup facts, never require or invent historical zero business writes.",
+    "Require actual diagnostic durable conclusions and exact three before body+definition observations; no source-only default PASS.",
+    "Do not instantiate the final after-ada8 import context as a before-upgrade live SQL proof. Maintenance compile keeps before command626 and after successorada8 separate.",
+    "Bind exact native descriptor and reviewed patch in existing outer/inner finite authorizations; no caller-supplied SQL path/text or dynamic routine list.",
+    "Apply one reviewed DO with the original READ COMMITTED wrapper and exact two SET LOCAL settings under SET ROLE owner; before and in-transaction after161 metadata guards and all3 body/definition/metadata reads.",
+    "COMMIT native ACK then begin independent READ ONLY transaction and repeat exact3 after reads/model guard, ROLLBACK, RESET ROLE, close connection and remove only own finite projection.",
+    "Report commitOutcomeUnknown/readback incomplete without replay; source/import/APP acceptance remains false."
+  ],
+  "noBusinessDML": true,
+  "originalWriterReplayed": false,
+  "writerNewKeyChosen": false,
+  "SQLInstalled": false,
+  "APPa7NativeUpgraded": false
+}

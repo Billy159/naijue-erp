@@ -1,0 +1,50 @@
+{
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-root08-source-materialization-window-01",
+  "issued": {
+    "state": "MAIN_ROOT08_FINITE_SOURCE_AUTHORITY_ISSUED_NOT_REGISTERED_OR_EXECUTED",
+    "requestKey": "t45-r3-batched-root08-source-delta-20261117-01",
+    "sourcePinsSha256": "059c0c0004a69742857eac93d9021fafb273f1062348f7d405134d1633e0d8d0",
+    "reviewSha256": "171e994cd6387a108cf042dfddda4f94a48e0b60788ce13a534e04a34e8e5092",
+    "closureBasisSha256": "593dd53a367d8f3ba7c966e611dfb531fd881ad7a9eee3fcc1632a0811d935c8",
+    "registryBasisSha256": "f88b2c26abafaf24b532ee0cd519d58e88aaa1d303b40744f3b994f877c0c647",
+    "startsAt": 1794914870540,
+    "expiresAt": 1794915770540,
+    "authoritySha256": "82881fd44c46d741c09ca2a5f29e8f404e1476c844e5a8f1bb6d6ad99addf62b",
+    "policySha256": "a973b27718e8bc4bebbf168528b17097dccbf16cec09b4a3bd3c5b1e9ae58652",
+    "registrationAuthoritySha256": "7378c5e456466fb424c1dc6e5dc08d3f7db72ec0e637739c0cf6e3bbf48cf48a",
+    "registryCASExecuted": false,
+    "materializationSubmitted": false,
+    "SQLExecuted": false
+  },
+  "files": {
+    "registration-packet.json": {
+      "sha256": "d6c8480b423146bc4511ae60a03c425683f13bcf345d6964f786953b94695701",
+      "bytes": 92281,
+      "mode": "0o600"
+    },
+    "registered-policy.json": {
+      "sha256": "a973b27718e8bc4bebbf168528b17097dccbf16cec09b4a3bd3c5b1e9ae58652",
+      "bytes": 2912,
+      "mode": "0o600"
+    },
+    "ISSUED.json": {
+      "sha256": "6136a3a05a178536c775ff8230bb606c6afeb84d05f90761783a670ad28f40ec",
+      "bytes": 942,
+      "mode": "0o600"
+    },
+    "materialize-authorization.json": {
+      "sha256": "82881fd44c46d741c09ca2a5f29e8f404e1476c844e5a8f1bb6d6ad99addf62b",
+      "bytes": 1163,
+      "mode": "0o600"
+    },
+    "registration-authorization.json": {
+      "sha256": "7378c5e456466fb424c1dc6e5dc08d3f7db72ec0e637739c0cf6e3bbf48cf48a",
+      "bytes": 5798,
+      "mode": "0o600"
+    }
+  },
+  "rawAuthorityOrPacketBodiesIncluded": false,
+  "registryCASActuallyExecuted": false,
+  "sourceMaterializationActuallySubmitted": false,
+  "SQLExecuted": false
+}

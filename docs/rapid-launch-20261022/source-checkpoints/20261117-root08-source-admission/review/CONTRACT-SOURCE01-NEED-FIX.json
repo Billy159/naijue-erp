@@ -1,0 +1,57 @@
+{
+  "actions": {
+    "ownerFilesModified": false,
+    "runtimeCalls": 0
+  },
+  "consumerReviewSha256": "abfa3e0957368558fd96c7e1130302621f63998eb0216fc3896196e7c1ef39af",
+  "consumerSourcePinsSha256": "4fed5130c1566729ae4d57e4bf2d6ba32d201b7500fb7f18bf91e48cea6a71a2",
+  "correctionOf": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root08-materialization-joint-review-01/RESULT.json",
+    "reason": "Earlier PASS treated the Main single-call execution arrangement as correcting the frozen contract. It only avoids the defect; this supplemental verdict governs Source01 contract conformance. Earlier report retained unchanged.",
+    "sha256": "2f7fd4a3885915d70fe149e259697895ece38ebcaf3209827af4aec5f66e496d"
+  },
+  "executionReady": false,
+  "findings": [
+    {
+      "axis": "spec",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-root08-source-admission-01/ROOT08-API-CONTRACT.json",
+      "finding": "orderedAPIs requires standalone prepare then run_once. prepare exclusively creates job-bundle (root08_cli.py:24), and run_once calls prepare again (line45); following the frozen contract fails with FileExistsError before submission. Main direct-run_once arrangement avoids this but does not correct the frozen source contract.",
+      "id": "R01",
+      "line": 35,
+      "priority": 2,
+      "relatedLines": [
+        40
+      ],
+      "requiredChange": "Source02 documentation/API/generator must describe run_once as the sole post-CAS public call with internal prepare; preserve runtime bytes, exclusive mkdir and no-replay.",
+      "title": "Ordered contract calls prepare twice through run_once"
+    }
+  ],
+  "reuse": {
+    "old66AndConsumerNotRerun": true,
+    "root88AndIndependent70Checks": true
+  },
+  "rootPairReviewComplete": true,
+  "sourceOnly": true,
+  "sourcePinsSha256": "522be25769d2ef5d2eb64656b3afde8b7e216cc7ecb8e2f4ee9166841cbd8073",
+  "spec": {
+    "findings": [
+      {
+        "axis": "spec",
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-root08-source-admission-01/ROOT08-API-CONTRACT.json",
+        "finding": "orderedAPIs requires standalone prepare then run_once. prepare exclusively creates job-bundle (root08_cli.py:24), and run_once calls prepare again (line45); following the frozen contract fails with FileExistsError before submission. Main direct-run_once arrangement avoids this but does not correct the frozen source contract.",
+        "id": "R01",
+        "line": 35,
+        "priority": 2,
+        "relatedLines": [
+          40
+        ],
+        "requiredChange": "Source02 documentation/API/generator must describe run_once as the sole post-CAS public call with internal prepare; preserve runtime bytes, exclusive mkdir and no-replay.",
+        "title": "Ordered contract calls prepare twice through run_once"
+      }
+    ]
+  },
+  "standards": {
+    "findings": []
+  },
+  "state": "SOURCE_NEED_FIX_ROOT08_ORDERED_CALL_CONTRACT"
+}

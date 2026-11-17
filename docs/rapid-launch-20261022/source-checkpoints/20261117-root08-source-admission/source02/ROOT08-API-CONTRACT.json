@@ -1,0 +1,63 @@
+{
+  "state": "SOURCE_API_ONLY_NO_CALLS",
+  "requestKey": "t45-r3-batched-root08-source-delta-20261117-01",
+  "actualBaseSha256": "b4013f9a04e35bfae287742a7d91b9c2a9daf1d06b0768262db01b8de40926de",
+  "requiredReviewFields": {
+    "sourceOnly": true,
+    "findings": [],
+    "sourcePinsSha256": "actual final SOURCE-PINS digest",
+    "consumerSourcePinsSha256": "4fed5130c1566729ae4d57e4bf2d6ba32d201b7500fb7f18bf91e48cea6a71a2",
+    "consumerReviewSha256": "abfa3e0957368558fd96c7e1130302621f63998eb0216fc3896196e7c1ef39af",
+    "rootPairReviewComplete": true
+  },
+  "orderedAPIs": [
+    {
+      "api": "prepare_channel.stage_and_read(review_file, review_pin)",
+      "owner": "T45 after Main post-review instruction",
+      "effect": "original root channel exact2code stage and one paired fresh metadata read"
+    },
+    {
+      "api": "main_issuer.issue_once(review_file, review_pin, closure_file, closure_pin, registry_file, registry_pin, authorization_reference)",
+      "owner": "Main only",
+      "effect": "local finite authority/policy/CAS packet; no remote execution"
+    },
+    {
+      "api": "prepare_channel.register_once()",
+      "owner": "T45 after separate Main finite CAS instruction",
+      "effect": "original root channel exact one-key shared-lock CAS only"
+    },
+    {
+      "api": "root08_cli.run_once(actual_cas_result_file)",
+      "owner": "T45 after actual CAS and separate Main materialization instruction",
+      "effect": "Call once directly: internal unique prepare then original clientmain fixed300s SOURCE-only one-shot job; never precede with prepare"
+    }
+  ],
+  "offlinePreparationOnly": {
+    "api": "root08_cli.prepare(actual_cas_result_file)",
+    "effect": "Standalone offline preparation only; not part of orderedAPIs and must not be followed by run_once",
+    "mutuallyExclusiveWith": "root08_cli.run_once(actual_cas_result_file)",
+    "existingRefusalPreserved": "mkdir(exist_ok=False); no idempotent or replay path added"
+  },
+  "existingStaticStagePreparation": {
+    "status": "ALREADY_PREPARED_RUNTIME_BYTES_UNCHANGED",
+    "action": "Reuse the two local Rootstage code preparations; T45 changes only local SOURCE path/pin after exact code/program pin comparison, preserving prior record; do not rerun prepare_local"
+  },
+  "actualDiagnosticClosure": {
+    "actualContainerId": "5a815d05577502f9d1c18906e19f4cd42e4659d9fbb5264946407ac38f7fd9f7",
+    "cleanupSha256": "efa0d88a847a8bf83f1beb2decb5dd3c90918d28155616cef1db338426b3e45a",
+    "requestKey": "t45-r3-core0-durable-readonly-20261117-02",
+    "resultSha256": "67e2ba34665b3f86123bdc6f49cdec697defb3a51091389cf95d60b36a481fd4",
+    "terminalSha256": "68ef74f754d803b13788fe420517900570cd4f5c714e264a16b204182d7f65a6"
+  },
+  "actualRecoveryDecision": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-durable02-recovery-decision-01/DECISION.json",
+    "sha256": "b07d9ba7ea9320e387ec43a2d99cd93a30faf99bfa95bb60915d8d3d59071b78"
+  },
+  "finiteAuthority": null,
+  "actualFreshBasis": null,
+  "actualRoot08Marker": null,
+  "futureC": null,
+  "futureEpoch": null,
+  "futureRoles": null,
+  "SQLUpgradePerformed": false
+}

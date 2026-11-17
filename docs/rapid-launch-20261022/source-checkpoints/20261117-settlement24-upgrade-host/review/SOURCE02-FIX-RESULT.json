@@ -1,0 +1,34 @@
+{
+  "SQLInstalled": false,
+  "checksCompleted": 10,
+  "closedFindings": [
+    "H01"
+  ],
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261117-r3-settlement24-upgrade-host-source-review-01/H01-FIX-EVIDENCE.json",
+    "sha256": "27e290f0293f9404eda9c838359ea9ba36a1c01be124c7d67078857515afba5a"
+  },
+  "findings": [],
+  "hostSha256": "f5c871260b5c6ce9415ab38a941e5b394571aead0b7d159ee81cb3d5c0eb405b",
+  "notVerified": [
+    "Future exact Root08 marker, finite service/target/window/roles/authorities and bound closure still absent.",
+    "No server, PG, native/application import, issuer, clock, CAS or positive runtime fixture call.",
+    "Source PASS does not prove SQL upgrade, import, APP release or production readiness."
+  ],
+  "priorReviewPreserved": true,
+  "priorReviewSha256": "c90a09d6a5587f3e1956dc8bfc01d1ce6a3f3c488a806a8f2f2f94cb588da005",
+  "reuse": [
+    "Original QB68 and owner36 accepted scopes, native seam20+21 and SQL91 not rerun."
+  ],
+  "runtimeReady": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/SETTLEMENT24-UPGRADE-HOST-SOURCE-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "613c4535b500a4d915e8d7b6efe9e039957152b498d41d41d4d69d616f627d19",
+  "spec": {
+    "findings": []
+  },
+  "standards": {
+    "findings": []
+  },
+  "state": "SOURCE_PASS_SETTLEMENT24_UPGRADE_HOST_H01_FIX_ONLY"
+}

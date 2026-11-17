@@ -1,0 +1,120 @@
+{
+  "SQLInstalled": false,
+  "actions": {
+    "bodyDataOrCredentialsRead": false,
+    "futureCAuthorityEpochOrPositiveRuntimeFixturesCreated": false,
+    "ownerFilesModified": false,
+    "serverPGNativeIssuerClockReaderCASApplicationImportCalls": 0
+  },
+  "checksCompleted": 68,
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-settlement24-upgrade-host-source-review-01/SOURCE-EVIDENCE.json",
+    "sha256": "b7e0e82d5d5e79e046641635ba116ebfed147ca974ada395272808a1fa7ac0ee"
+  },
+  "findings": [
+    {
+      "axis": "spec",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/SETTLEMENT24-UPGRADE-HOST-SOURCE-01/bundle/batched161_command_update_host.py",
+      "finding": "The host requires d[predecessorBatchedCatalog] == BEFORE_CATALOG,whose source/spec are historical cf27/9f4595. The native separately emits installedBatchedCatalog=historical35 and predecessorBatchedCatalog=the current Root08 command compiler result. Accepted Source768 metadata proves that compiled-before has source6ef510/specdcf662 with the same626c model. Its source differs deterministically from historicalcf27,so valid native output cannot pass this host equality and fails before upgrade. A future service may further change the live catalogSpec; no future C was fabricated here.",
+      "historicalInstalledBefore": {
+        "catalogSpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
+        "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+        "sourceSetSha256": "cf27add8653a4aa85b8cb10d609e2b85b1c4e55cf02f7fd2f5bf9e60ecb5ce9c"
+      },
+      "id": "H01",
+      "line": 98,
+      "metadataEvidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-settlement24-current-wire-fix-source-01/metadata/catalog-command.json",
+        "sha256": "a6e79b3530636cd3d8f18a71db33dc93e09e84c467cfc450066ae042ad041f84"
+      },
+      "priority": 2,
+      "producerEvidence": {
+        "lines": [
+          93,
+          95,
+          100
+        ],
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-settlement24-upgrade-seam-source-01/settlement24-catalog-run.UNBOUND.mjs"
+      },
+      "relatedLines": [
+        97,
+        98,
+        99
+      ],
+      "requiredChange": "Keep installedBatchedCatalog and outer historical batchedCatalog bound to actual catalog35. Validate current-source predecessorBatchedCatalog as the separate genuine before626 compiler descriptor under the exact reviewed source/program/runtime binding; retain explicit before626 versus afterada8. Do not rewrite current output as historicalcf27 or hardcode a guessed future live catalogSpec.",
+      "savedCurrentCompiledBefore": {
+        "catalogSpecSha256": "dcf662bbf28a700fcac17e7441c47d3fc95c12fe5b3456abd46fe11ed890ef62",
+        "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+        "sourceSetSha256": "6ef51045764dd091191f664ff14f48bf5c47b7e972dbf94f4fcf19b4e769ba82"
+      },
+      "title": "Compiled Root08 before catalog is equated to the historical installed catalog35 identity",
+      "trigger": "Future finite host receives the genuine descriptor produced by unchanged reviewed native7a759 from the fixed Root08 source."
+    }
+  ],
+  "runtimeReady": false,
+  "runtimeStillRequired": [
+    "H01 requires owner source correction before source PASS for this host closure. This review does not alter source or dispatch T45.",
+    "Actual Root08 registration/materialization marker,current live before definition/metadata,Main recovery decision adoption,unique upgrade key,serviceC/epoch/finite admin apply/roles/policy/inner+outer authorities must be genuinely bound in a new frozen closure.",
+    "No host/native application import,actual PG/query/SQL upgrade/issuer/clock/CAS or credential/body data read performed. D1 seam and actual diagnostic facts do not make this host executable.",
+    "Actual SQL upgrade and independent afterada8 readback precede import gate; APPa7 remains old native closure. Original failed writer/diagnostic01 never replayed; existing identity/ops rows and publication/STAGED restrictions preserved."
+  ],
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/SETTLEMENT24-UPGRADE-HOST-SOURCE-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "c40e5bf25c1c347e057f2296ce28ac56782a469d7f1684265dfb07b7774b83d3",
+  "spec": {
+    "findings": [
+      {
+        "axis": "spec",
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/SETTLEMENT24-UPGRADE-HOST-SOURCE-01/bundle/batched161_command_update_host.py",
+        "finding": "The host requires d[predecessorBatchedCatalog] == BEFORE_CATALOG,whose source/spec are historical cf27/9f4595. The native separately emits installedBatchedCatalog=historical35 and predecessorBatchedCatalog=the current Root08 command compiler result. Accepted Source768 metadata proves that compiled-before has source6ef510/specdcf662 with the same626c model. Its source differs deterministically from historicalcf27,so valid native output cannot pass this host equality and fails before upgrade. A future service may further change the live catalogSpec; no future C was fabricated here.",
+        "historicalInstalledBefore": {
+          "catalogSpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
+          "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+          "sourceSetSha256": "cf27add8653a4aa85b8cb10d609e2b85b1c4e55cf02f7fd2f5bf9e60ecb5ce9c"
+        },
+        "id": "H01",
+        "line": 98,
+        "metadataEvidence": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-settlement24-current-wire-fix-source-01/metadata/catalog-command.json",
+          "sha256": "a6e79b3530636cd3d8f18a71db33dc93e09e84c467cfc450066ae042ad041f84"
+        },
+        "priority": 2,
+        "producerEvidence": {
+          "lines": [
+            93,
+            95,
+            100
+          ],
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-settlement24-upgrade-seam-source-01/settlement24-catalog-run.UNBOUND.mjs"
+        },
+        "relatedLines": [
+          97,
+          98,
+          99
+        ],
+        "requiredChange": "Keep installedBatchedCatalog and outer historical batchedCatalog bound to actual catalog35. Validate current-source predecessorBatchedCatalog as the separate genuine before626 compiler descriptor under the exact reviewed source/program/runtime binding; retain explicit before626 versus afterada8. Do not rewrite current output as historicalcf27 or hardcode a guessed future live catalogSpec.",
+        "savedCurrentCompiledBefore": {
+          "catalogSpecSha256": "dcf662bbf28a700fcac17e7441c47d3fc95c12fe5b3456abd46fe11ed890ef62",
+          "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+          "sourceSetSha256": "6ef51045764dd091191f664ff14f48bf5c47b7e972dbf94f4fcf19b4e769ba82"
+        },
+        "title": "Compiled Root08 before catalog is equated to the historical installed catalog35 identity",
+        "trigger": "Future finite host receives the genuine descriptor produced by unchanged reviewed native7a759 from the fixed Root08 source."
+      }
+    ],
+    "scope": "Distinct historical installed32/install35 and current-source compiled before626 versus new afterada8 descriptor identities."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Frozen host/transport closure,unchanged native/driver/support/carrier/CHILD and unbound entry boundaries reviewed statically."
+  },
+  "state": "SOURCE_NEED_FIX_SETTLEMENT24_UPGRADE_HOST_BEFORE_CATALOG_BINDING",
+  "verifiedScope": [
+    "Final host c40/READY774f and all18 file pins exact. Native7a759 byte-identical to accepted D1seam5c48/QB177930; driver/support/carrier and complete transport CHILD/primitive ASTs reused,no old20+21/91/Root08 consumer rerun.",
+    "KEY/START/SERVICE_PROOF/ADMIN/APPLY_KEY/ADMIN_CONFIG/POLICY/INNER_LEAF/Root08actualSHA remain null. Host main and validate first call runtime_bound before environment/time/files/credentials/C; no runtime binder or positive fixture delivered.",
+    "Exact3 signatures/full routinePins/SQLdaf3/afterada8 bind outer descriptor; legacy inner API retained with exact program/source/target/window pins. install32 historical6e separate from catalog35 actual626,subject toH01 current-predecessor distinction.",
+    "Consumed writer FAILED001/ad874 native CLOSED/four cleanup is required,followed by actual02 COMPLETED68ef/result67e/cleanup metadata and fixedMainb07. Root/public terminal/result equality and snapshot cleanup required; no old writer-never-submitted shortcut.",
+    "Actual02 b460 prosrc facts and scoped zero root/subbatch/namespace/business-table counts preserved with five existing identity/operations table counts1/1/27/1/1. Definitions/owner/all-proc metadata are explicitly not proved by this diagnostic and still require native before/inTxafter/postCOMMIT independent readback.",
+    "Root08 marker392/3b8/ac85 must explicitly mean code materialized only,SQLUpgradePerformedfalse/importReadyfalse/new source modelada8 not installed. Runtime remains unbound; H01 prevents valid before descriptor currently."
+  ]
+}

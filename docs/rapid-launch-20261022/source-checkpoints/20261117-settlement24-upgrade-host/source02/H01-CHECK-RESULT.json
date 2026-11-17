@@ -1,0 +1,22 @@
+{
+  "H01ReviewSha256": "c90a09d6a5587f3e1956dc8bfc01d1ce6a3f3c488a806a8f2f2f94cb588da005",
+  "actualFutureCatalogSpec": null,
+  "checkCount": 10,
+  "checks": [
+    "H01 is the only change in executable host",
+    "all runtime bundle dependencies including native/transport unchanged",
+    "actual source metadata differs from historical installed source",
+    "compiled-before pins exact reviewed current-source sourceSet not model alone",
+    "saved target-dependent dcf spec not hardcoded into executable host",
+    "future catalogSpec must be a pin and is checked by unchanged genuine native complete-descriptor binding",
+    "native actual compile descriptor equals signed outer before connection",
+    "historical installed35 remains exact and before626/afterada8 remain separate",
+    "unissued main/validation refuse before runtime facts unchanged",
+    "owner generator updated to same compiled-source rule"
+  ],
+  "futurePositiveFixtureOrServerOrClockOrNativeOrPGCalls": 0,
+  "hostSha256": "f5c871260b5c6ce9415ab38a941e5b394571aead0b7d159ee81cb3d5c0eb405b",
+  "oldSourceSha256": "c40e5bf25c1c347e057f2296ce28ac56782a469d7f1684265dfb07b7774b83d3",
+  "prior36AndQB68ScopesReusedNotRerun": true,
+  "state": "H01_CURRENT_SOURCE_PREDECESSOR_LAYERING_CHECKED_SOURCE_ONLY"
+}
