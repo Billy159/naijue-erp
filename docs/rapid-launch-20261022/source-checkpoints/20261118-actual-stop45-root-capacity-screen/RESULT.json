@@ -1,0 +1,36 @@
+{
+  "state": "PRESSURE_SCREEN_USING_ACTUAL_STOP45_FREE_SPACE_FINAL_MEASURE_PENDING",
+  "generatedUTC": "2026-11-18T01:37:01.736077+00:00",
+  "rootVolume": "/dev/md0p1",
+  "device": 66304,
+  "measuredCapacityUTC": "2026-11-17T21:21:18.351539+00:00",
+  "measuredAvailableBytes": 267870744576,
+  "measuredAvailableGiB": "249.47",
+  "decreaseSinceOriginalMeasuredBaselineGiB": "5.44",
+  "rootReserveGiB": 28,
+  "observedRetainedPlanBytes": 740864000,
+  "observedRetainedInitializerBytes": 58716444,
+  "planAndInitializerLogicalGiB": "0.74",
+  "sameRootPressureAssumptions": {
+    "PGDATAWithWAL64GiB": true,
+    "twoNew65GiBBackupAndRestoreCopies": true,
+    "temporaryGiB": 5,
+    "originalInputIndexPlanBudgetGiB": 11,
+    "originalPGDATAAllocatedBytes": 77996032
+  },
+  "additionalPeakChargedAgainGiB": "209.93",
+  "screenMinimumRemainingGiB": "39.55",
+  "screenMarginAboveReserveGiB": "11.55",
+  "screenMinimumRootAdditionalGiB": "0.00",
+  "scopeLimit": "Previous pressure scenario charged in full again even though the earlier measured baseline already includes part of the actual import artifacts. Historical stop sample supplies free bytes. This is a screening projection, not the current root free bytes or measured cold-copy or restoration peak. New source installation only proved the 28 GiB minimum.",
+  "actualLatestSourceStagePGStopped": true,
+  "normal46NeedsNewRootCapacityProof": true,
+  "nextMeasurement": "Refresh root and verified destination mount free space at normal46 preflight. Measure PGDATA and WAL allocation without double-counting at stopped post-commit basis, then bound copy and restore coexistence including media, configuration, recovery scratch and retained backup before those jobs.",
+  "actualExtraCapacityRequired": "UNDETERMINED_UNTIL_LATEST_AND_REAL_POST_IMPORT_SIZE",
+  "placementIfShort": "Root volume for PGDATA/WAL/root-required part. A genuinely distinct available Linux volume can offload backup and restore when it leaves the required free space on root.",
+  "sources": {
+    "capacityEstimateMetadata": "5ad7d0b246d84bc321d41b8cb5d7eadc49cd8ca40e1ffbdae2275218e8b19beb",
+    "stop45ActualBasis": "08bba24616edb812396c4b836a69c17e3e505f18d8a44f164d791c7990c5b31b",
+    "latestSourceInstallationActualResult": "58a0e847dbb8affb3bacff6672bcb711ad92f79ff7754ecf22f274966ca34db0"
+  }
+}
