@@ -1,0 +1,19 @@
+{
+  "state": "ACTUAL_TARGET02_SOURCE_LINEAGE_GUARD_MISMATCH_REPRODUCED_LOCALLY",
+  "recordedUTC": "2026-11-18T03:50:31.992962+00:00",
+  "actualProcessPairedHeadSha256": "665f7e926750e17195e8f2100caa981ca4042b57dee20466941e8d738ef258a9",
+  "actualProcessRootResultSha256": "daab07d751e80c50cf7aade7a30b08b33db80e99d8122b589a13be0e59686228",
+  "runtimeStage": "EXECUTION_BINDING",
+  "runtimeGuardCode": "FINAL44_DESCRIBE_AFTER42_REQUIRED",
+  "localSourceLoader": "loadFresh35CompactZeroSource on the protected-baseline bytes and separate source-only target02 clone with the three exact recorded changes",
+  "originalSQL42BatchedSourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e",
+  "mappedTarget02ExecutionBatchedSourceSetSha256": "8d97c69f9e44520e03abe10fa1483f36ac3c5e102c2709dd946d18b038e6f0af",
+  "originalCompactSourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+  "target02CompactSourceSetSha256": "ef7d3b5aa12aed602bd2579708c7643ee3bad1e1c30261c6e4d89c48116ce9b9",
+  "settlement24ReviewSha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+  "originalAfterCommandSourceSetSha256": "6ef51045764dd091191f664ff14f48bf5c47b7e972dbf94f4fcf19b4e769ba82",
+  "target02AfterCommandSourceSetSha256": "d339cf0d7c8802d3a001705b76cfaa4371cccbdc71714a943d818c8c6c40628c",
+  "mappedTarget02PhysicalManifestSourceSetSha256": "13e67567351dbb0d0de6fd12c5c480151c08eea769699cc8b6b49bbff3d48bb3",
+  "exactNewCatalogSpecAndSameModelRecomputed": false,
+  "serverCallDuringReproduction": false
+}

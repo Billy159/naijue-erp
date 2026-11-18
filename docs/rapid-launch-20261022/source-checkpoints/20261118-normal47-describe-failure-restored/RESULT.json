@@ -1,0 +1,18 @@
+{
+  "state": "NORMAL47_DESCRIBE_FAILED_ORIGINAL_AUTH_RESTORED",
+  "actualRegistry": 156,
+  "checkedAtUTC": "2026-11-18T03:43:08.728315+00:00",
+  "ownerCloseoutSha256": "199e5d8d7d34a6bdb2f4af2c235545d4f91917ccec0541c5772cdee9469bdc6d",
+  "actualRestoreHeadSha256": "e2ed64f1198060440b974298310dfdbdcc59631d14913985244893d06bf7b4a9",
+  "restoreTerminalSha256": "ce56e28fca05ced621f99fc7daa8ccfc1fbb3b594d0e35d309f34668d5d9d0ff",
+  "serverExactOriginalAuthRestored": true,
+  "databaseStoppedDataPreserved": true,
+  "writer47AndStop47Unsubmitted": true,
+  "normal47NewBusinessWrites": 0,
+  "lastProvenCommittedGroups": 151,
+  "totalOriginalPlanGroups": 1061,
+  "preflightRootAvailableBytes": 267754233856,
+  "rootReserveBytes": 30064771072,
+  "sourceRootLogicalMismatchConfirmed": true,
+  "newRuntimeAuthorizedByThisRecord": false
+}
