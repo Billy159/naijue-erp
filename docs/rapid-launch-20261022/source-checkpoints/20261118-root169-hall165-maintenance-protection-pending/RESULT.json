@@ -1,0 +1,33 @@
+{
+  "state": "ACTUAL_HALL165_MAINTENANCE_ROLE_APPLY_AND_START_SUCCEEDED_CATALOG_AND_STOP_FAILED_RECOVERY_PENDING",
+  "actualRoot169Sha256": "f52c2621b6922e6a0754a92f5ff34331d51b257369b1a5ec0c6792cf11a6139d",
+  "actualRegistryCount": 169,
+  "old164AndThreeGuardsPreserved": true,
+  "applyTerminalSha256": "46db9d2a51a25d9cee310667d61efd1873d90c538a4b276f47f8ba561702dcfe",
+  "startTerminalSha256": "087206d0cb29c0d0d708e03ff3538ac70de56005c79b429a31b1d77c209c75aa",
+  "startGenuineOutputsIndependentlyReadBack": 4,
+  "sameServiceStillRunningAtLastObservation": true,
+  "reviewedMaintenanceWriterIncluded": false,
+  "upgradeObservedStatus": "FAILED",
+  "upgradeSafeCode": "HALL165_SQL42_AUTHORITY_BINDING_REQUIRED",
+  "upgradeTerminalSha256": "120f6f77e3d1ddb34c535249f42325ec9494f18996c6bd55e2e3caa523f706e9",
+  "catalogUpgradeVerified": false,
+  "stopObservedStatus": "FAILED",
+  "stopSafeCode": "PRESERVE_PREWRITER_HOLD_ALREADY_ACTIVE",
+  "stopTerminalSha256": "a094dea1da823805ba75d208ddd327ccf68a9065c15df2cded45dd480411d3db",
+  "oldHoldPreserved": true,
+  "originalRoleAuthenticationRestored": false,
+  "registeredOriginalRestoreSubmitted": false,
+  "recoveryOnlyCandidate": "t45-r3-hall165-original-auth-guardian-restore-20261118-01",
+  "originalHardRestorationDeadline": 1795013155661,
+  "source02PhysicalMaterializationPreserved": true,
+  "oldMaterializedCatalogStillUnapplied": true,
+  "writerResumeReconciliationRecoveryAndPreviewPending": true,
+  "evidenceSha256": {
+    "cas": "ec8fa20b29dd9b1b58a47c90a9d0c0fc41f9c5558a8966a41c0cbd5a009891df",
+    "apply": "4f9a517e30f65f28c17dbb3241365117b8cc133b56910a29ee8e12c0593b5732",
+    "start": "7df2a2e21a895f11dd8d59a888a3d8100f33121d7e3b815e5371429a28c766ee",
+    "upgrade": "b40b4159c5a77fbdaf9521f1932d83c977f1884db3c880e6faee7652e8bef09e",
+    "stop": "4456e8e950c333ff3a20c5f9b76d7dbc2f035791e4aad02eff955e120021f15e"
+  }
+}

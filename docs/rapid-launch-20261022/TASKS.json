@@ -52707,7 +52707,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Keep After48 as the original-plan resume basis. Actual Root164 source02 completed with matching public/private terminal and the physical 408-file Hall165 marker. The original PG and credentials are preserved and stopped at SQL42. Bind the maintenance-only five-key successor to this actual marker, roll the exact catalog forward and restore the runtime authentication before original-plan resume, reconciliation, recovery and the APP289 view-only release.",
+  "next": "Keep After48 as the original-plan resume basis. Actual Root169 role Apply and Start succeeded. Upgrade failed before the SQL work and Stop failed against the retained historical hold. Finish independently verified clean stop and exact original-role restoration before any new maintenance or writer; preserve both failed keys, the hold, the physical Hall165 source and original plan.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -55332,6 +55332,7 @@
   "r3ReadOnlyPreviewDecision": "docs/rapid-launch-20261022/source-checkpoints/20261118-r3-read-only-preview-decision/RESULT.json",
   "root146AdmissionCandidateCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source-admission-local-candidate/CHECKPOINT.json",
   "hall163OfflineDescribeLoadPrecursorCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-hall163-offline-describe-load-binding/RESULT.json",
+  "hall165Root169MaintenanceProtectionPendingCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root169-hall165-maintenance-protection-pending/RESULT.json",
   "hall165Root164ActualSource02Checkpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root164-hall165-source02-actual/RESULT.json",
   "hall165Root163SourceUploadStoppedCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-hall165-root163-source-upload-stopped/RESULT.json",
   "hall165MaintenanceSourceScopeCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-hall165-maintenance-source-scope/RESULT.json",
