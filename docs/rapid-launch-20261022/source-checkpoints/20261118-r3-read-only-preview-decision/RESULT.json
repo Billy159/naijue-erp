@@ -1,0 +1,19 @@
+{
+  "state": "CONFIRMED_CONTINUE_INITIAL_BATCH_THEN_VIEW_ONLY_PREVIEW",
+  "asOf": "2026-11-18T02:09:13+00:00",
+  "approvedBatchCutoff": "2026-11-16T11:40:00+08:00",
+  "sourceThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+  "deferIncrementalUserMessageId": "01a1ec6a-518b-7f32-b274-e9ff846ae080",
+  "noNewERPOrderEntryUserMessageId": "01a1ec63-44e7-75c0-a8fb-2b529ea85f64",
+  "existingNovember16BatchResumeAndReconciliationContinue": true,
+  "incrementalRequiredForReadOnlyPreview": false,
+  "incrementalRequiredBeforeERPBusinessEntry": true,
+  "businessEntrySystemUntilCutover": "T+",
+  "postCutoffIncrementalDataReceived": false,
+  "latestObservedBusinessCommitState": "PERSISTED_PARTIAL",
+  "latestObservedCommittedGroups": 151,
+  "latestObservedTotalGroups": 1061,
+  "publicPreviewDeploymentVerified": false,
+  "viewOnlyBoundary": "Verify authenticated reading and role visibility on the deployed release while preventing business mutations. Verify a representative denied command without creating a real record. The exact35 CLOSED generation state currently fences all HTTP requests, including login. Do not treat a pre-activation zero-write receipt or that state alone as a functional read-only preview.",
+  "businessEntryCutover": "Set a common cutoff with a verified T+ entry stop before writing in ERP. Receive and reconcile post-cutoff additions, changes and voids and prove stock and amount readback before opening ERP business writes."
+}

@@ -55328,6 +55328,7 @@
   },
   "postCutoffTplusWritesConfirmed": true,
   "finalIncrementalExportReceived": false,
+  "r3ReadOnlyPreviewDecision": "docs/rapid-launch-20261022/source-checkpoints/20261118-r3-read-only-preview-decision/RESULT.json",
   "root146AdmissionCandidateCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source-admission-local-candidate/CHECKPOINT.json",
   "root146MappedSourceActualCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source02-materialized-actual/ACTUAL-RESULT.json"
 }
