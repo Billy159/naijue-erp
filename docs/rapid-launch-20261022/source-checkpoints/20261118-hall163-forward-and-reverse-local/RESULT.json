@@ -1,0 +1,26 @@
+{
+  "state": "HALL163_LOCAL_FORWARD_AND_REVERSE_EXACT_CATALOG_READBACK",
+  "evidenceSha256": {
+    "localReadback": "5f6d112de49fb7e1c85a2e17ea90fc5cee66990e6f817187f45c36e340909529",
+    "catalogPins": "590e6cf1d2ae77debd0cc94a64b36c8be17907707ed3831c51178a4e2dce68f1",
+    "nameFixReview": "8f28d51e2adc36f4f16bd615ea770b0597cb6e5630bde82d22f1da61059da605",
+    "t45LocalWipHandoff": "2eb90c26df9567ab7178160ee7739cc5d57cd0995712e35cfbd42a0bc5e3e55f"
+  },
+  "routineCounts": [
+    161,
+    163,
+    161
+  ],
+  "independentPostCommitReads": true,
+  "originalRoutineMetadataAndStructurePreserved": true,
+  "reverseRejectsDriftAndRollsBack": true,
+  "nameCollisionFixIndependentReviewPassed": true,
+  "forwardInnerSha256": "6db5d805a1b1ec87d109b3559eefc6df42c95719f141c8c9e2fb804cb8938915",
+  "reverseInnerSha256": "12c2deee3cf63dc8e061bfe2a5b5d0e760ff8378692155f4feeca92a2b8fcaff",
+  "localSocketObserverUsedForPhysicalCheck": true,
+  "newAtomicBundleIndependentReviewPendingAtCheckpoint": true,
+  "authoritativeFormalCatalog": "SQL42_161_LAST_VERIFIED",
+  "liveUpgradeAuthorizedOrSubmitted": false,
+  "realImportResumed": false,
+  "originalDurableGroups": 151
+}
