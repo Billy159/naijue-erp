@@ -1,5 +1,7 @@
 # 奈爵 ERP 本地接手工程入口
 
+- 2026-11-18用户最新模型裁决：停止对现有聊天的批量切换及相关通知。后续新建的本项目聊天明确使用 `gpt-6.2-sol`，推理档位沿用任务安排。已经发生的配置变化作为历史记录保留。本裁决优先于下方旧模型条款及当日早期批量切换要求。见 `references/planning-20261008/统一Sol62模型切换裁决-20261118.md`。
+
 全局规则唯一权威：`/Users/billy/Desktop/Workspace/agents.md`。新任务先完整阅读；按其继续任务和冲突规则执行。
 
 本工程为 `work/erp-local-source-20261022`，当前文件归属、状态和证据分别以同级 `local-takeover-20261021-control/OWNERSHIP.md`、`STATUS.json`、`EVIDENCE-MATRIX.json` 为准，先读最新本地接手补充。仅 GPT-6.1-sol / xhigh；不用 Astra。

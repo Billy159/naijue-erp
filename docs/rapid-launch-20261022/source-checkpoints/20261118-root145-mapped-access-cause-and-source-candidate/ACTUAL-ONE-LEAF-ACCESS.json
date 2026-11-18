@@ -1,0 +1,91 @@
+{
+  "PGConnections": 0,
+  "actor": {
+    "egid": 61035,
+    "euid": 61035,
+    "gid": 61035,
+    "groups": [],
+    "uid": 61035
+  },
+  "actualEvidencePath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ROOT09-FAILED01-ONE-LEAF-ACCESS-01/ACTUAL-ONE-LEAF-ACCESS.PRIVATE.json",
+  "actualEvidenceSha256": "36f6383bf1933bd680f47b0c717d63ae8b7d746344194ce5d81a5800c07e0691",
+  "attempts": {
+    "absolute": {
+      "errno": 13,
+      "opened": false,
+      "regular": null,
+      "rowIndex": 0,
+      "sameDevInode": null,
+      "sameStat9": null,
+      "stat9": null
+    },
+    "mapped": {
+      "errno": null,
+      "opened": true,
+      "regular": true,
+      "rowIndex": 0,
+      "sameDevInode": true,
+      "sameStat9": true,
+      "stat9": [
+        66304,
+        13763764,
+        0,
+        0,
+        420,
+        1,
+        6326,
+        1794957812544831829,
+        1794957812544831829
+      ]
+    }
+  },
+  "authorizationForSuccessorExecution": false,
+  "automaticRetry": false,
+  "bodyReads": false,
+  "checkedAtUTC": "2026-11-17T23:56:59.608124+00:00",
+  "failedJobKey": "t45-r3-batched-root09-after45-resume-progress-source-20261118-01",
+  "leafStat9After": [
+    66304,
+    13763764,
+    0,
+    0,
+    420,
+    1,
+    6326,
+    1794957812544831829,
+    1794957812544831829
+  ],
+  "leafStat9Before": [
+    66304,
+    13763764,
+    0,
+    0,
+    420,
+    1,
+    6326,
+    1794957812544831829,
+    1794957812544831829
+  ],
+  "mappingBasis": "EXISTING_STATE_BIND_ROOT_FD",
+  "metadataUnchanged": true,
+  "mutations": 0,
+  "newJobOrAuthorityIssued": false,
+  "permissionChanges": 0,
+  "readProgramSha256": "296eada181a9a3f5cc399f705ed5d7713e7cc6de83fdc52f0cb03dafa2946078",
+  "safeOutputBytes": 1007,
+  "scope": "One fixed failed01 code leaf, two open-only comparisons using the same actor",
+  "sourceRelativeLeaf": "tools/unified-import/batched-stream-client.mjs",
+  "state": "ABSOLUTE_EACCES_MAPPED_EXACT_LEAF_OPENED",
+  "stateBindStat9": [
+    66304,
+    13502389,
+    0,
+    61035,
+    456,
+    34,
+    4096,
+    1794957796903033839,
+    1794957796903033839
+  ],
+  "wholeNamespaceVerified": false
+}

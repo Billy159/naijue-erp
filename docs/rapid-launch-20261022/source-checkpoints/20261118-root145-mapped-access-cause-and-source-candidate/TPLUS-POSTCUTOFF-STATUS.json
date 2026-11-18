@@ -1,0 +1,15 @@
+{
+  "state": "CONFIRMED_POSTCUTOFF_TPLUS_WRITES_INCREMENTAL_REQUIRED_BEFORE_CUTOVER",
+  "asOf": "2026-11-17T23:36:15.570069+00:00",
+  "approvedBatchCutoff": "2026-11-16T11:40:00+08:00",
+  "question": "Whether T+ sales/purchase/transfer entry continued after this cutoff.",
+  "questionType": "Direct human factual answer, not a new approval request. Existing operational authorization continues.",
+  "currentWorkContinues": "Original batch import/resume preparation, actual import, conservation, backups and independent recovery/source staging remain authorized and independent of answer. Do not stop those tasks or mark goal paused.",
+  "finalCutoverImplication": "Complete approved initial batch without reprepare/overwrite; keep original IDs/source crosswalks/receipts. Receive and reconcile later new/modified/voided records under separate source batch; obtain final common cutoff and old-system stop for real business opening. Do not treat initial11:40 snapshot as current live stock.",
+  "oldSystemContinuouslyStoppedVerified": false,
+  "postCutoffIncrementalDataKnown": false,
+  "userAnswer": "有，之后仍有录单",
+  "newTPlusEntriesAfterCutoffConfirmed": true,
+  "postCutoffIncrementalDataReceived": false,
+  "finalCutoverRequiresIncrementalReconciliation": true
+}

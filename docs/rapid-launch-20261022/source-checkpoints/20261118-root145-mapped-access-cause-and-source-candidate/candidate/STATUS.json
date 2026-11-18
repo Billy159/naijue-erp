@@ -1,0 +1,51 @@
+{
+  "state": "LOCAL_REVIEW_CANDIDATE_NOT_REGISTERED_OR_EXECUTED",
+  "actualRoot": 145,
+  "expectedSuccessorRoot": 146,
+  "failedKey": "t45-r3-batched-root09-after45-resume-progress-source-20261118-01",
+  "failedTarget": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root09-after45-resume-progress-20261118-01",
+  "candidateKey": "t45-r3-batched-root09-after45-resume-progress-source-20261118-02",
+  "candidateTarget": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root09-after45-resume-progress-20261118-02",
+  "newPhysicalSourceIdentitySameAsPreviouslyReviewed": true,
+  "physicalSourceRowsSha256": "e3ce167b5b31b6db11d37651665cb17aab74fbbffd52bfa1b9a983394df15f59",
+  "physicalSourceSetSha256": "13e67567351dbb0d0de6fd12c5c480151c08eea769699cc8b6b49bbff3d48bb3",
+  "singleLeafActualAccessEvidenceSha256": "c3b1c879aea65c845e00c90187702ae942af6f2f193cb54e8e3f165f97488dc9",
+  "basis": "Same exact file fails absolute host open EACCES13 and succeeds under existing STATE bind root, same UID/GID61035 empty supplementary groups. All checked new directories0755.",
+  "mappedStateDevInodeUidGidMode": [
+    66304,
+    13502389,
+    0,
+    61035,
+    456
+  ],
+  "workerSha256": "1b0c4ba8be67b3abb25062d5a7c7bdced781862217e3632165960f84bd145097",
+  "profileSha256": "ebabec0f925cffa01f0f472681ff1bac64c92a97cdad6096ae4ba4416672cb89",
+  "inheritedFiles": [
+    {
+      "file": "source-rows.json",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ROOT09-RESUME-PROGRESS-SOURCE-01/bundle/source-rows.json",
+      "sha256": "e3ce167b5b31b6db11d37651665cb17aab74fbbffd52bfa1b9a983394df15f59",
+      "bytes": 72609
+    },
+    {
+      "file": "delta-00.asset",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ROOT09-RESUME-PROGRESS-SOURCE-01/bundle/delta-00.asset",
+      "sha256": "89bb31da0c6c6e737746002929bd3a11f9b0fa54f365acdd3a7b545737f09d13",
+      "bytes": 6326
+    },
+    {
+      "file": "delta-01.asset",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ROOT09-RESUME-PROGRESS-SOURCE-01/bundle/delta-01.asset",
+      "sha256": "1d3bc9a96c22681c2e15e506daed1f53b5ad2ee73c56a178852d5febd28c4dad",
+      "bytes": 1316
+    },
+    {
+      "file": "delta-02.asset",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ROOT09-RESUME-PROGRESS-SOURCE-01/bundle/delta-02.asset",
+      "sha256": "8085cc6b337ecc3e8b37353273d73eda8a63f782fea8a2d5eb3a4cf3ea086b9e",
+      "bytes": 13446
+    }
+  ],
+  "actualSourceJobSubmitted": false,
+  "requires": "Owner packaging, exact successor dispatcher and one scope-specific independent review, actual fresh check and ordinary actor full proof. Current candidate is source only."
+}

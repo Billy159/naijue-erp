@@ -1,0 +1,26 @@
+{
+  "state": "ACTUAL_SOURCE_INSTALLATION_FAILED_AT_ORDINARY_ACTOR_READABILITY",
+  "diagnosticSafeCarrierSha256": "811a3863a472d51ada2e12ccbdca54e2911e0a539b018c79ef83c80ac151373c",
+  "checkedAtUTC": "2026-11-17T23:30:22.521521+00:00",
+  "fixedCode": "BATCHED_SOURCE_ACTUAL_ORDINARY_ACTOR_CODE_READABILITY_REQUIRED",
+  "errorType": "ValueError",
+  "errno": "UNKNOWN_NOT_PERSISTED",
+  "stage": "ordinary_actor_readability",
+  "fixedWorkerSourceFrames": [
+    245,
+    240,
+    182,
+    19
+  ],
+  "sourceCopyAndProtectedStatComparisonPrecededFailure": true,
+  "originalPlanDirectorySQLiteInitializerAndRoot08MarkerStat9AllMatchSeal": true,
+  "privateLogTailBytesRead": 1357,
+  "rawMessageBodyOrSourceLinesIncluded": false,
+  "directoryUmaskHypothesis": "NOT_YET_CONFIRMED_AWAIT_FIXED_LSTAT",
+  "authorizedNext": "Only lstat fixedOUTPUT/SOURCE plus one fixed reviewed code leaf ancestor chain,total<=5directories;no body/fulltree/chmod/proof replay/PG.",
+  "partialTargetRetained": true,
+  "sourceReady": false,
+  "rootCurrent": 145,
+  "PGCurrentlyStopped": true,
+  "normal46RuntimeNotIssued": true
+}

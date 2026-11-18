@@ -1,0 +1,13 @@
+{
+  "state": "LOCAL_SYNTAX_AND_EXACT_DELTA_CHECKS_PASSED",
+  "unchangedWorkerFunctions": 15,
+  "unchangedInheritedAssets": 4,
+  "changedWorkerFunction": "ordinary_actor_readability",
+  "profileChanges": [
+    "requestKey",
+    "outputDirectory"
+  ],
+  "existingOneLeafLinuxEvidenceReused": true,
+  "candidateLinux391LeafCheckPending": true,
+  "candidateAuthorizedOrExecuted": false
+}

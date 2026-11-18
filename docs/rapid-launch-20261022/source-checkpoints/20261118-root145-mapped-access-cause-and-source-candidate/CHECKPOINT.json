@@ -1,0 +1,33 @@
+{
+  "state": "ROOT145_FAILED_CAUSE_CONFIRMED_LOCAL_MAPPED_SOURCE_CANDIDATE_PREPARED",
+  "asOf": "2026-11-18T00:08:44.340123+00:00",
+  "currentRoot": 145,
+  "dispatcherSha256": "0e5e83c3d0b07e88b995fe2de2c07611ef37aaa6df7eec1bb792357081514e95",
+  "candidateRoot": 146,
+  "candidateExecuted": false,
+  "sourceRoot09Ready": false,
+  "originalPartialTargetRetained": true,
+  "lastVerifiedPGStopped": true,
+  "originalAuth45Restored": true,
+  "businessCommitState": "PERSISTED_PARTIAL",
+  "committedGroups": 151,
+  "committedReceipts": 467,
+  "newTPlusEntriesConfirmedBeyondCutoff": true,
+  "cutoff": "2026-11-16T11:40:00+08:00",
+  "finalIncrementalExportReceived": false,
+  "newChatModel": "gpt-6.2-sol",
+  "existingChatBulkMigrationStopped": true,
+  "copies": {
+    "INCIDENT-SAFE.json": "5b267c9e1c230346c34089a6a2c238059bdf416979f1468f604887f0025dd1ae",
+    "INITIAL-DIAGNOSIS.json": "433ab2beec3b87f3f4ecbf030a304607f077407d552ec4604bca837b6b05e5b8",
+    "ACTUAL-ONE-LEAF-ACCESS.json": "c3b1c879aea65c845e00c90187702ae942af6f2f193cb54e8e3f165f97488dc9",
+    "TPLUS-POSTCUTOFF-STATUS.json": "19879b1a39d48fa7c9137550024afe1cc8bd53c35eff6a2d82854903e09a80e2",
+    "切换前增量接收口径.md": "2539285deccada06d529921978a7b9cd1ea3fde1f5bd5b3d45e8ba3afeab62c2",
+    "candidate/STATUS.json": "e6dbb6fef49ef8ea24f12ccbe83e3d3c46f0491076e32c5cdaf6dd16d8776911",
+    "candidate/materialize-batched-source.py": "1b0c4ba8be67b3abb25062d5a7c7bdced781862217e3632165960f84bd145097",
+    "candidate/source-profile.json": "ebabec0f925cffa01f0f472681ff1bac64c92a97cdad6096ae4ba4416672cb89",
+    "candidate/LOCAL-CHECKS.json": "ecf5b24948938b6c03b557133e1f07d343626546b47e7531b8edc3446532239d",
+    "candidate/LOCAL-CHILD-FIXTURE.json": "6b3292d291798f33655a0819d8f947c5c3326d3044ae6cf0c53faa44929cf76f"
+  },
+  "next": "Actual registry Root145, failed source01 retained, no ready marker. Actual single-leaf comparison confirmed absolute-path EACCES(13) and existing STATE-bound dir_fd open success on the same inode under actor 61035. All four new directories were mode0755. Local successor worker candidate uses mapped proof and closed row diagnostics. Local syntax/delta and targeted child fixture passed. T45 owner packaging, Root successor source and independent review remain before any new registration or physical operation. PG stopped, original auth restored, last actual business state PARTIAL with 151 groups/467 receipts; full historical import and APP release pending. User confirmed T+ writes after 11:40. Final same-cutoff exports and incremental reconciliation required before opening. Existing-chat bulk model switching stopped; newly created project chats use Sol6.2."
+}

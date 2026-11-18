@@ -1,0 +1,9 @@
+{
+  "localFixture": "Darwin with the current local user and preopened directory FD; the Linux worker identity and O_PATH are verified separately by existing one-leaf production observation",
+  "pass": [
+    "same leaf via inherited directory fd",
+    "missing leaf returns closed errno",
+    "wrong file identity rejected"
+  ],
+  "doesNotAssertActual391FileServerProof": true
+}
