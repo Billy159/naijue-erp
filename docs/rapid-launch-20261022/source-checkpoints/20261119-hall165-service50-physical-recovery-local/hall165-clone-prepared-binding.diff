@@ -1,0 +1,31 @@
+--- a/bundle/clone_outer.py
++++ b/bundle/clone_outer.py
+@@ -67,6 +67,13 @@
+  need((s.st_dev,s.st_ino,s.st_uid,stat.S_IMODE(s.st_mode))==(66304,12224849,0,0o644),'CLONE_ORIGINAL_LOCK_IDENTITY_DIFFERS');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+  fixed=module('final33_receipts.py',a['staticPins']['final33_receipts.py']);core=module('cold_copy.py',a['staticPins']['cold_copy.py']);inputs=module('recovery_input_artifact.py',a['staticPins']['recovery_input_artifact.py'])
+  facts=fixed.committed_source(a['source']);fixed.inspect_original_stopped(facts)
++ service_key=facts['service']['serviceKey']
++ if service_key==fixed.SERVICE:
++  prepare_key=fixed.PREPARE
++ else:
++  need(service_key==fixed.RESUME50_START[0],'CLONE_HOST_PREPARE_SERVICE_SCOPE_DIFFERS')
++  prepare_key=fixed.RESUME50_PREPARE[0]
++ plan_path=TARGET/'state/real-first-20261110-r3/reports'/prepare_key/'batched-plan.sqlite'
+  complete=json.loads(read(COLD/'complete.json',a['coldCompleteSha256']));manifestRaw=read(COLD/'data-manifest.private.json',a['coldManifestSha256'],8*1024**2);manifest=json.loads(manifestRaw)
+  need(complete['requestKey']==fixed.COPY and complete['status']=='VERIFIED_FINAL33_POST_IMPORT_COLD_COPY_ONLY' and complete['sourceEvidence']==a['source'] and complete['manifestSha256']==a['coldManifestSha256'] and complete['applicationArchiveSha256']==ARCHIVE,'CLONE_HOST_ACTUAL_COLD_REQUIRED')
+  ready=json.loads(read(APP/'ready.json',a['appReadySha256'],uid=1000));need(ready.get('status')=='READY' and ready.get('artifactKey')==APP.name and ready.get('archiveSha256')==ARCHIVE and ready.get('archiveBytes')==7687919,'CLONE_HOST_ACTUAL_APPLICATION_READY_REQUIRED')
+@@ -105,12 +112,11 @@
+    os.chown(base,0,0);os.chmod(base,0o755)
+   for name in ('WAREHOUSE-KEY-EXPECTATIONS.private.json','AGGREGATE-READBACK-EXPECTATIONS.private.json'):write(DEST/'inputs'/name,members[name],0o440,61035)
+   write(DEST/'cold-readback/complete.json',read(COLD/'complete.json',a['coldCompleteSha256']),0o440,61035);write(DEST/'cold-readback/data-manifest.private.json',manifestRaw,0o440,61035)
+-  original=fixed.native_result(fixed.PREPARE,fixed.public_result(fixed.PREPARE,'final33-prepare-result.json',a['source']['pins']['prepareResult']),facts['service'])[0]
+-  write(DEST/'runtime-input.json',encode({'preparedBinding':original['preparedBinding']}),0o440,61035)
++  write(DEST/'runtime-input.json',encode({'preparedBinding':facts['binding']}),0o440,61035)
+   write(DEST/'authority.json',encode(a),0o440,61035)
+   # Only fixed original private files are file-mounted; no verifier/password is exported or hashed.
+   originalBoot=TARGET/'state/native-services/t45-first-r3-native-service-start-20261110-01'
+-  privateMounts=[(originalBoot/'runtime.pgpass','/restore-input/runtime.pgpass'),(fixed.JOBS/'t45-r3-first-admin-custody-receive-20261113-01/custody/original-a.json','/restore-input/original-a.json'),(TARGET/'state/native-services/ordinary35-auth-20261116-01/original-auth.json','/restore-input/original-auth.json'),(TARGET/'state/real-first-20261110-r3/reports'/fixed.PREPARE/'batched-plan.sqlite','/restore-input/plan.sqlite')]
++  privateMounts=[(originalBoot/'runtime.pgpass','/restore-input/runtime.pgpass'),(fixed.JOBS/'t45-r3-first-admin-custody-receive-20261113-01/custody/original-a.json','/restore-input/original-a.json'),(TARGET/'state/native-services/ordinary35-auth-20261116-01/original-auth.json','/restore-input/original-auth.json'),(plan_path,'/restore-input/plan.sqlite')]
+   # Existing private job sources stay root-only. Explicit empty mount targets
+   # prepare only these fixed readonly file binds; no private bytes are copied.
+   for original,target in privateMounts:

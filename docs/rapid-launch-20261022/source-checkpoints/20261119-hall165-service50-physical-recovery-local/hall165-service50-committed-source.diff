@@ -1,0 +1,228 @@
+--- a/bundle/final33_receipts.py
++++ b/bundle/final33_receipts.py
+@@ -41,6 +41,39 @@
+               'catalogTerminal', 'catalogResult', 'stopTerminal', 'stopResult', 'stopCleanup',
+               'restoreTerminal', 'restoreResult'}
+ 
++# The preserved PREPARE attempt and the resumed Writer use different services.
++RESUME50_START = (
++    't45-first-r3-native-service-start-20261119-50',
++    'cfe7a2bb6b31f1a7cc8ddda4f3591d5a0c2db9dd60e2938651cac3e7a3afb333',
++    '9e86f4f55621823ff4a461a390c961bb04a98f23176c385b43295bc875cb0746',
++    '1319887c6018ea19bd859cacb9bd9668344301576366dca4d329571f998950b0',
++)
++RESUME50_START_SERVICE = dict(
++    containerId='be2b4dc7ded1fdb57fc08849e68c7f3ccaa1e1cf5f0ebcf5eb411efb9a77cb6d',
++    containerStartedAt='2026-11-18T20:19:02.154217566Z',
++    postmasterStart='2026-11-18 20:19:03.53317+00',
++    proofSha256='f43c42ce521ae326e163b68f18a2b5cc7ce2e88b076c256583cdc69f697c2aa7',
++    serviceKey='t45-first-r3-native-service-start-20261119-50',
++)
++RESUME50_PREPARE = (
++    't45-r3-final33-plan-prepare-20261116-05',
++    '2f7a11142ced7b8056c52eb5af5ba5f2dcfad78d11918fe88f4cc4350d8795d1',
++    'a6861080bab7021463e47763db97e59332b4d643f742289ba8ddff15f5923fd6',
++    '881fc71435b0401496e183791e4a184242b71c654464ff8cd9e1d9c232961d35',
++)
++RESUME50_PREPARE_SERVICE = dict(
++    containerId='a17a885412cb8122e8b77a65d5058f1653c69a3cc20d1a11a3950e4fe6e4e1d5',
++    containerStartedAt='2026-11-17T05:39:38.918702945Z',
++    postmasterStart='2026-11-17 05:39:40.169724+00',
++    proofSha256='9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3',
++    serviceKey='t45-first-r3-native-service-start-20261116-39',
++)
++RESUME50_PREPARE_NATIVE = '552b8cf8bffe5c702c0e22513725065e7bf68ba23fe773b29f9b82689d814784'
++RESUME50_WRITER = 't45-r3-batched-real-hall165-resume-20261119-05'
++RESUME50_STOP = 't45-r3-hall165-resume-preserve-stop-20261119-05'
++RESUME50_RESTORE = 't45-r3-hall165-resume-auth-restore-20261119-05'
++RESUME50_STOP_SUPPORT = '02b6dcea96be58351b42dc5fe1fb86028c915813a60456792ea3c0195ae2ae71'
++
+ # Installed Hall165 is a historical maintenance generation, distinct from the
+ # later Writer and its stop. Keep the original terminal and both result pins.
+ HALL165_SOURCE02 = (
+@@ -129,27 +162,17 @@
+          'FINAL33_NATIVE_CHILD_CLEANUP_REQUIRED')
+     return value, authority
+ 
+-def committed_source(evidence):
+-    need(type(evidence) is dict and set(evidence) == {'format', 'service', 'pins'}
+-         and evidence['format'] == 'T45_FINAL33_COMMITTED_STOPPED_SOURCE_V1', 'FINAL33_FIXED_SOURCE_EVIDENCE_REQUIRED')
+-    service, pins = evidence['service'], evidence['pins']
+-    need(type(service) is dict and set(service) == SERVICE_FIELDS and service['serviceKey'] == SERVICE
+-         and all(type(service[k]) is str and HASH.fullmatch(service[k]) for k in ('proofSha256', 'containerId')),
+-         'FINAL33_SOURCE_SERVICE_REQUIRED')
+-    need(type(pins) is dict and set(pins) == PIN_FIELDS and all(type(v) is str and HASH.fullmatch(v) for v in pins.values()),
+-         'FINAL33_SOURCE_RECEIPT_PINS_REQUIRED')
+-    for key, pin in ((SERVICE, pins['startTerminal']), (PREPARE, pins['prepareTerminal']), (WRITER, pins['writerTerminal']),
+-                     (UPDATE, pins['catalogTerminal']), (STOP, pins['stopTerminal']), (RESTORE, pins['restoreTerminal'])):
+-        terminal(key, pin)
+-    proof_path = TARGET / 'authority/fresh35-current-production-service-v2-service-35.json'
++def original_proof(service, proof_leaf):
++    proof_path = TARGET / 'authority' / proof_leaf
+     proof = json.loads(read(proof_path, service['proofSha256']))
+     physical = proof.get('physical') or {}
+     birth = (proof.get('sharedPostgresNamespace') or {}).get('container') or {}
+-    need(proof.get('requestKey') == SERVICE and proof.get('dataDirectoryIdentity') == DATA_IDENTITY
++    need(proof.get('requestKey') == service['serviceKey'] and proof.get('dataDirectoryIdentity') == DATA_IDENTITY
+          and all(physical.get(k) == v for k, v in PHYSICAL.items()) and physical.get('postmasterStart') == service['postmasterStart']
+          and birth.get('id') == service['containerId'] and birth.get('startedAt') == service['containerStartedAt'], 'FINAL33_ORIGINAL_PHYSICAL_BINDING_DIFFERS')
+-    prepared = public_result(PREPARE, 'final33-prepare-result.json', pins['prepareResult'])
+-    prep, prep_authority = native_result(PREPARE, prepared, service)
++    return proof
++
++def original_prepared_binding(prepared, prep):
+     binding = prep.get('preparedBinding') or {}
+     need(prepared.get('state') == prep.get('state') == 'BATCHED_IMPORT_PREPARED'
+          and (prep.get('nativeResult') or {}).get('root_state') == 'ABSENT'
+@@ -158,6 +181,40 @@
+          and binding.get('documentBatchId') == DOCUMENT and binding.get('cutoffAt') == '2026-11-16T11:40:00+08:00'
+          and binding.get('sourceNamespace') == 'naijue:tplus:20261102' and HASH.fullmatch(binding.get('planSha256', '')),
+          'FINAL33_EXACT_PREPARED_BUSINESS_BATCH_REQUIRED')
++    return binding
++
++def original_cleanup(service_key, pin):
++    cleanup_path = STATE / 'native-services' / service_key / 'cleanup.json'
++    cleanup = json.loads(read(cleanup_path, pin))
++    need(cleanup.get('requestKey') == service_key and cleanup.get('retained') is True and cleanup.get('runtimeMaterialPreserved') is True
++         and all((cleanup.get('cleanup') or {}).get(k) is True for k in ('cleanupComplete', 'cleanShutdown', 'dataPreserved', 'ownedPidAbsent', 'portAbsent')),
++         'FINAL33_CLEAN_STOP_REQUIRED')
++
++def stopped_source(evidence, proof, binding, update, stop_result_pin):
++    service = evidence['service']
++    return dict(service=service, proof=proof, binding=binding, catalog=update, sourceEvidence=evidence,
++                previousCleanStop=dict(requestKey=service['serviceKey'], postmasterStart=service['postmasterStart'], systemIdentifier=PHYSICAL['systemIdentifier'],
++                    dataDirectoryIdentity=DATA_IDENTITY, containerStopped=True, ownedPidAbsent=True, portAbsent=True, cleanShutdown=True),
++                previousCleanStopReceiptSha256=stop_result_pin)
++
++def committed_source(evidence):
++    need(type(evidence) is dict and set(evidence) == {'format', 'service', 'pins'}
++         and evidence['format'] == 'T45_FINAL33_COMMITTED_STOPPED_SOURCE_V1', 'FINAL33_FIXED_SOURCE_EVIDENCE_REQUIRED')
++    service, pins = evidence['service'], evidence['pins']
++    need(type(pins) is dict and set(pins) == PIN_FIELDS and all(type(v) is str and HASH.fullmatch(v) for v in pins.values()),
++         'FINAL33_SOURCE_RECEIPT_PINS_REQUIRED')
++    if type(service) is dict and service.get('serviceKey') == RESUME50_START[0]:
++        return committed_source_resume50(evidence)
++    need(type(service) is dict and set(service) == SERVICE_FIELDS and service['serviceKey'] == SERVICE
++         and all(type(service[k]) is str and HASH.fullmatch(service[k]) for k in ('proofSha256', 'containerId')),
++         'FINAL33_SOURCE_SERVICE_REQUIRED')
++    for key, pin in ((SERVICE, pins['startTerminal']), (PREPARE, pins['prepareTerminal']), (WRITER, pins['writerTerminal']),
++                     (UPDATE, pins['catalogTerminal']), (STOP, pins['stopTerminal']), (RESTORE, pins['restoreTerminal'])):
++        terminal(key, pin)
++    proof = original_proof(service, 'fresh35-current-production-service-v2-service-35.json')
++    prepared = public_result(PREPARE, 'final33-prepare-result.json', pins['prepareResult'])
++    prep, _ = native_result(PREPARE, prepared, service)
++    binding = original_prepared_binding(prepared, prep)
+     writer = public_result(WRITER, 'final33-writer-result.json', pins['writerResult'])
+     native, writer_authority = native_result(WRITER, writer, service)
+     need(writer.get('state') == native.get('state') == 'COMPLETED'
+@@ -178,25 +235,98 @@
+          and stop.get('pgStopped') is True and stop.get('cleanupSha256') == pins['stopCleanup']
+          and all((stop.get('currentBatchTerminals') or {}).get(key) == dict(state='COMPLETED', terminalSha256=pin)
+                  for key, pin in ((PREPARE, pins['prepareTerminal']), (WRITER, pins['writerTerminal']), (UPDATE, pins['catalogTerminal']))), 'FINAL33_STOP_THROUGH_ORIGINAL_OPERATIONS_REQUIRED')
+-    cleanup_path = STATE / 'native-services' / SERVICE / 'cleanup.json'
+-    cleanup = json.loads(read(cleanup_path, pins['stopCleanup']))
+-    need(cleanup.get('requestKey') == SERVICE and cleanup.get('retained') is True and cleanup.get('runtimeMaterialPreserved') is True
+-         and all((cleanup.get('cleanup') or {}).get(k) is True for k in ('cleanupComplete', 'cleanShutdown', 'dataPreserved', 'ownedPidAbsent', 'portAbsent')),
+-         'FINAL33_CLEAN_STOP_REQUIRED')
++    original_cleanup(SERVICE, pins['stopCleanup'])
+     restored = public_result(RESTORE, 'maintenance-auth-result.json', pins['restoreResult'])
+     need(restored.get('phase') == 'restore' and restored.get('status') == 'FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED'
+          and (restored.get('result') or {}).get('status') == 'EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK'
+          and all((restored.get('cleanup') or {}).get(k) is True for k in ('ownContainerStopped', 'ownedPidAbsent', 'confirmed')),
+          'FINAL33_ACTUAL_ORIGINAL_AUTH_RESTORE_REQUIRED')
+-    return dict(service=service, proof=proof, binding=binding, catalog=update, sourceEvidence=evidence,
+-                previousCleanStop=dict(requestKey=SERVICE, postmasterStart=service['postmasterStart'], systemIdentifier=PHYSICAL['systemIdentifier'],
+-                    dataDirectoryIdentity=DATA_IDENTITY, containerStopped=True, ownedPidAbsent=True, portAbsent=True, cleanShutdown=True),
+-                previousCleanStopReceiptSha256=pins['stopResult'])
++    return stopped_source(evidence, proof, binding, update, pins['stopResult'])
++
++def committed_source_resume50(evidence):
++    service, pins = evidence['service'], evidence['pins']
++    start_key, start_end, start_root, start_public = RESUME50_START
++    prep_key, prep_end, prep_root, prep_public = RESUME50_PREPARE
++    need(service == RESUME50_START_SERVICE and pins['startTerminal'] == start_end,
++         'FINAL33_RESUME50_EXACT_START_REQUIRED')
++    need((pins['prepareTerminal'], pins['prepareResult'], pins['catalogTerminal'], pins['catalogResult'])
++         == (prep_end, prep_root, HALL165_UPDATE[1], HALL165_UPDATE[2]),
++         'FINAL33_RESUME50_HISTORICAL_RECEIPT_PINS_DIFFER')
++
++    terminal(start_key, start_end)
++    started = public_result(start_key, 'normal-service-result.json', start_root, public_pin=start_public)
++    need(started.get('proofSha256') == service['proofSha256'], 'FINAL33_RESUME50_START_RESULT_DIFFERS')
++    proof = original_proof(service, 'fresh35-current-production-service-v2-service-50.json')
++
++    terminal(prep_key, prep_end)
++    prepared = public_result(prep_key, 'final33-prepare-result.json', prep_root, public_pin=prep_public)
++    need(prepared.get('nativeResultSha256') == RESUME50_PREPARE_NATIVE, 'FINAL33_RESUME50_ARCHIVED_PREPARE_NATIVE_DIFFERS')
++    prep, _ = native_result(prep_key, prepared, RESUME50_PREPARE_SERVICE)
++    binding = original_prepared_binding(prepared, prep)
++    original_execution = prep.get('executionBinding') or {}
++    need(prepared.get('preparedBinding') == binding and prepared.get('executionBinding') == original_execution
++         and HASH.fullmatch(original_execution.get('preparedBindingSha256', '')),
++         'FINAL33_RESUME50_ARCHIVED_PREPARE_BINDINGS_DIFFERS')
++    update = hall165_catalog_predecessor()
++    catalog = update['batchedCatalog']
++    expected = dict(binding, currentServiceSha256=service['proofSha256'], postmasterStart=service['postmasterStart'],
++                    batchedSourceSetSha256=catalog['sourceSetSha256'], batchedCatalogSpecSha256=catalog['catalogSpecSha256'],
++                    batchedModelSha256=catalog['modelSha256'], preparedBindingSha256=original_execution['preparedBindingSha256'])
++
++    terminal(RESUME50_WRITER, pins['writerTerminal'])
++    writer = public_result(RESUME50_WRITER, 'final33-writer-result.json', pins['writerResult'])
++    native, authority = native_result(RESUME50_WRITER, writer, service)
++    need(writer.get('state') == native.get('state') == 'COMPLETED'
++         and writer.get('verification') == native.get('verification') == {'state': 'VERIFIED'}
++         and writer.get('readbackConnectionCleanup') == native.get('readbackConnectionCleanup') == 'CLOSED'
++         and native.get('readbackLocalCleanup') is None
++         and authority.get('prepareTerminalSha256') == prep_end and authority.get('prepareResultSha256') == prep_root
++         and authority.get('originalPreparedBinding') == binding and authority.get('originalExecutionBinding') == original_execution
++         and authority.get('expectedBinding') == native.get('executionBinding') == expected,
++         'FINAL33_ORIGINAL_WRITER_AND_INDEPENDENT_READBACK_REQUIRED')
++
++    terminal(RESUME50_STOP, pins['stopTerminal'])
++    stop = public_result(RESUME50_STOP, 'normal05-preserve-stop-result.json', pins['stopResult'])
++    stopped_writer = (stop.get('currentBatchTerminals') or {}).get(RESUME50_WRITER) or {}
++    cleanup_pin = stopped_writer.get('writerCleanupSha256', '')
++    need(stop.get('status') == 'NORMAL05_PRESERVATION_ONLY_CLEAN_STOP_CONFIRMED' and stop.get('service') == service
++         and stop.get('pgStopped') is stop.get('holdRetained') is True and stop.get('cleanupSha256') == pins['stopCleanup']
++         and stopped_writer.get('state') == 'COMPLETED' and stopped_writer.get('phaseStarted') is True
++         and stopped_writer.get('terminalSha256') == pins['writerTerminal']
++         and type(cleanup_pin) is str and HASH.fullmatch(cleanup_pin),
++         'FINAL33_STOP_THROUGH_ORIGINAL_OPERATIONS_REQUIRED')
++    writer_cleanup = JOBS / RESUME50_WRITER / 'results/final33-writer-child-cleanup.json'
++    need(json.loads(read(writer_cleanup, cleanup_pin)) == writer.get('processCleanup'),
++         'FINAL33_RESUME50_WRITER_STOP_CLEANUP_DIFFERS')
++    original_cleanup(start_key, pins['stopCleanup'])
++
++    terminal(RESUME50_RESTORE, pins['restoreTerminal'])
++    restored = public_result(RESUME50_RESTORE, 'maintenance-auth-result.json', pins['restoreResult'])
++    closed = public_result(RESUME50_RESTORE, 'maintenance-auth-cleanup.json', None)
++    restored_roles = json.loads(read(STATE / 'native-services/hall165-resume-auth-20261119-05/restored.json'))
++    restore_authority = json.loads(read(JOBS / RESUME50_RESTORE / 'bundle/host-authorization.json'))
++    need(restore_authority.get('requestKey') == RESUME50_RESTORE and restore_authority.get('phase') == 'restore'
++         and restore_authority.get('service') == service and restore_authority.get('stopRequestKey') == RESUME50_STOP
++         and (restore_authority.get('stopTerminalSha256'), restore_authority.get('stopResultSha256'),
++              restore_authority.get('stopCleanupSha256')) == (pins['stopTerminal'], pins['stopResult'], pins['stopCleanup'])
++         and restored.get('phase') == 'restore' and restored.get('status') == 'FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED'
++         and restored.get('cleanup') == closed and restored.get('result') == restored_roles
++         and restored_roles.get('requestKey') == RESUME50_RESTORE
++         and restored_roles.get('status') == 'EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK'
++         and restored_roles.get('exactOriginalVerifierAndExpiryVerifiedPrivately') is restored_roles.get('databaseStillStopped') is True
++         and all(closed.get(k) is True for k in ('confirmed', 'ownContainerStopped', 'ownedPidAbsent', 'sourceDataPreserved')),
++         'FINAL33_ACTUAL_ORIGINAL_AUTH_RESTORE_REQUIRED')
++    return stopped_source(evidence, proof, binding, update, pins['stopResult'])
++
+ 
+ def inspect_original_stopped(facts):
+-    # Reuse the same source33 stop module and its exact mount/birth inspection.
+-    path = JOBS / STOP / 'bundle/normal05_retained_stop.py'
+-    read(path, '1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb')
++    # Reuse the exact stop generation's mount and carrier inspection.
++    if facts['service']['serviceKey'] == RESUME50_START[0]:
++        stop_key, support_pin = RESUME50_STOP, RESUME50_STOP_SUPPORT
++    else:
++        stop_key, support_pin = STOP, '1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb'
++    path = JOBS / stop_key / 'bundle/normal05_retained_stop.py'
++    read(path, support_pin)
+     stop = runpy.run_path(str(path))
+     stop['inspect_birth'](facts['proof']['sharedPostgresNamespace']['container'], False)
+     need(stop['data_identity'](DATA) == DATA_IDENTITY and not os.path.lexists(DATA / 'postmaster.pid'), 'FINAL33_ORIGINAL_DATA_STOPPED_IDENTITY_REQUIRED')

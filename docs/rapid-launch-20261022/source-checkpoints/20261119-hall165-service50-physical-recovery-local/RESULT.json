@@ -1,0 +1,45 @@
+{
+  "state": "HALL165_SERVICE50_PHYSICAL_RECOVERY_SOURCE_ADAPTERS_LOCAL_REVIEWED",
+  "scope": [
+    "historical PREPARE05 from service 39",
+    "live Writer service 50 and same-generation Stop/Restore receipts",
+    "clone plan mount and reuse of verified prepared binding"
+  ],
+  "sourceHashes": {
+    "committedSourcePatch": "59065bb557e97d35bc0603b94b837569e4357d83174fdac50c1502729e1c95ec",
+    "committedSourceHandoff": "dcfa74fdc657d1185514de4992ad5958333b44d78778cb86209300832dc120dc",
+    "clonePreparedBindingPatch": "c344216644c3954d14ebb3b9154163d42b6757994d5656f35ab251aab776530b",
+    "clonePreparedBindingHandoff": "2764a812b5e22971144ebce7a52b546b48bb3ad5d72126a023904c3af84ee2bb"
+  },
+  "patches": [
+    {
+      "target": "bundle/final33_receipts.py",
+      "parentAfterHall165CatalogSha256": "d048e27e742aa1142642fc08e9f6c7bef8b3220c149fdbae91236ca9efeb0596",
+      "outputSha256": "2fbcb5023a9476cdef3114ce931e9ff14710f306c9990cfe09da0b0e1accbac2"
+    },
+    {
+      "target": "bundle/clone_outer.py",
+      "parentSha256": "b36348d00af1043ebdcf2d3269f6990274bfad5fc31af4fd078a968489c45aa9",
+      "outputSha256": "b4d4d5bbed6289773e0a87f175dd23f657d7c10dd86f9ec336ac4afa3b839069"
+    }
+  ],
+  "verification": {
+    "maintainerIsolatedCases": 19,
+    "independentVerifierSyntheticClosureCases": 1,
+    "independentVerifierRejectedMismatches": 8,
+    "cloneCompileExitCode": 0,
+    "bothArchivePathGenerationsMatch": true,
+    "unknownServiceRejected": true,
+    "otherPrivateMountsUnchanged": true,
+    "actualDatabaseConnections": 0,
+    "actualServerActions": 0,
+    "actualRestoreExecuted": false
+  },
+  "requirementsRemaining": [
+    "actual successful Writer and independent native and business reconciliation",
+    "same-generation Stop and verified original role restoration",
+    "actual cold copy, APP READY and protected credential lineage",
+    "actual independent physical restore and closed runtime"
+  ],
+  "relatedCheckpoint": "0d2a293a2edc7226710be92048129369bdc5f5d8"
+}
