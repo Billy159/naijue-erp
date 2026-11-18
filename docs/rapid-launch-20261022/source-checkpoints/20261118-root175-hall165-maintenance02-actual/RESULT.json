@@ -1,0 +1,89 @@
+{
+  "state": "ACTUAL_HALL165_CATALOG_COMMITTED_AND_READ_BACK_STOPPED_AUTH_RESTORED",
+  "actualRegistryCount": 175,
+  "actualDispatcherSha256": "cbda5ef759bd165f992162ffcc2fa54c7da195d0123e5a7680185041c8c1f3da",
+  "old170AndThreeGuardsPreserved": true,
+  "actualBeforeCatalogRoutines": 161,
+  "actualHall165CatalogRoutines": 165,
+  "actualHall165BatchedCatalog": {
+    "catalogSpecSha256": "cc0c72ae6f31818cadf664bbe8d08e67fbb450c76ba3bedb2da2a3d2e4b9cda6",
+    "modelSha256": "b9b67be2a68dcd35d445b7fe45838fdaade66cf877d3fdc5940eee880508c3d8",
+    "sourceSetSha256": "e5458806257844813145f08c581726e3da06cb2366d37f77b70b9b2365e65aab"
+  },
+  "commitAcknowledged": true,
+  "postCommitIndependentReadback": true,
+  "upgradeConnectionCleanup": "CLOSED",
+  "actualUpgradeSqlInnerSha256": "5f6b44183d2aa8bb27e1e398da0d0ac24731358f7bf0aa74ad750d33160a4532",
+  "actualUpgradeResultRootSha256": "a17d5f14ef8aa1af2fa3f85249c1251b15a6c646e721860dc85b8ba05de37d1e",
+  "phaseTerminals": {
+    "apply": {
+      "requestKey": "t45-r3-hall165-auth-apply-20261118-02",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "sha256": "6ea4a015b66d86080e54e0506260c13a9f68d62e6a3c589d5cab4fa96f86f25d",
+      "finishedAtUTC": "2026-11-18T15:14:42.927950+00:00"
+    },
+    "start": {
+      "requestKey": "t45-first-r3-native-service-start-20261118-hall165-02",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "sha256": "bbf8b270e1beddc9c1183c17e2226e6a3e4e172d49b4e06d7b524430fd938979",
+      "finishedAtUTC": "2026-11-18T15:18:58.931816+00:00"
+    },
+    "upgrade": {
+      "requestKey": "t45-r3-hall165-catalog-upgrade-20261118-02",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "sha256": "5e761937b13762b38b5c4185fce3b050c03a59a925cac2aeb5dba1c6e11661e1",
+      "finishedAtUTC": "2026-11-18T15:23:57.221354+00:00"
+    },
+    "stop": {
+      "requestKey": "t45-r3-hall165-preserve-stop-20261118-02",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "sha256": "36859f9fc6d314f0197fb2835e212b49be0186296de381b4b8960f0a788d4328",
+      "finishedAtUTC": "2026-11-18T15:26:22.185828+00:00"
+    },
+    "restore": {
+      "requestKey": "t45-r3-hall165-auth-restore-20261118-02",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "sha256": "d44adb3abe9fdf1f18129999e6e200deff7fd6fab56520d347a687f61be5fcf8",
+      "finishedAtUTC": "2026-11-18T15:29:40.263621+00:00"
+    }
+  },
+  "actualRestoreOriginalVerifierAndExpiryPrivatelyVerified": true,
+  "restoredBeforeHardDeadline": true,
+  "actualRestoreResultRootSha256": "dff4a13f571147752bc1911f5796d7adcd6e06a1481785df755162be49116694",
+  "guardianCleanupSha256": "9cee3f727ffc7af8854b5fbb18c62120cdc369b3d9ad2f63fadbcb55610975ef",
+  "postRestoreReadbackUTC": "2026-11-18T15:32:03.373560+00:00",
+  "originalAndRestoreContainersStopped": true,
+  "originalPGDATAPidAndPortAbsent": true,
+  "oldHoldAndFailedKeysPreserved": true,
+  "oldRecoverySnapshotsPreserved": true,
+  "postRestoreDatabaseConnections": 0,
+  "postRestoreMutations": 0,
+  "businessImportDuringMaintenance": false,
+  "originalPlanDurableGroupsUnchangedByMaintenance": 151,
+  "originalPlanDurableReceiptsUnchangedByMaintenance": 467,
+  "originalPlanTotalGroups": 1061,
+  "originalPlanTotalReceipts": 44911,
+  "firstGroupToResumeOrdinal": 151,
+  "rootAvailableBytesAtStoppedPreflight": 267610734592,
+  "rootReserveBytes": 30064771072,
+  "writerResumed": false,
+  "businessCutover": false,
+  "wholeBatchReconciliationBackupRecoveryAndViewOnlyReleasePending": true,
+  "evidenceSha256": {
+    "actualRoot175CAS": "478e611b4ec228f50d56bc4b9874be22451c3b8fc682309e2b66545a8260b457",
+    "actualApplyReadback": "bfda398a4ca0808997f4c94c24d1928692f297b07384ca4c3f598c1e70e1374d",
+    "actualGeneration02Custody": "666a19a7d6bba5c52148af0c58b721235f92808175a463b7f6ab32880063ab8e",
+    "actualStartProtectedReadback": "4b40676286abf8aa9281e62f9ebe33e543d215711bd809e5f6976aa8c05641d5",
+    "actualUpgradeReadback": "20a69b508f4df2b84fade0df44e767e2eefed2afb61dac6eb2e09944cc5dbb6c",
+    "actualStopClosedReadback": "d4cbbe060c9dd349039be5f263efeb0bfa01a2a7c9f60c6815a9681b2ab256c8",
+    "actualRestoreReadback": "c003fbe4cf274e51218ec42f2bb0ae52ba7d82c2a6559cd5aa755959f8ce5de6",
+    "actualPostRestoreCleanCustody": "755986e4777986d8d805b53737de932b651d5383eb7d2714f601aeaa8656a079",
+    "actualStoppedFresh": "36590c32a4d440def9fb1e6f96cddfc0a5f7fb7a668642c6e5c8cbb7717cdcec",
+    "t45ActualSummary": "9b83d36ac700605100a1fc1b1dae18b30c9f3fdae65bdad39faa65aec8e4ed25"
+  }
+}
