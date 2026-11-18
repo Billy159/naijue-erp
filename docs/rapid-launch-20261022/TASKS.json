@@ -52678,11 +52678,11 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-18T01:30:17.176163+00:00",
-  "state": "ROOT146_ACTUAL_MAPPED_SOURCE02_READY_NORMAL46_LOCAL_INTEGRATION",
+  "asOf": "2026-11-18T06:09:50.771604+00:00",
+  "state": "ROOT162_AFTER48_DURABLE_READONLY_CONFIRMED_NO_NEW_GROUPS_PG_STOPPED",
   "realWriterSubmitted": true,
   "realBusinessRowsWritten": null,
-  "formalR3": "SQL42_COMMITTED_AUTH45_RESTORED_PG_STOPPED_ORIGINAL_ROOT_PARTIALLY_COMMITTED",
+  "formalR3": "SQL42_COMMITTED_AUTH48_RESTORED_PG_STOPPED_151_GROUPS_467_RECEIPTS",
   "data": {
     "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
     "tables": 26,
@@ -52707,7 +52707,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Root146 is registered and the distinct Root09 target02 source-only install completed on the unique original key. Actual root/installed marker same digest, 392 files, 3 changed and 389 inherited. UID/GID61035 empty supplementary groups passed all 391 mapped code open-only proofs. Private baseline and failed target01 directory preserved. Verified PG stopped, no original port/PID/units and no database write, role change, or import. Current durable business state remains PERSISTED_PARTIAL with 151 committed groups and 467 receipts. T45 and D1 are preparing normal46 using this actual marker, original SQLite and original business identifiers with explicit RESUME. No normal46 live clock or role/writer action yet. Final same-cutoff exports still needed after T+ stop.",
+  "next": "Use the After48 durable readback as the original-plan resume basis. Local timing review and representative synthetic performance preparation are in progress. No further writer window is issued. Complete actual import, reconciliation, backup and independent recovery before APP289 view-only release.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -55331,6 +55331,7 @@
   "r3ReadOnlyPreviewSourceCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-app289-view-only-static-binding/RESULT.json",
   "r3ReadOnlyPreviewDecision": "docs/rapid-launch-20261022/source-checkpoints/20261118-r3-read-only-preview-decision/RESULT.json",
   "root146AdmissionCandidateCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source-admission-local-candidate/CHECKPOINT.json",
+  "after48ActualDurableCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root162-after48-durable-readonly/RESULT.json",
   "normal48ActualCloseoutCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-normal48-writer-timeout-and-restoration/RESULT.json",
   "normal48SourceRepairScope": "docs/rapid-launch-20261022/source-checkpoints/20261118-normal47-describe-failure-restored/NEXT-SOURCE-SCOPE.json",
   "normal47ActualCloseoutCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-normal47-describe-failure-restored/RESULT.json",
