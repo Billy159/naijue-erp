@@ -1,0 +1,56 @@
+{
+  "state": "LOCAL_FIRST_GROUP_GUARD_VERIFIED_PRODUCTION_PAIR_PENDING",
+  "parentLiveDispatcherSha256": "cbda5ef759bd165f992162ffcc2fa54c7da195d0123e5a7680185041c8c1f3da",
+  "parentLiveRegistryCount": 175,
+  "installedFunctions": 165,
+  "liveMaintenanceActualSha256": "93b6827328997a4f3c7bc1c3ef8eac6fd56c8d58ae6cbf13e5793c33a735851a",
+  "protectedOperationMembersUnchanged": 408,
+  "originalNativeBusinessRequestKey": "t45-r3-batched-real-execute-20261115-01",
+  "originalPreparationJobKey": "t45-r3-final33-plan-prepare-20261116-05",
+  "originalPlan": {
+    "groups": 1061,
+    "stepsIncludingCore": 44911
+  },
+  "lastActualDurablePrefix": {
+    "groups": 151,
+    "receipts": 467,
+    "lastStepOrdinal": 466,
+    "after48ActualSha256": "bcbaf622fe59b4ada3b2599d9888a89955b7274d2f614d0803b85f4857f18f38"
+  },
+  "requiredFirstIncomplete": {
+    "ordinal": 151,
+    "firstStepOrdinal": 467,
+    "lastStepOrdinal": 581,
+    "descriptorSha256": "15cb5fefd0167b3ceb78f2cdf1a38d44281224b659e947d0a83b2397e251a988",
+    "state": "ABSENT"
+  },
+  "localInputs": {
+    "resumeScopeSha256": "238f24ca27d8350d2c3e6d731c32d44a7095313827e6e067caa59f483237da21",
+    "consumerScopePairSha256": "5d03ecb64b700e3f7d995cd093e0fce441f61f8e53980db7577e609ffb80e850",
+    "fixedPreparationSha256": "ee662dc9f6c402e3208153881370468e8b8dfa27fe2341b1c801299a5af50a77",
+    "fixedPhaseMemberSlots": 44,
+    "carrierPatchSha256": "89da4575b68c35ed15c81b2324a89bc9a45488a213c37973331e703f469ab33d",
+    "baselineRunnerSha256": "7107758200cfeec55d1da8e359fcce7b3103fcbff64f14f59eccc8416ccd67b3",
+    "baselineHostSha256": "b3391ef7b7e9c97474fa2bbe275bacf14f0b4735d97e630edcf3df60cf16b1ad"
+  },
+  "authorVerification": {
+    "sha256": "89c7459b18e6a9ae8daab2e70aae02d2417b66727d1bfff8befb2da0d1154996",
+    "command": "node --test --test-reporter=spec verify_local.mjs",
+    "nodeVersion": "v25.8.2",
+    "exitCode": 0,
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "Original Hall165 executor and SQL adapter with simulated responses. Case coverage includes the same-transaction first APPLY, zero APPLY on mismatch, and no progression on missing APPLY or COMMIT acknowledgment."
+  },
+  "runtimeQualification": {
+    "target": "Linux Node v24.21.0 and original PostgreSQL 17.11",
+    "independentReviewPending": true,
+    "finalPhaseConsumerPairPending": true,
+    "newServiceObserved": false,
+    "postgresqlExecuted": false,
+    "outerJobRegistered": false,
+    "writerSubmitted": false,
+    "businessWrites": 0
+  }
+}
