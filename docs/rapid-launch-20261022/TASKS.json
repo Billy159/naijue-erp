@@ -55331,6 +55331,7 @@
   "r3ReadOnlyPreviewSourceCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-app289-view-only-static-binding/RESULT.json",
   "r3ReadOnlyPreviewDecision": "docs/rapid-launch-20261022/source-checkpoints/20261118-r3-read-only-preview-decision/RESULT.json",
   "root146AdmissionCandidateCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source-admission-local-candidate/CHECKPOINT.json",
+  "sql42SyntheticHistoryPerformanceCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-sql42-synthetic-history-performance/RESULT.json",
   "after48ActualDurableCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root162-after48-durable-readonly/RESULT.json",
   "normal48ActualCloseoutCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-normal48-writer-timeout-and-restoration/RESULT.json",
   "normal48SourceRepairScope": "docs/rapid-launch-20261022/source-checkpoints/20261118-normal47-describe-failure-restored/NEXT-SOURCE-SCOPE.json",

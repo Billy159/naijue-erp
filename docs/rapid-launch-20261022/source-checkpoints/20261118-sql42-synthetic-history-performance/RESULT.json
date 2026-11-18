@@ -1,0 +1,56 @@
+{
+  "state": "SYNTHETIC_SQL42_HISTORY_SLOWDOWN_REPRODUCED_SOURCE_OPTIMIZATION_IN_PROGRESS",
+  "resultSha256": {
+    "small": "6103826a54dfdedfea92215e57266a2a23f912707830662e1fb4da888ee98274",
+    "large": "d251b0a2b0266f4377f20906e9815a0c721ed72f81a7a783450435dd9f6a05bf",
+    "report": "7284fc7e0a96022c65cb236a9a35c1a494b6c1ae63d7b3777a9bb908742cc857"
+  },
+  "appliedFormalChanges": false,
+  "productionThroughputMeasured": false,
+  "newProductionWriterIssued": false,
+  "localPostgres": "17.11",
+  "syntheticRows": 247,
+  "commonHistoryRows": 130,
+  "commonHistorySteps": 37,
+  "largeHistoryGroupCommitted": false,
+  "largeFinalizeExecuted": false,
+  "sameVersionCases": {
+    "small": {
+      "initializerBytes": 96211,
+      "hallApprovalRecords": 34,
+      "historyApplyAcknowledgements": 37,
+      "historyApplyElapsedMs": 1156.956,
+      "fiveRowStepServerMs": 29.759,
+      "fiveRowStepControlledSendAckMs": 33.084,
+      "fiveRowStepNestedApprovalMapMs": 0.263,
+      "fiveRowStepNestedSecondInitAuditMs": 0.03,
+      "fiveRowStepTypedInsertInclusiveMs": 5.943,
+      "committedGroupAcknowledgements": 6,
+      "failedGroup": 6,
+      "failureStage": "APPLY",
+      "sqlstate": "23514",
+      "scratchPeakBytes": 134696960,
+      "cleanStoppedAndScratchRemoved": true
+    },
+    "large": {
+      "initializerBytes": 51977199,
+      "hallApprovalRecords": 34,
+      "historyApplyAcknowledgements": 37,
+      "historyApplyElapsedMs": 179835.11,
+      "fiveRowStepServerMs": 5274.645,
+      "fiveRowStepControlledSendAckMs": 5267.987,
+      "fiveRowStepNestedApprovalMapMs": 24.718,
+      "fiveRowStepNestedSecondInitAuditMs": 6.991,
+      "fiveRowStepTypedInsertInclusiveMs": 1522.272,
+      "committedGroupAcknowledgements": 5,
+      "failedGroup": 5,
+      "failureStage": "COMPLETE",
+      "sqlstate": "57014",
+      "scratchPeakBytes": 236650496,
+      "cleanStoppedAndScratchRemoved": true
+    }
+  },
+  "timingSourceSha256": "eb9d1a15be84059a88c6a447cd03f5c7c05546c2295e6b1704f975264be5fe3c",
+  "timingReviewSha256": "1774f5b4a0017c9ed83190205fa136295b74393921d639a00b0b952ab908096e",
+  "nextSourceScope": "Reuse the same INIT projections within each validation call. Preserve strict identity, hash, scope, role, constraint and transaction checks."
+}
