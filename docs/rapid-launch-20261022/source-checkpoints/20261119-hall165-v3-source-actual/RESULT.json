@@ -1,0 +1,55 @@
+{
+  "state": "HALL165_WRITER_TIMING_SOURCE_MATERIALIZED_AND_READ_BACK",
+  "registration": {
+    "newDispatcherSha256": "ab8d6eba8a18810d9bcf08e5fea1dfdd19510bb0e2429b099116255b765da28f",
+    "priorKeysPreserved": 202,
+    "newKeys": 1,
+    "policySha256": "6dae5b0137e1f7bc7de6aefc8c6b8d756c6894b7f2db70331a0bd684fc227164",
+    "independentReadbackSha256": "b5357b92360eb101a287555eca3baab9e4cd2c131f0621c0c97a2a1febb7f294",
+    "replayed": false
+  },
+  "source": {
+    "state": "MATCHED_SOURCE_TERMINAL_AND_MARKER",
+    "exitCode": 0,
+    "status": "COMPLETED",
+    "readBackAtUTC": "2026-11-18T23:05:28.528682+00:00",
+    "files": 408,
+    "inherited": 407,
+    "changed": 1,
+    "revisedLeaf": "tools/unified-import/whole-host-session.mjs",
+    "receivedReviewSha256": "8c225e728767568fea60216fa18d87bf9988448edb76c4f8a0b11239e3af2488",
+    "terminalPairSha256": "6c2090d430783aacd016e03778a8ac1d11ca3b8061832dcb7562d3ac6e245fd9",
+    "physicalSourceSetSha256": "194b7d9656c8b51a317d3ef28fc07a4abae61af9b87a633a8377e7c17b11d8d1",
+    "runtimeSourceSetSha256": "484726bb524331172eb0ef62be2631d04824cd19de181044a1cb009b286cfe85",
+    "rootMarkerSha256": "81cea1e5574a19ed092c9ce70d6c95c5a26878668013d328fb8f8436577a6cfa",
+    "publicResultSha256": "165efb415a6f2987222420462c91c45fa894a7e34ea6ff2c07005cb19cf5bd31",
+    "rootAndMarkerEqual": true,
+    "originalSourceAndStoppedDataPreserved": true,
+    "priorSourceFilesModified": false
+  },
+  "priorPublishRefusal": {
+    "cause": "incorrect stat9 gid and file mode column selection",
+    "publicationInitiallyAbsent": true,
+    "recoveryUsedInMemoryCheckedCorrection": true,
+    "originalStagedFileUnchanged": true,
+    "successfulStartCount": 1
+  },
+  "stageValidation": {
+    "localSyntheticLoaderEvidenceSha256": "5132d90529833e4cb7099c527e4acd5937c40458756cf83e380fff49103ccd48",
+    "sourceOnlyProductionWork": true,
+    "productionDatabaseConnections": 0,
+    "productionDatabaseWrites": 0,
+    "productionRoleChanges": 0,
+    "productionWriterTested": false
+  },
+  "nextPlanBoundaries": {
+    "durableGroupCount": 154,
+    "durableStepCount": 821,
+    "nextGroupZeroBased": 154,
+    "nextFirstStepZeroBased": 821,
+    "nextLastStepZeroBased": 944,
+    "requiresNativeLockValidation": true
+  },
+  "bookingOpen": false,
+  "priorPerformanceEvidenceCommit": "8ee1cdf1b75eadd43bebfc6cc5a94c9ef1e58109"
+}
