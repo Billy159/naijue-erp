@@ -1,0 +1,22 @@
+{
+  "state": "AUTHORIZE_SOURCE_FOR_ONE_AFTER48_DURABLE_READONLY_OBSERVATION",
+  "actual48TimeOutAndClosureSha256": "ef1bc18d6c3c0d7d7795bc53f3bd5a3f82b792d50f64cbebd5771f61095960d2",
+  "actualRootBefore": 161,
+  "candidateRootAfter": 162,
+  "jobId": "t45-r3-original-businessroot-durable-after48-readonly-20261118-01",
+  "maximumWindowSeconds": 900,
+  "maximumJobSeconds": 300,
+  "insideSeconds": 210,
+  "cleanupSeconds": 90,
+  "minimumRootReserveBytes": 30064771072,
+  "existingMechanism": "Reuse the earlier actually successful fixed PostgreSQL 17.11 single-user metadata observation at stopped original PGDATA, exact data identity uid61035, one REPEATABLE READ READ ONLY SELECT then rollback, no network. Physical control/WAL startup writes may occur. No role change, schema, business mutation or replay.",
+  "queryScope": "Preserve original root/business IDs and fixed saved plan. Count durable committed groups and receipts, root/batch boundaries, identity/ordinal/namespace/audit conflicts. Treat legal final ordinal 44910 as in bounds (44911 actual including CORE); retain 44910 non-CORE logical binding. No table bodies, SQL text or project business data in output.",
+  "optionalSeparateDiagnostic": "Prepare only safe original SQLite metadata projection for ordinal 562 and group 151. Method and fixed route class/count and identity only, existing plan immutable stat9, no row/parameter/identifier bodies. Its reported scope does not authorize actual read before exact separate operational choice.",
+  "authorization": "Local source work and necessary exact delta review only until Main evidence-bounded current read-only issuance. Preserve current stopped final and former role authentication.",
+  "owners": {
+    "T45": "exact readonly observation source and sole server owner",
+    "D1": "narrow registration and local confirmed execution-cost analysis",
+    "QB": "exact delta review of frozen pair"
+  },
+  "runtimeIssued": false
+}

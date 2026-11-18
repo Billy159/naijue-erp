@@ -55331,6 +55331,7 @@
   "r3ReadOnlyPreviewSourceCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-app289-view-only-static-binding/RESULT.json",
   "r3ReadOnlyPreviewDecision": "docs/rapid-launch-20261022/source-checkpoints/20261118-r3-read-only-preview-decision/RESULT.json",
   "root146AdmissionCandidateCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source-admission-local-candidate/CHECKPOINT.json",
+  "normal48ActualCloseoutCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-normal48-writer-timeout-and-restoration/RESULT.json",
   "normal48SourceRepairScope": "docs/rapid-launch-20261022/source-checkpoints/20261118-normal47-describe-failure-restored/NEXT-SOURCE-SCOPE.json",
   "normal47ActualCloseoutCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-normal47-describe-failure-restored/RESULT.json",
   "normal46ActualCloseoutCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-normal46-early-start-failure-restored/RESULT.json",
