@@ -1,0 +1,23 @@
+{
+  "state": "LOCAL_INIT_PROJECTION_REUSE_HELPED_HISTORY_APPLY_COMPLETE_STILL_TIMED_OUT",
+  "sourcePatchSha256": "ed6fc0781eec31bcdef18c38fc137725eb447c8086ea07e69a7c8eb40a7b38df",
+  "independentSourceReviewSha256": "ed5cc7cfc46aad8383b6452a78f974c9cd62f38932daa7cc338ef256cfff95a9",
+  "resultSha256": "5d120531bca72f5fdcd5f530bb30fc61340ae3a7255d66be7df22c87c3fd2aad",
+  "reportSha256": "b76e042fbb8722b8fe7d084bc6f11f5dc0dc45af4125750adc20090c8d548e52",
+  "sameLargeSyntheticInitBytes": 51977199,
+  "historyStepsAcknowledged": 37,
+  "baselineHistoryApplyToAckMs": 179835.11,
+  "candidateHistoryApplyToAckMs": 159189.972,
+  "baselineFiveRowStepPGMs": 5274.645,
+  "candidateFiveRowStepPGMs": 4655.575,
+  "candidateScopeFunctionCalls": 2405,
+  "candidateScopeFunctionSelfMs": 188525.857,
+  "candidateScopeWriterTotalMs": 202455.967,
+  "candidateScopeFunctionTimingCoversWholePrefix": true,
+  "candidateCompleteSqlState": "57014",
+  "statementTimeoutSeconds": 40,
+  "candidateHistoryCommit": "ROLLED_BACK_ABSENT_ON_INDEPENDENT_READBACK",
+  "candidateFinalizeExecuted": false,
+  "pgCleanStoppedAndPrivateScratchRemoved": true,
+  "formalR3Touched": false
+}
