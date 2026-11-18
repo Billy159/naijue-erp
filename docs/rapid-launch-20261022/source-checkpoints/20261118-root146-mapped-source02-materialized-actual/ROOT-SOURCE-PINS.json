@@ -1,0 +1,58 @@
+{
+  "candidatePinsSha256": "61f6959460655bb7e278f3faec78afc8fe7a3bfd0ef571753e1390343ede8251",
+  "consumerReviewSha256": "ad873595bf9b42c0f5d38f635f3f05f9c3dd35b4ada3acd6a8e182b8e345f30e",
+  "consumerSourcePinsSha256": "fa8320172a2430aa7d579df91072558de20d884f7cba0123e261b3ce89bfed68",
+  "files": {
+    "CONSUMER-BINDING.json": {
+      "bytes": 6200,
+      "sha256": "f7a1bc17f2df9d87cb7290ba894d976736ea28383c2803c21ca7c21d2c7ad126"
+    },
+    "CONSUMER-REVIEW-REF.json": {
+      "bytes": 342,
+      "sha256": "a741d3c9f376ae8900f33551d544de2142810b65dc2fab54538a9820b022f974"
+    },
+    "HISTORY.json": {
+      "bytes": 3338,
+      "sha256": "473aba4020bc827644e02bb17db211ea4916ac1a7920a12cc89ba6d88560915d"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 453,
+      "sha256": "88437650296636594ab400dd78fa10dcf1e6b8abd9bb684d00ec314aca40c57f"
+    },
+    "SUCCESSOR-SCOPE.CANDIDATE.json": {
+      "bytes": 1627,
+      "sha256": "8833d6a0fecc14a5c80998736ce3ec0064f35496024e459774f76f0f3704169c"
+    },
+    "admin_exec.MAPPED-UNREGISTERED.py": {
+      "bytes": 66961,
+      "sha256": "57ac4a0ecfbc2e551819ecedb226af0a1a08064be29aa6700e6364b82666e441"
+    },
+    "issue_registration.py": {
+      "bytes": 5584,
+      "sha256": "7a019c938a9b59cf42053ab63e05ede83a7b6468849a1c52885e9255c705ee2a"
+    },
+    "prepare_channel.py": {
+      "bytes": 7337,
+      "sha256": "3c524bb6ef7e399f45152a7fb678865d9e5cf1d43cb2e6065c1286c8989797c8"
+    },
+    "r3_root09_after45_mapped_source_admission.py": {
+      "bytes": 12706,
+      "sha256": "d6faef3195a4e546447365ba9682ffb11c59a2934b1a216324085a7659ae1fbd"
+    },
+    "read_registration_basis.py": {
+      "bytes": 1406,
+      "sha256": "80a87ee910006d02b982ee2cecf68f0b8c38e7060f5096e3a619bfa4646106cb"
+    },
+    "register_cas.py": {
+      "bytes": 42920,
+      "sha256": "730ed5431838f001eb4d57341aa4e334252457a7b2e458298b7a7969fe6fbcae"
+    },
+    "root09_cli.py": {
+      "bytes": 5708,
+      "sha256": "c4d328b815cb742f00d1108bed2b75685207aca1b099e7265c0dc4c8e43cae90"
+    }
+  },
+  "jointReviewPending": true,
+  "serverActions": 0,
+  "state": "ROOT09_MAPPED_SOURCE_READY_UNISSUED_NOT_REGISTERED"
+}

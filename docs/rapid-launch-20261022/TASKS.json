@@ -51897,9 +51897,9 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-18T00:16:08.789848+00:00",
+  "updatedAt": "2026-11-18T01:30:17.176163+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
-  "currentTarget": "ROOT145_ACTUAL_ROOT146_LOCAL_ADMISSION_READY_FOR_SCOPE_REVIEW",
+  "currentTarget": "ROOT146_MAPPED_SOURCE02_READY_NORMAL46_EXPLICIT_RESUME_LOCAL",
   "owners": {
     "T45": "Sole server owner; diagnostic host/collector and bounded two-artifact staging install/restore source",
     "D1": "Native diagnostic runner source accepted; explicit auxiliary outer/native scope continuation and root source",
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Root146 admission and six-member mapped source bundle are local candidates pinned to observed Root145 and failed01 evidence. Local syntax/dispatcher delta, package identity, closed-basis checks under modeled filesystem and subprocess, and refusal without independent review passed. Actual registry remains Root145. The new root package has no frozen SOURCE-PINS, review pin, or issued authority. Next independent source delta review and T45 real paired fresh, then independent source materialization only. Original authentication restored, last verified PG stopped, business partial 151 groups / 467 receipts, initial batch RESUME and cutover incremental data still pending. Final exports after T+ stop are still needed.",
+  "next": "Root146 is registered and the distinct Root09 target02 source-only install completed on the unique original key. Actual root/installed marker same digest, 392 files, 3 changed and 389 inherited. UID/GID61035 empty supplementary groups passed all 391 mapped code open-only proofs. Private baseline and failed target01 directory preserved. Verified PG stopped, no original port/PID/units and no database write, role change, or import. Current durable business state remains PERSISTED_PARTIAL with 151 committed groups and 467 receipts. T45 and D1 are preparing normal46 using this actual marker, original SQLite and original business identifiers with explicit RESUME. No normal46 live clock or role/writer action yet. Final same-cutoff exports still needed after T+ stop.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows.",
   "supersededCurrentTargetBeforeAuth45SummaryRepair": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "newProjectChatModel": "gpt-6.2-sol",
@@ -52678,8 +52678,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-18T00:16:08.789848+00:00",
-  "state": "ROOT146_ADMISSION_LOCAL_CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+  "asOf": "2026-11-18T01:30:17.176163+00:00",
+  "state": "ROOT146_ACTUAL_MAPPED_SOURCE02_READY_NORMAL46_LOCAL_INTEGRATION",
   "realWriterSubmitted": true,
   "realBusinessRowsWritten": null,
   "formalR3": "SQL42_COMMITTED_AUTH45_RESTORED_PG_STOPPED_ORIGINAL_ROOT_PARTIALLY_COMMITTED",
@@ -52707,7 +52707,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Root146 admission and six-member mapped source bundle are local candidates pinned to observed Root145 and failed01 evidence. Local syntax/dispatcher delta, package identity, closed-basis checks under modeled filesystem and subprocess, and refusal without independent review passed. Actual registry remains Root145. The new root package has no frozen SOURCE-PINS, review pin, or issued authority. Next independent source delta review and T45 real paired fresh, then independent source materialization only. Original authentication restored, last verified PG stopped, business partial 151 groups / 467 receipts, initial batch RESUME and cutover incremental data still pending. Final exports after T+ stop are still needed.",
+  "next": "Root146 is registered and the distinct Root09 target02 source-only install completed on the unique original key. Actual root/installed marker same digest, 392 files, 3 changed and 389 inherited. UID/GID61035 empty supplementary groups passed all 391 mapped code open-only proofs. Private baseline and failed target01 directory preserved. Verified PG stopped, no original port/PID/units and no database write, role change, or import. Current durable business state remains PERSISTED_PARTIAL with 151 committed groups and 467 receipts. T45 and D1 are preparing normal46 using this actual marker, original SQLite and original business identifiers with explicit RESUME. No normal46 live clock or role/writer action yet. Final same-cutoff exports still needed after T+ stop.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -53593,10 +53593,10 @@
   "normal39": "NORMAL39_WRITER_FAILED_SAFELY_CLOSED_APPLY0_ACK_PRIOR_DURABLE_UNKNOWN",
   "normal39SourceDecisionSha256": "247e9972441b302fbd6d6399b978792e08a9a834c24b33f7565588c933ed9a4b",
   "currentActualRoot": {
-    "registeredKeys": 145,
-    "dispatcherSha256": "0e5e83c3d0b07e88b995fe2de2c07611ef37aaa6df7eec1bb792357081514e95",
-    "moduleSha256": "684a933a841936f5d0fe03a329ae8e7977481c8a50a4f50ac5ff534029c6c756",
-    "policySha256": "9010e953c48c3fce9fc7d6611505cd1a73b677173f1a3eae9d5f9bdd8f9bcd94"
+    "registeredKeys": 146,
+    "dispatcherSha256": "65a98988d88ddd610001f270a7f26714c9db4de687a957341e5ff144d6786eaf",
+    "moduleSha256": "d6faef3195a4e546447365ba9682ffb11c59a2934b1a216324085a7659ae1fbd",
+    "policySha256": "5e15a34ceb18d94a0c71d878ee52a39d17671cee69f25396890f20f48373677b"
   },
   "normal39Consumer": {
     "sourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
@@ -55328,6 +55328,7 @@
   },
   "postCutoffTplusWritesConfirmed": true,
   "finalIncrementalExportReceived": false,
-  "root146AdmissionCandidateCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source-admission-local-candidate/CHECKPOINT.json"
+  "root146AdmissionCandidateCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source-admission-local-candidate/CHECKPOINT.json",
+  "root146MappedSourceActualCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source02-materialized-actual/ACTUAL-RESULT.json"
 }
 }
