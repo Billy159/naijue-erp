@@ -1,0 +1,72 @@
+{
+  "state": "ACTUAL_ROOT185_START_FAILED_BEFORE_CREATE_ORIGINAL_AUTH_RESTORED",
+  "evidenceSha256": {
+    "cas": "5b906ac52eb96e72ae29e9eb3d95e2f0d74e61d39c0256a6f5697be0e4827cc3",
+    "apply": "9031e65e7c2e533115510017af568855c0dc2a7ba1c40b8cb990f27b68c1e40f",
+    "start": "fb59e913e89c5a4e77e5f22828ae9eaa710d9168d9dabb294ced900ba256f097",
+    "failedStartLocked": "bfb55e95da894bed739ff183486b84a1e75b63f4ccbf6f0c6920dbccddbed82a",
+    "restore": "f577db5f6b5d80ef1dcb60f947707d5a41411eabe65369e55bec7e8a061aa0f8",
+    "restoreLocked": "da92f909c14d8460dbf64188e78735c79a16bd174de627c893b7738927aebe74"
+  },
+  "root": {
+    "oldRegistryCount": 180,
+    "actualRegistryCount": 185,
+    "dispatcherSha256": "132d4d0009f658a7b3c2472b7bd729a167b5db8c26db4eed9aceb42aeb116878",
+    "policySha256": "02a95a7d179470fcfef28bff10af8a82fce59b80aca4b0a494cac56e6f42359d",
+    "moduleSha256": "48ad57c420437ead4cd79110b8bf0d68b5f64da39672b13c21fd5fb47a155b83",
+    "old180AndThreeGuardsPreserved": true,
+    "auditResultSha256": "2539b2519c5bd552a317e15457311af331ebd3ecd868ff5949f01152b1c516f1",
+    "checkedAtUTC": "2026-11-18T17:46:46.094344+00:00"
+  },
+  "phases": {
+    "apply": {
+      "jobId": "t45-r3-hall165-resume-auth-apply-20261119-02",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "phaseStarted": true,
+      "finishedAtUTC": "2026-11-18T17:47:12.773126+00:00",
+      "terminalSha256": "9251f732d7a33c0f5a01cb19545890421d65d49cf212fcfef8eee2bbdd36378a"
+    },
+    "start": {
+      "jobId": "t45-first-r3-native-service-start-20261119-hall165-resume-02",
+      "status": "FAILED",
+      "exitCode": 2,
+      "phaseStarted": true,
+      "finishedAtUTC": "2026-11-18T17:49:51.687874+00:00",
+      "terminalSha256": "1f597355ffaa594466a710cee5b8e8b09c052622a497b74e371662202a4d3e78",
+      "lifecycleStage": "VALIDATE_PRESERVED_INPUTS",
+      "safeCode": "FileNotFoundError",
+      "missingBundleMember": "bundle/source_lineage.py",
+      "root08ValidatorSha256": "e55a5a9da3aaf76e7bcbcd4065a979964188dbb6d9906f59df44ac45dde97846",
+      "expectedHistoricalSourceHelperSha256": "1cee2db632a3c4040215d01ddb68b8e14a9e900196f62f3c5275865fd6c573cf",
+      "createAttempted": false
+    },
+    "restore": {
+      "jobId": "t45-r3-hall165-resume-auth-restore-20261119-02",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "phaseStarted": true,
+      "finishedAtUTC": "2026-11-18T17:57:07.058561+00:00",
+      "terminalSha256": "1107449177070c72c245932b32df9a8991306b30ea3a05230774b5790f4358f5",
+      "branch": "FAILED_BEFORE_CREATE",
+      "safeReceiptSha256": "2f6c9e2fa33adbaa28ee26709f7c9553bd0750a96136fc1178e378ce634432e9",
+      "originalRolesRestored": true,
+      "originalAndRestoreContainersStopped": true,
+      "closedAtUTC": "2026-11-18T17:59:15.819969+00:00",
+      "originalPlanAndRoleCustodyMetadataPreserved": true,
+      "originalHoldPreserved": true,
+      "writerAndStopNotSubmitted": true
+    }
+  },
+  "business": {
+    "batchRows": 514485,
+    "originalPlan": "PREPARE05",
+    "lastActualDurableGroups": 151,
+    "totalGroups": 1061,
+    "lastActualDurableStepReceipts": 467,
+    "totalStepReceipts": 44911,
+    "newBusinessWrites": 0,
+    "firstBusinessResumeHumanGroup": 152,
+    "cutover": false
+  }
+}
