@@ -1,0 +1,40 @@
+{
+  "state": "SQL42_SYNTHETIC_FINALIZE_PRIOR_COMMIT_VALIDATION_FAILURE_REPRODUCED",
+  "sourcePinSha256": "a49a6127ad7575c9739a2f130914afdd20fa73392e4f2c1160a17339d089a180",
+  "localResultSha256": "7143d34daa2941fbfb45170d157ca902ca22a416f26785f3b7a129955ed8f1f0",
+  "diagnosticEntrypointSha256": "c8955c929027185edaa2e8ce1cd0c1572b6afe70102e27d586f79077a1eb75d7",
+  "syntheticDataRows": 247,
+  "statementTimeoutMs": 40000,
+  "clientQueryTimeoutMs": 45000,
+  "precedingGroupsActuallyAcknowledged": 6,
+  "failedGroupOrdinal": 6,
+  "failedStepOrdinal": 42,
+  "failedPhase": "FINALIZE_APPLY",
+  "sqlstate": "23514",
+  "preservedSourceTrace": [
+    {
+      "routine": "assert_unified_current_actor",
+      "line": 8
+    },
+    {
+      "routine": "assert_document_migration",
+      "line": 33
+    },
+    {
+      "routine": "standard_whole_package_command_v2",
+      "line": 1151
+    },
+    {
+      "routine": "standard_batched_import_step_v1",
+      "line": 4
+    }
+  ],
+  "preciseCurrentGuardFailureFromPinnedSource": "A MIGRATE_DOCUMENT receipt from a committed HISTORY transaction is passed to the current-transaction actor assertion during FINALIZE.",
+  "additionalStaticIssue": "The subsequent row-intent function also binds source rows to the current transaction.",
+  "subsequentStaticIssueRuntimeReached": false,
+  "finalizeRolledBack": true,
+  "temporaryClusterCleanStoppedAndRemoved": true,
+  "realR3ChangedOrContacted": false,
+  "requiredNextScope": "Validate immutable records across committed HISTORY groups at FINALIZE while preserving existing current-transaction authorization and typed document checks on writes.",
+  "formalUpgradeIssued": false
+}
