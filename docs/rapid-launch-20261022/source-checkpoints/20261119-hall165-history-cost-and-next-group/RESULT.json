@@ -1,0 +1,69 @@
+{
+  "state": "HALL165_HISTORY_PERFORMANCE_LOCALLY_CHARACTERIZED",
+  "writerActualBasis": {
+    "workSeconds": 2772.568496,
+    "firstHistoryApplyCalls": 115,
+    "firstHistoryApplyTotalMs": 509583,
+    "firstHistoryApplyMeanMs": 4431,
+    "postgresOrWaitPhaseUndefined": true
+  },
+  "firstSlice": {
+    "fixtureHallEntries": 34,
+    "applyCalls": 37,
+    "groupSeconds": 14.9,
+    "strictHallHits": 1114,
+    "observedFallbackCalls": 0,
+    "completedCommitIndependently": true
+  },
+  "cardinalitySlice": {
+    "fixtureHallEntries": 4096,
+    "differenceFromFixtureBaselineInitBytes": 4,
+    "applyCalls": 224,
+    "stepMeanMs": 370,
+    "strictHallHits": 4914,
+    "observedFallbackCalls": 0,
+    "hallMapMeanMs": 65,
+    "completeSeconds": 25.692,
+    "independentCommitReadback": true
+  },
+  "groupAggregateCandidate": {
+    "sqlSha256": "f2b4e4013d9cf131b827f501339b9bdfb5af8f83e372810947ccbef8ab0a5075",
+    "queryInvocationsBefore": 673,
+    "queryInvocationsAfter": 673,
+    "querySecondsBefore": 17.234,
+    "querySecondsAfter": 6.835,
+    "completeSecondsBefore": 25.692,
+    "completeSecondsAfter": 17.011,
+    "applySecondsBefore": 82.885,
+    "applySecondsAfter": 82.814,
+    "semanticCasesEqual": 10,
+    "sameConnectionNextGroupRejectedAndRolledBack": true,
+    "independentPreviousCommitAndNextAbsenceVerified": true,
+    "productionInstalled": false
+  },
+  "actualNextPlanBoundary": {
+    "oldLockedReadbackSha256": "a3994035390fafae00dd413f8076c12535d38ccd4a6f15272f39dc62806ec592",
+    "groupZeroBased": 154,
+    "firstStepZeroBased": 821,
+    "lastStepZeroBased": 944,
+    "descriptorSha256": "5a6e59fbd5118a6e288ac9b0b95da7d0477e1957eae6b5b98bef48b68d71799a",
+    "previousGroupCommitted": true,
+    "independentFullPlanComparisonPerformed": false,
+    "writerAuthorized": false
+  },
+  "capacity": {
+    "observedAvailableBytes": 267559317504,
+    "minimumReserveGiB": 28,
+    "conservativePhysicalPeakGiB": 209.93,
+    "physicalPeakProjectedRemainingGiB": 39.25,
+    "fullExtraLogicalSameDiskProjectedShortfallGiB": 21.75,
+    "finalPostImportPeakMeasured": false
+  },
+  "productionAction": "existing plan metadata read only, no writer started",
+  "evidence": {
+    "base": "deb269cf7999b171f7f981ce41ee5f2e8007b9c78fefda3cf96f517285922d40",
+    "cardinality": "c9586ad6bcf4157d437245e929b060acb326da3efa3268b25306573a37d2e004",
+    "groupAggregate": "272f7960aa167414941dbe9dcb36aec449c5bc3b1ad3ca48bbb339c833cf45d1"
+  },
+  "priorDurableEvidenceCommit": "554f7cf0c89668cce53d09f27b6ef0745bad693f"
+}
