@@ -1,0 +1,50 @@
+{
+  "state": "LOCAL_APP289_VIEW_ONLY_STATIC_RELEASE_BINDING_UNISSUED",
+  "sourcePinsSha256": "dec310cec8fc8cb1b84633d346e40a1c6320e39ec300f00967f516f2e4dafdb8",
+  "priorProxySourcePinsSha256": "b07a1ab8882f65efcd326415453bf2d6bd0fec1782b058b567103420090e23eb",
+  "app289": {
+    "sourceCommit": "cb1155328d46286569e166246000c66e53ec8365",
+    "buildId": "erp-cb1155328d46-r3-app-settlement24-20261117",
+    "archiveSha256": "0abef69a1969c67f4d8965ddfda8d9a30eee67c4e29e3a19afc0efc1664bda77",
+    "archiveBytes": 8072920,
+    "manifestSha256": "e4cfe86fe940520b5c64f5db719b49e74ce708b9de6f869573f87a5342aa369b",
+    "manifestBytes": 549588,
+    "normalizedManifestSha256": "a98cc8f962223fa7e9fbfc85c8a99b9b7f148e4ea416b44b816f5996d58ae46f",
+    "nativeSourceSetSha256": "e041e3fecc6e8e37c64b466f3c3dfaad93d2da6fcc481c521e967ceb1c8f10d6",
+    "nativeClosureMembers": 289,
+    "nativeReferenceIndexSha256": "62d1e71eb8bdb203d12817f42f612a3fe4fed7cf55cb4549e8bb9582e8cdd89e",
+    "releasePayloadMembers": 527,
+    "packedMembers": 528,
+    "sourceManifestSha256": "ff7b2dbf9318941b5dcdcf350d2f182c4340115a6b90bfd1862906e6d5e466d6",
+    "buildManifestSha256": "b537b8c5dbf1a70df7ee7e6684984a1c4074d6cf3cb153397fc4b4a900bb452e",
+    "buildReceiptSha256": "136b2712d9645284a6aff4a89fa4228161a4b85783d131fab26e2e95ff20cebe",
+    "packReceiptSha256": "8954f0ceea90ce1f4194437ed6f2292c3d7d5aaee4f295652135889796acdacf",
+    "runtimeTemplateSha256": "13fef31939eb4c8daf129e4b9fc6083b0ac6c5cbc93d1dd0cba7f4ca807d99c9",
+    "archivePayloadWithoutDependenciesSha256": "9a88e80baa868b223260082f361fb67b3c3fd89aa62cebd2a0ec823d6966132b"
+  },
+  "releaseContractSource": {
+    "path": "config/release-contract.json",
+    "bytes": 7490,
+    "sha256": "4d30d3f2b32116d83c302b6eef81015b4733d624d9abf09c3fd52d5082445456"
+  },
+  "publicHttpMode": "app289-view-only-v1",
+  "renderedProxy": {
+    "bytes": 14301,
+    "sha256": "88630e5c85f4512d26c0f1a941b84b188579f0238d426d2d0282ebe2048ebd86"
+  },
+  "checks": {
+    "actualArchiveAndPayloadMembersVerifiedByCandidate": 528,
+    "actualArchiveAndPayloadMembersVerifiedByFirstInstall": 528,
+    "originalReleaseNativeClosureEntriesRecomputedAndMatched": 289,
+    "localTargetedChecksPassed": 4,
+    "proxyConfigurationIdenticalToPredecessor": true,
+    "nginxBinaryAvailable": false,
+    "nginxParsed": false,
+    "productionReceiptsVerified": 0
+  },
+  "databaseAndRecoveryFactsBound": false,
+  "productionAuthorityIssued": false,
+  "serverActions": 0,
+  "liveProxyTested": false,
+  "deployed": false
+}
