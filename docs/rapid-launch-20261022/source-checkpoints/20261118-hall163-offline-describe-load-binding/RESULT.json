@@ -1,0 +1,43 @@
+{
+  "state": "HALL163_OFFLINE_DESCRIBE_LOAD_BOUND_BEFORE_FINALIZE_SUCCESSOR",
+  "pinnedSources": {
+    "VERIFICATION.json": "093779912566e72686786c20d83afbd15ae768d75a4fa6c00fb94be0f96d222f",
+    "SOURCE-ROWS-400.json": "3ebb2937a9b76d29020fc882156121d23a7de32ab699d6bde1b1361970519435",
+    "CHANGE-MAP.json": "d979a9c437ff3d2725da723082bb574ce28dc7d9ec60ebc081fbec9e0f762eae",
+    "HANDOFF.md": "c9dc59c5a879655be5647fdbd157bb9a1661b47d9d903f3ed5c70989a9f1b7cc"
+  },
+  "currentHall163Candidate": {
+    "transactionMode": "BATCHED_V1",
+    "batchedDbCandidatePinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+    "batchedSourceSetSha256": "4cb5f2aa29ebd307aa78405539bf10812147878e23eedfbb0e2ce699f66382c9",
+    "batchedCatalogSpecSha256": "f3affcac576940661486e23126b08eecac3ce7f5e26bf41b9e300d9f469013ef",
+    "batchedModelSha256": "57fa63c1c082c6274d41e3da3f65120db91c8030664f1e85188919cc73fa34cb"
+  },
+  "installedHistoricalSql42": {
+    "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e",
+    "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+    "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9"
+  },
+  "originalPrepare05Witness": {
+    "preparedBindingSha256": "bd1601155aeb8bc1f340c6763633b551ea56760b9b9f5bd5ee3b97899af5dab0",
+    "steps": 44910,
+    "stepsSha256": "45a764dfa0da3e95567dad4394f79d0cb2dc83218582cdee163a53de937db997",
+    "planSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+    "originalBatchedSourceSetSha256": "db127efd32e1953fa550e56bd715b6ea334cc9d7e141217c4da8151bcd8c7803",
+    "originalBatchedCatalogSpecSha256": "344ccd895e1e65dedf0fdae5be71e291a6226ba5c21d9c0f4276b2be5490f362",
+    "originalBatchedModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+    "inputBindingSha256": "d3bfd39a995dc164309f8ec6bf7be34f6b3e721d9dd4fbcaa7d0192367702856"
+  },
+  "sameCatalogChosenByBothPaths": true,
+  "staleCurrentDigestCasesRejected": [
+    "batchedSourceSetSha256",
+    "batchedCatalogSpecSha256",
+    "batchedModelSha256",
+    "all-three-sql42",
+    "all-three-prepare05"
+  ],
+  "originalProtectedEntrypointChecksRetained": true,
+  "successorMustIncorporateFinalizeCrossGroupFix": true,
+  "installedOrUsedAtFormalR3": false,
+  "actualPlanRerun": false
+}
