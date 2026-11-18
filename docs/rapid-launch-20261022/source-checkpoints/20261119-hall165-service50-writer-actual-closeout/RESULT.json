@@ -1,0 +1,71 @@
+{
+  "state": "HALL165_SERVICE50_WRITER_WORK_DEADLINE_AND_VERIFIED_STOP_RESTORE",
+  "basisBatch": {
+    "effectiveTPlusCutoff": "2026-11-16T11:40:00+08:00",
+    "inputRows": 514485,
+    "originalGroups": 1061,
+    "originalSteps": 44911
+  },
+  "writer": {
+    "status": "FAILED",
+    "exitCode": 2,
+    "phaseStarted": true,
+    "completedAtUTC": "2026-11-18T21:08:08.221761+00:00",
+    "elapsedSeconds": 2772.568496,
+    "terminalSha256": "c794893dc979dcbf84423b4f8b6a147653968cfb727343686ba72170eed62659",
+    "pairedReadbackSha256": "34610e0c61af13e5714e3a7bc5d13b8574e02b2da8b7843c0e0b92ceb0e1aca3",
+    "closedProgressSha256": "67915d9481205ad30a892835e322b85987048cbc98b12eb8c397fa8233b90261",
+    "safeCode": "FINAL33_NATIVE_RESULT_BINDING_REQUIRED",
+    "childDiagnostic": "WORK_DEADLINE_EXPIRED",
+    "durableOutcome": "UNKNOWN",
+    "childReaped": true,
+    "priorGroupsSkipped": 151,
+    "progressCommitAcknowledgements": 3,
+    "progressLastAcknowledgedGroupZeroBased": 153,
+    "progressLastUnconfirmedGroupZeroBased": 154,
+    "progressLastUnconfirmedStepZeroBased": 868,
+    "progressLastGroupCommitAttempted": false,
+    "readbackVerified": false
+  },
+  "timingsMs": {
+    "planVerify": 2,
+    "restoreHost": 32459,
+    "coreInspect": 95983,
+    "skippedGroupsTotal": 1746,
+    "firstHistoryApply": {
+      "calls": 115,
+      "total": 509583,
+      "max": 6886
+    }
+  },
+  "stop": {
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "terminalSha256": "257f3b935dfbd0dc18b47cc8cf7d5253256706a0b17d1ffe155b20a136b26a27",
+    "pairedReadbackSha256": "cf7c83eef600f54e7378e9e9cf544a17c2ca520a7f8ec45c005ccb65097b48b9",
+    "lockedActualReadbackSha256": "20ae07ec4104742f2e44137f27f6713688aa1763f200da9a918a01d1105e7ce2",
+    "cleanShutdown": true
+  },
+  "restore": {
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "terminalSha256": "10e0bbde521a218976fed35ef5bcca4556745d31d4da54851f60a0fb4491c426",
+    "pairedReadbackSha256": "0fea780fe059c0793a89994d3fc67607e1850b33e60453fc50d91b8ff7e0df68",
+    "lockedActualReadbackSha256": "718eee5de4794c1412e3731eb91b7185ce3bbc8f32257e40a6cbb5da426f5546",
+    "recheckedAtUTC": "2026-11-18T21:14:23.873934+00:00",
+    "originalRoleVerifierAndExpiryVerified": true,
+    "protectedSnapshotBodiesRead": false,
+    "originalPlanMetadataMatched": true,
+    "originalPGStopped": true,
+    "restoreContainerStopped": true,
+    "legacyHoldPreserved": true,
+    "activeOperationUnits": 0
+  },
+  "bookEntryOpen": false,
+  "readOnlyPreviewOpen": false,
+  "remaining": [
+    "independent original database check of the durable prefix",
+    "evidence-driven reduction of the observed per-step runtime before continued import",
+    "completed import and reconciliation, actual backup and isolated recovery, APP289 read-only preview and final cutoff reconciliation"
+  ]
+}
