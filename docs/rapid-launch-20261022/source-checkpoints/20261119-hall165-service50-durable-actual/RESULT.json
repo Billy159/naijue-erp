@@ -1,0 +1,86 @@
+{
+  "state": "HALL165_SERVICE50_DURABLE_PREFIX_OBSERVED_AND_ROLLED_BACK",
+  "sourceCutoff": "2026-11-16T11:40:00+08:00",
+  "inputRows": 514485,
+  "totalPlan": {
+    "groups": 1061,
+    "steps": 44911
+  },
+  "registeredRoot": {
+    "sha256": "b79fefcb6a709b45ae6a7a605b8f395a6039fd15b82964f12cebf77227af51d8",
+    "priorKeysPreserved": 201,
+    "newKeys": 1,
+    "readbackSha256": "ebb16d1db9f134eca85458809970073b1120cad8910792379e2726dbf503f06e",
+    "registrationReplayed": false
+  },
+  "readonly": {
+    "terminalStatus": "COMPLETED",
+    "exitCode": 0,
+    "completedAtUTC": "2026-11-18T21:38:20.805263+00:00",
+    "checkedAtUTC": "2026-11-18T21:38:24.352989+00:00",
+    "terminalSha256": "968541249755d6104ced10e57b004867e5363077a8fe220412608fbbd3ee70e8",
+    "actualResultSha256": "3f818f21532fd26ae66e02ec4be8a389a982fd57054649b605a70f0bbc6bd149",
+    "pairedReadbackSha256": "de8bc4323e614b736e4c3de8ca537af55af22563301cf36f18002032e9e6eb81",
+    "postLockedReadbackSha256": "8b0168593ad9ad285fa26e5c1150b3d49f535c2ffe92d6ffe40bc346973a1b1b",
+    "repeatableReadOnlyTransactionRolledBack": true,
+    "cleanPGStopVerified": true,
+    "physicalStartControlAndWALWritesPossible": true,
+    "businessDML": 0,
+    "roleChanges": 0,
+    "rawBusinessRowsExported": false
+  },
+  "durable": {
+    "audit": 821,
+    "groups": 154,
+    "receipts": 821
+  },
+  "increment": {
+    "audit": 354,
+    "groups": 3,
+    "receipts": 354
+  },
+  "phaseGroups": {
+    "BASELINE_CLOSE": 1,
+    "CORE": 1,
+    "DOCUMENT_OPEN": 1,
+    "FINALIZE": 0,
+    "HISTORY": 3,
+    "KEYS": 80,
+    "MASTER": 68,
+    "OTHER": 0
+  },
+  "groupOrdinals": [
+    0,
+    153
+  ],
+  "stepOrdinals": [
+    0,
+    820
+  ],
+  "firstUnprovenGroupZeroBased": 154,
+  "firstUnprovenStepZeroBased": 821,
+  "observedAnomalies": {
+    "auditWithoutReceiptCount": 0,
+    "bindingIdentityConflictCount": 0,
+    "descriptorHashConflictCount": 0,
+    "duplicateOrdinalCount": 0,
+    "duplicateSubBatchIdCount": 0,
+    "extraMatchingBatchCount": 0,
+    "identityConflictCount": 0,
+    "identityOrDescriptorConflictCount": 0,
+    "invalidDescriptorHashCount": 0,
+    "invalidRangeCount": 0,
+    "memberClosureConflictCount": 0,
+    "nonImportOrActorConflictCount": 0,
+    "otherHashBatchCount": 0,
+    "otherStatusReceiptCount": 0,
+    "predecessorConflictCount": 0,
+    "receiptWithoutAuditCount": 0
+  },
+  "allFrozenPlanDescriptorsCompared": false,
+  "baselineStatus": "IMPORTED",
+  "documentStatus": "VALIDATING",
+  "originalAuthenticationRestored": true,
+  "businessEntryOpen": false,
+  "relatedCheckpoint": "1a3b540e05af01b972195cb529bdfdc4e22bad7e"
+}
