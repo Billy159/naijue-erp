@@ -1,0 +1,54 @@
+{
+  "state": "ACTUAL_ROOT180_REGISTERED_APPLY_ASSEMBLY_FAILED_PROVEN_UNSUBMITTED",
+  "root": {
+    "previousRegistryCount": 175,
+    "registryCount": 180,
+    "dispatcherSha256": "8bb0c1ef9a5fb60f115fedd77c7d16a0255c90f30aa0bcb0f255a298a2bb3e56",
+    "policySha256": "5b4796ae42c3014bbedaadff3129e9790af95529ae08147a29cb29d18ef816c7",
+    "moduleSha256": "6f5dfdd16751656d5a055555dad0a392b4130e7e789d5d5031a7e89a5bdc36a3",
+    "casExitCode": 0,
+    "old175AndThreeGuardsPreserved": true,
+    "casReceiptSha256": "2aeb3e1609bb56b0a48d7b419e03b2ed3f9f93a69e9c412767f29d0a73a7e880",
+    "independentCasReadbackSha256": "0f631245eac25f015c2c5dfb005f725ea0c4389abacea73ac53b094dc29b296d",
+    "checkedAtUTC": "2026-11-18T17:06:01.575714+00:00"
+  },
+  "staticPlacement": {
+    "independentMemberCount": 68,
+    "phaseIndexSha256": "e7c013b2cd335728bf6e30f1d9c83a995d761f298fe06f15e8cbdf7d3ac412d4",
+    "readyCacheSha256": "f9577b09b1fbc390fdac5a35ae76baacf0f4d40dbbb3bd3fce9f8e9d164ab44a",
+    "rootAndObserverReadbackSha256": "8a64f5dea7113cd4d0c15961984209a91f2bc3e6188764d4ceb338cf755c1953",
+    "freshBasisSha256": "92fa3e02de104f880747f73d6501c418d1478a8bfc5d6fb52cc07091f69df32c",
+    "checkedAtUTC": "2026-11-18T17:01:30.644705+00:00",
+    "availableBytes": 267593056256,
+    "rootReserveBytes": 30064771072
+  },
+  "apply": {
+    "outerRequestKey": "t45-r3-hall165-resume-auth-apply-20261119-01",
+    "initialIssuanceSha256": "1703d462dbf8d8ac14c37b9f98046e5b6a560a9871be169fd4817336fb0d82ae",
+    "assemblyExitCode": 1,
+    "assemblyFailureReceiptSha256": "46a167aa54059e9d7b9507ba2fec60efdb1ffc7d27967a307cdce96a3a420a78",
+    "outerTransportCode": "LEASED_CHANNEL_OR_DISPATCHER_FAILED_NO_PASSWORD_FALLBACK",
+    "confirmedSourceFailure": "The exact deployed static host omitted CONTROL. Its paths(key) raises NameError before the first assemble filesystem operation. The controlled transport recorded its generic failure status.",
+    "sameKeyReadbackSha256": "3c4bf2507ecbdbf997b51bdd9b23d1c9c11ae44a61a085cb6a909ce34efd5395",
+    "lockedClosureSha256": "7b78075c89be611d22b7f5e03415358633b6c4cd01e5f7ff30e46283e98c66d0",
+    "closedAtUTC": "2026-11-18T17:11:23.168072+00:00",
+    "controlAndWorkerRecordsAbsent": true,
+    "hiddenPendingAbsent": true,
+    "allFivePhaseRequestsAbsent": true,
+    "originalAuthenticationStillRestored": true,
+    "originalAuthenticationEvidenceSha256": "9cb6859b41a9626a7a2dd652606e88303e93f0333a7658e58f9b6e7b104ed9bc",
+    "originalPGStopped": true,
+    "startFullWindowAdmissionElapsed": true,
+    "realPhaseExecuted": false,
+    "originalKeyReplayed": false
+  },
+  "business": {
+    "originalPlan": "PREPARE05",
+    "lastActualDurableGroups": 151,
+    "lastActualDurableStepReceipts": 467,
+    "currentGenerationBusinessWrites": 0,
+    "postgresqlConnectionsInRegistrationAndAssemblyCloseout": 0,
+    "writerResumed": false,
+    "cutover": false
+  }
+}
