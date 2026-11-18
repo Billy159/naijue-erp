@@ -1,0 +1,36 @@
+{
+  "state": "HALL165_PHYSICAL_RECOVERY_OUTER_HISTORICAL_CATALOG_LOCAL_REVIEWED",
+  "scope": "historical Hall165 catalog evidence and common catalog model binding for physical recovery",
+  "sourceFilesSha256": {
+    "hall165-outer-catalog.patch": "deae3340f0f7ece9cb4810467c38f26b68fa2e040500d4c79d324cfe31f83ab3",
+    "HANDOFF.md": "75ecf1158e1f6f576f7e2aae3cc6629b7a10e02f6b91ae5735db8f6d68886b82",
+    "verify_local.py": "0500c793b3b2a91627690ef97c2c76336e6eb15a59ca4083c6e7b9f723cfe562"
+  },
+  "baseReceiptModuleSha256": "761351f03fa327757143e6f3955c43c064416946b4c323e243c7ada537a8b68e",
+  "patchedReceiptModuleSha256": "d048e27e742aa1142642fc08e9f6c7bef8b3220c149fdbae91236ca9efeb0596",
+  "catalog": {
+    "routineCount": 165,
+    "sourceSetSha256": "e5458806257844813145f08c581726e3da06cb2366d37f77b70b9b2365e65aab",
+    "catalogSpecSha256": "cc0c72ae6f31818cadf664bbe8d08e67fbb450c76ba3bedb2da2a3d2e4b9cda6",
+    "modelSha256": "b9b67be2a68dcd35d445b7fe45838fdaade66cf877d3fdc5940eee880508c3d8"
+  },
+  "verification": {
+    "command": "python3 -B verify_local.py",
+    "exitCode": 0,
+    "historicalTerminalProjectionsChecked": 4,
+    "historicalResultOrMarkerByteDigestsChecked": 13,
+    "catalogMismatchCasesRejected": 3,
+    "changedReceiptCasesRejected": 4,
+    "actualRootOrControlReadPerformed": false,
+    "databaseConnections": 0,
+    "serverActions": 0,
+    "restoreExecuted": false
+  },
+  "unchanged": "original successful writer, same-generation stop and role restoration, cold backup, physical independence, APP and final closure requirements",
+  "pending": [
+    "Hall165 successful Writer and same-generation Stop/Restore execution-binding adapter",
+    "actual protected cold backup and independently verified closed clone",
+    "actual APP acceptance"
+  ],
+  "relatedCheckpoint": "efe9d42deadf5ef62a138469cac239ba7e20eed5"
+}

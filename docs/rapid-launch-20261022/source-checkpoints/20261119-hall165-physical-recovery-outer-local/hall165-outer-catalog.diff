@@ -1,0 +1,151 @@
+--- a/bundle/final33_receipts.py
++++ b/bundle/final33_receipts.py
+@@ -41,6 +41,40 @@
+               'catalogTerminal', 'catalogResult', 'stopTerminal', 'stopResult', 'stopCleanup',
+               'restoreTerminal', 'restoreResult'}
+ 
++# Installed Hall165 is a historical maintenance generation, distinct from the
++# later Writer and its stop. Keep the original terminal and both result pins.
++HALL165_SOURCE02 = (
++    't45-r3-batched-hall165-source-materialize-20261118-02',
++    '82e7e9ffc81e75dd27ee7af3a8a5d72f29d13cc711810ef1933575ab5d8a6035',
++    '43ab921ad0abfcdef94e2e07537046bd1026999f1fc1b6530526e0984f6f2bc0',
++    '21812a9ca14e2f351d60a05fe1c900db82b8e8fd01d956a09cb0c3418990456d',
++)
++HALL165_SOURCE02_MARKER = STATE / 'installed-real-operation-batched-hall165-20261118-01/source-materialization.json'
++HALL165_UPDATE = (
++    't45-r3-hall165-catalog-upgrade-20261118-02',
++    '5e761937b13762b38b5c4185fce3b050c03a59a925cac2aeb5dba1c6e11661e1',
++    'a17d5f14ef8aa1af2fa3f85249c1251b15a6c646e721860dc85b8ba05de37d1e',
++    'fdf90c66a1646959beef519d5f2e398222da48f13ef6005920beb76d5ed51643',
++)
++HALL165_CATALOG = dict(
++    sourceSetSha256='e5458806257844813145f08c581726e3da06cb2366d37f77b70b9b2365e65aab',
++    catalogSpecSha256='cc0c72ae6f31818cadf664bbe8d08e67fbb450c76ba3bedb2da2a3d2e4b9cda6',
++    modelSha256='b9b67be2a68dcd35d445b7fe45838fdaade66cf877d3fdc5940eee880508c3d8',
++)
++HALL165_STOP = (
++    't45-r3-hall165-preserve-stop-20261118-02',
++    '36859f9fc6d314f0197fb2835e212b49be0186296de381b4b8960f0a788d4328',
++    'bde7b6e11a41e62f020ac24ee6109aa2c38282d8d690aed7bfc8835125c83db3',
++    'c2627d9e84a21b7a0b1d7d6ee99a572d8a45db1c9454ae5d21a982c2beae6934',
++)
++HALL165_RESTORE = (
++    't45-r3-hall165-auth-restore-20261118-02',
++    'd44adb3abe9fdf1f18129999e6e200deff7fd6fab56520d347a687f61be5fcf8',
++    'dff4a13f571147752bc1911f5796d7adcd6e06a1481785df755162be49116694',
++    'be5b5bf130c58c67a5a078db0aa0f5ea8ff74e5ba7001cb7e7fd69999cb3b7a4',
++)
++
++
+ def need(ok, code):
+     if not ok:
+         raise ValueError(code)
+@@ -72,9 +106,9 @@
+          == (key, 'T45', GRANT, 'COMPLETED', 0, True) and value.get('finishedAtUTC'), 'FINAL33_SUCCESSFUL_ORIGINAL_TERMINAL_REQUIRED')
+     return value
+ 
+-def public_result(key, leaf, pin):
++def public_result(key, leaf, pin, *, public_pin=None):
+     raw = read(JOBS / key / 'results' / leaf, pin)
+-    need(json.loads(raw) == json.loads(read(CONTROL / 'jobs' / key / 'results' / leaf, uid=1000)), 'FINAL33_ROOT_PUBLIC_RESULT_DIFFERS')
++    need(json.loads(raw) == json.loads(read(CONTROL / 'jobs' / key / 'results' / leaf, public_pin, uid=1000)), 'FINAL33_ROOT_PUBLIC_RESULT_DIFFERS')
+     result = json.loads(raw)
+     need(result.get('requestKey') == key, 'FINAL33_ORIGINAL_RESULT_KEY_DIFFERS')
+     return result
+@@ -178,11 +212,77 @@
+     need(type(text) is str and re.fullmatch(r'\d{4}-\d\d-\d\d \d\d:\d\d:\d\d(?:\.\d{1,6})?\+00', text), 'FINAL33_PG_EPOCH_FORMAT_REQUIRED')
+     return datetime.fromisoformat(text + ':00')
+ 
++def hall165_catalog_predecessor():
++    # This reads the prior installation history. It proves neither a new
++    # Writer's commit nor a new generation's stop or role restoration.
++    def paired(pins, leaf):
++        key, terminal_pin, root_pin, public_pin = pins
++        terminal(key, terminal_pin)
++        return public_result(key, leaf, root_pin, public_pin=public_pin)
++
++    material = paired(HALL165_SOURCE02, 'batched-source-materialization.json')
++    need(material == json.loads(read(HALL165_SOURCE02_MARKER, HALL165_SOURCE02[2]))
++         and material.get('sourceFiles') == 408 and material.get('databaseWrites') == 0,
++         'FINAL33_ACTUAL_HALL165_SOURCE02_REQUIRED')
++    update = paired(HALL165_UPDATE, 'batched161-command-update-result.json')
++    need(update.get('state') == 'HALL165_CATALOG_APPLIED_AND_READ_BACK'
++         and update.get('batchedCatalog') == HALL165_CATALOG
++         and update.get('sourceSetSha256') == material.get('operatorRuntimeSourceSetSha256')
++         and update.get('completionSha256') == '8e2ab4c0588efcd5990801fcf319446fca1c625d48974048f7ab2ff1f4abb11a'
++         and update.get('connectionCleanup') == 'CLOSED'
++         and update.get('commitOutcomeUnknown') is update.get('businessImported') is False
++         and all(update.get(k) is True for k in ('commitAcknowledged', 'postCommitReadback',
++             'independentPhysicalReadback', 'roleRestoreAcknowledged', 'innerAuthorityRemoved',
++             'childReaped', 'descendantsReaped')),
++         'FINAL33_ACTUAL_HALL165_CATALOG_UPDATE_REQUIRED')
++
++    stop = paired(HALL165_STOP, 'normal05-preserve-stop-result.json')
++    service = update['service']
++    cleanup_path = STATE / 'native-services' / service['serviceKey'] / 'cleanup.json'
++    cleanup_pin = '9cee3f727ffc7af8854b5fbb18c62120cdc369b3d9ad2f63fadbcb55610975ef'
++    cleanup = json.loads(read(cleanup_path, cleanup_pin))
++    need(stop.get('service') == service and stop.get('pgStopped') is stop.get('holdRetained') is True
++         and stop.get('status') == 'NORMAL05_PRESERVATION_ONLY_CLEAN_STOP_CONFIRMED'
++         and stop.get('cleanupSha256') == cleanup_pin
++         and stop['currentBatchTerminals'].get(HALL165_UPDATE[0]) == dict(state='COMPLETED', terminalSha256=HALL165_UPDATE[1])
++         and cleanup.get('requestKey') == service['serviceKey']
++         and cleanup.get('retained') is cleanup.get('runtimeMaterialPreserved') is True
++         and all(cleanup['cleanup'].get(k) is True for k in
++             ('cleanupComplete', 'cleanShutdown', 'dataPreserved', 'ownedPidAbsent', 'portAbsent')),
++         'FINAL33_ACTUAL_HALL165_MAINTENANCE_STOP_REQUIRED')
++
++    restored = paired(HALL165_RESTORE, 'maintenance-auth-result.json')
++    closed = public_result(HALL165_RESTORE[0], 'maintenance-auth-cleanup.json',
++        '901adce8e32034cb4c737f62eaf7737e5d9f868f34d18357adfd66bcef9df06b',
++        public_pin='e0dab4d5f0d1b92bc608c2fa2966b73fc2e8b367089126b090754f39f4d1e71b')
++    safe = json.loads(read(STATE / 'native-services/hall165-auth-20261118-02/restored.json',
++                           'cc464027dc503cfdc7e336c12a1faac1ddf3d17ac317e75cbab6b3a3267770d1'))
++    need(restored.get('phase') == 'restore' and restored.get('status') == 'FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED'
++         and restored.get('cleanup') == closed and restored.get('result') == safe
++         and safe.get('status') == 'EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK'
++         and safe.get('exactOriginalVerifierAndExpiryVerifiedPrivately') is safe.get('databaseStillStopped') is True
++         and all(closed.get(k) is True for k in ('confirmed', 'ownContainerStopped', 'ownedPidAbsent', 'sourceDataPreserved')),
++         'FINAL33_ACTUAL_HALL165_MAINTENANCE_RESTORE_REQUIRED')
++    return update
++
++
++def recovery_catalog_identity(facts):
++    update = facts['catalog']
++    if update.get('requestKey') == HALL165_UPDATE[0]:
++        need(update == hall165_catalog_predecessor(), 'FINAL33_ACTUAL_HALL165_CATALOG_LINEAGE_DIFFERS')
++        return 165, HALL165_CATALOG['modelSha256']
++    need(update.get('requestKey') == UPDATE
++         and update.get('batchedCatalog') == dict(sourceSetSha256=CATALOG_SOURCE, catalogSpecSha256=CATALOG_SPEC, modelSha256=MODEL),
++         'FINAL33_ACTUAL_161_CATALOG_UPDATE_REQUIRED')
++    return 161, MODEL
++
++
+ def recovery(descriptor, coverage, lineage):
+     """Consume the DB result together with the separate actual outer closure."""
+     need(type(descriptor) is dict and set(descriptor) == {'format', 'source', 'cold', 'restore'}
+          and descriptor['format'] == 'T45_FINAL33_OWNER_RECOVERY_INPUT_V1', 'FINAL33_OWNER_RECOVERY_DESCRIPTOR_REQUIRED')
+     facts = committed_source(descriptor['source'])
++    routine_count, catalog_model = recovery_catalog_identity(facts)
+     cold, restore = descriptor['cold'], descriptor['restore']
+     need(type(cold) is dict and set(cold) == {'terminalSha256', 'resultSha256', 'manifestSha256'}
+          and type(restore) is dict and set(restore) == {'terminalSha256', 'resultSha256', 'databaseResultSha256'}
+@@ -193,7 +293,7 @@
+     need(copied == complete and complete.get('status') == 'VERIFIED_FINAL33_POST_IMPORT_COLD_COPY_ONLY'
+          and complete.get('requestKey') == COPY and complete.get('inputManifestSha256') == MANIFEST
+          and complete.get('manifestSha256') == cold['manifestSha256'] and complete.get('sourceEvidence') == descriptor['source']
+-         and complete.get('finalModelSha256') == MODEL and complete.get('applicationArchiveSha256') == APP_ARCHIVE
++         and complete.get('finalModelSha256') == catalog_model and complete.get('applicationArchiveSha256') == APP_ARCHIVE
+          and complete.get('record38Sha256') == 'd18f80cec591b3740f7aeceb14f1148bdea4ce867feba4e5ff3465dbdb8d231e'
+          and complete.get('independentRestorePerformed') is False and complete.get('PGStarted') is False
+          and complete.get('minimumAvailableAfterBytes') == 28*1024**3
+@@ -207,7 +307,7 @@
+          and database.get('state') == 'VERIFIED_CLONE_DATABASE_READBACK_ONLY'
+          and database.get('database') == 'erp_fresh35_20261110_r3'
+          and database.get('systemIdentifier') == PHYSICAL['systemIdentifier'] and database.get('databaseOid') == PHYSICAL['databaseOid']
+-         and database.get('routineCount') == 161 and database.get('catalogModelSha256') == MODEL
++         and database.get('routineCount') == routine_count and database.get('catalogModelSha256') == catalog_model
+          and all(database.get(k) is True for k in ('physicalMatched', 'catalogMatched', 'scopeExplicitDigestMatched', 'transactionsRolledBack'))
+          and database.get('nativePackageState') == 'VERIFIED' and database.get('connectionCleanup') == 'CLOSED'
+          and database.get('warehouseMismatchCount') == database.get('cashMismatchCount') == 0
