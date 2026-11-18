@@ -1,0 +1,41 @@
+{
+  "state": "HALL165_ROOT163_REGISTERED_ORIGINAL_UPLOAD_STOPPED_BEFORE_REQUEST",
+  "originalRequestKey": "t45-r3-batched-hall165-source-materialize-20261118-01",
+  "originalRequestPublished": false,
+  "originalJobStarted": false,
+  "originalMaterializationTargetExists": false,
+  "originalTerminalExists": false,
+  "actualDispatcherSha256": "3352ad2e4e2882e501947307b3ea9e160c6bb65b38f386b0d8250c2b111a1fd2",
+  "actualRegistryCount": 163,
+  "old162AndThreeGuardsPreserved": true,
+  "actualCasReceiptSha256": "5f6389ac6b27bd2d089d2a49a83c8bd2240d41bd183e8e04f08817150b511cbd",
+  "actualUploadStopReceiptSha256": "89639f14ff7e036e8308dafe2bb1b1600a688c852a9caae01c1a42109c9c994a",
+  "actualOriginalKeyFactsSha256": "ac04a7bfc42859f9d210c0d19e0c4d4bf230d7442406861ca843744aa137cdba",
+  "checkedAtUTC": "2026-11-18T12:01:48.743082+00:00",
+  "partialControlUploadPreserved": true,
+  "observedTransportMembers": 20,
+  "exactStaticTransportMembers": 18,
+  "exactStaticBytes": 6719856,
+  "partialOrMissingStaticMembers": [
+    "delta-04.asset.json",
+    "delta-09.asset.json",
+    "delta-15.asset.json",
+    "delta-18.asset.json"
+  ],
+  "oldAuthorityExpiredAndPreserved": true,
+  "databaseStopped": true,
+  "databaseConnections": 0,
+  "priorPlanCommittedGroups": 151,
+  "priorPlanCommittedReceipts": 467,
+  "sameRootVolumeAvailableBytes": 267729645568,
+  "minimumReserveBytes": 30064771072,
+  "newSourceOnlyCandidate": {
+    "requestKey": "t45-r3-batched-hall165-source-materialize-20261118-02",
+    "nextRegistryCount": 164,
+    "prestageStaticBeforeIssuance": true,
+    "productionIssued": false
+  },
+  "maintenanceRegistered": false,
+  "writerResumed": false,
+  "independentRecoveryAndApp289PreviewPending": true
+}
