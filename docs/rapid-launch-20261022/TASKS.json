@@ -55335,6 +55335,7 @@
   "hall165Root175Maintenance02ActualCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root175-hall165-maintenance02-actual/RESULT.json",
   "hall165Prepare05LocalFirstGroupGuardCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-hall165-prepare05-first-group-guard-local/RESULT.json",
   "hall165Prepare05LocalCloseoutPairCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261119-hall165-resume-closeout-local/RESULT.json",
+  "hall165Root196PhaseOrderRefusedApply": "docs/rapid-launch-20261022/source-checkpoints/20261119-root196-order-refused-apply/RESULT.json",
   "hall165Root191DurableReadonlyActual": "docs/rapid-launch-20261022/source-checkpoints/20261119-root191-durable-readonly-actual/RESULT.json",
   "hall165Prepare05Root190ActualWriterFailedRestored": "docs/rapid-launch-20261022/source-checkpoints/20261119-root190-writer-failed-restored/RESULT.json",
   "hall165Prepare05Root185ActualStartFailedRestored": "docs/rapid-launch-20261022/source-checkpoints/20261119-root185-start-missing-member-restored/RESULT.json",

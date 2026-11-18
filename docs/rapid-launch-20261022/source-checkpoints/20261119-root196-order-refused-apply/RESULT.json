@@ -1,0 +1,63 @@
+{
+  "state": "ACTUAL_ROOT196_APPLY_REFUSED_PREPHASE_NO_ROLE_CHANGE",
+  "evidenceSha256": {
+    "casResult": "7ffb7d06af05ca10aed959d8d626ceb81066e62d2fc8b8d6f5599d89ba35eebb",
+    "cas": "47fcc4febcc54ad179587669a6fc46e0c534d0ce0cc8631364745c3f30f86ca8",
+    "apply": "279e1c0964357d0d493684d530ee97a2f88584233d336d04b20139254bd85cd3",
+    "lockedClosure": "fdfe1a05afcbcaf423e3e7de6b39e75f40aaccd92e87fd5c274f9b3697a1718c"
+  },
+  "root": {
+    "oldRegistryCount": 191,
+    "actualRegistryCount": 196,
+    "dispatcherSha256": "e5c8c5159edf86089004c3483123bb67bb3cc1434e460765b6ed9de6620aa03f",
+    "policySha256": "dc13555f1306cc3ae833809d95e971692feea2f1378a95baf52ee38d9824b052",
+    "moduleSha256": "301efa6665a700a77f318cfd03e1fcd4bb3a896e633e927262ac6297ba8ac917",
+    "auditResultSha256": "7ffb7d06af05ca10aed959d8d626ceb81066e62d2fc8b8d6f5599d89ba35eebb",
+    "checkedAtUTC": "2026-11-18T19:33:38.791124+00:00",
+    "old191AndThreeGuardsPreserved": true
+  },
+  "apply": {
+    "jobId": "t45-r3-hall165-resume-auth-apply-20261119-04",
+    "status": "REFUSED_R3_CONTINUITY_BEFORE_PHASE",
+    "exitCode": 2,
+    "phaseStarted": false,
+    "finishedAtUTC": "2026-11-18T19:33:42.179822+00:00",
+    "sha256": "8de1493f1222f5ca1395d0cae09fb597b07277ba43544fbc02dd3701be920005"
+  },
+  "guard": {
+    "code": "R3_CONTINUITY_HALL165_PREPARE05_RESUME_NEXT_KEYS_DIFFER",
+    "dispatcherPhaseOrder": [
+      "apply",
+      "start",
+      "writer",
+      "stop",
+      "restore"
+    ],
+    "modulePhaseOrder": [
+      "apply",
+      "restore",
+      "start",
+      "stop",
+      "writer"
+    ],
+    "sameFiveMembers": true
+  },
+  "lockedClosure": {
+    "checkedAtUTC": "2026-11-18T19:35:00.850222+00:00",
+    "originalPGDATAStopped": true,
+    "previousOriginalAuthenticationPreserved": true,
+    "roleCustodyAndCaptureAbsent": true,
+    "otherFourKeysAbsent": true,
+    "restoreRequired": false,
+    "originalKeyReplayed": false
+  },
+  "business": {
+    "batchRows": 514485,
+    "originalPlan": "PREPARE05",
+    "lastActualDurableGroups": 151,
+    "lastActualDurableStepReceipts": 467,
+    "newBusinessWrites": 0,
+    "firstBusinessResumeHumanGroup": 152,
+    "cutover": false
+  }
+}
