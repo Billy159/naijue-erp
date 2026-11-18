@@ -1,0 +1,29 @@
+{
+  "state": "SYNTHETIC_HALL_PROJECTION_COMMITTED_READ_BACK_SOURCE_NAME_COLLISION_NEEDS_FIX",
+  "evidenceSha256": {
+    "actual": "925fb88ac907ce6c2077cd7a07e789e071cb0375749f3e4ea1ca63122aacd6f2",
+    "report": "d9528d58d3781d82ed52d61758d60356c4330c2d53c78f1c1c689d57dbd261d7",
+    "independentReview": "8b7d9fc8d9f3b101e875f1aa1306dedde00c8e4eae834add8b0e69efc6a7a9ab",
+    "candidate": "346b693496a6e0e684793c86899b8e99cb5332f3e0574c993721937e9e4e308d"
+  },
+  "postgres": "17.11",
+  "limitedLocalStatementTimeoutMs": 90000,
+  "limitedLocalClientTimeoutMs": 100000,
+  "limitedLocalJobWorkSeconds": 720,
+  "localLimitChangeExplicitlyAuthorized": true,
+  "initializerWireBytes": 51977199,
+  "historyStepsAcknowledged": 37,
+  "historyRows": 130,
+  "stepControlledTotalMs": 10465.811,
+  "warmFiveRowStepControlledMs": 276.946,
+  "warmProofSelfMs": 10.812,
+  "completeControlledMs": 4570.993,
+  "completeMeasuredBelowFormerFortySeconds": true,
+  "historyWholeGroupMs": 15937.789,
+  "privateProjectionCreatedAndFilled": 1,
+  "commitAcknowledgedAndReadBackByDifferentPhysicalConnection": true,
+  "cleanStoppedAndPrivateRootRemoved": true,
+  "finalizeExecuted": false,
+  "formalR3AccessOrChange": false,
+  "sourceFinding": "A same-named caller-owned temporary type can cause a local optional table creation conflict. Preserve that object and fall back to the original proof."
+}
