@@ -1,0 +1,61 @@
+{
+  "state": "NORMAL46_START_PRECONTAINER_FAILURE_ORIGINAL_AUTH_RESTORED",
+  "checkedAtUTC": "2026-11-18T02:51:45.009016+00:00",
+  "actualRegistry": 151,
+  "readbackSha256": {
+    "preflight": "dfeb642cdcd7759ada6810654d8680ed519881cda60a0785777e79746b9f5628",
+    "registration": "35d401cb978caf5f918fbfc22384c220c021932428bbdcf5f561e9080c599936",
+    "apply": "4d9484171fe4bd96bc1d8212b571ac8154da3da9c701b60672be16e12a8d918f",
+    "start": "630c2fcba0bc134fe74b438d67f84f22bfc749cdf40d98d52b7fd5d92812bd06",
+    "restore": "ab0a7612a5da4814ec0fab1fc28cbed7f658b5c2a7f4470d5910894fbe548c89"
+  },
+  "rootAvailableAtPreflightBytes": 267758518272,
+  "rootReserveBytes": 30064771072,
+  "registration": {
+    "dispatcherSha256": "bc281cd28869e6daf2919b2f1d25fb8abb2b8aa90debedeefc4e31a2813750ab",
+    "moduleSha256": "2aae715f33fb7ee08dcb8fe0e501c5d9f1a4005a49438ad9afdb4f604996f4f4",
+    "policySha256": "10d12a8bb1f6a3329660a5a080912dd9e4e135f7ce6ceabcdc469687025339ad",
+    "old146AndThreeGuardsPreserved": true
+  },
+  "phaseTerminal": {
+    "apply": {
+      "jobId": "t45-r3-ordinary46-auth-apply-20261118-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "sha256": "eeeec57fd63f8360bb6385440bf5ca41982d5436c9700d8ea50bbd43e47de700",
+      "finishedAtUTC": "2026-11-18T02:38:27.363709+00:00"
+    },
+    "start": {
+      "jobId": "t45-first-r3-native-service-start-20261118-46",
+      "status": "FAILED",
+      "exitCode": 2,
+      "sha256": "707ddf58d8eb88ae4745ec8a6d8d0e22608116347005a2c22ffb26d5f26538f2",
+      "finishedAtUTC": "2026-11-18T02:45:18.123084+00:00"
+    },
+    "restore": {
+      "jobId": "t45-r3-ordinary46-auth-restore-20261118-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "sha256": "6182d5b0225d885b29bf64b135e0ce61dcceec8bd8b039c1d3b2e5d6c04b0f2b",
+      "finishedAtUTC": "2026-11-18T02:51:17.311418+00:00"
+    }
+  },
+  "normalServiceContainerCreated": false,
+  "startFailurePhase": "VALIDATE_PRESERVED_INPUTS",
+  "reproducedSourceFailure": {
+    "file": "start/bundle/root08_material.py",
+    "line": 11,
+    "oldExpectedHelperSha256": "0fb01ca460ea35b48d2f28f303a91901af34083aee710bb61cc67d99e03a88da",
+    "actualFrozenHelperSha256": "1cee2db632a3c4040215d01ddb68b8e14a9e900196f62f3c5275865fd6c573cf",
+    "localReproduction": "Original rejects actual child bytes; updating exact dependency pin reaches the historical lineage reader."
+  },
+  "writer46AndStop46UnsubmittedByActualOwner": true,
+  "newBusinessWritesFromNormal46": 0,
+  "lastDurableBusinessCommitState": "PERSISTED_PARTIAL",
+  "lastProvenCommittedGroups": 151,
+  "totalOriginalPlanGroups": 1061,
+  "exactOriginalAuthRestored": true,
+  "runtimeAuthOrMembershipChanged": false,
+  "originalPGStopped": true,
+  "DBOrApplicationReleased": false
+}

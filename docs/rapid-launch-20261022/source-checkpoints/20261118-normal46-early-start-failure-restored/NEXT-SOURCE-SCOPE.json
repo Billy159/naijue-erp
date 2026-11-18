@@ -1,0 +1,29 @@
+{
+  "state": "NORMAL47_MINIMAL_START_PIN_REPAIR_AND_CONTINUATION_SOURCE_ONLY",
+  "recordedUTC": "2026-11-18T02:54:31.007946+00:00",
+  "actualNormal46CloseoutSha256": "e4cf46aec1db675b79b492845d065c83318e5a84819074139775cc156d11d003",
+  "actualRootBefore": 151,
+  "candidateRootAfter": 156,
+  "previousGenerationKept": true,
+  "newKeys": {
+    "apply": "t45-r3-ordinary47-auth-apply-20261118-01",
+    "start": "t45-first-r3-native-service-start-20261118-47",
+    "writer": "t45-r3-batched-real-after46-resume-20261118-01",
+    "stop": "t45-r3-ordinary47-preserve-stop-20261118-01",
+    "restore": "t45-r3-ordinary47-auth-restore-20261118-01"
+  },
+  "sourceRepair": "Update only the confirmed Root08 historic helper expectation for the actual source_lineage child, propagate affected hashes, and verify the historical reader and each opened same-bundle identity through the real preserved-input entry with local fixtures. Reuse existing guard and phase implementations where their inputs are unchanged.",
+  "originalBusinessIdentityUnchanged": true,
+  "originalPlanCustodyUnchanged": true,
+  "approvedCutoff": "2026-11-16T11:40:00+08:00",
+  "lastCommittedGroups": 151,
+  "totalOriginalPlanGroups": 1061,
+  "retainedPlanStepsIncludingCORE": 44911,
+  "newPolicyLeaf": "direct47-batched-resume.json",
+  "minimumRootFreeBytes": 30064771072,
+  "existingTimingCapsUnchanged": true,
+  "serverOwner": "T45",
+  "authorityPhase": "SOURCE_ONLY",
+  "runtimeWindowIssued": false,
+  "nextRuntimeGate": "Exact frozen and paired source checks, actual matching stopped/fresh readback with old role fields restored, and Main finite window before existing owner runtime."
+}
