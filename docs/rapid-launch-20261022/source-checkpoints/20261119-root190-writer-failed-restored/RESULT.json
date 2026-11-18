@@ -1,0 +1,102 @@
+{
+  "state": "ACTUAL_ROOT190_WRITER_FAILED_ORIGINAL_AUTH_RESTORED_DURABLE_OUTCOME_UNKNOWN",
+  "evidenceSha256": {
+    "root08": "595c0227bd1e5ea82a54213218755f116d1c579670263e2c2655e22ca8ea7129",
+    "cas": "0281cc08daa057f9c1ed1fa0efc2c2aae52df9ff091e59c7207e8dc482709dee",
+    "apply": "43b619ee01afc465a966fb3baf4410dd8b10f2ae86e706007975f3d2998c1425",
+    "start": "f3d455c9a1d79ff03f1a2fa253155a7feed83eddb1f04eaf11c361f9f542df04",
+    "writer": "1d8e055d1801759652fed7d687bef5f122a6f274afb42646bfd60992cf8294c5",
+    "writerProgress": "0d80fc1f40c3dfa0342d77650824836bd4f38c1cbbf501779bcb802c413bc5b7",
+    "writerSummary": "f4dbc0bd117053c05d7972c9de4574e87b470162607dcf0cc8a9d37ef95ec889",
+    "stop": "61b75c6e44714ea37e896d1e3b75cb82182f00418f8fdf84f19faa8086b5fb67",
+    "stopped": "98519ef0714f13abf790ae575b71f39bce122eea2cffb491c34cb23933eb4c82",
+    "restore": "98c72d94210cb39641face7e67739377dbf6b95f23f493c986fa6b6192f2e526",
+    "closed": "d26338eb262494101a78420f205dff7272f1141907a4fcda645fc0e8b9f973ec"
+  },
+  "root": {
+    "oldRegistryCount": 185,
+    "actualRegistryCount": 190,
+    "dispatcherSha256": "62423e2a02c776c54e76349a033a7ec4d0d1f1ffdf051e7e839fcffeac324f47",
+    "policySha256": "50d539f6d03520406600cd6aaed9acbc692a954f0afc0f2882f04ac609bfdd08",
+    "moduleSha256": "c01cda017041814a69eab3904eb85e980ffd6b87ff0b4c9fbd11957cdab601b3",
+    "checkedAtUTC": "2026-11-18T18:24:12.566048+00:00",
+    "auditResultSha256": "d46adc9a207321b378c8974ccb405724b0b7a725f39e8330800a168ff2885828"
+  },
+  "root08HistoricalReadback": {
+    "memberCount": 69,
+    "originalLockMatched": true,
+    "actualHistoricalTerminalAndMaterializationPaired": true,
+    "cacheReadySha256": "105bdbe49db574205de757bd94455e4746289e53c04cc19a6b58c95c30eab901"
+  },
+  "phases": {
+    "apply": {
+      "jobId": "t45-r3-hall165-resume-auth-apply-20261119-03",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "phaseStarted": true,
+      "finishedAtUTC": "2026-11-18T18:24:23.959328+00:00",
+      "terminalSha256": "b544d3f5a367bf904dbbf8bac98ab54e750cbf35f04cb54a11a8c7b88d3bd8a5"
+    },
+    "start": {
+      "jobId": "t45-first-r3-native-service-start-20261119-hall165-resume-03",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "phaseStarted": true,
+      "finishedAtUTC": "2026-11-18T18:27:38.109610+00:00",
+      "terminalSha256": "d61ee4a5b5d4b3efc445d9af6d853d665d5570d1136d421782464df5bad64352",
+      "serviceProofSha256": "46e3afc79524e06667f8c98d6adb92a65081a69c2672b17e51291d151553049c",
+      "retainedAckSha256": "ca84b0b74dd036c961f02e2075e56d1cb2f2a5ece0fc9408d6013d0a10ce6d07",
+      "actualServiceAuthenticated": true,
+      "applicationAcceptance": false
+    },
+    "writer": {
+      "jobId": "t45-r3-batched-real-hall165-resume-20261119-03",
+      "status": "FAILED",
+      "exitCode": 2,
+      "phaseStarted": true,
+      "finishedAtUTC": "2026-11-18T18:37:28.072052+00:00",
+      "terminalSha256": "f3383c4b4307a548837288f0d737083bc5c57b47d58b11f7141650e27638991f",
+      "safeCode": "FINAL33_NATIVE_OUTCOME_UNCONFIRMED",
+      "nativeState": "UNKNOWN",
+      "lastObservedProgressStage": "RUNNER_FAILURE",
+      "progressReportedCommitAttempted": false,
+      "progressReportedCommitAcknowledged": false,
+      "durableReadbackVerified": false,
+      "originalKeyReplayed": false
+    },
+    "stop": {
+      "jobId": "t45-r3-hall165-resume-preserve-stop-20261119-03",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "phaseStarted": true,
+      "finishedAtUTC": "2026-11-18T18:41:48.816661+00:00",
+      "terminalSha256": "b086bd8111155afd67a7cdf6a05f402a30636fb835f075a2ce2d8771f34592dd",
+      "sameServiceCleanlyStopped": true
+    },
+    "restore": {
+      "jobId": "t45-r3-hall165-resume-auth-restore-20261119-03",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "phaseStarted": true,
+      "finishedAtUTC": "2026-11-18T18:45:45.341950+00:00",
+      "terminalSha256": "69bb3b0224bb4c299e4c50801b59f0a892f4f6fbfb129deb0020f2871d7e5310",
+      "safeReceiptSha256": "5a76075b3cb080e3ec31345d0b9600e432f96d62d9266b7400ab4214f685d1e0",
+      "independentCloseoutUTC": "2026-11-18T18:46:53.463515+00:00",
+      "originalAuthenticationRestored": true,
+      "originalPlanStat9Preserved": true,
+      "originalAndRestoreContainersStopped": true,
+      "legacyHoldPreserved": true
+    }
+  },
+  "business": {
+    "batchRows": 514485,
+    "originalPlan": "PREPARE05",
+    "priorVerifiedGroups": 151,
+    "totalGroups": 1061,
+    "priorVerifiedStepReceipts": 467,
+    "totalStepReceipts": 44911,
+    "afterThisWriterDurableCounts": null,
+    "afterThisWriterCommitOutcome": "UNKNOWN",
+    "cutover": false
+  }
+}
