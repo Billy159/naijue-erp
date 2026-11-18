@@ -1,0 +1,35 @@
+{
+  "PGOrBusinessActionsAuthorized": false,
+  "authorityBasis": "Reuse the existing approved R3 launch work and the observed source-readability diagnosis. This draft does not grant runtime authority.",
+  "beforeDispatcherSha256": "0e5e83c3d0b07e88b995fe2de2c07611ef37aaa6df7eec1bb792357081514e95",
+  "consumerSourcePinsSha256": "fa8320172a2430aa7d579df91072558de20d884f7cba0123e261b3ce89bfed68",
+  "destination": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root09-after45-resume-progress-20261118-02",
+  "failedSourceEvidence": {
+    "key": "t45-r3-batched-root09-after45-resume-progress-source-20261118-01",
+    "targetPath": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root09-after45-resume-progress-20261118-01",
+    "targetStat9": [
+      66304,
+      13667828,
+      0,
+      0,
+      493,
+      3,
+      4096,
+      1794957815606792634,
+      1794957815606792634
+    ],
+    "terminalSha256": "8627a5860d2a31e6abb121bb926c5f3a7bc7e8226e0121f41eacb17e7f863305"
+  },
+  "independentReviewPending": true,
+  "jobSeconds": 300,
+  "localOneLeafEvidenceSha256": "c3b1c879aea65c845e00c90187702ae942af6f2f193cb54e8e3f165f97488dc9",
+  "newJobId": "t45-r3-batched-root09-after45-resume-progress-source-20261118-02",
+  "normal46RuntimeAuthorized": false,
+  "registeredKeysAfter": 146,
+  "registeredKeysBefore": 145,
+  "registrationSeconds": 180,
+  "reserveBytes": 30064771072,
+  "sourceMaterializationOnly": true,
+  "state": "LOCAL_REVIEW_CANDIDATE_SCOPE_NO_RUNTIME_AUTHORITY",
+  "windowSeconds": 900
+}

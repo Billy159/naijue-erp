@@ -1,0 +1,49 @@
+{
+  "files": {
+    "CONSUMER-BINDING.json": {
+      "bytes": 6138,
+      "sha256": "2e79603e1eecabd28579e332e0c99e5041d1fd595f512e53b39e28d8d7dc400f"
+    },
+    "HISTORY.json": {
+      "bytes": 3276,
+      "sha256": "9d1908cd4924f3f760f3295ce2878f44eb309b2f26cba253c10cba3042ada540"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 453,
+      "sha256": "88437650296636594ab400dd78fa10dcf1e6b8abd9bb684d00ec314aca40c57f"
+    },
+    "SUCCESSOR-SCOPE.CANDIDATE.json": {
+      "bytes": 1627,
+      "sha256": "8833d6a0fecc14a5c80998736ce3ec0064f35496024e459774f76f0f3704169c"
+    },
+    "admin_exec.MAPPED-UNREGISTERED.py": {
+      "bytes": 66961,
+      "sha256": "8792d58c207b5d48f81de3e27137dbd0b1cb76d3b3a5b4c0e106e5f7892b813c"
+    },
+    "issue_registration.py": {
+      "bytes": 5584,
+      "sha256": "7a019c938a9b59cf42053ab63e05ede83a7b6468849a1c52885e9255c705ee2a"
+    },
+    "prepare_channel.py": {
+      "bytes": 7337,
+      "sha256": "3c524bb6ef7e399f45152a7fb678865d9e5cf1d43cb2e6065c1286c8989797c8"
+    },
+    "r3_root09_after45_mapped_source_admission.py": {
+      "bytes": 12644,
+      "sha256": "60b62bc90c381674a60a5d476027ec36ccbb98c3a600f487de6b0b27753a158b"
+    },
+    "read_registration_basis.py": {
+      "bytes": 1406,
+      "sha256": "80a87ee910006d02b982ee2cecf68f0b8c38e7060f5096e3a619bfa4646106cb"
+    },
+    "register_cas.py": {
+      "bytes": 42858,
+      "sha256": "b663c36670d1cf41f611df74de9f0eec56b1079e6483cb7bf8b3a01b0523d1ab"
+    },
+    "root09_cli.py": {
+      "bytes": 5708,
+      "sha256": "c4d328b815cb742f00d1108bed2b75685207aca1b099e7265c0dc4c8e43cae90"
+    }
+  },
+  "status": "LOCAL_ONLY_UNISSUED_REVIEW_PENDING"
+}

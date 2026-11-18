@@ -1,0 +1,24 @@
+{
+  "changedBundleMembers": [
+    "materialize-batched-source.py",
+    "source-profile.json"
+  ],
+  "dynamicAuthorityPresent": false,
+  "files": {
+    "INTERFACE.CANDIDATE.json": "3539d8ac6f189731b028b4bb2d6ade2a368861b9a3c445b65bac0f533bf77166",
+    "bundle/delta-00.asset": "89bb31da0c6c6e737746002929bd3a11f9b0fa54f365acdd3a7b545737f09d13",
+    "bundle/delta-01.asset": "1d3bc9a96c22681c2e15e506daed1f53b5ad2ee73c56a178852d5febd28c4dad",
+    "bundle/delta-02.asset": "8085cc6b337ecc3e8b37353273d73eda8a63f782fea8a2d5eb3a4cf3ea086b9e",
+    "bundle/materialize-batched-source.py": "1b0c4ba8be67b3abb25062d5a7c7bdced781862217e3632165960f84bd145097",
+    "bundle/source-profile.json": "ebabec0f925cffa01f0f472681ff1bac64c92a97cdad6096ae4ba4416672cb89",
+    "bundle/source-rows.json": "e3ce167b5b31b6db11d37651665cb17aab74fbbffd52bfa1b9a983394df15f59",
+    "transport/delta-00.asset.json": "89bb31da0c6c6e737746002929bd3a11f9b0fa54f365acdd3a7b545737f09d13",
+    "transport/delta-01.asset.json": "1d3bc9a96c22681c2e15e506daed1f53b5ad2ee73c56a178852d5febd28c4dad",
+    "transport/delta-02.asset.json": "8085cc6b337ecc3e8b37353273d73eda8a63f782fea8a2d5eb3a4cf3ea086b9e",
+    "transport/materialize-batched-source.py": "1b0c4ba8be67b3abb25062d5a7c7bdced781862217e3632165960f84bd145097",
+    "transport/source-profile.json": "ebabec0f925cffa01f0f472681ff1bac64c92a97cdad6096ae4ba4416672cb89",
+    "transport/source-rows.json": "e3ce167b5b31b6db11d37651665cb17aab74fbbffd52bfa1b9a983394df15f59"
+  },
+  "serverActions": 0,
+  "state": "LOCAL_SOURCE_ONLY_CANDIDATE"
+}

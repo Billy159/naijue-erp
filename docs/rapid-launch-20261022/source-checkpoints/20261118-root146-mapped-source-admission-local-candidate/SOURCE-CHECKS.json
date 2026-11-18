@@ -1,0 +1,14 @@
+{
+  "activeAuthorityIssued": false,
+  "candidateRegistry": 146,
+  "changedExistingDispatcherFunction": "execute",
+  "consumerReviewBound": false,
+  "currentRegistry": 145,
+  "existingDispatcherFunctions": 53,
+  "frozenSourceManifestCreated": false,
+  "oldBranchesPreservedAfterRemovingNewBranch": true,
+  "protectedPaths": 118,
+  "result": "LOCAL_SYNTAX_EXACT_DELTA_AND_PACKET_FIELDS_CHECKED",
+  "retainedFailedTargetPinned": true,
+  "serverCalls": 0
+}

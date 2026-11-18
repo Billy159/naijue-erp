@@ -1,0 +1,21 @@
+{
+  "state": "ROOT146_ADMISSION_LOCAL_CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+  "asOf": "2026-11-18T00:16:08.789848+00:00",
+  "actualRegistryKeys": 145,
+  "candidateRegistryKeys": 146,
+  "mainLocalCandidateDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261118-r3-root146-mapped-source-admission-candidate-01",
+  "candidatePinsSha256": "61f6959460655bb7e278f3faec78afc8fe7a3bfd0ef571753e1390343ede8251",
+  "workerBundlePinsSha256": "fa8320172a2430aa7d579df91072558de20d884f7cba0123e261b3ce89bfed68",
+  "runtimeActions": 0,
+  "actualLastVerifiedPGStopped": true,
+  "businessDurableState": "PERSISTED_PARTIAL",
+  "source09Ready": false,
+  "copies": {
+    "ROOT-CANDIDATE-PINS.json": "61f6959460655bb7e278f3faec78afc8fe7a3bfd0ef571753e1390343ede8251",
+    "SUCCESSOR-SCOPE.CANDIDATE.json": "8833d6a0fecc14a5c80998736ce3ec0064f35496024e459774f76f0f3704169c",
+    "SOURCE-CHECKS.json": "88437650296636594ab400dd78fa10dcf1e6b8abd9bb684d00ec314aca40c57f",
+    "WORKER-BUNDLE-PINS.json": "fa8320172a2430aa7d579df91072558de20d884f7cba0123e261b3ce89bfed68",
+    "MODELED-CLOSURE-CHECK.json": "820c810a12adaf68bc3936a842b8829518c59ae7d9ad45a382b71174ee13a1d2"
+  },
+  "next": "Root146 admission and six-member mapped source bundle are local candidates pinned to observed Root145 and failed01 evidence. Local syntax/dispatcher delta, package identity, closed-basis checks under modeled filesystem and subprocess, and refusal without independent review passed. Actual registry remains Root145. The new root package has no frozen SOURCE-PINS, review pin, or issued authority. Next independent source delta review and T45 real paired fresh, then independent source materialization only. Original authentication restored, last verified PG stopped, business partial 151 groups / 467 receipts, initial batch RESUME and cutover incremental data still pending. Final exports after T+ stop are still needed."
+}

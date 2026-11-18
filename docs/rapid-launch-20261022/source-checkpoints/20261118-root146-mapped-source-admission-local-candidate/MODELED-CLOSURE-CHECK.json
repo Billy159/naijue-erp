@@ -1,0 +1,14 @@
+{
+  "state": "LOCAL_SYNTHETIC_CLOSURE_AND_UNISSUED_GUARD_CHECKED",
+  "candidatePinsSha256": "61f6959460655bb7e278f3faec78afc8fe7a3bfd0ef571753e1390343ede8251",
+  "passed": [
+    "matching fixed custody metadata returns closed basis flags",
+    "wrong_terminal",
+    "wrong_inode",
+    "failed_marker",
+    "new_target_exists",
+    "unreviewed policy rejected"
+  ],
+  "filesystemSubprocessAndRootMetadataMocked": true,
+  "runtimeCalls": 0
+}
