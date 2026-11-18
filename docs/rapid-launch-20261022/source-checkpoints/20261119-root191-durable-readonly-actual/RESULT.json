@@ -1,0 +1,103 @@
+{
+  "state": "ACTUAL_ROOT191_DURABLE_READONLY_CONFIRMED_NO_NEW_GROUPS_PG_STOPPED",
+  "evidenceSha256": {
+    "cas": "421a8ad6042172926056b47041672545cad5be9091b1cd6693d47303dd0a7092",
+    "fresh": "90da12fd7f2a507f90ef0d83304e61d45ff614fbfad03b6716236e3e66b6efc3",
+    "terminalReadback": "0120b2fa8b1cd831485dad2bba13a76d8b40645fb80e045e9d57143779f67808",
+    "result": "42ddf5af7c3c007a6e13fef8cc1549c83d4f06655ff83451ffe98f2a49a267c6"
+  },
+  "root": {
+    "oldRegistryCount": 190,
+    "actualRegistryCount": 191,
+    "dispatcherSha256": "58b99e1e413509c74f83271c0ead0b2c2b07b413c03f17827cf186c7d11c8767",
+    "policySha256": "7420f2b5abaf2328d24dca66fa705324a1e20940baf92caf89ab8492a25d4031",
+    "moduleSha256": "24975fea5f45d46732bb6e42784bf4209e582855c7e872ae9b49a059197d347a",
+    "auditResultSha256": "fb826ad7369b498e7d089635872698121e82572e5156eb04a5745751d111605d",
+    "actualFinalClosureSha256": "d26338eb262494101a78420f205dff7272f1141907a4fcda645fc0e8b9f973ec",
+    "old190AndThreeGuardsPreserved": true
+  },
+  "observation": {
+    "requestKey": "t45-r3-hall165-resume03-durable-readonly-20261119-01",
+    "checkedAtUTC": "2026-11-18T19:11:27.574701+00:00",
+    "finishedAtUTC": "2026-11-18T19:10:54.279228+00:00",
+    "terminalSha256": "1ea3b4703a4d8427001f696e27884aec33e884be1610738b92d207a45c1a637e",
+    "terminalStatus": "COMPLETED",
+    "terminalExitCode": 0,
+    "resultRootSha256": "e49d3ea68dc7d98498e18386bbdeac14c04c7e35e9d4d42d7772c3600ef02035",
+    "resultPublicSha256": "4f91a5ca0d07c8fb67780d03f9560272fe01479abc30901063e29a31ed36a866",
+    "cleanupRootSha256": "801c64f6c794aca274624dcb08b90e246ca897a2d098aba8cbf1f43e81d358b9",
+    "cleanupPublicSha256": "98531a9814f24fedf68915beb7d48afec06f993449c295551ed696d737ffbbd3",
+    "historicalBaselineSha256": "bcbaf622fe59b4ada3b2599d9888a89955b7274d2f614d0803b85f4857f18f38",
+    "currentCounts": {
+      "audit": 467,
+      "groups": 151,
+      "receipts": 467
+    },
+    "historicalCounts": {
+      "audit": 467,
+      "groups": 151,
+      "receipts": 467
+    },
+    "countDeltas": {
+      "audit": 0,
+      "groups": 0,
+      "receipts": 0
+    },
+    "committedGroupOrdinalRange": [
+      0,
+      150
+    ],
+    "committedStepOrdinalRange": [
+      0,
+      466
+    ],
+    "phaseGroupCounts": {
+      "BASELINE_CLOSE": 1,
+      "CORE": 1,
+      "DOCUMENT_OPEN": 1,
+      "FINALIZE": 0,
+      "HISTORY": 0,
+      "KEYS": 80,
+      "MASTER": 68,
+      "OTHER": 0
+    },
+    "checkedAnomalies": {
+      "auditWithoutReceiptCount": 0,
+      "bindingIdentityConflictCount": 0,
+      "descriptorHashConflictCount": 0,
+      "duplicateOrdinalCount": 0,
+      "duplicateSubBatchIdCount": 0,
+      "extraMatchingBatchCount": 0,
+      "identityConflictCount": 0,
+      "identityOrDescriptorConflictCount": 0,
+      "invalidDescriptorHashCount": 0,
+      "invalidRangeCount": 0,
+      "memberClosureConflictCount": 0,
+      "nonImportOrActorConflictCount": 0,
+      "otherHashBatchCount": 0,
+      "otherStatusReceiptCount": 0,
+      "predecessorConflictCount": 0,
+      "receiptWithoutAuditCount": 0
+    },
+    "expectedDescriptorBinding": "UNKNOWN_NOT_READ_FROM_ORIGINAL_PLAN",
+    "rootIdentityMatched": true,
+    "actualReadonlyRollback": true,
+    "pgCleanStopped": true,
+    "businessDML": false,
+    "roleOrCredentialChanges": false,
+    "physicalPGDATAFileWritesPossible": true,
+    "baselineStatus": "IMPORTED",
+    "documentStatus": "STAGED"
+  },
+  "business": {
+    "originalPlan": "PREPARE05",
+    "batchRows": 514485,
+    "totalGroups": 1061,
+    "totalStepReceipts": 44911,
+    "noNewDurableCommitsFromFailedWriterAfterPriorObservation": true,
+    "firstMissingGroupOrdinal": 151,
+    "firstMissingGroupHuman": 152,
+    "observationAuthorizesWriter": false,
+    "businessEntryOpened": false
+  }
+}
