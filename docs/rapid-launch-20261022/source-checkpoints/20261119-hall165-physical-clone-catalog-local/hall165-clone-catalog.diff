@@ -1,0 +1,114 @@
+--- a/tools/unified-import/physical-clone-readback.mjs
++++ b/tools/unified-import/physical-clone-readback.mjs
+@@ -6,13 +6,17 @@
+ import {BoundedPostgresPool} from '../../adapters/postgres/src/bounded-pool.ts';
+ import {loadFresh35CombinedRecordEnvelope} from '../../scripts/release/unified-install/fresh35-combined-record-v1.mjs';
+ import {reconstructFresh35InstalledProductionTargetV2,describeFresh35CombinedTarget} from '../../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
+-import {resolveFresh35ReferenceInputPaths,loadFresh35CompactZeroSource,assertFresh35CombinedSourcesCurrent} from '../../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
+-import {buildFresh35CompactZeroCatalog,describeFresh35CombinedCatalog,assertFresh35CombinedCatalogCurrent,fresh35Admin154ControllerCatalogSql,validateFresh35CombinedRuntimeCatalogObservation,fresh35CombinedOrdinaryCatalogSql,validateFresh35CombinedOrdinaryCatalogObservation} from '../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
+-import {buildFresh35Ordinary161Catalog} from './fresh35-host-session.mjs';
++import {resolveFresh35ReferenceInputPaths,loadFresh35CompactZeroSource,describeFresh35CombinedSource,assertFresh35CombinedSourcesCurrent} from '../../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
++import {buildFresh35CompactZeroCatalog,buildFresh35BatchedCatalogV1,buildFresh35BatchedCommandSuccessorCatalogV1,buildFresh35Settlement24CurrentWireCatalogV1,buildFresh35HallFinalize165CatalogV1,describeFresh35CombinedCatalog,assertFresh35CombinedCatalogCurrent,fresh35Admin154ControllerCatalogSql,validateFresh35CombinedRuntimeCatalogObservation,fresh35CombinedOrdinaryCatalogSql,validateFresh35CombinedOrdinaryCatalogObservation} from '../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
+ import {reconcileWholePackage} from './whole-package-reconcile.mjs';
+ import {runtimeReadbackSql,validateProjection,compareWholePackageRuntimeProjection,ordinaryIdentitySql,runtimeReadIdentitySql} from './physical-clone-projection.mjs';
+ 
+-const model='626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811';
++const hall165Catalog=Object.freeze({
++  routineCount:165,
++  sourceSetSha256:'e5458806257844813145f08c581726e3da06cb2366d37f77b70b9b2365e65aab',
++  catalogSpecSha256:'cc0c72ae6f31818cadf664bbe8d08e67fbb450c76ba3bedb2da2a3d2e4b9cda6',
++  modelSha256:'b9b67be2a68dcd35d445b7fe45838fdaade66cf877d3fdc5940eee880508c3d8',
++});
+ const runtimeRole='erp_unified27_runtime_2393dbc6db9581c2';
+ const initializerRole='erp_unified27_initializer_2393dbc6db9581c2';
+ const importerRole='erp_unified27_importer_2393dbc6db9581c2';
+@@ -23,15 +27,39 @@
+ const ack=(result,command)=>need(result?.command===command,'CLONE_CHECK_QUERY_ACK_INVALID');
+ const safeCodes=new Set(['CLONE_CHECK_HOST_CURRENT_FAILED','CLONE_CHECK_WINDOW_EXPIRED','CLONE_CHECK_IDLE_CLIENT_REQUIRED','CLONE_CHECK_QUERY_ACK_INVALID','CLONE_CHECK_PHYSICAL_DIFFERS','CLONE_CHECK_RUNTIME_ROLE_DIFFERS','CLONE_CHECK_CATALOG_REPLY_INVALID','CLONE_CHECK_CATALOG_GUARD_ACK_INVALID','CLONE_CHECK_NATIVE_VERIFY_FAILED','CLONE_CHECK_PROJECTION_REPLY_INVALID','CLONE_CHECK_CLEANUP_UNKNOWN']);
+ 
+-/** Uses the same protected historical target and actual 161 builder. No PG. */
++/** Uses the protected historical target and the same Hall165 builder chain as the retained readback. No PG. */
+ export async function loadPhysicalCloneReadbackCatalog(sourceRoot,referenceDirectory){
+   need(resolve(sourceRoot)===resolve(fileURLToPath(new URL('../../',import.meta.url))),'CLONE_CHECK_RUNNING_SOURCE_ROOT_REQUIRED');
+   const target=await reconstructFresh35InstalledProductionTargetV2(await loadFresh35CombinedRecordEnvelope());
+   const paths=await resolveFresh35ReferenceInputPaths(referenceDirectory);
+   const source=await loadFresh35CompactZeroSource(sourceRoot,{baselineDirectory:paths.baselineDirectory});
+   const base=await buildFresh35CompactZeroCatalog(source,target,paths);
+-  const catalog=await buildFresh35Ordinary161Catalog(source,target,base);
++  const catalog=await buildPhysicalCloneHall165Catalog(source,target,base);
++  requireHall165Catalog(describeFresh35CombinedCatalog(catalog));
+   return Object.freeze({source,target,catalog});
++}
++
++async function buildPhysicalCloneHall165Catalog(source,target,base){
++  const predecessor=await buildFresh35BatchedCatalogV1(source,target,base);
++  const command=await buildFresh35BatchedCommandSuccessorCatalogV1(source,target,predecessor);
++  const sql42=await buildFresh35Settlement24CurrentWireCatalogV1(source,target,command);
++  return buildFresh35HallFinalize165CatalogV1(source,target,sql42);
++}
++
++function requireHall165Catalog(description){
++  need(Object.entries(hall165Catalog).every(([key,value])=>description[key]===value),
++    'CLONE_CHECK_REAL_HALL165_CATALOG_REQUIRED');
++}
++
++function physicalCloneOrdinaryCatalogSql(catalog,source,target,physical){
++  const {guardSql,observationSql}=fresh35CombinedOrdinaryCatalogSql(catalog,source,target,physical);
++  // The ordinary builder emits the compact-source marker. The paired validator
++  // expects the selected catalog descriptor, including the Hall165 successors.
++  const sourceSetSha256=describeFresh35CombinedSource(source).sourceSetSha256;
++  const marker="'sourceSetSha256','"+sourceSetSha256+"'";
++  const parts=observationSql.split(marker);
++  need(digest.test(sourceSetSha256)&&parts.length===2,'CLONE_CHECK_CATALOG_REPLY_INVALID');
++  return {guardSql,observationSql:parts.join("'sourceSetSha256','"+hall165Catalog.sourceSetSha256+"'")};
+ }
+ 
+ /** Not an admission API. Only the existing trusted T45 carrier calls this,
+@@ -41,7 +69,8 @@
+ export async function checkPhysicalCloneDatabase(input){
+   const {source,target,catalog}=input.catalogContext??{};
+   const t=describeFresh35CombinedTarget(target),description=describeFresh35CombinedCatalog(catalog);
+-  need(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'&&description.routineCount===161&&description.modelSha256===model,'CLONE_CHECK_REAL161_TARGET_REQUIRED');
++  need(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35','CLONE_CHECK_REAL_TARGET_REQUIRED');
++  requireHall165Catalog(description);
+   const clone=Object.freeze({...input.clone});
+   need(typeof clone.assertCurrent==='function'&&Number.isSafeInteger(clone.startsAt)&&Number.isSafeInteger(clone.expiresAt)&&clone.startsAt<clone.expiresAt&&
+     typeof clone.postmasterStart==='string'&&/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d(?:\.\d{1,6})?\+00$/.test(clone.postmasterStart)&&clone.postmasterStart!==t.physical.postmasterStart&&
+@@ -147,7 +176,7 @@
+       ack(await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'),'BEGIN');
+       await physical(client,'runtime',first.backendPid);
+       ack(await client.query('SET LOCAL ROLE '+runtimeRole),'SET');
+-      await catalogQuery(client,fresh35CombinedOrdinaryCatalogSql(catalog,source,target,first),validateFresh35CombinedOrdinaryCatalogObservation);
++      await catalogQuery(client,physicalCloneOrdinaryCatalogSql(catalog,source,target,first),validateFresh35CombinedOrdinaryCatalogObservation);
+       const runtimeIdentity=async()=>{
+         const r=await client.query(runtimeReadIdentitySql);ack(r,'SELECT');const x=r.rows?.[0];
+         need(r.rows?.length===1&&x?.database===t.proposal.database&&x.role===runtimeRole&&x.session_user===t.proposal.runtime&&x.server_port===t.ordinary.serverPort&&
+@@ -172,7 +201,7 @@
+     return {publicResult:{format:'D1_R3_PHYSICAL_CLONE_DATABASE_READBACK_V1',requestKey:PHYSICAL_CLONE_RESTORE_KEY,
+       state:comparison.state==='FIRST_IMPORT_RECONCILED'&&scopeExplicitDigestMatched?'VERIFIED_CLONE_DATABASE_READBACK_ONLY':'CLONE_DATABASE_READBACK_DIFFERS',phase:'COMPLETE',code:null,
+       database:t.proposal.database,systemIdentifier:t.physical.systemIdentifier,databaseOid:t.physical.databaseOid,postmasterStart:clone.postmasterStart,
+-      routineCount:161,catalogModelSha256:model,physicalMatched:true,catalogMatched:true,nativePackageState:nativeResult.state,scopeExplicitDigestMatched,
++      routineCount:description.routineCount,catalogModelSha256:description.modelSha256,physicalMatched:true,catalogMatched:true,nativePackageState:nativeResult.state,scopeExplicitDigestMatched,
+       warehouseMismatchCount:comparison.warehouseMismatches.length,cashMismatchCount:comparison.cashMismatches.length,currentInventory:comparison.currentExplicitInventory,
+       currentCashDirectionsDiffer:comparison.currentCashDirectionsDiffer,omittedKeyHasEffects:comparison.omittedKeyHasEffects,
+       transactionsRolledBack:true,connectionCleanup:'CLOSED',restoreClosed:false,hostClosure:'T45_OUTER_STOP_READBACK_REQUIRED'},
+@@ -182,7 +211,7 @@
+       state:cleanupUnknown?'CLONE_DATABASE_CHECK_CLEANUP_UNKNOWN':'CLONE_DATABASE_CHECK_FAILED',phase,
+       code:safeCodes.has(error?.message)?error.message:'CLONE_CHECK_DATABASE_OR_CATALOG_FAILED',
+       database:t.proposal.database,systemIdentifier:t.physical.systemIdentifier,databaseOid:t.physical.databaseOid,postmasterStart:clone.postmasterStart,
+-      routineCount:161,catalogModelSha256:model,physicalMatched:null,catalogMatched:catalogResult?true:null,nativePackageState:nativeResult?.state??null,
++      routineCount:description.routineCount,catalogModelSha256:description.modelSha256,physicalMatched:null,catalogMatched:catalogResult?true:null,nativePackageState:nativeResult?.state??null,
+       scopeExplicitDigestMatched:null,warehouseMismatchCount:null,cashMismatchCount:null,currentInventory:null,currentCashDirectionsDiffer:null,omittedKeyHasEffects:null,transactionsRolledBack:null,
+       connectionCleanup:cleanupUnknown?'UNKNOWN':'CLOSED',restoreClosed:false,hostClosure:'T45_OUTER_STOP_READBACK_REQUIRED'},detail:{catalog:catalogResult??null,nativePackage:nativeResult??null}};
+   }
+--- a/tools/unified-import/physical-clone-readback.d.mts
++++ b/tools/unified-import/physical-clone-readback.d.mts
+@@ -54,7 +54,7 @@
+   readonly systemIdentifier: string;
+   readonly databaseOid: string;
+   readonly postmasterStart: string;
+-  readonly routineCount: 161;
++  readonly routineCount: 165;
+   readonly catalogModelSha256: string;
+   readonly physicalMatched: true | null;
+   readonly catalogMatched: true | null;

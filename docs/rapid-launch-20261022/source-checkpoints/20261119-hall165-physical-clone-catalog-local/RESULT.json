@@ -1,0 +1,46 @@
+{
+  "state": "HALL165_PHYSICAL_RESTORE_CHECKER_SOURCE_REVIEWED_LOCAL_ONLY",
+  "scope": [
+    "physical-clone-readback.mjs",
+    "physical-clone-readback.d.mts"
+  ],
+  "sourceMembers": 408,
+  "sourceMemberManifestSha256": "c9eb7dc2c923a1288761986ead5a90a05b3f25f3ca3f71c66070f8a7a84b9703",
+  "verifiedSourceSha256": {
+    "hall165-clone-catalog.patch": "dda42405224684caeb80e57df36459d5f245356c64c3ca7e3757e3a3346e7c3f",
+    "HANDOFF.md": "28798f7a2769325fe8cd1aa01430667642f506f7b3f0884dc4302646265d0e5a",
+    "verify_local.py": "85131995d3c371fb07b6dfdc57d50f05a05d2b3abce933359f395fb65fa73dd7",
+    "verify-catalog-wiring.mjs": "241be4fc04bf5329d603533877a65583cfd5e71259807feb051872fb171cf6cd"
+  },
+  "patchedFilesSha256": {
+    "physical-clone-readback.mjs": "8acb502312a84cb3b315185204d50878c1b5aa224a339410822588cb24a2f1a2",
+    "physical-clone-readback.d.mts": "6821c0cdcf4469e625efd37edb865f325e4ed7b8872ae0717bb197b368e3f7ff"
+  },
+  "catalog": {
+    "routineCount": 165,
+    "fullDescriptionSha256": "860d8245bac8400841bd88056ae6817baae4f96e51b5b1d3832ec471f292b628",
+    "sourceSetSha256": "e5458806257844813145f08c581726e3da06cb2366d37f77b70b9b2365e65aab",
+    "catalogSpecSha256": "cc0c72ae6f31818cadf664bbe8d08e67fbb450c76ba3bedb2da2a3d2e4b9cda6",
+    "modelSha256": "b9b67be2a68dcd35d445b7fe45838fdaade66cf877d3fdc5940eee880508c3d8"
+  },
+  "verification": {
+    "independentReviewTurn": "01a1f045-4825-7720-b02e-f4f8843f4d27",
+    "runner": "python3 -B verify_local.py",
+    "nodeVersion": "25.8.2",
+    "localFocusedExitCode": 0,
+    "oldMissingExportReproduced": true,
+    "fullOfflineCatalogMatched": true,
+    "wrongCatalogPinsRejected": true,
+    "ordinaryObservationReachedFullValidation": true,
+    "realCatalogObservationVerified": false,
+    "databaseConnections": 0,
+    "serverActions": 0,
+    "restoreExecuted": false,
+    "liveSuccessorChanged": false
+  },
+  "pending": [
+    "actual PREPARE05 Writer success and reconciliation",
+    "same-generation stop and protected cold backup",
+    "actual independent restore and host closure with updated outer receipt binding"
+  ]
+}
