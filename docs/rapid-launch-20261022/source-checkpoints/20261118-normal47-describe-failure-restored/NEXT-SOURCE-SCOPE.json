@@ -1,0 +1,42 @@
+{
+  "state": "NORMAL48_MINIMAL_EXACT_EXECUTION_CATALOG_REBIND_SOURCE_ONLY",
+  "asOf": "2026-11-18T03:59:17.302627+00:00",
+  "actualNormal47CloseoutSha256": "4cdc1d9a2861398f091004a220c48aeb6a16596c2ad8e85a13fc6fc9bb6e4eb9",
+  "exactLocalCatalogReproductionSha256": "f9e3456921e76d4d8cb0506919a03d442607e1fff095afac63caa1dd5b88f455",
+  "actualRegistryBefore": 156,
+  "candidateRegistryAfter": 161,
+  "newPolicyLeaf": "direct48-batched-resume.json",
+  "jobs": {
+    "apply": "t45-r3-ordinary48-auth-apply-20261118-01",
+    "start": "t45-first-r3-native-service-start-20261118-48",
+    "writer": "t45-r3-batched-real-after47-resume-20261118-01",
+    "stop": "t45-r3-ordinary48-preserve-stop-20261118-01",
+    "restore": "t45-r3-ordinary48-auth-restore-20261118-01"
+  },
+  "installedHistoricalSQL42": {
+    "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e",
+    "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+    "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9"
+  },
+  "currentTarget02Execution": {
+    "sourceSetSha256": "8d97c69f9e44520e03abe10fa1483f36ac3c5e102c2709dd946d18b038e6f0af",
+    "catalogSpecSha256": "a37bb026a4a7f506c6e4232111f692afc95e9768046305ccfbba604b99fc0250",
+    "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9"
+  },
+  "target02PhysicalSet": "13e67567351dbb0d0de6fd12c5c480151c08eea769699cc8b6b49bbff3d48bb3",
+  "modelAndGuardSqlPreserved": true,
+  "guardSqlSha256": "a977e4924e4eb90a2c38aaeefeb8cec168a5e370d3a855d16ac3f20b5fa09e58",
+  "originalPreparedBindingSha256": "bd1601155aeb8bc1f340c6763633b551ea56760b9b9f5bd5ee3b97899af5dab0",
+  "originalPreparedNonCoreSteps": 44910,
+  "originalSQLiteStepsIncludingCORE": 44911,
+  "previousProvenCommittedGroups": 151,
+  "originalPlanGroups": 1061,
+  "preserve": "Actual Root156 and all prior keys, preserved failed Start47 real container and retained acknowledgement, paired clean stop and exact original role restoration, unsubmitted Writer47/Stop47, source and prior batch identities, SQL42 history and existing native protected target and control bounds. No historical receipt is rewritten.",
+  "changeScope": "T45 adjusts trusted actual Start descriptor and current Writer closure to use the two exact newly derived execution digests. Old SQL42 paired history remains independently verified. D1 applies the same distinction to Main issuers and Root admission, and adds only the five new operational transport keys. Current DB model, guard SQL, original Prepared digest and original SQLite/group/business keys remain.",
+  "verification": "Reproduce old refusal with exact current derivation and new acceptance using that same derivation in the Start descriptor through Main8, Root admission and Writer consumer. Test wrong current source/spec or historical receipt independently. Local checks only until paired review and a actual new stopped-basis decision.",
+  "serverOwner": "T45",
+  "rootReserveBytes": 30064771072,
+  "sameExistingTimingCaps": true,
+  "runtimeAuthorized": false,
+  "pgOrServerActionsAuthorizedByScope": false
+}
