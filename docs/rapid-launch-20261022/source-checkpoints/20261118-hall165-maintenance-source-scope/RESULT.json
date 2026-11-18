@@ -1,0 +1,77 @@
+{
+  "state": "HALL165_LOCAL_CANDIDATE_AND_MAINTENANCE_SOURCE_SCOPE_UNISSUED",
+  "evidenceSha256": {
+    "finalSourceResult": "7706c68f140c07be42144f6f33919bfa2576d837f8819928473439bce64b8e07",
+    "sourceRows408": "c9eb7dc2c923a1288761986ead5a90a05b3f25f3ca3f71c66070f8a7a84b9703",
+    "localCatalogReadback": "62cd04f99ce0433552882c5fc7552f25204ac2899dd7e7706326afa54f54b3c1",
+    "offlineHostSelection": "335d081a3137bfdcbefd23d412e431ca847dd96e4bfed4e9132660e56d470445",
+    "twoHistoryEarlierFinalize": "2a31beef6c1765b94a994aeff907f07cfd675f63ee85e2d0f4ebe3f090054221",
+    "combinedDirectoryPins": "e763c1db8a056aa617924fa40c10bb7a243569f6ced4754a4eefe40631626d1a",
+    "lastFormalDurableReadback": "bcbaf622fe59b4ada3b2599d9888a89955b7274d2f614d0803b85f4857f18f38"
+  },
+  "catalogRoutinesBeforeAfterAndLocalReverse": [
+    161,
+    165,
+    161
+  ],
+  "installedActualSql42": {
+    "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e",
+    "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+    "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9"
+  },
+  "candidateCurrentCatalog": {
+    "transactionMode": "BATCHED_V1",
+    "batchedDbCandidatePinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+    "batchedSourceSetSha256": "e5458806257844813145f08c581726e3da06cb2366d37f77b70b9b2365e65aab",
+    "batchedCatalogSpecSha256": "cc0c72ae6f31818cadf664bbe8d08e67fbb450c76ba3bedb2da2a3d2e4b9cda6",
+    "batchedModelSha256": "b9b67be2a68dcd35d445b7fe45838fdaade66cf877d3fdc5940eee880508c3d8"
+  },
+  "originalPlanRetained": {
+    "preparedBindingSha256": "bd1601155aeb8bc1f340c6763633b551ea56760b9b9f5bd5ee3b97899af5dab0",
+    "steps": 44910,
+    "stepsSha256": "45a764dfa0da3e95567dad4394f79d0cb2dc83218582cdee163a53de937db997",
+    "planSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+    "originalBatchedSourceSetSha256": "db127efd32e1953fa550e56bd715b6ea334cc9d7e141217c4da8151bcd8c7803",
+    "originalBatchedCatalogSpecSha256": "344ccd895e1e65dedf0fdae5be71e291a6226ba5c21d9c0f4276b2be5490f362",
+    "originalBatchedModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+    "inputBindingSha256": "d3bfd39a995dc164309f8ec6bf7be34f6b3e721d9dd4fbcaa7d0192367702856"
+  },
+  "actualPriorRegistryKeyCount": 162,
+  "actualPriorDispatcherSha256": "1fb6d91a7ad19b65ce4bdbd1387c59755b896449c0a9af6e8b0caac0345701dd",
+  "actualPriorCommittedGroups": 151,
+  "actualPriorCommittedReceipts": 467,
+  "newMaintenanceInnerSha256": "5f6b44183d2aa8bb27e1e398da0d0ac24731358f7bf0aa74ad750d33160a4532",
+  "reverseMaintenanceInnerSha256": "a9d990e10bcd26f035f37bb747cec39dd7cdad07e27caba9d1be8c964057fe0b",
+  "localEarlierFinalizeRegression": {
+    "historyGroups": [
+      {
+        "rows": 67,
+        "retainedSettlementClosures": 19
+      },
+      {
+        "rows": 63,
+        "retainedSettlementClosures": 6
+      }
+    ],
+    "finalizeConnectionStartedEarlierAndObtainedEarlierXid": true,
+    "applyAcknowledgedThenPlannedRollback": true,
+    "independentStates": [
+      "COMMITTED",
+      "COMMITTED",
+      "ABSENT"
+    ]
+  },
+  "approvedLocalWork": "T45 prepares the exact Hall165 maintenance-only successor using the established five-phase lifecycle. No approval to contact or mutate the formal server here.",
+  "maintenanceActionsScope": [
+    "Apply finite maintenance role credentials",
+    "Start the existing original PostgreSQL target",
+    "One reviewed atomic Hall165 catalog upgrade with independent readback",
+    "Stop and verify the existing target",
+    "Restore the original role authentication and verify stopped state"
+  ],
+  "minimumFormalRootReserveBytes": 30064771072,
+  "maintenanceSourceAndRootPairReviewRequired": true,
+  "requiresFreshStoppedReadbackBeforeActualIssuance": true,
+  "writerIncluded": false,
+  "runtimeIssued": false
+}

@@ -52707,7 +52707,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Keep the After48 durable readback as the original-plan resume basis. The measured Hall V2 history optimization passed an isolated group. Repair the newly reproduced cross-transaction FINALIZE assertion, verify the original local HISTORY through FINALIZE and independent readback, then bind the full upgrade before actual import, reconciliation, backups and independent recovery.",
+  "next": "Keep the After48 durable readback as the original-plan resume basis. Bind the exact combined Hall165 source and paired maintenance-only root, obtain independent review and a fresh stopped basis before issuance. Actual resume, reconciliation, backup, independent recovery and the APP289 view-only release remain pending.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -55332,6 +55332,7 @@
   "r3ReadOnlyPreviewDecision": "docs/rapid-launch-20261022/source-checkpoints/20261118-r3-read-only-preview-decision/RESULT.json",
   "root146AdmissionCandidateCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source-admission-local-candidate/CHECKPOINT.json",
   "hall163OfflineDescribeLoadPrecursorCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-hall163-offline-describe-load-binding/RESULT.json",
+  "hall165MaintenanceSourceScopeCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-hall165-maintenance-source-scope/RESULT.json",
   "hallFinalizeSyntheticCompleteCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-hall-finalize-synthetic-complete/RESULT.json",
   "sql42FinalizeCrossGroupDiagnosisCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-sql42-finalize-cross-group-diagnosis/RESULT.json",
   "hall163LocalCatalogSuccessorCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-hall163-forward-and-reverse-local/RESULT.json",
