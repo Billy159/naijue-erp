@@ -1,0 +1,21 @@
+{
+  "state": "NORMAL46_JOINT_SOURCE_REVIEW_PASSED_FRESH_PENDING",
+  "rootSourcePinsSha256": "887b38b15d8e55fb3c1955b45847db58736db499dc69b75d409dd8b43b5eb129",
+  "consumerSourcePinsSha256": "2212bf944a3d4e0d6aa3cb963a73937b108d4c8fbd91666457c5b358a44da881",
+  "consumerReviewSha256": "cbc67e45805129b3069f95d0911b3af8876a7923bfa83d9a19c5de50ed0951b4",
+  "rootReviewSha256": "6f389960d856d28c4825a5c6444531e6e41d3add013e12a61fb83853bd0c8841",
+  "actualRoot": 146,
+  "candidateRoot": 151,
+  "actualTarget02MarkerSha256": "829de5d784377c40da2023a337c509a80488bdeeda5f3f809cacbb653587feb2",
+  "lastProvenBusinessCommitState": "PERSISTED_PARTIAL",
+  "lastProvenCommittedGroups": 151,
+  "totalPlanGroups": 1061,
+  "sameOriginalPlanAndBusinessIdentityRequired": true,
+  "minRootAvailableBytes": 30064771072,
+  "corrections": [
+    "Resolve the final five-phase rules through verified manifest and issuer pins.",
+    "Validate the Start lease duration against the real original Apply authority.",
+    "Publish the new continuation policy at its confirmed distinct path."
+  ],
+  "anyLiveActionOrFreshBasisVerifiedAtThisCheckpoint": false
+}
