@@ -1,0 +1,40 @@
+{
+  "state": "SYNTHETIC_HALL_FINALIZE_PUBLISH_COMMIT_AND_RECONCILIATION_VERIFIED",
+  "evidenceSha256": {
+    "RESULT.json": "f068e83a8a56ee32ac5d8013401c1ff843ec955287ad6d29bc3bd3cfe7c6b140",
+    "REPORT.md": "8fb40500689f3c60783319c806d47d08eb2b14a880a23ad0b26dd5e56e9ca289",
+    "finalize-durable-history.sql": "fe9eff549cf57e3abf96d35f5c2878d90bec3702abbf9d2bd00c0dea2939579a"
+  },
+  "baselineDiagnosticSha256": "7143d34daa2941fbfb45170d157ca902ca22a416f26785f3b7a129955ed8f1f0",
+  "sourceBoundaryReviewSha256": "cb29f7f50c03b9cae41a749e7c61e10685c87f066e2ab25467adf5aab909f889",
+  "syntheticRows": 247,
+  "initializerBytes": 96211,
+  "historyGroupCount": 1,
+  "groupsCommitted": 7,
+  "skippedGroups": 0,
+  "verifiedDatabaseRoutines": 165,
+  "verifiedTables": 35,
+  "statementTimeoutMs": 40000,
+  "finalizeMilliseconds": {
+    "apply": 173.439,
+    "commit": 0.15,
+    "complete": 42.516
+  },
+  "finalizeCommitAcknowledged": true,
+  "independentReconciliation": {
+    "code": null,
+    "differentBackend": true,
+    "rollbackAcknowledged": true,
+    "state": "VERIFIED"
+  },
+  "negativeProbes": {
+    "committedFinalizeCannotBeReusedAsCurrent": true,
+    "historyCannotActAsPublication": true,
+    "oldMigrateRejectedByWritePath": true,
+    "protectedImporterCannotCallOwnerHelper": true
+  },
+  "localClusterCleanStoppedAndRemoved": true,
+  "actualFinalBatchRun": false,
+  "actualR3Release": false,
+  "nextScope": "Combine this local proof with the Hall optimization in the exact SQL42 forward and reverse catalog and rebind both real host paths before any formal maintenance."
+}
