@@ -1,0 +1,35 @@
+{
+  "state": "SYNTHETIC_HISTORY_PROOF_HOTSPOT_MEASURED_LOCAL_PROJECTION_CANDIDATE_UNDER_DEVELOPMENT",
+  "evidenceSha256": {
+    "localSample": "4278e7031d99c6fa52df7f6a841ccbdc80dbecf23d25d74273ec02c2986ea19f",
+    "localTemporaryRelation": "e49ecab1f1977f7a31b04fab9a4d71f76e4b358455e74a24f3d4ac6493a78b0e",
+    "localStableReader": "bbc65da6f661817d1ecbb5f3926e827fa190f8f6c697fe974338fb3f1c1322c4"
+  },
+  "selectedHistoryStep": {
+    "rows": 5,
+    "completedDocuments": 1,
+    "commandInclusiveMs": 4646.662,
+    "proofCalls": 50,
+    "proofSelfMs": 4377.646,
+    "contextCalls": 11,
+    "contextInclusiveMs": 18.868
+  },
+  "selectionScope": "Same writer connection transaction statistics before and after a single observed step.",
+  "historyApplyAcknowledgements": 37,
+  "historyApplyTotalMs": 158422.913,
+  "newObservationQueryCount": 3,
+  "newObservationQueryMs": 1.65,
+  "complete": {
+    "sqlstate": "57014",
+    "controlledSendToErrorMs": 40217.931,
+    "historyRolledBackAndAbsentOnOtherConnection": true,
+    "transactionEndStatsAvailable": false
+  },
+  "localProjectionMechanism": {
+    "permissionAndLifecycleChecks": 9,
+    "stableReaderAndDeferredChecks": 3,
+    "scope": "Independent synthetic PostgreSQL fixtures. Same-version cache behavior with SQL42, group admission and performance remain unverified."
+  },
+  "allLocalClustersCleanStopped": true,
+  "formalR3ExecutionOrSignatureAdded": false
+}

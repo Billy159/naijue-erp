@@ -52707,7 +52707,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Use the After48 durable readback as the original-plan resume basis. Local timing review and representative synthetic performance preparation are in progress. No further writer window is issued. Complete actual import, reconciliation, backup and independent recovery before APP289 view-only release.",
+  "next": "Keep the After48 durable readback as the original-plan resume basis. Isolate the measured proof hot path in the local Hall V2 candidate and verify the existing HISTORY group commit before a further writer decision. Actual import, reconciliation, backups and independent recovery remain on the APP289 view-only release path.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -55331,6 +55331,7 @@
   "r3ReadOnlyPreviewSourceCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-app289-view-only-static-binding/RESULT.json",
   "r3ReadOnlyPreviewDecision": "docs/rapid-launch-20261022/source-checkpoints/20261118-r3-read-only-preview-decision/RESULT.json",
   "root146AdmissionCandidateCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root146-mapped-source-admission-local-candidate/CHECKPOINT.json",
+  "sql42HistoryProofSegmentCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-sql42-history-proof-segment-sampling/RESULT.json",
   "sql42InitReuseCandidateCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-sql42-init-reuse-local-candidate/RESULT.json",
   "sql42SyntheticHistoryPerformanceCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-sql42-synthetic-history-performance/RESULT.json",
   "after48ActualDurableCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-root162-after48-durable-readonly/RESULT.json",
