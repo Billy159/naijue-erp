@@ -1,0 +1,50 @@
+{
+  "state": "LOCAL_PREPARE05_PHASE_CLOSEOUT_AND_ROOT_ISSUER_PAIRED",
+  "liveRegisteredParent": {
+    "registryCount": 175,
+    "dispatcherSha256": "cbda5ef759bd165f992162ffcc2fa54c7da195d0123e5a7680185041c8c1f3da",
+    "lastExactStoppedAndRestoredReceiptSha256": "755986e4777986d8d805b53737de932b651d5383eb7d2714f601aeaa8656a079"
+  },
+  "candidate": {
+    "registryCount": 180,
+    "newJobCount": 5,
+    "old175AndThreeGuardsPreserved": true,
+    "dispatcherTemplateSha256": "0effce7ea4fec7f0e07bf57caa5c525c393c948fc8c64320236aa734d7fe4205",
+    "d1RootPinsSha256": "4047e4f80c62614cfa1b1beced0c60b2391d8a2c532963cb0fff96c28cf3aa00",
+    "t45PhasePairSha256": "979f42d95b16cbb787b9e8a71cf61c3bb0c74d7428e8a703b1d7a2663412ff83",
+    "phaseMemberSlots": {
+      "apply": 12,
+      "start": 27,
+      "writer": 13,
+      "stop": 3,
+      "restore": 13
+    },
+    "mainIssuerSha256": "a9efb59afe3994ac99a46c40fcda3196ea8167733d9475d089a5b3ee3b36fa0d"
+  },
+  "localVerification": {
+    "existingFirstGroupChecksReused": 17,
+    "t45CloseoutPassed": 11,
+    "t45CloseoutReceiptSha256": "0e6f9fe47ec4dc19a1e506d5824c704c18352ebb40c369199a22c7944fad63b1",
+    "d1RootPairPassed": 8,
+    "d1MainAndRootPassed": 10,
+    "t45ExactGuardianFixturesPassedThroughMainAndRoot": 5,
+    "d1IssuerReceiptSha256": "2ad0e838049f3864cde780a92738a941e361c7de9daeacb302fcd05faec98f32",
+    "testsFailed": 0
+  },
+  "checks": [
+    "The outer and native resume authorization bind the current successful Apply controller expiry and preserve the original 3000-second Writer requirement.",
+    "Before-phase terminal refusal is tied to the original job and proven by paired terminal results. Expired control-only requests and completely absent requests require their own readback. Jobs that actually ran retain the original child cleanup requirement.",
+    "Resume retains original PREPARE05 and native request identity. First potentially new APPLY is gated by the same transaction's exact original group ordinal 151 and steps 467–581."
+  ],
+  "runtime": {
+    "originalDurableGroupsAtLastAudit": 151,
+    "originalDurableReceiptsAtLastAudit": 467,
+    "remoteStaticStaged": false,
+    "registered": false,
+    "authorityIssued": false,
+    "writerSubmitted": false,
+    "PGConnections": 0,
+    "businessWrites": 0,
+    "finalOriginalChannelObserverPairAndIndependentReviewPending": true
+  }
+}
