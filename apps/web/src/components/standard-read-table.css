@@ -1,0 +1,10 @@
+.erp-read-table{width:100%;min-width:0;--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2);--color-bg-2:var(--ca-surface)}
+.erp-read-table .arco-table{font:inherit;color:var(--ca-ink)}
+.erp-read-table .arco-table .arco-table-th,.erp-read-table .arco-table .arco-table-td{height:var(--ui-row,36px);padding:6px 9px;border-bottom:1px solid var(--ca-line);font-size:12px;line-height:20px;vertical-align:middle;background:var(--ca-surface);color:var(--ca-ink)}
+.erp-read-table .arco-table .arco-table-th{color:var(--ca-ink-2);background:var(--ca-table-head);font-weight:600}
+.erp-read-table .arco-table-th-item{padding:0}
+.erp-read-table .arco-table .arco-table-tr:hover .arco-table-td{background:var(--ca-table-row-hover)}
+.erp-read-table .arco-table-border .arco-table-container{border:0}
+/* Page owners present loading/error/empty facts. Arco's placeholder row is not
+   a result and must not add a second empty panel or a blank record height. */
+.erp-read-table .arco-table-empty-row{display:none}

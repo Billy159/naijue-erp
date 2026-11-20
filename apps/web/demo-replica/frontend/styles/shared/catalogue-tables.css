@@ -1,0 +1,11 @@
+/* Shared authoritative rule sequence. Keep import order in page entries. */
+.pc-settings-page .pc-settings-body table{border:1px solid var(--ca-line)}
+.pc-settings-page .pc-settings-body table[data-has-operations] th:last-child,.pc-settings-page .pc-settings-body table[data-has-operations] td:last-child{width:76px}
+.pc-settings-page .pc-settings-body .hint.spaced{margin:8px 0;color:var(--ca-ink-3);font-size:12px;line-height:1.5}
+.pc-settings-page .pc-attribute-grid{gap:16px}
+.pc-settings-page .pc-attribute-grid section{min-width:0}
+.pc-schemes-page .pc-schemes{min-height:0;border:1px solid var(--ca-line)}
+.pc-schemes-page .pc-schemes .table-scroll{max-height:calc(100dvh - var(--ui-topbar) - 190px);overflow:auto}
+.pc-schemes-page .pc-schemes table{min-width:920px}
+.pc-schemes-page .pc-schemes th:nth-child(3),.pc-schemes-page .pc-schemes td:nth-child(3){width:37%;white-space:normal}
+

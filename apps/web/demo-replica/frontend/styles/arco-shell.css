@@ -1,0 +1,14 @@
+/* Arco 2.66.16 component dependencies in distribution order. */
+@import '@arco-design/web-react/es/style/index.css';
+@import '@arco-design/web-react/es/Avatar/style/index.css';
+@import '@arco-design/web-react/es/Button/style/index.css';
+@import '@arco-design/web-react/es/Divider/style/index.css';
+@import '@arco-design/web-react/es/Dropdown/style/index.css';
+@import '@arco-design/web-react/es/Input/style/index.css';
+@import '@arco-design/web-react/es/Menu/style/index.css';
+@import '@arco-design/web-react/es/Modal/style/index.css';
+@import '@arco-design/web-react/es/Popover/style/index.css';
+@import '@arco-design/web-react/es/Space/style/index.css';
+@import '@arco-design/web-react/es/Tooltip/style/index.css';
+@import '@arco-design/web-react/es/Trigger/style/index.css';
+@import '@arco-design/web-react/es/Typography/style/index.css';

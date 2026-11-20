@@ -1,0 +1,3 @@
+#pc-dialog{position:fixed;inset:0;margin:auto;width:min(620px,94vw);max-height:88vh;padding:0;border:1px solid var(--strong);border-radius:var(--ca-radius-card);color:var(--text);background:var(--surface)}
+#pc-dialog.pc-wide{width:min(940px,94vw)}
+

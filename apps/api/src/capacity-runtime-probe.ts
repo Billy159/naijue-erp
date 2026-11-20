@@ -1,0 +1,211 @@
+/** A02 trusted host resource. No pool construction, filesystem inference,
+ * default window/budgets or operational fact collection. The API binds its one
+ * owned bounded pool before serving requests; the original admission component
+ * owns TTL, waiter limits, shared-volume accounting and the single in-flight probe.
+ */
+import type {RuntimeDatabaseReadPool, RuntimeDatabaseTargetIdentity} from './runtime-database-read-ports.ts';
+import {CAPACITY_VOLUMES, createCapacityAdmission} from './capacity-admission.ts';
+import type {CapacityAdmission, ObservableCapacityAdmission, CapacityBinding, CapacityBytes, CapacityReading, CapacityWindow} from './capacity-admission.ts';
+import {describeFresh35OrdinaryAdmissionV2,assertFresh35OrdinaryAdmissionCurrentV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
+import type {Fresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
+
+export interface CapacityRuntimeTarget {
+  readonly host: string; readonly port: number; readonly database: string;
+  readonly role: string; readonly databaseOid: string; readonly postmasterStart: string;
+}
+export type CapacityRuntimeVolumeFacts = {readonly status: 'UNKNOWN'} | {
+  readonly status: 'KNOWN'; readonly windowToken: string; readonly binding: CapacityBinding;
+  /** Actual collection time on the SAME trusted clock as admission.now, not file
+   * read time. All five logical-volume observations must be at least this fresh.
+   * The provider must freshly observe after this probe starts; do not relabel
+   * a cached operational receipt or an API-local statfs as remote PG/WAL space.
+   */
+  readonly observedAt: number; readonly freeBytes: CapacityBytes;
+};
+export interface CapacityRuntimeProbeOptions {
+  readonly target: CapacityRuntimeTarget;
+  /** Explicit authorized operational producer; no remote mount or second pool. */
+  readonly readVolumeFacts: (context: {readonly window: CapacityWindow; readonly signal: AbortSignal}) => Promise<CapacityRuntimeVolumeFacts>;
+}
+export type OwnedPoolCapacityOptions = Omit<Parameters<typeof createCapacityAdmission>[0], 'probe'> & {
+  readonly runtimeProbe: CapacityRuntimeProbeOptions;
+};
+export interface PreparedOwnedPoolCapacityAdmission extends ObservableCapacityAdmission {
+  /** Startup only, after the factory binds its sole pool and before listening.
+   * Valid low free space is observed, not changed into UNKNOWN or credited.
+   * This read does not admit a write or consume/refund any window budget. */
+  preflight(): Promise<void>;
+}
+// Keep callers' complete target type (including private operator fields) opaque
+// while consuming only the identity subset. Generic acceptance also preserves
+// the existing inline bounded-target call sites without widening this port.
+type PoolBinder = <Target extends RuntimeDatabaseTargetIdentity>(pool: RuntimeDatabaseReadPool, target: Target, fresh35?: Fresh35OrdinaryAdmissionV2) => void;
+const binders = new WeakMap<CapacityAdmission, PoolBinder>();
+
+/** Capture before the API's first await, alongside its original singleton.
+ * Ordinary explicit admission providers retain their existing path unchanged.
+ */
+export function captureCapacityRuntimePoolBinder(admission: CapacityAdmission): PoolBinder | undefined {
+  return binders.get(admission);
+}
+const IDENTITY_SQL = `/* capacity-runtime:identity */ SELECT current_database() AS database,current_user AS role,session_user,
+ (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()) AS database_oid,
+ pg_postmaster_start_time()::text AS postmaster_start,
+ current_setting('transaction_read_only') AS read_only,current_setting('transaction_isolation') AS isolation`;
+// Same finite aggregate as scripts/ops/capacity-inventory.mjs. Keep this literal
+// inside the bundled runtime: that standalone operational script is not a runtime
+// release member. No collector traversal or second-pool entry is imported.
+const STORAGE_SQL = `/* capacity-inventory:storage */ SELECT
+ pg_relation_size('naijue_erp.auth_session'::regclass)::text AS relation_bytes,
+ pg_indexes_size('naijue_erp.auth_session'::regclass)::text AS index_bytes,
+ pg_total_relation_size('naijue_erp.auth_session'::regclass)::text AS total_relation_bytes,
+ pg_database_size(current_database())::text AS database_bytes`;
+// Fresh35 LOGIN has CONNECT but NOINHERIT. Its existing runtime interface owns
+// schema USAGE, so keep each finite statistic under its original authorized role.
+const FRESH35_DATABASE_SQL = `/* capacity-runtime:database-storage */ SELECT pg_database_size(current_database())::text AS database_bytes`;
+const FRESH35_RUNTIME_ROLE = 'erp_unified27_runtime_2393dbc6db9581c2';
+const FRESH35_RELATION_SQL = `/* capacity-runtime:relation-storage */ SELECT
+ pg_relation_size('naijue_erp.auth_session'::regclass)::text AS relation_bytes,
+ pg_indexes_size('naijue_erp.auth_session'::regclass)::text AS index_bytes,
+ pg_total_relation_size('naijue_erp.auth_session'::regclass)::text AS total_relation_bytes`;
+const unknown = (): CapacityReading => ({status: 'UNKNOWN'});
+const timestamp = (value: unknown): value is number => typeof value === 'number' && Number.isSafeInteger(value) && value >= 0;
+const decimal = (value: unknown): value is string => typeof value === 'string' && /^(?:0|[1-9][0-9]*)$/.test(value);
+function sameBinding(a: CapacityBinding, b: CapacityBinding): boolean {
+  return !!a && !!b && ['candidateFingerprint', 'targetFingerprint', 'writerTopologyFingerprint', 'inventoryFingerprint', 'processInstanceId',
+    'restartGeneration', 'writerCount'].every(key => a[key as keyof CapacityBinding] === b[key as keyof CapacityBinding])
+    && !!a.physicalVolumes && !!b.physicalVolumes && CAPACITY_VOLUMES.every(v => a.physicalVolumes[v] === b.physicalVolumes[v]);
+}
+
+/** Pass this singleton through the existing production factory/main capacity
+ * parameter. No JSON/parser/permission contract or automatic approval is added.
+ */
+export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptions): PreparedOwnedPoolCapacityAdmission {
+  const input = options?.runtimeProbe, t = input?.target;
+  if (!t || !['host', 'database', 'role', 'postmasterStart'].every(key => typeof t[key as keyof CapacityRuntimeTarget] === 'string'
+    && String(t[key as keyof CapacityRuntimeTarget]).length > 0)
+    || !Number.isSafeInteger(t.port) || t.port < 1 || t.port > 65535 || !/^[1-9]\d*$/.test(t.databaseOid)
+    || typeof input.readVolumeFacts !== 'function') throw new TypeError('Explicit capacity runtime target and authorized fresh volume facts required');
+  const expected = structuredClone(t), readVolumeFacts = input.readVolumeFacts.bind(input), {now, probeTtlMillis, probeTimeoutMillis} = options;
+  const assertOperational = options.accounting?.assertOperational;
+  let pool: RuntimeDatabaseReadPool | undefined, closed = false;
+  let fresh35: Fresh35OrdinaryAdmissionV2 | undefined;
+  let startup: AbortController | undefined, probing = false;
+  const probe: Parameters<typeof createCapacityAdmission>[0]['probe'] = async ({window, signal}) => {
+    if (probing) return unknown();
+    probing = true;
+    try {return await observe(window, signal);} finally {probing = false;}
+  };
+  async function observe(window: CapacityWindow, signal: AbortSignal): Promise<CapacityReading> {
+    const started = now();
+    if (!pool || closed || signal.aborted || !timestamp(started)) return unknown();
+    const active = () => {
+      const at = now();
+      if (closed || signal.aborted || !timestamp(at) || at < started || at < window.startsAt || at >= window.expiresAt)
+        throw new Error('Capacity runtime observation unavailable');
+      return at;
+    };
+    const queryOperational = async (lease: Awaited<ReturnType<RuntimeDatabaseReadPool['connect']>>, sql: string) => {
+      if (assertOperational) {await assertOperational(); active();}
+      return lease.query(sql);
+    };
+    let client: Awaited<ReturnType<RuntimeDatabaseReadPool['connect']>> | undefined, began = false, discard: Error | undefined;
+    let result: CapacityReading = unknown();
+    try {
+      active();
+      if (fresh35) {await assertFresh35OrdinaryAdmissionCurrentV2(fresh35,pool);active();}
+      // Operational IO finishes BEFORE borrowing the database lease. The original
+      // admission retains its in-flight slot until this entire worker settles,
+      // even if a provider ignores abort or a bounded acquisition is still pending.
+      const supplied = await readVolumeFacts({window: structuredClone(window), signal}); active();
+      if (supplied?.status !== 'KNOWN') return unknown();
+      const facts = structuredClone(supplied), factsAt = active();
+      if (facts.windowToken !== window.token || !sameBinding(facts.binding, window.binding)
+        || !timestamp(facts.observedAt) || facts.observedAt < started || facts.observedAt > factsAt
+        || factsAt - facts.observedAt >= probeTtlMillis || !facts.freeBytes
+        || !CAPACITY_VOLUMES.every(v => typeof facts.freeBytes[v] === 'bigint' && facts.freeBytes[v] >= 0n)) return unknown();
+      if (assertOperational) await assertOperational();
+      active(); client = await pool.connect(); active();
+      await queryOperational(client,'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'); began = true; active();
+      const identity = await queryOperational(client,IDENTITY_SQL); active();
+      const id = identity.rows[0];
+      if (identity.rows.length !== 1 || !id || id.database !== expected.database || id.role !== expected.role
+        || id.session_user !== expected.role || id.database_oid !== expected.databaseOid || id.postmaster_start !== expected.postmasterStart
+        || id.read_only !== 'on' || id.isolation !== 'repeatable read') throw new Error('Capacity runtime target mismatch');
+      let storage: Awaited<ReturnType<typeof client.query>>;
+      if (fresh35) {
+        const database = await queryOperational(client,FRESH35_DATABASE_SQL);active();
+        if (database.rows.length!==1 || !decimal(database.rows[0]?.database_bytes)) throw new Error('Capacity runtime storage unavailable');
+        await assertFresh35OrdinaryAdmissionCurrentV2(fresh35,pool);active();
+        const switched=await queryOperational(client,'SET LOCAL ROLE '+FRESH35_RUNTIME_ROLE);active();
+        if ((switched as {command?:unknown}).command!=='SET') throw new Error('Capacity runtime role unavailable');
+        const roleIdentity=await queryOperational(client,IDENTITY_SQL);active();const actor=roleIdentity.rows[0];
+        if (roleIdentity.rows.length!==1 || !actor || actor.database!==expected.database || actor.role!==FRESH35_RUNTIME_ROLE
+          || actor.session_user!==expected.role || actor.database_oid!==expected.databaseOid || actor.postmaster_start!==expected.postmasterStart
+          || actor.read_only!=='on' || actor.isolation!=='repeatable read') throw new Error('Capacity runtime target mismatch');
+        const relations=await queryOperational(client,FRESH35_RELATION_SQL);active();
+        if (relations.rows.length!==1) throw new Error('Capacity runtime storage unavailable');
+        await assertFresh35OrdinaryAdmissionCurrentV2(fresh35,pool);active();
+        storage={rows:[{...relations.rows[0],database_bytes:database.rows[0]!.database_bytes}],rowCount:1};
+      } else {storage=await queryOperational(client,STORAGE_SQL);active();}
+      const bytes = storage.rows[0];
+      if (storage.rows.length !== 1 || !bytes || !['relation_bytes', 'index_bytes', 'total_relation_bytes', 'database_bytes'].every(k => decimal(bytes[k])))
+        throw new Error('Capacity runtime storage unavailable');
+      const sessionRelationBytes = BigInt(String(bytes.total_relation_bytes)), databaseBytes = BigInt(String(bytes.database_bytes));
+      if (sessionRelationBytes < BigInt(String(bytes.relation_bytes)) + BigInt(String(bytes.index_bytes)) || databaseBytes < sessionRelationBytes)
+        throw new Error('Capacity runtime storage inconsistent');
+      // The oldest actual component controls expiry. Physical sizes are current
+      // observations within a read transaction, not an MVCC-frozen storage size.
+      if (active() - facts.observedAt < probeTtlMillis) result = {status: 'KNOWN', windowToken: window.token,
+        binding: structuredClone(window.binding), observedAt: facts.observedAt, freeBytes: facts.freeBytes, databaseBytes, sessionRelationBytes};
+    } catch {discard = new Error('Capacity runtime probe failed'); result = unknown();}
+    finally {
+      if (client) {
+        if (began) try {
+          const rollback=await client.query('ROLLBACK');
+          if (fresh35) {
+            if ((rollback as {command?:unknown}).command!=='ROLLBACK') throw new Error('Capacity runtime rollback unconfirmed');
+            const restored=await queryOperational(client,IDENTITY_SQL);active();const actor=restored.rows[0];
+            if (restored.rows.length!==1 || !actor || actor.database!==expected.database || actor.role!==expected.role
+              || actor.session_user!==expected.role || actor.database_oid!==expected.databaseOid || actor.postmaster_start!==expected.postmasterStart)
+              throw new Error('Capacity runtime role restoration unconfirmed');
+            await assertFresh35OrdinaryAdmissionCurrentV2(fresh35,pool);active();
+          }
+        } catch {discard = new Error('Capacity runtime rollback unconfirmed'); result = unknown();}
+        try {client.release(discard);} catch {result = unknown();}
+      }
+    }
+    // No Promise.race or early lease release: bounded driver acquisition/query
+    // outcomes must settle before rollback/release. Abort is not claimed SQL cancel.
+    try {if (active() - (result.status === 'KNOWN' ? result.observedAt : started) >= probeTtlMillis) return unknown();}
+    catch {return unknown();}
+    return result;
+  }
+  const admission = createCapacityAdmission({...options, probe});
+  const window = options.window === null ? null : structuredClone(options.window), currentBinding = options.currentBinding;
+  const owned: PreparedOwnedPoolCapacityAdmission = Object.freeze({acquire: admission.acquire.bind(admission), snapshot: admission.snapshot,
+    async preflight() {
+      if (closed || !pool || startup || !window?.approved || !window.token || probing) throw new Error('Capacity startup observation unavailable');
+      const controller = new AbortController(); startup = controller;
+      const timer = setTimeout(() => controller.abort(), probeTimeoutMillis);
+      try {
+        if (!sameBinding(currentBinding(), window.binding)) throw new Error('Capacity startup binding differs');
+        const reading = await probe({window: structuredClone(window), signal: controller.signal});
+        if (reading.status !== 'KNOWN' || controller.signal.aborted || closed || !sameBinding(currentBinding(), window.binding))
+          throw new Error('Capacity startup observation unavailable');
+      } finally {clearTimeout(timer); if (startup === controller) startup = undefined;}
+    },
+    close() {closed = true; startup?.abort(); admission.close();}});
+  binders.set(owned, (original, target, proof) => {
+    if (closed || pool || !original || typeof original.connect !== 'function' || target.host !== expected.host || target.port !== expected.port
+      || target.database !== expected.database || target.user !== expected.role) throw new TypeError('Capacity runtime requires its one exact owned pool target');
+    if (proof!==undefined) {
+      const actual=describeFresh35OrdinaryAdmissionV2(proof);
+      if (actual.connectHost!==expected.host || actual.connectPort!==expected.port || actual.database!==expected.database
+        || actual.user!==expected.role || actual.databaseOid!==expected.databaseOid || actual.postmasterStart!==expected.postmasterStart)
+        throw new TypeError('Capacity runtime requires its original Fresh35 admission target');
+    }
+    pool = original;fresh35=proof;
+  });
+  return owned;
+}

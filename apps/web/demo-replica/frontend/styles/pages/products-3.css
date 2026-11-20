@@ -1,0 +1,7 @@
+.pc-settings-page .pc-settings-body{min-height:0;padding:8px 0 0}
+.pc-settings-page .pc-settings-body .pc-section-line{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:32px;margin:0 0 8px}
+.pc-settings-page .pc-settings-body .pc-section-line input{box-sizing:border-box;height:32px;min-height:32px;padding:5px 9px;border:1px solid transparent;background:var(--ca-surface-muted);font-size:13px}
+.pc-settings-page .pc-settings-body .pc-section-line>.btn:not(.primary){height:30px;min-height:30px;padding:3px 8px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:13px;font-weight:400}
+.pc-settings-page .pc-settings-body .pc-section-line>.btn:not(.primary):hover{background:var(--ca-primary-hover-soft)}
+.pc-settings-page .pc-settings-body .pc-section-line h3{margin:0;font-weight:600}
+

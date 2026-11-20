@@ -1,0 +1,6 @@
+.erp-pagination{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap;font-size:12px}
+.erp-pagination .arco-pagination-item{font-size:12px;min-width:28px;height:28px;line-height:28px}
+.erp-pagination .arco-pagination-item-active{color:var(--ca-primary);border-color:var(--ca-primary)}
+.erp-pagination .arco-pagination-item:focus-visible{outline:2px solid var(--ca-primary);outline-offset:1px}
+.erp-pagination .erp-exact-pagination,.erp-pagination .erp-pagination-slot{display:flex;align-items:center;gap:4px}
+.erp-pagination .arco-pagination-list{flex-wrap:wrap}

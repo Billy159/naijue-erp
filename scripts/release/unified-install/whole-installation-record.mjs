@@ -1,0 +1,10 @@
+/** Local OS installation configuration, not a signature or caller-provided approval. */
+import {open,lstat} from 'node:fs/promises';import {constants} from 'node:fs';
+import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
+const etc=process.platform==='darwin'?'/private/etc':'/etc';
+export const WHOLE_INSTALLATION_RECORD_PATH=etc+'/naijue-erp/whole-installation.json';
+const need=(ok)=>{if(!ok)throw Error('WHOLE_INSTALLATION_RECORD_UNTRUSTED');};
+const keys=['system_identifier','database_oid','database_name','owner','controller','runtime_login','server_version_num','catalog_sha256','source_spec_sha256'];
+export function validateInstallationRecord(value,source){need(value&&Object.keys(value).sort().join(',')==='binding,format,installedAt'&&value.format==='WHOLE_INSTALLATION_RECORD_V1'&&typeof value.installedAt==='string'&&Number.isFinite(Date.parse(value.installedAt)));const b=value.binding;need(b&&Object.keys(b).sort().join(',')===[...keys].sort().join(','));for(const k of keys)need(typeof b[k]==='string'&&b[k].length>0&&b[k].length<=256);need(/^[a-f0-9]{64}$/.test(b.catalog_sha256)&&b.source_spec_sha256===source);need(/^\d+$/.test(b.system_identifier)&&/^\d+$/.test(b.database_oid)&&/^\d+$/.test(b.server_version_num));return Object.freeze({...b});}
+export function validateInstallationFileMetadata(s,runtimeUid){need(runtimeUid!==0&&s.uid===0&&s.isFile()&&s.nlink===1&&(s.mode&0o022)===0&&s.size>0&&s.size<=65536);}
+export async function loadWholeInstallationRecord(sourceSpec){need(typeof sourceSpec?.source_spec_sha256==='string');const uid=process.getuid?.();need(Number.isInteger(uid)&&uid!==0);for(const p of [etc,etc+'/naijue-erp']){const s=await lstat(p);need(s.isDirectory()&&!s.isSymbolicLink()&&s.uid===0&&(s.mode&0o022)===0);}const file=await open(WHOLE_INSTALLATION_RECORD_PATH,constants.O_RDONLY|constants.O_NOFOLLOW);try{validateInstallationFileMetadata(await file.stat(),uid);const bytes=await file.readFile();need(bytes.length<=65536);return validateInstallationRecord(parseStrictJson(bytes.toString('utf8')),sourceSpec.source_spec_sha256);}finally{await file.close();}}

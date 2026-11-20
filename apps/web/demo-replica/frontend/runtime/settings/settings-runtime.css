@@ -1,0 +1,6 @@
+/* Control visuals live in the shared source shadow styles. */
+.runtime-settings-page-size{width:108px;min-width:108px;max-width:108px;flex:0 0 108px;height:32px}
+.runtime-settings-directory{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 4px;font-size:12px}
+.runtime-settings-note{margin:8px 0;color:var(--secondary);font-size:13px;line-height:1.5}
+.bs-tab-panel{display:flex;flex-direction:column;flex:1;min-height:0}
+.bs-tab-panel>.bs-pager{flex:none;margin-top:auto;padding-top:var(--ca-space-2);background:var(--surface)}

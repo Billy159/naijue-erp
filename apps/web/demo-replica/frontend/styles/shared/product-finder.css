@@ -1,0 +1,37 @@
+/* Shared authoritative rule sequence. Keep import order in page entries. */
+.product-finder{position:fixed;z-index:90;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:6px;box-shadow:var(--ca-shadow-float);overflow:auto;font-size:13px}
+.product-finder[hidden]{display:none}
+.pf-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(180px,1fr)}
+.pf-layout:not(:has(aside)){display:block}
+.pf-list{min-width:0}
+.pf-list button{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border:0;border-radius:0;background:transparent;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.pf-list button strong{white-space:nowrap}
+.pf-list button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pf-list button:hover,.pf-list [aria-selected=true]{background:var(--primary-light)}
+.pf-list>small{display:block;padding:8px 10px;color:var(--secondary)}
+.pf-list [data-inline-more]{color:var(--primary);font-size:12px;white-space:normal}
+.pf-preview{display:flex;flex-direction:column;gap:6px;padding:10px;border-left:1px solid var(--border);position:sticky;top:0;align-self:start;overflow-wrap:anywhere}
+.pf-preview img{height:85px;width:100%;object-fit:contain}
+.pf-no-image{height:70px;display:grid;place-items:center;background:var(--bg);color:var(--secondary)}
+.pf-preview small{color:var(--secondary)}
+.product-finder mark,#sale-pick-results mark{color:var(--primary);background:var(--primary-light);font-weight:700}
+.product-finder{margin:0;inset:auto;padding:0;box-sizing:border-box}
+.product-finder.pf-inline{position:relative;width:100%;max-height:360px;box-shadow:none;border:0}
+.product-finder p{padding:10px}
+.product-finder mark{color:var(--primary);background:var(--primary-light)}
+@media (max-width:700px){.product-finder .pf-layout{grid-template-columns:1fr}.product-finder .pf-preview{border-left:0;border-top:1px solid var(--border);position:static}.product-finder .pf-no-image,.product-finder img{height:48px}}
+#scan-workbench{position:fixed;inset:auto;margin:0;padding:0;box-sizing:border-box;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:6px;box-shadow:var(--ca-shadow-float);font:inherit;overflow:auto;z-index:100}
+#scan-workbench[hidden],#scan-workbench [hidden]{display:none}
+#scan-workbench>header{display:flex;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border);cursor:move;touch-action:none}
+#scan-workbench header strong{flex:1}
+#scan-workbench header button{background:transparent;border:0;color:var(--secondary);cursor:pointer;padding:3px 7px}
+#scan-workbench [data-scan-status]{font-size:12px;color:var(--secondary)}
+#scan-workbench .scan-work-body{padding:12px;display:grid;gap:10px}
+#scan-workbench form{display:flex;gap:8px}
+#scan-workbench input{width:100%;min-width:0}
+#scan-workbench .scan-work-actions{display:flex;gap:8px}
+#scan-workbench p{margin:0;font-size:12px}
+#scan-workbench article{padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;overflow-wrap:anywhere}
+#scan-workbench summary{cursor:pointer}
+#scan-workbench small{color:var(--secondary)}
+

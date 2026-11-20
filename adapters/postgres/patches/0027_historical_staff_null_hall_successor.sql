@@ -1,0 +1,39 @@
+-- Exact operator-approved historical departed staff null-hall successor.
+-- Candidate only; requires real PostgreSQL validation and registered installation.
+-- No business columns, roles, logins or fake halls are added.
+BEGIN;
+SET LOCAL search_path=pg_catalog,naijue_erp,pg_temp;
+DO $historical_source_profile$
+DECLARE
+ spec jsonb := $source_profile_changes${"predecessor_sha256":"23fbb6f80befaabac0dcccf9e3c82eb9151de154ad5cd61bed1b14a1ea752301","successor_sha256":"177c809bdf917024807db5064973dabb119e4dd238cfea71aaee53370420c88f","replacements":[{"before":"'execution_contract','schema_declarations_sha256']<>'{}'","after":"'execution_contract','schema_declarations_sha256','historical_staff_hall_approval']<>'{}'"},{"before":"  -- SQL49: the frozen eight-key planning contract is an explicit V2 opt-in.","after":"  IF payload ? 'historical_staff_hall_approval' THEN\n   expected:=payload->'historical_staff_hall_approval';\n   IF jsonb_typeof(expected) IS DISTINCT FROM 'object' OR expected-ARRAY['utf8','sha256']<>'{}'\n    OR NOT(expected ?& ARRAY['utf8','sha256']) OR jsonb_typeof(expected->'utf8') IS DISTINCT FROM 'string'\n    OR octet_length(convert_to(expected->>'utf8','UTF8')) NOT BETWEEN 1 AND 1048576\n    OR (expected->>'utf8' IS JSON OBJECT WITH UNIQUE KEYS) IS DISTINCT FROM true\n    OR encode(sha256(convert_to(expected->>'utf8','UTF8')),'hex') IS DISTINCT FROM expected->>'sha256'\n   THEN RAISE EXCEPTION 'STAFF_HALL_APPROVAL_HASH' USING ERRCODE='23514'; END IF;\n   expected:=(expected->>'utf8')::jsonb;\n   IF jsonb_typeof(expected) IS DISTINCT FROM 'object'\n    OR expected-ARRAY['format_version','source_namespace','evidence_sha256','staff']<>'{}'\n    OR NOT(expected ?& ARRAY['format_version','source_namespace','evidence_sha256','staff'])\n    OR expected->>'format_version' IS DISTINCT FROM 'HISTORICAL_STAFF_NULL_HALL_APPROVAL_V1'\n    OR expected->>'source_namespace' IS DISTINCT FROM request->>'namespace'\n    OR (expected->>'evidence_sha256' ~ '^[a-f0-9]{64}$') IS DISTINCT FROM true\n    OR jsonb_typeof(expected->'staff') IS DISTINCT FROM 'array'\n   THEN RAISE EXCEPTION 'STAFF_HALL_APPROVAL_SHAPE' USING ERRCODE='23514'; END IF;\n   IF jsonb_array_length(expected->'staff') NOT BETWEEN 1 AND 1000\n    OR (SELECT count(DISTINCT value->>'source_key') FROM jsonb_array_elements(expected->'staff'))<>jsonb_array_length(expected->'staff')\n    OR (SELECT count(DISTINCT value->>'target_id') FROM jsonb_array_elements(expected->'staff'))<>jsonb_array_length(expected->'staff')\n   THEN RAISE EXCEPTION 'STAFF_HALL_APPROVAL_DUPLICATE' USING ERRCODE='23514'; END IF;\n   FOR item IN SELECT value FROM jsonb_array_elements(expected->'staff') LOOP\n    IF jsonb_typeof(item) IS DISTINCT FROM 'object' OR item-ARRAY['source_key','target_id','source_refs']<>'{}'\n     OR NOT(item ?& ARRAY['source_key','target_id','source_refs'])\n     OR jsonb_typeof(item->'source_key') IS DISTINCT FROM 'string' OR length(item->>'source_key')=0 OR item->>'source_key' ~ '[[:cntrl:]]' OR item->>'source_key' IS DISTINCT FROM btrim(item->>'source_key',U&' \\00a0\\1680\\2000\\2001\\2002\\2003\\2004\\2005\\2006\\2007\\2008\\2009\\200a\\2028\\2029\\202f\\205f\\3000\\feff')\n     OR (item->>'target_id' ~ '^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$') IS DISTINCT FROM true\n     OR jsonb_typeof(item->'source_refs') IS DISTINCT FROM 'array'\n    THEN RAISE EXCEPTION 'STAFF_HALL_APPROVAL_RECORD' USING ERRCODE='23514'; END IF;\n    IF jsonb_array_length(item->'source_refs')=0 OR EXISTS(SELECT 1 FROM jsonb_array_elements(item->'source_refs') ref WHERE\n     jsonb_typeof(ref) IS DISTINCT FROM 'object' OR ref-ARRAY['file_sha256','sheet','row']<>'{}' OR NOT(ref ?& ARRAY['file_sha256','sheet','row'])\n     OR (ref->>'file_sha256' ~ '^[a-f0-9]{64}$') IS DISTINCT FROM true OR jsonb_typeof(ref->'sheet') NOT IN ('string','null')\n     OR jsonb_typeof(ref->'row') IS DISTINCT FROM 'number' OR (ref->>'row' ~ '^[1-9][0-9]*$') IS DISTINCT FROM true OR (ref->>'row')::numeric>2147483647\n     OR (ref->'sheet'<>'null'::jsonb AND (length(ref->>'sheet')=0 OR ref->>'sheet' ~ '[[:cntrl:]]' OR ref->>'sheet' IS DISTINCT FROM btrim(ref->>'sheet',U&' \\00a0\\1680\\2000\\2001\\2002\\2003\\2004\\2005\\2006\\2007\\2008\\2009\\200a\\2028\\2029\\202f\\205f\\3000\\feff'))))\n    THEN RAISE EXCEPTION 'STAFF_HALL_APPROVAL_SOURCE' USING ERRCODE='23514'; END IF;\n    IF (SELECT count(DISTINCT ref) FROM jsonb_array_elements(item->'source_refs') ref)<>jsonb_array_length(item->'source_refs') THEN RAISE EXCEPTION 'STAFF_HALL_APPROVAL_DUPLICATE_REF' USING ERRCODE='23514'; END IF;\n   END LOOP;\n  END IF;\n  -- SQL49: the frozen eight-key planning contract is an explicit V2 opt-in."},{"before":"     -- WHOLE_FIT_PROFILE_GUARD_BEGIN","after":"     IF kind='STAFF' AND fields->>'role'='SALESPERSON' AND fields->'hall_id'='null'::jsonb THEN\n      IF fields->>'employment_status' IS DISTINCT FROM '离职'\n       OR NOT EXISTS(SELECT 1 FROM jsonb_array_elements(coalesce(((cfg->'historical_staff_hall_approval'->>'utf8')::jsonb)->'staff','[]'::jsonb)) approved\n        WHERE approved->>'source_key'=entry->>'source_key' AND approved->>'target_id'=entry->>'target_id'\n         AND (approved->'source_refs') @> (entry->'source_refs') AND (entry->'source_refs') @> (approved->'source_refs'))\n       OR EXISTS(SELECT 1 FROM naijue_erp.user_account WHERE staff_id=(entry->>'target_id')::uuid)\n      THEN RAISE EXCEPTION 'STAFF_HALL_REQUIRED' USING ERRCODE='23514'; END IF;\n     END IF;\n     -- WHOLE_FIT_PROFILE_GUARD_BEGIN"}]}$source_profile_changes$::jsonb;
+ signature text := 'naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)';
+ routine oid; before_body text; after_body text; definition text; change jsonb;
+ before_meta jsonb; after_meta jsonb;
+BEGIN
+ routine:=pg_catalog.to_regprocedure(signature);
+ SELECT p.prosrc,pg_catalog.to_jsonb(p)-'prosrc' INTO before_body,before_meta
+ FROM pg_catalog.pg_proc p WHERE p.oid=routine;
+ IF before_body IS NULL OR pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(before_body,'UTF8')),'hex') IS DISTINCT FROM spec->>'predecessor_sha256'
+ THEN RAISE EXCEPTION 'STAFF_HALL_PREDECESSOR_DIFFERS' USING ERRCODE='55000'; END IF;
+ IF before_meta->>'prosecdef' IS DISTINCT FROM 'true'
+  OR (before_meta->'proconfig' @> '["search_path=pg_catalog, naijue_erp, pg_temp"]'::jsonb) IS DISTINCT FROM true
+ THEN RAISE EXCEPTION 'STAFF_HALL_METADATA_UNSAFE' USING ERRCODE='55000'; END IF;
+ definition:=pg_catalog.pg_get_functiondef(routine);after_body:=before_body;
+ FOR change IN SELECT value FROM pg_catalog.jsonb_array_elements(spec->'replacements') LOOP
+  IF coalesce(pg_catalog.length(change->>'before'),0)=0
+   OR (pg_catalog.length(after_body)-pg_catalog.length(pg_catalog.replace(after_body,change->>'before','')))/pg_catalog.length(change->>'before')<>1
+   OR (pg_catalog.length(definition)-pg_catalog.length(pg_catalog.replace(definition,change->>'before','')))/pg_catalog.length(change->>'before')<>1
+  THEN RAISE EXCEPTION 'STAFF_HALL_ANCHOR_DIFFERS' USING ERRCODE='55000'; END IF;
+  after_body:=pg_catalog.replace(after_body,change->>'before',change->>'after');
+  definition:=pg_catalog.replace(definition,change->>'before',change->>'after');
+ END LOOP;
+ IF pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(after_body,'UTF8')),'hex') IS DISTINCT FROM spec->>'successor_sha256'
+ THEN RAISE EXCEPTION 'STAFF_HALL_OUTPUT_DIFFERS' USING ERRCODE='55000'; END IF;
+ EXECUTE definition;
+ SELECT p.prosrc,pg_catalog.to_jsonb(p)-'prosrc' INTO after_body,after_meta
+ FROM pg_catalog.pg_proc p WHERE p.oid=routine;
+ IF before_meta IS DISTINCT FROM after_meta
+  OR pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(after_body,'UTF8')),'hex') IS DISTINCT FROM spec->>'successor_sha256'
+ THEN RAISE EXCEPTION 'STAFF_HALL_POSTCONDITION_FAILED' USING ERRCODE='55000'; END IF;
+END $historical_source_profile$;
+COMMIT;

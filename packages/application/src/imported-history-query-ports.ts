@@ -1,0 +1,135 @@
+import type { HistoricalSalesHallEvidence } from './historical-sales-hall-evidence.ts';
+import type { ActorContext } from './ports.ts';
+
+export const importedHistoryPageSizes = [20, 50, 100, 200] as const;
+export type ImportedHistoryPageSize = typeof importedHistoryPageSizes[number];
+export type ImportedHistoryKind = 'sales' | 'transfers';
+export interface ImportedHistoryListQuery {
+  readonly batchId: string | null;
+  readonly number: string;
+  readonly businessDateFrom: string | null;
+  readonly businessDateTo: string | null;
+  readonly sourceStatus: 'DRAFT' | 'APPROVED' | 'VOID' | null;
+  readonly hallId: string | null;
+  readonly warehouseId: string | null;
+  readonly customerId: string | null;
+  readonly salespersonId: string | null;
+  readonly fromWarehouseId: string | null;
+  readonly toWarehouseId: string | null;
+  readonly page: number;
+  readonly pageSize: ImportedHistoryPageSize;
+}
+export interface ImportedHistoryDetailQuery {
+  readonly documentId: string;
+  readonly linePage: number;
+  readonly linePageSize: ImportedHistoryPageSize;
+  readonly settlementPage: number;
+  readonly settlementPageSize: ImportedHistoryPageSize;
+}
+export type ImportedHistoryReadIntent =
+  | { readonly kind: ImportedHistoryKind; readonly operation: 'list'; readonly parameters: ImportedHistoryListQuery }
+  | { readonly kind: ImportedHistoryKind; readonly operation: 'detail'; readonly parameters: ImportedHistoryDetailQuery };
+export type ImportedHistoryScope = { readonly kind: 'ALL' } | { readonly kind: 'HALL_IDS'; readonly hallIds: readonly string[] }
+  | { readonly kind: 'TRANSFER_HALL_IDS'; readonly hallIds: readonly string[] };
+/** Explicit historical policy only. No role/LIVE/native-profile fallback. Sales
+ * HALL_IDS never authorizes transfers; TRANSFER_HALL_IDS requires the original
+ * source-bound warehouse/creator proof on the reader's own snapshot. */
+export interface ImportedHistoryReadGrant {
+  readonly dataset: 'HISTORY';
+  readonly actorAccountId: string;
+  readonly kind: ImportedHistoryKind;
+  readonly operation: 'list' | 'detail';
+  readonly targetId: string | null;
+  readonly scope: ImportedHistoryScope;
+}
+export interface ImportedHistoryPerson {
+  readonly state: 'UNKNOWN' | 'UNRESOLVED' | 'BOUND';
+  readonly staffId: string | null;
+}
+interface ImportedHistoryHeaderBase {
+  readonly dataset: 'HISTORY'; readonly kind: ImportedHistoryKind;
+  readonly batchId: string; readonly documentId: string; readonly version: number;
+  readonly number: string; readonly businessDate: string | null;
+  readonly sourceStatus: 'DRAFT' | 'APPROVED' | 'VOID'; readonly note: string | null;
+  readonly createdBy: ImportedHistoryPerson; readonly approvedBy: ImportedHistoryPerson;
+  readonly responsibleStaffId: string | null; readonly responsibleName: string | null;
+  readonly createdHallId: string | null;
+  readonly createdHallProvenance: 'ORIGINAL' | 'MIGRATION_DERIVED' | 'UNKNOWN';
+  readonly createdLocalAt: string | null; readonly updatedLocalAt: string | null; readonly approvedLocalAt: string | null;
+  readonly createdInstant: string | null; readonly updatedInstant: string | null; readonly approvedInstant: string | null;
+}
+export interface ImportedHistorySalesHeader extends ImportedHistoryHeaderBase {
+  readonly historicalHallEvidence?: HistoricalSalesHallEvidence;
+  readonly historicalHallDiffersFromCurrent?: boolean;
+  readonly kind: 'sales'; readonly businessType: 'SALE' | 'RETURN' | 'EXCHANGE';
+  readonly hallId: string | null; readonly customerId: string; readonly warehouseId: string; readonly salespersonId: string | null;
+  readonly grossAmount: string; readonly orderDiscount: string; readonly netDue: string;
+}
+export interface ImportedHistoryTransferHeader extends ImportedHistoryHeaderBase {
+  readonly kind: 'transfers'; readonly fromWarehouseId: string; readonly toWarehouseId: string;
+}
+export type ImportedHistoryHeader = ImportedHistorySalesHeader | ImportedHistoryTransferHeader;
+export interface ImportedHistoryLine {
+  readonly id: string; readonly lineNo: number; readonly skuId: string; readonly quantity: string;
+  readonly productCodeSnapshot: string | null; readonly productNameSnapshot: string | null;
+  readonly colorNameSnapshot: string | null; readonly fitNameSnapshot: string | null;
+  readonly sizeNameSnapshot: string | null; readonly barcodeSnapshot: string | null;
+}
+export interface ImportedHistorySalesLine extends ImportedHistoryLine {
+  readonly referencePrice: string | null; readonly dealPrice: string; readonly lineAmount: string;
+  readonly allocatedDiscount: string | null; readonly isGift: boolean | null;
+  readonly pricingMethodSource: string | null; readonly discountTenths: number | null; readonly ordinaryZeroConfirmed: boolean | null;
+}
+export interface ImportedHistorySettlement {
+  readonly id: string; readonly lineNo: number; readonly paymentAccountId: string;
+  readonly direction: 'RECEIVE' | 'REFUND'; readonly amount: string;
+  readonly accountNameSnapshot: string | null; readonly methodNameSnapshot: string | null;
+  readonly paymentMethodIdSnapshot: string | null;
+}
+export interface ImportedHistoryPage<T> {
+  readonly page: number; readonly pageSize: ImportedHistoryPageSize;
+  /** Exact count, including values beyond JavaScript safe integers. */
+  readonly total: string; readonly items: readonly T[];
+}
+export interface ImportedHistoryList { readonly dataset: 'HISTORY'; readonly kind: ImportedHistoryKind; readonly documents: ImportedHistoryPage<ImportedHistoryHeader> }
+/** Read-only original-line coordinates. No source keys, file refs or write authority. */
+export const IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS = 1000;
+export type ImportedHistoryLineIdentity = { readonly state: 'UNKNOWN' }
+  | { readonly state: 'BOUND'; readonly productId: string; readonly colorId: string; readonly fitId: string; readonly sizeId: string };
+export type ImportedHistorySourceGroup = { readonly state: 'UNKNOWN' } | { readonly state: 'BOUND'; readonly groupId: string };
+export interface ImportedHistoryLineCatalogV1 {
+  readonly basis: 'PUBLISHED_SOURCE_SKU_IDENTITY_V1';
+  readonly items: readonly { readonly lineId: string; readonly skuId: string; readonly identity: ImportedHistoryLineIdentity; readonly sourceGroup: ImportedHistorySourceGroup }[];
+  readonly groups: readonly { readonly groupId: string; readonly name: string;
+    readonly sizes: readonly { readonly sizeId: string; readonly name: string; readonly displayOrder: number }[] }[];
+}
+export interface ImportedHistoryLineCatalogV2 {
+  readonly basis: 'HISTORY_EFFECTIVE_SKU_IDENTITY_V2';
+  readonly items: readonly (ImportedHistoryLineCatalogV1['items'][number] & {
+    readonly origin: { readonly kind: 'SOURCE'; readonly sourceLineId: string } | { readonly kind: 'REVISION'; readonly createdRevisionId: string };
+    readonly currentGroup: { readonly state: 'UNKNOWN' } | { readonly state: 'BOUND'; readonly revisionId: string; readonly groupId: string };
+  })[];
+  readonly groups: ImportedHistoryLineCatalogV1['groups'];
+  readonly currentGroups: readonly (ImportedHistoryLineCatalogV1['groups'][number] & { readonly revisionId: string })[];
+}
+export type ImportedHistoryLineCatalog = ImportedHistoryLineCatalogV1 | ImportedHistoryLineCatalogV2;
+export interface ImportedHistoryDetail {
+  readonly dataset: 'HISTORY'; readonly kind: ImportedHistoryKind; readonly document: ImportedHistoryHeader | null;
+  readonly lines: ImportedHistoryPage<ImportedHistoryLine | ImportedHistorySalesLine>;
+  readonly settlements: ImportedHistoryPage<ImportedHistorySettlement>;
+  /** Missing on older providers means UNAVAILABLE, never a current-form fallback.
+   * Present items correspond exactly to this detail's current line page. */
+  readonly lineCatalog?: ImportedHistoryLineCatalog;
+}
+export interface ImportedHistoryReadAuthorization {
+  authorize(actor: ActorContext, intent: ImportedHistoryReadIntent, signal: AbortSignal): Promise<ImportedHistoryReadGrant>;
+}
+export interface ImportedHistoryScopedRead {
+  readonly actor: ActorContext; readonly intent: ImportedHistoryReadIntent;
+  readonly grant: ImportedHistoryReadGrant; readonly signal: AbortSignal;
+}
+export interface ImportedHistoryReader {
+  readList(read: ImportedHistoryScopedRead): Promise<ImportedHistoryList>;
+  readDetail(read: ImportedHistoryScopedRead): Promise<ImportedHistoryDetail>;
+}
+export interface ImportedHistoryReadDependencies { readonly authorization: ImportedHistoryReadAuthorization; readonly reader: ImportedHistoryReader }

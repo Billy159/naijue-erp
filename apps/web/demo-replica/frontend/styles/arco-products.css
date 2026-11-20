@@ -1,0 +1,20 @@
+/* Arco 2.66.16 component dependencies in distribution order. */
+@import '@arco-design/web-react/es/_class/OverflowEllipsis/style/index.css';
+@import '@arco-design/web-react/es/Cascader/style/index.css';
+@import '@arco-design/web-react/es/Checkbox/style/index.css';
+@import '@arco-design/web-react/es/Drawer/style/index.css';
+@import '@arco-design/web-react/es/Empty/style/index.css';
+@import '@arco-design/web-react/es/Grid/style/index.css';
+@import '@arco-design/web-react/es/Image/style/index.css';
+@import '@arco-design/web-react/es/InputTag/style/index.css';
+@import '@arco-design/web-react/es/List/style/index.css';
+@import '@arco-design/web-react/es/Pagination/style/index.css';
+@import '@arco-design/web-react/es/Progress/style/index.css';
+@import '@arco-design/web-react/es/Select/style/index.css';
+@import '@arco-design/web-react/es/Spin/style/index.css';
+@import '@arco-design/web-react/es/Tabs/style/index.css';
+@import '@arco-design/web-react/es/Tag/style/index.css';
+@import '@arco-design/web-react/es/Transfer/style/index.css';
+@import '@arco-design/web-react/es/Tree/style/index.css';
+@import '@arco-design/web-react/es/TreeSelect/style/index.css';
+@import '@arco-design/web-react/es/Upload/style/index.css';

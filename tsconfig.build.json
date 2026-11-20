@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "rootDir": ".",
+    "declaration": true
+  },
+  "exclude": [
+    "tests",
+    "**/*.test.ts",
+    "**/tests/**",
+    "apps/web/preview/**",
+    "**/*.test.tsx",
+    "apps/web/unified-browser-harness/review-builds/**",
+    "apps/web/demo-replica/frontend/runtime/**",
+    "apps/web/demo-replica/frontend/runtime-bootstrap.ts",
+    "apps/web/demo-replica/frontend/runtime-styles.ts",
+    "apps/web/demo-replica/frontend/runtime-preview-transport.ts",
+    "apps/web/demo-replica/frontend/production-bootstrap.ts",
+    "apps/web/demo-replica/frontend/frozen-style-order.ts",
+    "apps/web/demo-replica/frontend/qa-reference-fixtures.mts",
+    "apps/web/demo-replica/frontend/runtime-native-preview-seeds.ts"
+  ]
+}
