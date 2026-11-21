@@ -79,6 +79,8 @@ export function createCurrentFormHttpPlugin(options: CurrentFormHttpOptions): Fa
     }],
     ["/current-form/barcode/query", (a, b, s) => {
       const query = parseCurrentFormBarcodeQuery(b);
+      if (barcodeOnly && (query.context.kind === "SALES_DRAFT" || query.context.kind === "TRANSFER_DRAFT"))
+        throw new DomainError("INVALID_CURRENT_FORM_QUERY", "This host requires complete warehouse scope");
       if (!barcode) throw new DomainError("CURRENT_FORM_READ_UNAVAILABLE", "Explicit current barcode reader unavailable");
       return barcode(a, query, s);
     }]

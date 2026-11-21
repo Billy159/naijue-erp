@@ -38,7 +38,7 @@ function AuditBody(props: Parameters<typeof AuditDrawer>[0] & { controller: Sett
       <DatePicker aria-label="开始日期" value={draft.dateFrom ?? ''} placeholder="开始日期" onChange={date => controller.update({ dateFrom: date || null })}/><DatePicker aria-label="结束日期" value={draft.dateTo ?? ''} placeholder="结束日期" onChange={date => controller.update({ dateTo: date || null })}/>
       <div className="bs-toolbar-actions bs-log-actions"><Button type="primary" onClick={() => controller.apply()}>查询</Button><Button onClick={() => controller.reset()}>重置</Button></div></div>
     {Object.values(form.errors).map((error,index) => <p className="bs-error" role="alert" key={index}>{error}</p>)}
-    {state.phase === 'error' && <div className="bs-error" role="alert">{readMessage(state.error)}<Button type="text" onClick={() => controller.retry()}>重试</Button></div>}
+    {state.phase === 'error' && <div className="bs-error" role="alert">{readMessage(state.error)}{records.length>0&&'下面是上次查询的结果。'}<Button type="text" onClick={() => controller.retry()}>重试</Button></div>}
     <div className="bs-log-results iw-arco-table"><Table<SettingsAuditItem> size="small" rowKey="id" pagination={false} loading={state.phase === 'loading'} data={[...records]} noDataElement={<Empty description="暂无操作记录"/>} columns={[
       { title: '时间', width: 158, render: (_,row) => row.occurredAt ? new Date(row.occurredAt).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }) : '未知' },
       { title: '操作人', width: 90, render: (_,row) => row.actor.name ?? row.actor.loginName ?? '未知' },

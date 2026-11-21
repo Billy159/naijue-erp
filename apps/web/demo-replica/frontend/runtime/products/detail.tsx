@@ -104,7 +104,7 @@ export function SchemeConsumer(p:Pick<ProductDetailOptions,'scope'|'http'|'onAcc
    .catch(()=>{if(active&&child.active&&p.scope.active)setFailed(true);});
   return()=>{active=false;p.scope.signal.removeEventListener('abort',abort);queueMicrotask(()=>{child.dispose();release?.();});};
  },[p.scope,p.schemeId,p.http,attempt]);
- return <><div ref={host}/>{failed&&p.scope.active&&<SourceModal title="查看条码方案" close={p.close} footer={<><button className="btn" onClick={p.close}>关闭</button><button className="btn primary" onClick={()=>setAttempt(n=>n+1)}>重试</button></>}>
-  <p className="inline-error" role="alert">条码方案未能打开，请重试。如仍无法打开，可先关闭并保留当前操作。</p>
+ return <><div ref={host}/>{failed&&p.scope.active&&<SourceModal title="条码方案没打开" close={p.close} footer={<><button className="btn" onClick={p.close}>关闭</button><button className="btn primary" onClick={()=>setAttempt(n=>n+1)}>重试</button></>}>
+  <p className="inline-error" role="alert">可以再试一次，关闭也不会丢掉当前修改。</p>
  </SourceModal>}</>;
 }

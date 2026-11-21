@@ -35,7 +35,7 @@ export function createProductsFeature(options:ReadyPageOptions,navigate:Navigate
     if (route === 'products' && config.products) {
       const module = await import('./index.tsx');
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
-      return { dispose: module.mountProductList(host, { scope, http, ...(options.notify?{notify:options.notify}:{}), onAccessFailure: session.onAccessFailure, openEditor: id => navigate(id === null ? 'products/new' : 'products/edit/' + encodeURIComponent(id)) }), canLeave: () => true };
+      return { dispose: module.mountProductList(host, { scope, http, ...(options.notify?{notify:options.notify}:{}), onAccessFailure: session.onAccessFailure, openEditor: id => navigate(id === null ? 'products/new' : 'products/edit/' + encodeURIComponent(id)), ...(options.previewProductCreate && config.productFullPage ? { openDetails: (id: string) => navigate('products/view/' + encodeURIComponent(id)) } : {}) }), canLeave: () => true };
     }
     if ((route === 'products/new' || route.startsWith('products/edit/')) && config.products) {
       if (!prepareRoute) throw new Error('商品编辑样式加载尚未接入。');
@@ -47,27 +47,29 @@ export function createProductsFeature(options:ReadyPageOptions,navigate:Navigate
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
       const owner = ownerScope(), productId = route === 'products/new' ? null : decodeURIComponent(route.slice('products/edit/'.length));
       const matches = (identity: typeof scope.identity) => owner.active && ['accountId','sessionRevision','permissionRevision'].every(key => identity[key as keyof typeof identity] === owner.identity[key as keyof typeof identity]);
-      let guard: (() => boolean) | null = null, inlineGuard: (() => boolean) | null = null, destination: string | null = null, queued = false;
+      let guard: (() => boolean) | null = null, discardGuard: (() => boolean) | null = null, inlineGuard: (() => boolean) | null = null, destination: string | null = null, queued = false;
       const handoff = (next: string) => { guard = null; destination = next; if (!queued) { queued = true; queueMicrotask(() => { queued = false; if (scope.active && destination) navigate(destination); }); } };
       const detailReader = full.createProductFullPageHttpReader(http, ['stock'], config.productStockOverview ? { stockOverview: true } : {});
       const dictionary = dictionaries.createDictionaryHttpReader(http), catalogueSession = await catalogueCommands(scope), maintenance = catalogueSession?.maintenance;
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
       const capability: ProductEditorCapability = {
         loadStyles: () => prepareRoute(route, scope.signal), reader: clients.createProductMaintenanceHttpReaderV2(http), client: clients.createProductMaintenanceHttpClientV2(http), newRequestKey: options.newRequestKey,
-        allowedActions: enabled(flags?.products)() ? ['CREATE','EDIT','DISABLE','RESTORE','DELETE'] : [],
+        allowedActions: enabled(flags?.products)() ? options.previewProductCreate ? ['CREATE'] : ['CREATE','EDIT','DISABLE','RESTORE','DELETE'] : [],
         onRecoveryRequired: (command, identity) => { if (!matches(identity)) return; const target = command.action === 'CREATE' ? null : command.id, previous = productRecovery.get(target); if (!previous || previous.requestKey === command.requestKey) productRecovery.set(target, snapshotQueryParameters(command)); },
         recovery: { read: (identity, target) => matches(identity) ? productRecovery.get(target) ?? null : null, resolved: (identity, key) => { if (matches(identity)) for (const [target, command] of productRecovery) if (command.requestKey === key) productRecovery.delete(target); } },
         productReader: products.createProductHttpReader(http), dictionaryReader: dictionary, ...(config.barcodeSchemes ? { barcodeSchemeReader: dictionary } : {}),
         ...(config.productFullPage && detailReader.stock ? { stock: detailReader.stock } : {}),
         media: clients.createProductEditorMediaHttpReader(http),
-        ...(config.productMediaReady===true&&enabled(flags?.products)()?{mediaUpload:clients.createProductMediaUploadHttpClient(http)}:{}),
+        ...(config.productMediaReady===true&&enabled(flags?.products)()&&(!options.previewProductCreate||productId===null)?{mediaUpload:clients.createProductMediaUploadHttpClient(http)}:{}),
         ...(maintenance?.COLOR || maintenance?.FIT ? { catalogueMaintenance: { ...(maintenance.COLOR ? { colors: maintenance.COLOR } : {}), ...(maintenance.FIT ? { fits: maintenance.FIT } : {}) } } : {}),
       };
       const dispose = module.mountProductEditor(host, { parent: scope, productId, capability, http,
         catalogueOptions: { onChanged: options.catalogue.onChanged, ...(catalogueSession ? { maintenance: catalogueSession.maintenance, commandOwners: catalogueSession.commandOwners } : {}), scope, http, catalogue: catalogueReaders.createCatalogueSettingsHttpReader(http), dictionaries: dictionary, renderPager: helpers.renderOriginalPager, categoryControlCss: helpers.originalCategoryControlCss, mountEmpty: helpers.mountOriginalEmpty, onAccessFailure: access, onCanLeaveChange: value => { inlineGuard = value; } },
-        onAccessFailure: session.onAccessFailure, onCanLeaveChange: value => { guard = value; }, onOpenInventory: async product => openProductInventory(scope, product), onClose: () => handoff('products'), onSaved: id => handoff('products/view/' + encodeURIComponent(id)),
+        onAccessFailure: session.onAccessFailure, onCanLeaveChange: value => { guard = value; }, onCanDiscardChange: value => { discardGuard = value; }, onRequestClose: () => { void navigate('products'); }, onOpenInventory: async product => openProductInventory(scope, product), onClose: () => handoff('products'), onSaved: id => handoff('products/view/' + encodeURIComponent(id)),
       });
-      return { dispose, canLeave: () => (guard?.() ?? true) && (inlineGuard?.() ?? true) };
+      const canDiscard = () => scope.active && discardGuard?.() === true && (inlineGuard?.() ?? true);
+      return { dispose, canLeave: () => (guard?.() ?? true) && (inlineGuard?.() ?? true), canDiscard,
+        discard: () => { if (!canDiscard()) return false; guard = null; return true; } };
     }
     if (route.startsWith('products/view/') && config.products && config.productFullPage) {
       const [module, readers] = await Promise.all([import('./detail-entry.tsx'), import('../../../../src/products/product-page-http-reader.ts')]);

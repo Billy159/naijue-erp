@@ -99,17 +99,17 @@ interface SummaryLine {
   readonly styleKey: string | null;
   readonly category?: { readonly id: string; readonly label: string | null };
 }
-export function SalesDocumentSummary({ businessType, lines, grossMinor, discountMinor, netDueMinor, snapshotCodes = false, extra }: {
+export function SalesDocumentSummary({ businessType, lines, grossMinor, discountMinor, netDueMinor, snapshotCodes = false, returnOnly = false, extra }: {
   readonly businessType: 'SALE' | 'RETURN' | 'EXCHANGE'; readonly lines: readonly SummaryLine[];
   readonly grossMinor: string | null; readonly discountMinor: string | null; readonly netDueMinor: string | null;
-  readonly snapshotCodes?: boolean; readonly extra?: ReactNode;
+  readonly snapshotCodes?: boolean; readonly returnOnly?: boolean; readonly extra?: ReactNode;
 }) {
   const money = (value: string | null) => value === null ? '待填写' : salesInputMoney(value);
   const units = (rows: readonly SummaryLine[]) => { const value = salesExactQuantity(rows); return value === null ? '待校验' : `${value}件`; };
   const giftKnown = lines.every(line => line.isGift !== null);
   if (businessType !== 'SALE') {
     const incoming = lines.filter(row => row.isGift === false && row.quantity.startsWith('-')), outgoing = lines.filter(row => row.isGift === false && !row.quantity.startsWith('-'));
-    return <footer className="tc-foot tc-gold-footer sale-summary"><div className="sale-summary-primary" data-sales-quantity-summary><strong>退回 {giftKnown ? salesExactQuantity(incoming, true) ?? '待校验' : '未记录'}</strong><strong>换出 {giftKnown ? salesExactQuantity(outgoing, true) ?? '待校验' : '未记录'}</strong><strong>{netDueMinor === '0' ? '差额' : netDueMinor?.startsWith('-') ? '应退' : '应收'} ¥{money(netDueMinor?.replace(/^-/, '') ?? null)}</strong>{extra}</div></footer>;
+    return <footer className="tc-foot tc-gold-footer sale-summary"><div className="sale-summary-primary" data-sales-quantity-summary><strong>退回 {giftKnown ? salesExactQuantity(incoming, true) ?? '待校验' : '未记录'}</strong>{!returnOnly && <strong>换出 {giftKnown ? salesExactQuantity(outgoing, true) ?? '待校验' : '未记录'}</strong>}<strong>{netDueMinor === '0' ? '差额' : netDueMinor?.startsWith('-') ? '应退' : '应收'} ¥{money(netDueMinor?.replace(/^-/, '') ?? null)}</strong>{extra}</div></footer>;
   }
   const gifts = lines.filter(row => row.isGift), categories = new Map<string, { label: string; rows: SummaryLine[] }>();
   for (const line of lines) {

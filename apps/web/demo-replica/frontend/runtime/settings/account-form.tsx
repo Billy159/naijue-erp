@@ -1,4 +1,6 @@
-import { Button, Input, Modal, Switch } from '@arco-design/web-react';
+import { uncertainOperation } from '../common/dialog-copy.ts';
+import { SettingsDialog } from './settings-dialog.tsx';
+import { Button, Input, Switch } from '@arco-design/web-react';
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { LatestQuery, type QuerySnapshot } from '../../../../src/loading/latest-query.ts';
 import type { AccountIntent, AccountSettingsProps, AccountSettingsRecord, AccountStaffCandidate } from '../../../../src/account-settings/contracts.ts';
@@ -13,7 +15,7 @@ export default function AccountForm(props:Props){return props.editor?<Editor {..
 function Detail(props:Props&{detail:NonNullable<Props['detail']>}){
  const state=useSyncExternalStore(props.detail.subscribe,props.detail.getSnapshot,props.detail.getSnapshot),delivered=useRef(false);
  useEffect(()=>{if(!delivered.current&&state.phase==='success'&&state.success?.data){delivered.current=true;props.onRecord(state.success.data);}},[state,props.onRecord]);
- return <Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title="登录账号" maskClosable={false} onCancel={props.close} footer={<Button onClick={props.close}>取消</Button>}>{state.phase==='loading'||state.phase==='idle'?<p role="status">正在读取当前账号…</p>:state.phase==='error'?<p className="bs-error" role="alert">{readMessage(state.error)}<Button onClick={()=>{if(state.request)void props.detail.run(state.request.parameters);}}>重试资料</Button></p>:<p role="status">{state.success?.data?'正在准备编辑…':'当前账号不存在或已不可用。'}</p>}</Modal>;
+ return <SettingsDialog visible className="bs-modal iw-arco-modal iw-arco-controls" title="登录账号" onCancel={props.close} footer={<Button onClick={props.close}>取消</Button>}>{state.phase==='loading'||state.phase==='idle'?<p role="status">正在加载…</p>:state.phase==='error'?<p className="bs-error" role="alert">{readMessage(state.error)}<Button onClick={()=>{if(state.request)void props.detail.run(state.request.parameters);}}>重试</Button></p>:<p role="status">{state.success?.data?'正在打开…':'找不到这个账号。'}</p>}</SettingsDialog>;
 }
 function Editor(props:Props&{editor:AccountSettingsController}){
  const {editor}=props,state=useSyncExternalStore(editor.subscribe,editor.getSnapshot,editor.getSnapshot),password=useRef<HTMLDivElement>(null),[passwordKey,setPasswordKey]=useState(0),confirmed=useRef(false);
@@ -22,19 +24,19 @@ function Editor(props:Props&{editor:AccountSettingsController}){
  if(state.disposed||!state.draft)return null;
  const draft=state.draft,locked=editor.locked,editing=editor.intent==='CREATE'||editor.intent==='EDIT',withPassword=editor.intent==='CREATE'||editor.intent==='RESET_PASSWORD',role=props.roles.find(role=>role.value===draft.staff?.role)?.label??'未提供';
  const cancel=()=>{if(editor.discard())props.close();},submit=()=>{const value=password.current?.querySelector('input')?.value??'';if(Object.keys(editor.validate(value.length>0)).length)return;void editor.submit(value);setPasswordKey(value=>value+1);};
- return <Modal visible className="bs-modal iw-arco-modal iw-arco-controls runtime-settings" title={{CREATE:'新增账号',EDIT:'编辑账号',DISABLE:'禁用账号',RESTORE:'启用账号',RESET_PASSWORD:'重置密码'}[editor.intent]} maskClosable={false} autoFocus={false} onCancel={cancel} onOk={submit} confirmLoading={['checking','submitting','recovering'].includes(state.write.phase)} okText="确定" cancelText="取消" okButtonProps={{disabled:!editor.writesEnabled||locked}}>
+ return <SettingsDialog visible className="bs-modal iw-arco-modal iw-arco-controls runtime-settings" title={{CREATE:'新增账号',EDIT:'编辑账号',DISABLE:'要停用账号吗？',RESTORE:'要启用账号吗？',RESET_PASSWORD:'重置密码'}[editor.intent]} autoFocus={false} onCancel={cancel} onOk={submit} confirmLoading={['checking','submitting','recovering'].includes(state.write.phase)} okText={{CREATE:'保存',EDIT:'保存',DISABLE:'确定',RESTORE:'确定',RESET_PASSWORD:'保存'}[editor.intent]} okButtonProps={{disabled:!editor.writesEnabled||locked}}>
  <div className="bs-form-fields iw-form-fields"><Field title="所属员工" required={editor.intent==='CREATE'} error={state.errors.staff}>{editor.intent==='CREATE'?<StaffPicker {...props} selected={draft.staff} disabled={locked} onChange={staff=>editor.selectStaff(staff)}/>:<div className="bs-readonly">{draft.staff?.name??'未提供'}</div>}</Field>
  {draft.staff&&<Field title="员工资料"><div className="bs-readonly">{role} · {draft.staff.employmentStatus||'未提供'}</div></Field>}
  <Field title="登录账号" required={editing} error={state.errors.loginName}>{editing?<Input className="iw-arco-input" aria-label="登录账号" value={draft.loginName} autoComplete="off" disabled={locked} onChange={loginName=>editor.update({loginName})}/>:<div className="bs-readonly">{draft.loginName}</div>}</Field>
  {editing&&<Field title="登录权限" error={state.errors.loginEnabled}><div className="bs-switch"><Switch aria-label="登录权限" checked={draft.loginEnabled} disabled={locked} onChange={loginEnabled=>editor.update({loginEnabled})}/><span>{draft.loginEnabled?'已开通':'已关闭'}</span></div></Field>}
  {withPassword&&<Field title={editor.intent==='CREATE'?'初始密码':'新密码'} required error={state.errors.password}><div ref={password}><Input.Password key={passwordKey} className="iw-arco-input" aria-label={editor.intent==='CREATE'?'初始密码':'新密码'} defaultValue="" autoComplete="new-password" disabled={locked} onChange={value=>editor.setPasswordIntent(value.length>0)}/></div></Field>}</div>
- {(editor.intent==='DISABLE'||editor.intent==='RESTORE')&&<p>{editor.intent==='DISABLE'?'确认关闭此账号的登录权限？员工和历史记录继续保留。':'确认开通此账号的登录权限？服务器仍会核对员工与角色状态。'}</p>}
+ {(editor.intent==='DISABLE'||editor.intent==='RESTORE')&&<p>{editor.intent==='DISABLE'?'停用后不能登录，之前的单据还在。':'启用后，员工可按原有权限登录。'}</p>}
  {Object.entries(state.errors).filter(([key])=>!['staff','loginName','loginEnabled','password'].includes(key)).map(([key,error])=><p key={key} className="bs-error" role="alert">{error}</p>)}
  {!editor.writesEnabled&&<p className="runtime-settings-note" role="status">账号维护保存尚未接入。</p>}{state.needsPasswordReentry&&!locked&&<p className="bs-error" role="status">密码已从输入框清除，请重新输入后再提交。</p>}
  {state.write.phase==='rejected'&&<p className="bs-error" role="alert">{accountRejectionMessage(state.write.error?.code??'')}</p>}
- {state.write.phase==='uncertain'&&<section className="bs-error" role="alert"><p>提交结果尚未确认，原请求身份已保留，不能重新提交或放弃。</p><Button onClick={()=>{void editor.recover();}}>查询原操作回执</Button></section>}
- {state.write.phase==='committed'&&<p role="status">保存已确认。{state.readback.phase==='error'?'重新读取账号暂未完成。':'正在重新读取账号…'}{state.readback.phase==='error'&&<Button onClick={()=>{void editor.readback();}}>重试读取</Button>}</p>}
- </Modal>;
+ {state.write.phase==='uncertain'&&<section className="bs-error" role="alert"><p>{uncertainOperation.body}</p><Button onClick={()=>{void editor.recover();}}>{uncertainOperation.check}</Button></section>}
+ {state.write.phase==='committed'&&<p role="status">{state.readback.phase==='error'?'已保存，暂时看不到最新资料。':'已保存，正在打开…'}{state.readback.phase==='error'&&<Button onClick={()=>{void editor.readback();}}>重试</Button>}</p>}
+ </SettingsDialog>;
 }
 function StaffPicker(props:Props&{selected:AccountStaffCandidate|null;disabled:boolean;onChange:(staff:AccountStaffCandidate)=>void}){
  const [binding,setBinding]=useState<{scope:Props['scope'];reader:Props['staffReader'];query:LatestQuery<StaffSettingsQuery,StaffSettingsPage>}|null>(null),[opened,setOpened]=useState(false);

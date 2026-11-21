@@ -33,13 +33,15 @@ export function createCatalogueFeature(options:ReadyPageOptions){
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
       const catalogueSession = route === 'barcode-schemes' ? undefined : await catalogueCommands(scope);
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
-      let guard: (() => boolean) | null = null;
+      let guard: (() => boolean) | null = null, discardGuard: (() => boolean) | null = null;
       const dispose = await module.mountCatalogue(host, route as 'product-categories' | 'product-settings' | 'barcode-schemes', {
-        onChanged: options.catalogue.onChanged, ...(catalogueSession ? { maintenance: catalogueSession.maintenance, commandOwners: catalogueSession.commandOwners } : {}), renderPager: helpers.renderOriginalPager, categoryControlCss: helpers.originalCategoryControlCss, mountEmpty: helpers.mountOriginalEmpty, scope, http, onAccessFailure: access, onCanLeaveChange: value => { guard = value; },
+        onChanged: options.catalogue.onChanged, ...(catalogueSession ? { maintenance: catalogueSession.maintenance, commandOwners: catalogueSession.commandOwners } : {}), renderPager: helpers.renderOriginalPager, categoryControlCss: helpers.originalCategoryControlCss, mountEmpty: helpers.mountOriginalEmpty, scope, http, onAccessFailure: access, onCanLeaveChange: value => { guard = value; }, onCanDiscardChange: value => { discardGuard = value; },
         ...(config.productSettings ? { initialSettingTab: config.productSettings.initialTab,
           allowedSettingTabs: (['colors', 'groups', 'fits', 'seasons'] as const).filter(tab => config.productSettings && config.productSettings[tab]) } : {}),
       });
-      return { dispose, canLeave: () => guard?.() ?? true };
+      const canDiscard = () => scope.active && discardGuard?.() === true;
+      return { dispose, canLeave: () => guard?.() ?? true, canDiscard,
+        discard: () => { if (!canDiscard()) return false; guard = null; return true; } };
     }
     throw new Error('此页面尚未接入当前版本。');
   }

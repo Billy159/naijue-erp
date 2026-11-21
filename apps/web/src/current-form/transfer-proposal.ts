@@ -1,3 +1,4 @@
+import { defaultDocumentFit, readDefaultDocumentFitIds } from './document-fit-default.ts';
 import { BoundedReadPool,readCompleteSkuPages } from '../loading/bounded-read-pool.ts';
 import type { DictionaryListQuery, DictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import { TRANSFER_PREPARE_MAX_LINES, TRANSFER_PREPARE_MAX_NOTE_LENGTH } from '../../../../packages/application/src/transfer-payload-budget.ts';
@@ -34,6 +35,7 @@ export function transferProposalRowKey(sku: { readonly productId: string; readon
 export interface TransferPendingEntry {
   readonly query: string; readonly product: CurrentFormProduct | null;
   readonly color: { readonly id: string; readonly name: string } | null; readonly fit: { readonly id: string; readonly name: string } | null;
+  readonly defaultFit?: NonNullable<TransferPendingEntry['fit']> | null;
   readonly skus: readonly CurrentFormSku[]; readonly page: number; readonly exactTotal: bigint | null;
   readonly sizeQuantities: Readonly<Record<string, string>>;
   readonly phase: 'idle' | 'loading' | 'ready' | 'error'; readonly quantities: Readonly<Record<string, string>>;
@@ -266,7 +268,7 @@ export class TransferProposalSession {
       this.#publish({ pending: this.#mapReplacement(next) });
       // Only a fresh entry may default. Existing/replacement Y and explicit user
       // choices are never replaced, even if this read finishes later.
-      if (!this.#state.replacement && this.#state.pending.fit === null) await this.#defaultAFromCurrentFits(product.id, sequence, signal);
+      if (!this.#seeded && !this.#state.replacement && this.#state.pending.fit === null) await this.#defaultAFromCurrentFits(product.id, sequence, signal);
     } catch (error) {
       if (signal.aborted || this.#state.disposed || sequence !== this.#skuSequence) return;
       if (error instanceof HttpQueryError && ['unauthenticated', 'forbidden'].includes(error.kind)) { this.#scope.dispose(); try { this.#onAccessFailure?.(error); } catch { /* cleared first */ } return; }
@@ -297,19 +299,15 @@ export class TransferProposalSession {
       && this.#state.pending.product?.id === productId && this.#state.pending.phase === 'ready'
       && this.#state.pending.fit === null && this.#fitIntentRevision === intentRevision;
     if (!current()) return;
-    const found = new Set<string>();
     try {
-      for (let page = 1; page <= 50; page++) {
-        const result = await read({ search: '5', page, pageSize: 20 }, signal);
-        if (!current()) return;
-        for (const fit of result.items) if (fit.enabled && fit.code === '5') found.add(fit.id);
-        if (page * 20 < result.total) continue;
-        const choices = [...new Map(this.#state.pending.skus.filter(sku => found.has(sku.fitId))
-          .map(sku => [sku.fitId, { id: sku.fitId, name: sku.fitName }])).values()];
-        if (choices.length === 1) this.#publish({ pending: { ...this.#state.pending, fit: choices[0]! } });
-        return;
+      const ids = await readDefaultDocumentFitIds(read, signal);
+      if (!current()) return;
+      if (!ids) { this.#publish({ notice: '默认A版资料未完整读取，请手工选择版型。' }); return; }
+      const pending = this.#state.pending, defaultFit = defaultDocumentFit(pending.skus, ids);
+      if (defaultFit) {
+        const compatible = !pending.color || pending.skus.some(sku => sku.colorId === pending.color!.id && sku.fitId === defaultFit.id);
+        this.#publish({ pending: { ...pending, defaultFit, fit: compatible ? defaultFit : null } });
       }
-      if (current()) this.#publish({ notice: '默认A版资料未完整读取，请手工选择版型。' });
     } catch (error) {
       if (!current()) return;
       if (error instanceof HttpQueryError && error.kind === 'unauthenticated') {
@@ -324,7 +322,9 @@ export class TransferProposalSession {
     if (!sku) return false;
     if ([...Object.values(pending.quantities), ...Object.values(pending.sizeQuantities)].some(raw => raw !== '') && pending.userEdited) { this.#publish({ notice: '已有尚未完成的数量输入，请先完成、清除或取消当前改选。' }); return false; }
     if (kind === 'fit') this.#fitIntentRevision++;
-    const next = kind === 'color' ? { ...pending, color: { id: sku.colorId, name: sku.colorName }, quantities: {}, sizeQuantities: {}, userEdited: false }
+    const preferredFit = pending.fit ?? pending.defaultFit ?? null;
+    const fit = preferredFit && preferredFit === pending.defaultFit && !pending.skus.some(row => row.colorId === sku.colorId && row.fitId === preferredFit.id) ? null : preferredFit;
+    const next = kind === 'color' ? { ...pending, color: { id: sku.colorId, name: sku.colorName }, fit, quantities: {}, sizeQuantities: {}, userEdited: false }
       : { ...pending, fit: { id: sku.fitId, name: sku.fitName }, quantities: {}, sizeQuantities: {}, userEdited: false };
     this.#pending(this.#mapReplacement(next)); this.closePicker(); return true;
   }
@@ -406,13 +406,13 @@ export class TransferProposalSession {
     if (ok) this.#publish({ pending: replacement?.previousPending ?? emptyPending(), replacement: null, appendRequest: null, entry: { product: pending.product, skus: pending.skus, page: pending.page, exactTotal: pending.exactTotal } });
     return ok;
   }
-  get canScan(): boolean { return !this.#state.disposed && !!this.#reader.readBarcode && !!this.#state.draft.from && !!this.#state.draft.to; }
+  get canScan(): boolean { return !this.#state.disposed && !!this.#reader.readBarcode; }
   createScanner(): DocumentScanController {
     // Provisional few-seconds scan-only budget; other readers retain their own deadlines.
     return new DocumentScanController({ timeoutMs: 3_000, scope: this.#scope, ...(this.#onAccessFailure ? { onAccessFailure: this.#onAccessFailure } : {}),
       target: () => {
         const { from, to } = this.#state.draft;
-        return this.canScan && from && to ? { key: String(this.#revision), context: { kind: 'TRANSFER', fromWarehouseId: from.id, toWarehouseId: to.id } } : null;
+        return this.canScan ? { key: String(this.#revision), context: from && to ? { kind: 'TRANSFER', fromWarehouseId: from.id, toWarehouseId: to.id } : { kind: 'TRANSFER_DRAFT' } } : null;
       },
       resolve: (query, signal) => this.#reader.readBarcode!(query, signal),
       apply: result => {
@@ -501,8 +501,11 @@ export class TransferProposalSession {
   saveProposal(transferId: string | null): NativeTransferSaveProposal | null {
     const { draft, pending, replacement, matrixQuantities } = this.#state;
     if (this.#state.disposed || !this.#scope.active) return null;
+    if (!draft.from || !draft.to) {
+      this.#publish({ errors: [`请选择${!draft.from && !draft.to ? '调出仓库和调入仓库' : !draft.from ? '调出仓库' : '调入仓库'}。`], notice: '还没保存，已保留你填的内容。' }); return null;
+    }
     try {
-      if (!draft.from || !draft.to || replacement && replacement.originals.some(row => !draft.lines.includes(row))) throw Error();
+      if (replacement && replacement.originals.some(row => !draft.lines.includes(row))) throw Error();
       const lines: NativeTransferSaveProposal['lines'][number][] = [], coordinates = new Set<string>(), pointers = new Set<string>();
       const append = (line: NativeTransferSaveProposal['lines'][number], coordinate: readonly string[]) => {
         const key = JSON.stringify(coordinate);

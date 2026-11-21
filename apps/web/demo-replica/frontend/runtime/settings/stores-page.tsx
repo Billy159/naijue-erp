@@ -1,5 +1,6 @@
+import { SettingsDialog } from './settings-dialog.tsx';
 import { useRuntimeTabs, SettingsTabPanel, type RuntimeTabs } from '../common/tabs.tsx';
-import { Button, Empty, Input, Modal, Table, Tag } from '@arco-design/web-react';
+import { Button, Empty, Input, Table, Tag } from '@arco-design/web-react';
 import { IconSearch } from '@arco-design/web-react/icon';
 import { useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState, useSyncExternalStore } from 'react';
 import type { StoreSettingsEntry, StoreSettingsKind, StoreSettingsPageProps } from '../../../../src/settings/stores/contracts.ts';
@@ -105,13 +106,13 @@ function StoreTabBody(props: Parameters<typeof StoreTab>[0] & { controller: Stor
     <div ref={table} className="bs-table-wrap iw-arco-table" onScroll={event => { ui.tableScroll.top = event.currentTarget.scrollTop; ui.tableScroll.left = event.currentTarget.scrollLeft; }}><Table<StoreSettingsEntry> size="small" rowKey="id" loading={busy} columns={[...columns, { title: '状态', width: 100, render: (_, row) => <Tag className={`iw-status ${row.enabled ? 'normal' : 'off'}`}>{row.enabled ? '正常' : '已停用'}</Tag> }, { title: '操作', width: 76, render: (_, row) => <div className="bs-row-actions"><Button type="text" size="small" disabled={busy} onClick={() => { capture(); setDetail(controller.openDetail(row.id)); }}>编辑</Button></div> }]} data={[...(data?.items ?? [])]} pagination={false} noDataElement={<Empty description={state.phase === 'idle' ? '正在准备资料…' : state.phase === 'error' ? '资料尚未读取' : '暂无符合条件的数据'}/>}/></div>
     <Pager total={data?.total ?? 0} page={current?.parameters.page ?? applied.page} size={current?.parameters.pageSize ?? applied.pageSize} disabled={busy} onPage={page => run({ ...(current?.parameters ?? ui.applied), page })} onSize={pageSize => run({ ...(current?.parameters ?? ui.applied), page: 1, pageSize })}/>
     {needsForm && (formModule ? <formModule.default scope={props.scope} kind={kind} editor={editor ?? null} detail={detail} directory={props.maintenance?.directory} onRecord={openEditor} onSaved={() => run()} close={close}/> : <PendingForm kind={kind} editor={editor ?? null} failed={formFailed} retry={retryForm} close={close}/>)}
-    {auditOpen && props.audit && (auditModule ? <auditModule.default scope={props.scope} capability={props.audit} onAccessFailure={props.onAccessFailure} close={() => { setAuditOpen(false); restoreFocus(); }}/> : <Modal visible title="基础设置操作记录" maskClosable={false} footer={<Button onClick={() => { setAuditOpen(false); restoreFocus(); }}>取消</Button>} onCancel={() => { setAuditOpen(false); restoreFocus(); }}><p role={auditFailed ? 'alert' : 'status'}>{auditFailed ? '操作记录暂未加载。' : '正在读取操作记录…'}{auditFailed && <Button type="text" onClick={retryAudit}>重试加载</Button>}</p></Modal>)}
+    {auditOpen && props.audit && (auditModule ? <auditModule.default scope={props.scope} capability={props.audit} onAccessFailure={props.onAccessFailure} close={() => { setAuditOpen(false); restoreFocus(); }}/> : <SettingsDialog visible title="基础设置操作记录" footer={<Button onClick={() => { setAuditOpen(false); restoreFocus(); }}>取消</Button>} onCancel={() => { setAuditOpen(false); restoreFocus(); }}><p role={auditFailed ? 'alert' : 'status'}>{auditFailed ? '操作记录没打开。' : '正在加载…'}{auditFailed && <Button type="text" onClick={retryAudit}>重试</Button>}</p></SettingsDialog>)}
   </SettingsTabPanel></section>;
 }
 function PendingForm(props: { kind: StoreSettingsKind; editor: StoreMaintenanceController | null; failed: boolean; retry: () => void; close: () => void }) {
   const cancel = () => { if (!props.editor || props.editor.discard()) props.close(); };
-  return <Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={`${props.editor && !props.editor.record ? '新增' : '编辑'}${names[props.kind]}`} footer={<Button onClick={cancel}>取消</Button>} onCancel={cancel} maskClosable={false} autoFocus={false}>
-    <p role={props.failed ? 'alert' : 'status'}>{props.failed ? '维护表单暂未加载，资料和输入已保留。' : '正在准备维护表单…'}{props.failed && <Button type="text" onClick={props.retry}>重试加载表单</Button>}</p>
-  </Modal>;
+  return <SettingsDialog visible className="bs-modal iw-arco-modal iw-arco-controls" title={`${props.editor && !props.editor.record ? '新增' : '编辑'}${names[props.kind]}`} footer={<Button onClick={cancel}>取消</Button>} onCancel={cancel} autoFocus={false}>
+    <p role={props.failed ? 'alert' : 'status'}>{props.failed ? '维护表单暂未加载，资料和输入已保留。' : '正在加载…'}{props.failed && <Button type="text" onClick={props.retry}>重试</Button>}</p>
+  </SettingsDialog>;
 }
 export default StoreSettingsRuntime;

@@ -1,3 +1,4 @@
+import { unsavedChanges } from '../common/dialog-copy.ts';
 // Extracted categoryEditor/mountCategoryTree UI, with native IDs/counts and the
 // existing authoritative order commands replacing Demo mutation of arrays.
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
@@ -10,6 +11,7 @@ import type { CatalogueEditorDraft } from '../../../../src/product-settings/cata
 import type { CategoryOrderResult } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
 import { categoryPath, categoryReorderDraft, categoryTreeIndex, visibleCategoryRows } from '../../../../src/product-categories/tree-model.ts';
 import type { CataloguePageOptions } from './entry.tsx';
+import { ConfirmDialog } from '../common/confirm-dialog.tsx';
 import { Head, MaintenanceNotice, ReadNotice, Recovery, SourceModal, maintenanceUnavailable, useCommand, useRead } from './source-controls.tsx';
 
 type Draft = { name: string; parentId: string | null; displayOrder: number; original: CatalogueSettingsCategory | null };
@@ -58,7 +60,14 @@ function Categories({ options }: { options: CataloguePageOptions }) {
     }
     setRecord(data.items.find(item => item.id === selected) ?? index.children.get(null)?.[0]);
   }, [data, fresh, draft, selected, setRecord, index, state]);
-  useEffect(() => { options.onCanLeaveChange(() => !dirty && !busy); return () => options.onCanLeaveChange(null); }, [options, dirty, busy]);
+  useEffect(() => {
+    options.onCanLeaveChange(() => !dirty && !busy);
+    options.onCanDiscardChange?.(() => {
+      const live = controller?.getSnapshot();
+      return dirty && options.scope.active && (!live || ['idle', 'rejected'].includes(live.phase));
+    });
+    return () => { options.onCanLeaveChange(null); options.onCanDiscardChange?.(null); };
+  }, [options, dirty, busy, controller]);
   const request = (action: () => void) => { if (busy) return; if (dirty) setDeferred(() => action); else action(); };
   const sameOrder = (saved: CategoryOrderResult) => !!data && saved.order.members.every(member => {
     const current = index.byId.get(member.id); return current?.parentId === saved.order.parentId && current.version === member.version && current.displayOrder === member.displayOrder;
@@ -155,8 +164,8 @@ function Categories({ options }: { options: CataloguePageOptions }) {
     <ReadNotice phase={snapshot.phase} error={snapshot.error} retry={() => state?.phase === 'committed' ? void finish() : void query.run({})} cancel={() => query.cancel()} />
     {state?.phase === 'committed' && !deleting && <button className="btn ghost" disabled={readingBack} onClick={() => void finish()}>重新读取目录</button>}
   </section></div>
-    {deleting && <SourceModal title="确认删除分类" close={() => { if (!busy) setDeleting(false); }} footer={<><button className="btn" disabled={busy} onClick={() => setDeleting(false)}>取消</button><button className="btn pc-danger-solid" disabled={busy} onClick={() => { if (draft?.original && canWrite('DELETE')) void submit({ action: 'DELETE', id: draft.original.id, expectedVersion: draft.original.version }); }}>确认删除</button></>}><p>删除该分类后无法恢复，确定继续吗？</p>{controller && <Recovery controller={controller} />}{state?.phase === 'committed' && <div className={notice?.kind === 'error' ? 'inline-error' : 'hint'} role={notice?.kind === 'error' ? 'alert' : 'status'}>{notice?.message ?? '删除操作已提交，正在读取最新目录。'} <button className="btn ghost" type="button" disabled={readingBack || !options.scope.active} onClick={() => void finish()}>重新读取目录</button></div>}</SourceModal>}
-    {deferred && <SourceModal title="有未保存的修改" close={() => setDeferred(null)} footer={<><button className="btn" onClick={() => setDeferred(null)}>继续编辑</button><button className="btn primary" disabled={busy} onClick={() => { const action = deferred; setDeferred(null); action(); }}>放弃修改并离开</button></>}><p>离开后，本次未保存的修改将丢失。</p></SourceModal>}
+    {deleting && <SourceModal title="删除分类？" close={() => { if (!busy) setDeleting(false); }} footer={<><button className="btn" disabled={busy} onClick={() => setDeleting(false)}>取消</button><button className="btn pc-danger-solid" disabled={busy} onClick={() => { if (draft?.original && canWrite('DELETE')) void submit({ action: 'DELETE', id: draft.original.id, expectedVersion: draft.original.version }); }}>确定</button></>}><p>分类里还有商品或下级分类，就不能删除。</p>{controller && <Recovery controller={controller} />}{state?.phase === 'committed' && <div className={notice?.kind === 'error' ? 'inline-error' : 'hint'} role={notice?.kind === 'error' ? 'alert' : 'status'}>{notice?.message ?? '删除操作已提交，正在读取最新目录。'} <button className="btn ghost" type="button" disabled={readingBack || !options.scope.active} onClick={() => void finish()}>重新读取目录</button></div>}</SourceModal>}
+    {deferred && <ConfirmDialog title={unsavedChanges.discardTitle} className="sale-confirm" onCancel={() => setDeferred(null)} confirmDisabled={busy} onConfirm={() => { const action = deferred; setDeferred(null); action(); }}><p>{unsavedChanges.discardBody}</p></ConfirmDialog>}
   </div>;
 }
 export function mount(host: HTMLElement, options: CataloguePageOptions) { const root = createRoot(host); root.render(<Categories options={options} />); return () => root.unmount(); }

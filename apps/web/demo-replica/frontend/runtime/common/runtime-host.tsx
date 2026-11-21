@@ -1,9 +1,10 @@
+import { unsavedChanges } from './dialog-copy.ts';
 import {createRoutePresentationOwner} from './route-presentation.ts';
 import {prepareRouteResources} from './route-resources.ts';
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createPortal } from 'react-dom';
-import {SaleDialog} from '../documents/native-dialog.tsx';
+import {ConfirmDialog} from './confirm-dialog.tsx';
 import { LoginView } from './login-view.tsx';
 import type { OwnPasswordFields, OwnPasswordErrors } from './account-menu.tsx';
 import { createReadyPageMounts, type ReadyPageOptions, type MountedReplicaPage } from './ready-pages.tsx';
@@ -114,23 +115,30 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
  const toast = (message: string) => { let node = document.getElementById('toast'); if (!node) { node = document.createElement('div'); node.id = 'toast'; node.setAttribute('role', 'status'); document.body.append(node); } node.textContent = message; node.style.display = 'block'; window.clearTimeout(toastTimer); toastTimer = window.setTimeout(() => { if (node) node.style.display = 'none'; }, 4200); };
  const canLeave = () => !pages.hasUnresolvedWrite() && (current?.canLeave() ?? true);
  const leaveHost=document.createElement('div');leaveHost.dataset.documentLeave='';document.body.append(leaveHost);const leaveRoot=createRoot(leaveHost);
- let pendingLeave:{next:string;replace:boolean;owner:MountedReplicaPage;scope:ReadScope|null}|null=null;
+ // Index only this host's same-document route entries, so a blocked Back/Forward
+ // can restore the current entry without overwriting the destination.
+ const routePosition=()=>{const value=history.state?.replicaRoutePosition;return Number.isSafeInteger(value)?value as number:null;};
+ let currentPosition=routePosition()??0;
+ let pendingLeave:{next:string;replace:boolean;historyDelta:number|null;owner:MountedReplicaPage;scope:ReadScope|null}|null=null;
  const dismissLeave=()=>{pendingLeave=null;leaveRoot.render(null);};
- const askLeave=(next:string,replace:boolean)=>{
+ const askLeave=(next:string,replace:boolean,historyDelta:number|null)=>{
   if(pendingLeave||!current||!current.canDiscard?.()||pages.hasUnresolvedWrite())return;
-  pendingLeave={next,replace,owner:current,scope};
-  leaveRoot.render(<SaleDialog variant="transfer" className="tc-confirm tc-danger" title="有未保存的修改" close={dismissLeave} footer={<><button type="button" className="btn" onClick={dismissLeave}>继续编辑</button><button type="button" className="btn primary" onClick={()=>{const decision=pendingLeave;if(!decision||current!==decision.owner||scope!==decision.scope||!scope?.active){dismissLeave();return;}if(pages.hasUnresolvedWrite()||!current.canDiscard?.()||!current.discard?.()){dismissLeave();toast('当前操作尚未结束，输入已保留。');return;}dismissLeave();void navigate(decision.next,decision.replace);}}>放弃修改并离开</button></>}><p>离开后，本次未保存的修改将丢失。</p></SaleDialog>);
+  pendingLeave={next,replace,historyDelta,owner:current,scope};
+  const catalogueLeave=route.startsWith('products/')||route==='product-categories';
+  leaveRoot.render(<ConfirmDialog variant="transfer" className={catalogueLeave?'tc-confirm pc-leave-confirm':'tc-confirm tc-danger'} title={unsavedChanges.leaveTitle} onCancel={dismissLeave} onConfirm={()=>{const decision=pendingLeave;if(!decision||current!==decision.owner||scope!==decision.scope||!scope?.active){dismissLeave();return;}if(pages.hasUnresolvedWrite()||!current.canDiscard?.()||!current.discard?.()){dismissLeave();toast('当前操作尚未结束，输入已保留。');return;}dismissLeave();if(decision.historyDelta!==null&&routePosition()===currentPosition)history.go(decision.historyDelta);else void navigate(decision.next,decision.replace);}}><p>{unsavedChanges.leaveBody}</p></ConfirmDialog>);
  };
  const clearPage = () => { sourceNavigation?.abort(); sourceNavigation = null; dismissLeave();serial++; current?.dispose(); current = null; scope?.dispose(); scope = null; presentation.clear(); page.replaceChildren(); };
  const status = (message: string, retry?: () => void, retryLabel = '重试加载资料') => { page.replaceChildren(); const box = document.createElement('div'); box.className = 'iw-state'; box.setAttribute('role', retry ? 'alert' : 'status'); box.textContent = message; if (retry) { const button = document.createElement('button'); button.className = 'btn'; button.textContent = retryLabel; button.onclick = retry; box.append(' ', button); } page.append(box); };
- async function navigate(next: string, replace = false): Promise<boolean> {
+ async function navigate(next: string, replace = false, historyDelta:number|null=null): Promise<boolean> {
   if (disposed || !session.auth.getSnapshot().principal) return false;
   if (next === route && current && scope?.active) return true;
-  if (!canLeave()) { if(!pages.hasUnresolvedWrite()&&current?.canDiscard?.())askLeave(next,replace);else toast('请先保存或取消当前编辑，当前输入已保留。');return false; }
+  if (!canLeave()) { if(!pages.hasUnresolvedWrite()&&current?.canDiscard?.())askLeave(next,replace,historyDelta);else toast('请先保存或取消当前编辑，当前输入已保留。');return false; }
   clearPage(); route = next; presentation.activate(next); const request = serial;
   breadcrumb.textContent = captions[next] ?? (next.startsWith('transfer/')?'库存管理 / 调拨单':next.startsWith('sales/')?'销售管理 / 销货单':next.startsWith('products/')?'商品管理 / 商品信息':'业务页面');
   document.querySelectorAll<HTMLAnchorElement>('.sidebar a[data-route]').forEach(link => { const selected = link.dataset.route === next || (next === 'customers' || next === 'suppliers') && link.dataset.route === 'settings/parties' || next === 'settings/accounts' && link.dataset.route === 'settings/staff' || next.startsWith('transfer/') && next!=='transfer/new' && link.dataset.route==='transfer' || next.startsWith('sales/') && next!=='sales/new' && link.dataset.route==='sales' || next.startsWith('products/') && link.dataset.route==='products'; link.classList.toggle('selected', selected); if (selected) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
-  if (replace) history.replaceState(null, '', '#' + next); else if (location.hash !== '#' + next) history.pushState(null, '', '#' + next);
+  if(replace){currentPosition=routePosition()??currentPosition;history.replaceState({replicaRoutePosition:currentPosition},'','#'+next);}
+  else if(location.hash!=='#'+next){currentPosition++;history.pushState({replicaRoutePosition:currentPosition},'','#'+next);}
+  else if(routePosition()===null)history.replaceState({replicaRoutePosition:currentPosition},'','#'+next);
   status('正在加载页面…');
   try {
    scope = session.reads.createScope('replica-route:' + next + ':' + request); const active = scope;
@@ -156,7 +164,15 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
  }
  // The combined menu keeps customer/supplier and account data as separate consumers.
  const click = (event: MouseEvent) => { const target = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('.sidebar a[data-route]') : null; if (!target || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); void navigate(target.dataset.route!); };
- const hash = () => { const next = location.hash.slice(1) || 'inventory'; void navigate(next, true).then(ok => { if (!ok && current) history.replaceState(null, '', '#' + route); }); };
+ const hash=()=>{
+  const targetHash=location.hash,next=targetHash.slice(1)||'inventory',position=routePosition();
+  const delta=position!==null&&position!==currentPosition?position-currentPosition:null;
+  void navigate(next,true,delta).then(ok=>{
+   if(ok||!current||location.hash!==targetHash)return;
+   if(delta!==null)history.go(-delta);
+   else history.replaceState({replicaRoutePosition:currentPosition},'','#'+route);
+  });
+ };
  const beforeUnload = (event: BeforeUnloadEvent) => { if (!canLeave()) { event.preventDefault(); event.returnValue = ''; } };
  const authChanged = () => {
   const state = session.auth.getSnapshot(), principal = state.principal;

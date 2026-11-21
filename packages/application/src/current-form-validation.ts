@@ -3,7 +3,7 @@ import { entityId } from "../../domain/src/values.ts";
 import type { EntityId, EntityKind } from "../../domain/src/values.ts";
 import type { ActorContext } from "./ports.ts";
 import { CURRENT_FORM_MAX_TARGET_SKUS } from "./current-form-ports.ts";
-import type { CurrentFormBarcodeContext, CurrentFormBarcodeQuery, CurrentFormContext, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormReadGrant,
+import type { CurrentFormBarcodeContext, CurrentFormBarcodeQuery, CurrentFormContext, CurrentFormLineContext, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormReadGrant,
   CurrentFormSearch, CurrentFormSkuBatchQuery, CurrentSalesReferenceQuery, CurrentTransferWarehouseQuery } from "./current-form-ports.ts";
 
 function invalid(): never { throw new DomainError("INVALID_CURRENT_FORM_QUERY", "Invalid current form query"); }
@@ -31,6 +31,12 @@ function context(value: unknown): CurrentFormContext {
   const row = record(value, ["kind", "hallId"]); if (row.kind !== "SALES") invalid();
   return Object.freeze({ kind: "SALES", hallId: id("hall", row.hallId) });
 }
+function lineContext(value: unknown): CurrentFormLineContext {
+  if (value && typeof value === "object" && "kind" in value && value.kind === "SALES_DRAFT") {
+    record(value, ["kind"]); return Object.freeze({ kind: "SALES_DRAFT" });
+  }
+  return context(value);
+}
 export function parseCurrentSalesReferenceQuery(value: unknown): CurrentSalesReferenceQuery {
   const accountKind = value !== null && typeof value === "object" && !Array.isArray(value)
     && (value as Record<string, unknown>).kind === "paymentAccount";
@@ -53,11 +59,11 @@ export function parseCurrentTransferWarehouseQuery(value: unknown): CurrentTrans
   return Object.freeze({ ...search(row), direction: row.direction });
 }
 export function parseCurrentFormProductQuery(value: unknown): CurrentFormProductQuery {
-  const row = record(value, ["context", "search", "page", "pageSize"]); return Object.freeze({ ...search(row), context: context(row.context) });
+  const row = record(value, ["context", "search", "page", "pageSize"]); return Object.freeze({ ...search(row), context: lineContext(row.context) });
 }
 export function parseCurrentFormProductSkuQuery(value: unknown): CurrentFormProductSkuQuery {
   const row = record(value, ["context", "productId", "page", "pageSize"]);
-  return Object.freeze({ ...paging(row), context: context(row.context), productId: id("product", row.productId) });
+  return Object.freeze({ ...paging(row), context: lineContext(row.context), productId: id("product", row.productId) });
 }
 export function parseCurrentFormSkuBatchQuery(value: unknown): CurrentFormSkuBatchQuery {
   const row = record(value, ["context", "skuIds"]);
@@ -69,7 +75,9 @@ export function parseCurrentFormBarcodeQuery(value: unknown): CurrentFormBarcode
   const row = record(value, ["context", "barcode"]);
   if (typeof row.barcode !== "string" || row.barcode.length < 1 || row.barcode.length > 512 || /[\x00-\x1f\x7f]/.test(row.barcode)) invalid();
   let target: CurrentFormBarcodeContext;
-  if (row.context && typeof row.context === "object" && "kind" in row.context && row.context.kind === "TRANSFER") {
+  if (row.context && typeof row.context === "object" && "kind" in row.context && (row.context.kind === "SALES_DRAFT" || row.context.kind === "TRANSFER_DRAFT")) {
+    record(row.context, ["kind"]); target = row.context.kind === "SALES_DRAFT" ? Object.freeze({ kind: "SALES_DRAFT" }) : Object.freeze({ kind: "TRANSFER_DRAFT" });
+  } else if (row.context && typeof row.context === "object" && "kind" in row.context && row.context.kind === "TRANSFER") {
     const c = record(row.context, ["kind", "fromWarehouseId", "toWarehouseId"]);
     const fromWarehouseId = id("warehouse", c.fromWarehouseId), toWarehouseId = id("warehouse", c.toWarehouseId);
     if (fromWarehouseId === toWarehouseId) invalid();

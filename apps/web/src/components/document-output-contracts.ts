@@ -1,3 +1,4 @@
+import { isCurrentPureReturn } from '../sales/sales-return-display.ts';
 import { salesHallLabel, historicalHallFacts } from '../sales/historical-hall.ts';
 import type { SalesDetailDto } from '../sales/contracts.ts';
 import type { TransferDetailDto } from '../transfers/contracts.ts';
@@ -34,9 +35,10 @@ function printColumns(section: DocumentOutputSection, indices: readonly number[]
 }
 export function salesDocumentOutput(data: SalesDetailDto): DocumentOutput {
   const { header: h, lines, settlements } = data.document;
+  const pureReturn = isCurrentPureReturn(data);
   const names = new Map(data.settlementNames.map(row => [row.settlementId, row]));
   const groups = h.businessType === 'SALE' ? [{ title: '销售商品', lines }]
-    : h.businessType === 'RETURN' ? [{ title: '退回商品', lines }]
+    : h.businessType === 'RETURN' ? [{ title: pureReturn ? '退货商品' : '退回商品', lines }]
       : [{ title: '退回商品', lines: lines.filter(row => BigInt(row.quantity) < 0n) }, { title: '换出商品', lines: lines.filter(row => BigInt(row.quantity) >= 0n) }];
   const sections: DocumentOutputSection[] = groups.map(group => ({ title: group.title,
     columns: [...lineColumns, '参考零售价', '折扣（折）', '成交单价', '金额', '分摊优惠', '赠品'],
@@ -54,7 +56,7 @@ export function salesDocumentOutput(data: SalesDetailDto): DocumentOutput {
   return { kind: 'sales', id: h.id, version: h.version, title: `奈爵服饰 · 销货单（${types[h.businessType]}）`, number: h.number,
     metadata: [['单据日期', h.businessDate], ['单据编号', h.number], ['状态', statuses[h.status]], ['版本', String(h.version)], ['营业厅', salesHallLabel(data.referenceNames.hallName, h.hallId, data.historicalHallEvidence, data.stockBasis === 'CUTOFF_HISTORY', data.historicalHallDiffersFromCurrent)], ['客户', data.referenceNames.customerName],
       ['营业员', data.referenceNames.salespersonName], ['仓库', data.referenceNames.warehouseName], ['创建账号编号', h.createdByAccountId], ['创建时间', h.createdAt], ['审核账号编号', h.approvedByAccountId], ['审核时间', h.approvedAt], ['最后更新', h.updatedAt], ['备注', h.note], ...(data.historicalHallEvidence ? [...historicalHallFacts(data.historicalHallEvidence), ['当前值与导入取值不同', data.historicalHallDiffersFromCurrent ? '是，原始取值依据保留' : '否'] as const] : [])], sections,
-    totals: [...(h.businessType === 'SALE' ? [['数量（不含赠品）', giftKnown ? (outgoing - incoming).toString() : '未记录'] as const] : [['退回数量（不含赠品）', giftKnown ? incoming.toString() : '未记录'] as const, ['换出数量（不含赠品）', giftKnown ? outgoing.toString() : '未记录'] as const]),
+    totals: [...(h.businessType === 'SALE' ? [['数量（不含赠品）', giftKnown ? (outgoing - incoming).toString() : '未记录'] as const] : [[pureReturn ? '退货数量（不含赠品）' : '退回数量（不含赠品）', giftKnown ? incoming.toString() : '未记录'] as const, ...(!pureReturn ? [['换出数量（不含赠品）', giftKnown ? outgoing.toString() : '未记录'] as const] : [])]),
       ['商品金额', money(h.grossAmount)], ['整单优惠', money(h.orderDiscount)], ['应结金额', money(h.netDue)], ['收款减退款', money(settlements.reduce((sum, row) => sum + (row.direction === 'RECEIVE' ? 1n : -1n) * BigInt(row.amount), 0n).toString())]],
     printMetadata: [['单据日期', h.businessDate], ['单据编号', h.number], ['状态', statuses[h.status]], ['版本', String(h.version)], ['营业厅', salesHallLabel(data.referenceNames.hallName, h.hallId, data.historicalHallEvidence, data.stockBasis === 'CUTOFF_HISTORY', data.historicalHallDiffersFromCurrent)], ['客户', data.referenceNames.customerName], ['营业员', data.referenceNames.salespersonName], ['仓库', data.referenceNames.warehouseName], ['备注', h.note], ...(data.historicalHallEvidence ? [...historicalHallFacts(data.historicalHallEvidence), ['当前值与导入取值不同', data.historicalHallDiffersFromCurrent ? '是，原始取值依据保留' : '否'] as const] : [])],
     printSections: sections.map((section, index) => index === sections.length - 1

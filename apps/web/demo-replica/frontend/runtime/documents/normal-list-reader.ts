@@ -12,7 +12,7 @@ import { createHttpJsonQuery, type HttpQueryOptions } from '../../../../src/tran
 import type { QueryRead } from '../../../../src/loading/latest-query.ts';
 type Wire<T> = T extends bigint ? string : T extends string|number|boolean|null ? T : T extends readonly (infer V)[] ? readonly Wire<V>[] : T extends object ? {readonly [K in keyof T]:Wire<T[K]>} : T;
 export type NormalSalesPage=Wire<SalesUnifiedListPage>;
-export type NormalSalesRow=Wire<SalesUnifiedSummary>;
+export type NormalSalesRow=Wire<SalesUnifiedSummary> & {readonly currentPureReturn?: true};
 export type NormalTransferPage=Wire<TransferUnifiedListPage>;
 export type NormalTransferRow=Wire<TransferUnifiedSummary>;
 const identityFields=['dataset','batchId','documentId','effectiveVersion','productSummary'];
@@ -52,11 +52,17 @@ function categoryFields(value:unknown,metric:'QUANTITY'|'PRODUCT_COUNT',ordinary
 export function documentRowKey(row:Pick<DocumentListIdentity,'dataset'|'batchId'|'documentId'|'effectiveVersion'>):string{return JSON.stringify([row.dataset,row.batchId,row.documentId,row.effectiveVersion]);}
 function identity(row:Record<string,unknown>){if(row.dataset!=='LIVE'&&row.dataset!=='HISTORY')invalid();uuid(row.documentId);integer(row.effectiveVersion);if(row.documentId!==row.id||row.effectiveVersion!==row.version)invalid();if(row.dataset==='LIVE'){if(row.batchId!==null)invalid();}else uuid(row.batchId);products(row.productSummary);return JSON.stringify([row.dataset,row.batchId,row.documentId,row.effectiveVersion]);}
 function page(value:unknown,p:{page:number;pageSize:number},totalFields:readonly string[]){const row=record(value,['page','pageSize','exactTotal','items','historyCoverage','totals']);integer(row.page);integer(row.pageSize);exact(row.exactTotal,true);if(row.page!==p.page||row.pageSize!==p.pageSize||!Array.isArray(row.items)||row.items.length>p.pageSize)invalid();const remain=BigInt(row.exactTotal)-BigInt(p.page-1)*BigInt(p.pageSize),expected=remain<0n?0n:remain>BigInt(p.pageSize)?BigInt(p.pageSize):remain;if(BigInt(row.items.length)!==expected)invalid();if(!['PUBLISHED_AUTHORIZED','NOT_PUBLISHED','AUTHORIZATION_UNAVAILABLE'].includes(String(row.historyCoverage)))invalid();const totals=record(row.totals,totalFields);for(const field of totalFields)nullableExact(totals[field],field==='incomingQuantity'||field==='outgoingQuantity');return {row,items:row.items,totals};}
+function returnDisplayFields(value:unknown):string[]{
+ if(!value||typeof value!=='object'||!Object.hasOwn(value,'currentPureReturn'))return [];
+ const row=value as Record<string,unknown>;
+ if(row.currentPureReturn!==true||row.businessType!=='RETURN'||row.dataset!=='LIVE'||row.outgoingQuantity!==null&&row.outgoingQuantity!=='0')invalid();
+ return ['currentPureReturn'];
+}
 function salesQuantities(row:Record<string,unknown>){for(const field of ['quantity','incomingQuantity','outgoingQuantity'])nullableExact(row[field],field!=='quantity');const values=[row.quantity,row.incomingQuantity,row.outgoingQuantity];if(values.some(value=>value===null)){if(!values.every(value=>value===null))invalid();}else if(BigInt(String(row.quantity))!==BigInt(String(row.outgoingQuantity))-BigInt(String(row.incomingQuantity)))invalid();}
 function nativeFields(row:Record<string,unknown>,keys:readonly string[]){return Object.fromEntries(keys.map(key=>[key,row[key]]));}
 export function normalSalesResponse(value:unknown,p:Readonly<SalesListQuery>):NormalSalesPage{
  const {row:envelope,items,totals}=page(value,p,salesTotals),seen=new Set<string>();salesQuantities(totals);
- for(const value of items){const history=!!value&&typeof value==='object'&&'dataset'in value&&value.dataset==='HISTORY';const row=record(value,[...salesFields,...historicalHallFields(value),...identityFields,...categoryFields(value,'QUANTITY'),...(history?['createdLocalAt','updatedLocalAt']:[])]),key=identity(row);if(history&&envelope.historyCoverage!=='PUBLISHED_AUTHORIZED')invalid();if(seen.has(key))invalid();seen.add(key);
+ for(const value of items){const history=!!value&&typeof value==='object'&&'dataset'in value&&value.dataset==='HISTORY';const row=record(value,[...salesFields,...historicalHallFields(value),...identityFields,...categoryFields(value,'QUANTITY'),...returnDisplayFields(value),...(history?['createdLocalAt','updatedLocalAt']:[])]),key=identity(row);if(history&&envelope.historyCoverage!=='PUBLISHED_AUTHORIZED')invalid();if(seen.has(key))invalid();seen.add(key);
   if(!history){salesListResponse({page:1,pageSize:p.pageSize,exactTotal:'1',items:[nativeFields(row,[...salesFields,...historicalHallFields(row)])]},{...p,page:1});continue;}
   if((value as Record<string,unknown>).dataset!=='HISTORY')invalid();
   id('sales',row.id);text(row.number);nullableDate(row.businessDate);nullableStamp(row.updatedAt);nullableText(row.createdLocalAt);nullableText(row.updatedLocalAt);integer(row.version);
@@ -88,7 +94,7 @@ function transferCategoryReader(http: ReturnType<typeof createHttpJsonQuery>) {
   });
  };
 }
-export function createNormalListReader(options:HttpQueryOptions){const http=createHttpJsonQuery({...options,fetch:(input,init)=>{const headers=new Headers(init.headers);headers.set('x-naijue-document-summary','category-v2');return options.fetch(input,{...init,headers});}});return Object.freeze({readTransferCategories: transferCategoryReader(http),readSales(read:QueryRead<SalesListQuery>){const p=parseSalesListQuery({...read.parameters,filter:{...read.parameters.filter}});return http.post('/sales/query',p,read.signal,value=>normalSalesResponse(value,p));},readTransfers(read:QueryRead<TransferListQuery>){const p=parseTransferListQuery({...read.parameters,filter:{...read.parameters.filter}});return http.post('/transfers/query',p,read.signal,value=>normalTransferResponse(value,p));}});}
+export function createNormalListReader(options:HttpQueryOptions){const http=createHttpJsonQuery({...options,fetch:(input,init)=>{const headers=new Headers(init.headers);headers.set('x-naijue-document-summary','category-v2');headers.set('x-naijue-sales-return-display','pure-return-v1');return options.fetch(input,{...init,headers});}});return Object.freeze({readTransferCategories: transferCategoryReader(http),readSales(read:QueryRead<SalesListQuery>){const p=parseSalesListQuery({...read.parameters,filter:{...read.parameters.filter}});return http.post('/sales/query',p,read.signal,value=>normalSalesResponse(value,p));},readTransfers(read:QueryRead<TransferListQuery>){const p=parseTransferListQuery({...read.parameters,filter:{...read.parameters.filter}});return http.post('/transfers/query',p,read.signal,value=>normalTransferResponse(value,p));}});}
 
 // Ordinary27 is an explicit host-selected lane, never a relabel of the legacy oracle.
 import type { OrdinaryDocumentPage, OrdinarySalesSummary, OrdinaryTransferSummary, OrdinaryDocumentTotals, OrdinarySalesTotals, OrdinarySalesTotalsQuery, OrdinaryTransferTotalsQuery } from '../../../../../../packages/application/src/ordinary-document-query-ports.ts';
@@ -111,7 +117,7 @@ function ordinaryPage(value:unknown,p:{page:number;pageSize:number}) {
 export function ordinarySalesResponse(value:unknown,p:Readonly<SalesListQuery>):OrdinarySalesPage {
  const row=ordinaryPage(value,p);
  // Reuse strict ordinary row/filter validation, not the legacy envelope or history decoder.
- const seen=new Set<string>();for(const value of row.items as unknown[]){const item=record(value,[...salesFields,...historicalHallFields(value),...identityFields,...categoryFields(value,'QUANTITY',true)]);const key=identity(item);if(seen.has(key))invalid();seen.add(key);salesListResponse({page:1,pageSize:p.pageSize,exactTotal:'1',items:[nativeFields(item,[...salesFields,...historicalHallFields(item)])]},{...p,page:1});}
+ const seen=new Set<string>();for(const value of row.items as unknown[]){const item=record(value,[...salesFields,...historicalHallFields(value),...identityFields,...categoryFields(value,'QUANTITY',true),...returnDisplayFields(value)]);const key=identity(item);if(seen.has(key))invalid();seen.add(key);salesListResponse({page:1,pageSize:p.pageSize,exactTotal:'1',items:[nativeFields(item,[...salesFields,...historicalHallFields(item)])]},{...p,page:1});}
  return value as OrdinarySalesPage;
 }
 export function ordinaryTransferResponse(value:unknown,p:Readonly<TransferListQuery>):OrdinaryTransferPage {
@@ -122,7 +128,7 @@ function ordinaryTotals(value:unknown,expectedRevision:string,fields:readonly st
 export function ordinarySalesTotalsResponse(value:unknown,expectedRevision:string):OrdinarySalesTotalsPage {const totals=ordinaryTotals(value,expectedRevision,salesTotals);salesQuantities(totals);for(const field of ['grossAmount','orderDiscount','netDue'])exact(totals[field]);return value as OrdinarySalesTotalsPage;}
 export function ordinaryTransferTotalsResponse(value:unknown,expectedRevision:string):OrdinaryTransferTotalsPage {const totals=ordinaryTotals(value,expectedRevision,['totalQuantity']);exact(totals.totalQuantity,true);return value as OrdinaryTransferTotalsPage;}
 export function createOrdinaryListReader(options:HttpQueryOptions){
- const http=createHttpJsonQuery({...options,fetch:(input,init)=>{const headers=new Headers(init.headers);headers.set('x-naijue-document-list','ordinary-v1');headers.set('x-naijue-document-summary','category-v2');return options.fetch(input,{...init,headers});}});
+ const http=createHttpJsonQuery({...options,fetch:(input,init)=>{const headers=new Headers(init.headers);headers.set('x-naijue-document-list','ordinary-v1');headers.set('x-naijue-document-summary','category-v2');headers.set('x-naijue-sales-return-display','pure-return-v1');return options.fetch(input,{...init,headers});}});
  return Object.freeze({
  readTransferCategories: transferCategoryReader(http),
  readSales(read:QueryRead<SalesListQuery>){const p=parseSalesListQuery({...read.parameters,filter:{...read.parameters.filter}});return http.post('/sales/query',p,read.signal,value=>ordinarySalesResponse(value,p));},

@@ -2,7 +2,8 @@ import {HISTORICAL_SALES_HALL_BATCH_CTES,decodeHistoricalSalesHallProjection} fr
 import { createHash } from 'node:crypto';
 import type { Pool } from 'pg';
 import type { ActorContext } from '../../../packages/application/src/ports.ts';
-import type { DocumentCategorySummary, DocumentProductSummary, SalesListQuery, SalesQueryFilter, SalesReadScope, SalesScopedRead, SalesSummary, SalesSummaryQuantities } from '../../../packages/application/src/sales-query-ports.ts';
+import type { OrdinarySalesSummary } from '../../../packages/application/src/ordinary-document-query-ports.ts';
+import type { DocumentCategorySummary, DocumentProductSummary, SalesListQuery, SalesQueryFilter, SalesReadScope, SalesScopedRead, SalesSummaryQuantities } from '../../../packages/application/src/sales-query-ports.ts';
 import type { TransferListQuery, TransferQueryFilter, TransferReadScope, TransferScopedRead, TransferSummary } from '../../../packages/application/src/transfer-query-ports.ts';
 import { checkedSalesReadScope, parseSalesListQuery } from '../../../packages/application/src/sales-query-validation.ts';
 import { checkedTransferReadScope, parseTransferListQuery } from '../../../packages/application/src/transfer-query-validation.ts';
@@ -39,7 +40,7 @@ export interface OrdinaryDocumentIdentity {
   readonly dataset: 'LIVE'; readonly batchId: null; readonly documentId: string; readonly effectiveVersion: number;
   readonly productSummary: DocumentProductSummary; readonly categorySummary: DocumentCategorySummary;
 }
-export type OrdinarySalesSummary = SalesSummary & OrdinaryDocumentIdentity;
+export type { OrdinarySalesSummary } from '../../../packages/application/src/ordinary-document-query-ports.ts';
 export type OrdinaryTransferSummary = TransferSummary & OrdinaryDocumentIdentity;
 export interface OrdinaryDocumentPage<T> {
   readonly profile: 'ORDINARY_DOCUMENT_LIST_V1'; readonly page: number; readonly pageSize: number;
@@ -110,11 +111,12 @@ function categories(row: Record<string, unknown>, kind: Kind, unknownQuantity: b
 }
 function salesSummary(row: Record<string, unknown>): OrdinarySalesSummary {
   const documentId = id('sales', row.id), version = versionFromSql(row.version), q = quantities(row);
+  const currentPureReturn = row.stock_basis === 'RUNTIME_LEDGER' && row.business_type === 'RETURN' && row.pure_return_lines === true;
   return { ...decodeHistoricalSalesHallProjection(row),id: documentId, number: stringValue(row.number), businessType: choice(row.business_type, ['SALE', 'RETURN', 'EXCHANGE']), businessDate: businessDate(stringValue(row.business_date)),
     hallId: nullableId('hall', row.hall_id), customerId: id('customer', row.customer_id), salespersonId: nullableId('staff', row.salesperson_id), warehouseId: id('warehouse', row.warehouse_id),
     status: choice(row.status, ['DRAFT', 'APPROVED', 'VOID']), version, grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due),
     updatedAt: nullableString(row.updated_at), responsibleStaffId: nullableId('staff', row.responsible_staff_id), responsibleName: nullableString(row.responsible_name), createdByName: nullableString(row.created_by_name),
-    hallName: nullableString(row.hall_name), warehouseName: stringValue(row.warehouse_name), customerName: stringValue(row.customer_name), salespersonName: nullableString(row.salesperson_name), ...q,
+    hallName: nullableString(row.hall_name), warehouseName: stringValue(row.warehouse_name), customerName: stringValue(row.customer_name), salespersonName: nullableString(row.salesperson_name), ...q, ...(currentPureReturn ? {currentPureReturn:true as const} : {}),
     dataset: 'LIVE', batchId: null, documentId, effectiveVersion: version, productSummary: products(row), categorySummary: categories(row, 'sales', q.quantity === null) };
 }
 function transferSummary(row: Record<string, unknown>): OrdinaryTransferSummary {
@@ -177,11 +179,11 @@ class Predicate {
   }
   where(): string { return this.parts.map(part => `(${part})`).join(' AND '); }
 }
-function quantityMetrics(source: string): string {
+function quantityMetrics(source: string, sales: boolean): string {
   return `SELECT document_id,
     CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE THEN quantity ELSE 0 END) END AS quantity,
     CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity<0 THEN -quantity ELSE 0 END) END AS incoming_quantity,
-    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity>0 THEN quantity ELSE 0 END) END AS outgoing_quantity
+    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity>0 THEN quantity ELSE 0 END) END AS outgoing_quantity${sales ? ',bool_and(quantity<0) AS pure_return_lines' : ''}
     FROM ${source} GROUP BY document_id`;
 }
 function pageSql(kind: Kind, p: Predicate, parameters: Parameters): string {
@@ -211,7 +213,7 @@ function pageSql(kind: Kind, p: Predicate, parameters: Parameters): string {
       s.product_id,l.product_code_snapshot,l.product_name_snapshot,cc.id AS category_id,cc.name AS category_name
       FROM page_headers p JOIN naijue_erp.${lineTable} l ON l.${owner}=p.id AND l.is_current
       LEFT JOIN naijue_erp.sku s ON s.id=l.sku_id LEFT JOIN naijue_erp.product cp ON cp.id=s.product_id AND p.stock_basis='RUNTIME_LEDGER' LEFT JOIN naijue_erp.product_category cc ON cc.id=cp.category_id),
-    page_metrics AS (${quantityMetrics('page_lines')}),
+    page_metrics AS (${quantityMetrics('page_lines',kind==='sales')}),
     category_groups AS (SELECT document_id,category_id,category_name,min(line_no) AS first_line,
       ${kind === 'sales' ? 'sum(quantity)' : 'CASE WHEN bool_or(product_id IS NULL) THEN NULL ELSE count(DISTINCT product_id) END'} AS value
       FROM page_lines WHERE stock_basis='RUNTIME_LEDGER' AND ${kind === 'sales' ? 'is_gift IS FALSE' : 'quantity>0'} GROUP BY document_id,category_id,category_name
@@ -224,7 +226,7 @@ function pageSql(kind: Kind, p: Predicate, parameters: Parameters): string {
     product_summaries AS (SELECT document_id,CASE WHEN count(*) FILTER(WHERE product_id IS NULL)>0 THEN NULL ELSE count(*) END::text AS product_count,
       jsonb_agg(jsonb_build_object('productId',product_id,'productCodeSnapshot',product_code_snapshot,'productNameSnapshot',product_name_snapshot) ORDER BY preview_row) FILTER(WHERE preview_row<=3) AS product_items,
       count(*)>3 AS product_has_more FROM previews GROUP BY document_id)
-    SELECT ${headerColumns},${quantity},CASE WHEN ps.document_id IS NULL THEN '0' ELSE ps.product_count END AS product_count,
+    SELECT ${headerColumns},${quantity},${kind==='sales'?'q.pure_return_lines,':''}CASE WHEN ps.document_id IS NULL THEN '0' ELSE ps.product_count END AS product_count,
       coalesce(ps.product_items,'[]'::jsonb) AS product_items,coalesce(ps.product_has_more,false) AS product_has_more,
       coalesce(cs.category_items,'[]'::jsonb) AS category_items,coalesce(cs.category_count,'0') AS category_count,coalesce(cs.category_has_more,false) AS category_has_more
     FROM page_headers h ${headerJoins} ${kind==='sales'?'LEFT JOIN hall_results hall_result ON hall_result.document_id=h.id':''} LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id LEFT JOIN naijue_erp.staff creator ON creator.id=h.created_by_staff_id

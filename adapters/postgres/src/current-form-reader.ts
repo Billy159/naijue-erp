@@ -5,7 +5,7 @@ import { historicalCustomerExclusionEnabled } from "./party-read-reader.ts";
 import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import { readCurrentRecentAccount } from "./current-account-recommendations.ts";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
-import type { CurrentFormBarcodeQuery, CurrentFormBarcodeResult, CurrentFormAuthorization, CurrentFormContext, CurrentFormIdentity, CurrentFormIntent, CurrentFormPage,
+import type { CurrentFormBarcodeQuery, CurrentFormBarcodeResult, CurrentFormAuthorization, CurrentFormLineContext, CurrentFormIdentity, CurrentFormIntent, CurrentFormPage,
   CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormReader, CurrentFormReadGrant,
   CurrentFormSku, CurrentFormSkuBatchQuery, CurrentFormSavedEditSkuBatch, CurrentFormSavedEditProduct, CurrentSalesReferenceItem, CurrentSalesReferenceQuery,
   CurrentTransferWarehouse, CurrentTransferWarehouseQuery } from "../../../packages/application/src/current-form-ports.ts";
@@ -206,8 +206,18 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
     const rows = (await query("/* current-form:sales-hall */ SELECT id, enabled FROM naijue_erp.hall WHERE id = $1::uuid LIMIT 2", [hallId])).rows;
     if (rows.length !== 1 || rows[0]!.id !== hallId || rows[0]!.enabled !== true) denied();
   }
-  private async formContext(query: Query, identity: CurrentFormIdentity, grant: CurrentFormReadGrant, context: CurrentFormContext): Promise<void> {
+  private async formContext(query: Query, identity: CurrentFormIdentity, grant: CurrentFormReadGrant, context: CurrentFormLineContext): Promise<void> {
     if (context.kind === "SALES") await this.salesHall(query, identity, grant, context.hallId);
+    if (context.kind === "SALES_DRAFT") {
+      if (identity.role === "SALESPERSON") {
+        if (!identity.hallId) denied();
+        await this.salesHall(query, identity, grant, identity.hallId);
+      } else if (grant.kind === "halls") {
+        // A scoped host grant is not equivalent to an unscoped catalogue grant.
+        if (!identity.hallId) denied();
+        await this.salesHall(query, identity, grant, identity.hallId);
+      }
+    }
     // Shared product/SKU identities have no product-hall ownership. A restricted
     // grant authorizes use in its halls, never a fictitious product-hall relation.
   }
@@ -452,21 +462,26 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
       else if (this.runtime26) assertExact26BarcodeSchema(schema[0]!.versions);
       else assertHistoryPublicationSchema19(schema[0]!.versions);
       const context = parameters.context;
-      if (context.kind === "SALES") await this.salesHall(query, identity, grant, context.hallId);
-      const warehouseIds = context.kind === "SALES" ? [context.warehouseId] : [context.fromWarehouseId, context.toWarehouseId];
-      const warehouses = (await query(`/* current-form:barcode-warehouses */ SELECT w.id,w.hall_id,w.enabled,h.id native_hall_id,
-        EXISTS(SELECT 1 FROM naijue_erp.inventory_balance b WHERE b.warehouse_id=w.id AND b.quantity<>0) has_nonzero_inventory
-        FROM naijue_erp.warehouse w JOIN naijue_erp.hall h ON h.id=w.hall_id
-        WHERE w.id=ANY($1::uuid[]) ORDER BY w.id LIMIT 3`, [warehouseIds])).rows;
-      if (warehouses.length !== warehouseIds.length) denied();
-      const seen = new Set<string>();
-      for (const w of warehouses) {
-        const warehouseId = id("warehouse", w.id), hallId = id("hall", w.hall_id);
-        if (!warehouseIds.includes(warehouseId) || seen.has(warehouseId) || w.native_hall_id !== hallId
-          || grant.kind === "halls" && !grant.hallIds.includes(hallId)) denied(); seen.add(warehouseId);
-        const enabled = booleanValue(w.enabled), nonzero = booleanValue(w.has_nonzero_inventory);
-        if (context.kind === "SALES" ? hallId !== context.hallId || !enabled
-          : warehouseId === context.fromWarehouseId ? !enabled && !nonzero : !enabled) denied();
+      if (context.kind === "SALES_DRAFT") await this.formContext(query, identity, grant, context);
+      // The header-free variants authorize catalogue identity only. Never look up
+      // warehouses or stock in this branch; fully scoped callers keep all checks.
+      if (context.kind === "SALES" || context.kind === "TRANSFER") {
+        if (context.kind === "SALES") await this.salesHall(query, identity, grant, context.hallId);
+        const warehouseIds = context.kind === "SALES" ? [context.warehouseId] : [context.fromWarehouseId, context.toWarehouseId];
+        const warehouses = (await query(`/* current-form:barcode-warehouses */ SELECT w.id,w.hall_id,w.enabled,h.id native_hall_id,
+          EXISTS(SELECT 1 FROM naijue_erp.inventory_balance b WHERE b.warehouse_id=w.id AND b.quantity<>0) has_nonzero_inventory
+          FROM naijue_erp.warehouse w JOIN naijue_erp.hall h ON h.id=w.hall_id
+          WHERE w.id=ANY($1::uuid[]) ORDER BY w.id LIMIT 3`, [warehouseIds])).rows;
+        if (warehouses.length !== warehouseIds.length) denied();
+        const seen = new Set<string>();
+        for (const w of warehouses) {
+          const warehouseId = id("warehouse", w.id), hallId = id("hall", w.hall_id);
+          if (!warehouseIds.includes(warehouseId) || seen.has(warehouseId) || w.native_hall_id !== hallId
+            || grant.kind === "halls" && !grant.hallIds.includes(hallId)) denied(); seen.add(warehouseId);
+          const enabled = booleanValue(w.enabled), nonzero = booleanValue(w.has_nonzero_inventory);
+          if (context.kind === "SALES" ? hallId !== context.hallId || !enabled
+            : warehouseId === context.fromWarehouseId ? !enabled && !nonzero : !enabled) denied();
+        }
       }
       const rows = (await query(`/* current-form:barcode */ SELECT b.id binding_id,b.barcode,b.barcode_kind,b.enabled binding_enabled,
         ${SKU_COLUMNS}, (to_jsonb(p)->>'deleted_at' IS NULL AND to_jsonb(c)->>'deleted_at' IS NULL AND to_jsonb(f)->>'deleted_at' IS NULL

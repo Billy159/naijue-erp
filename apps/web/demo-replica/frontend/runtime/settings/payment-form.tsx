@@ -1,4 +1,6 @@
-import { Button, Input, Modal, Switch } from '@arco-design/web-react';
+import { uncertainOperation } from '../common/dialog-copy.ts';
+import { SettingsDialog } from './settings-dialog.tsx';
+import { Button, Input, Switch } from '@arco-design/web-react';
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import type { LatestQuery } from '../../../../src/loading/latest-query.ts';
 import type { PaymentSettingsKind, PaymentSettingsProps, PaymentSettingsRecord } from '../../../../src/payment-settings/contracts.ts';
@@ -11,7 +13,7 @@ export default function PaymentForm(props:Props){return props.editor?<Editor {..
 function Detail(props:Props&{detail:NonNullable<Props['detail']>}){
  const state=useSyncExternalStore(props.detail.subscribe,props.detail.getSnapshot,props.detail.getSnapshot),delivered=useRef(false);
  useEffect(()=>{if(!delivered.current&&state.phase==='success'&&state.success?.data){delivered.current=true;props.onRecord(state.success.data);}},[state,props.onRecord]);
- return <Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={`编辑${names[props.kind]}`} maskClosable={false} autoFocus={false} onCancel={()=>props.close()} footer={<Button onClick={()=>props.close()}>取消</Button>}>{state.phase==='loading'||state.phase==='idle'?<p role="status">正在读取当前资料…</p>:state.phase==='error'?<p className="bs-error" role="alert">{readMessage(state.error)}<Button onClick={()=>{if(state.request)void props.detail.run(state.request.parameters);}}>重试资料</Button></p>:<p role="status">{state.success?.data?'正在准备编辑…':'当前资料不存在或已不可用。'}</p>}</Modal>;
+ return <SettingsDialog visible className="bs-modal iw-arco-modal iw-arco-controls" title={`编辑${names[props.kind]}`} autoFocus={false} onCancel={()=>props.close()} footer={<Button onClick={()=>props.close()}>取消</Button>}>{state.phase==='loading'||state.phase==='idle'?<p role="status">正在加载…</p>:state.phase==='error'?<p className="bs-error" role="alert">{readMessage(state.error)}<Button onClick={()=>{if(state.request)void props.detail.run(state.request.parameters);}}>重试</Button></p>:<p role="status">{state.success?.data?'正在打开…':'找不到这条资料。'}</p>}</SettingsDialog>;
 }
 function Editor(props:Props&{editor:PaymentSettingsController}){
  const {editor,kind}=props,state=useSyncExternalStore(editor.subscribe,editor.getSnapshot,editor.getSnapshot),confirmed=useRef(false),close=useRef(props.close);
@@ -24,13 +26,13 @@ function Editor(props:Props&{editor:PaymentSettingsController}){
  },[result,props.detail,props.scope,kind,readbackAttempt]);
  if(state.disposed||!state.draft)return null;
  const draft=state.draft,editing=editor.record!==null,locked=editor.locked,cancel=()=>{if(state.write.phase==='committed')return;if(editor.discard())props.close();};
- return <Modal visible className="bs-modal iw-arco-modal iw-arco-controls runtime-settings" title={`${editing?'编辑':'新增'}${names[kind]}`} maskClosable={false} closable={state.write.phase!=='committed'} autoFocus={false} onCancel={cancel} onOk={()=>{void editor.submit();}} confirmLoading={['submitting','recovering'].includes(state.write.phase)} okText="确定" cancelText="取消" cancelButtonProps={{disabled:state.write.phase==='committed'}} okButtonProps={{disabled:!editor.writesEnabled||locked}}>
+ return <SettingsDialog visible className="bs-modal iw-arco-modal iw-arco-controls runtime-settings" title={`${editing?'编辑':'新增'}${names[kind]}`} closable={state.write.phase!=='committed'} autoFocus={false} onCancel={cancel} onOk={()=>{void editor.submit();}} confirmLoading={['submitting','recovering'].includes(state.write.phase)} okText="保存" cancelButtonProps={{disabled:state.write.phase==='committed'}} okButtonProps={{disabled:!editor.writesEnabled||locked}}>
  <div className="bs-form-fields iw-form-fields"><Field title={kind==='accounts'?'账户名称':'名称'} required error={state.errors.name}><Input className="iw-arco-input" aria-label={kind==='accounts'?'账户名称':'名称'} value={draft.name} disabled={locked} autoComplete="off" onChange={name=>editor.update({name})}/></Field>
  {kind==='accounts'&&<><Field title="所属收款方式" required={!editing} error={state.errors.method}>{editing?<div className="bs-readonly">{draft.method?.name??'名称未提供'}</div>:<ReferenceSelect scope={props.scope} reader={props.directory} kind="payment-methods" label="所属收款方式" selected={draft.method} required disabled={locked} onChange={method=>editor.update({method})}/>}</Field>
  </>}
  {editing&&<Field title="使用状态"><div className="bs-switch"><Switch aria-label="使用状态" checked={draft.enabled} disabled={locked} onChange={enabled=>editor.update({enabled})}/><span>{draft.enabled?'正常':'已停用'}</span></div></Field>}</div>
- {!editor.writesEnabled&&<p className="runtime-settings-note" role="status">维护保存尚未接入，填写内容不会提交。</p>}{state.write.phase==='rejected'&&<p className="bs-error" role="alert">{paymentRejectionMessage(state.write.error?.code??'')}</p>}
- {state.write.phase==='uncertain'&&<section className="bs-error" role="alert"><p>提交结果尚未确认，原请求身份与填写内容已保留，不能重新提交或放弃。</p><Button onClick={()=>{void editor.recover();}}>查询原操作回执</Button></section>}
- {state.write.phase==='committed'&&<p role={readback==='error'?'alert':'status'}>保存已确认。{readback==='error'?'当前资料读回失败，请重试读取。':'正在重新读取当前资料…'}{readback==='error'&&<Button onClick={()=>retryReadback(value=>value+1)}>重试读取</Button>}</p>}
- </Modal>;
+ {!editor.writesEnabled&&<p className="runtime-settings-note" role="status">这里暂时不能保存。</p>}{state.write.phase==='rejected'&&<p className="bs-error" role="alert">{paymentRejectionMessage(state.write.error?.code??'')}</p>}
+ {state.write.phase==='uncertain'&&<section className="bs-error" role="alert"><p>{uncertainOperation.body}</p><Button onClick={()=>{void editor.recover();}}>{uncertainOperation.check}</Button></section>}
+ {state.write.phase==='committed'&&<p role={readback==='error'?'alert':'status'}>{readback==='error'?'已保存，暂时看不到最新资料。':'已保存，正在打开…'}{readback==='error'&&<Button onClick={()=>retryReadback(value=>value+1)}>重试</Button>}</p>}
+ </SettingsDialog>;
 }

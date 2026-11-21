@@ -1,12 +1,14 @@
+import { unsavedChanges } from '../common/dialog-copy.ts';
 import { useRuntimeTabs, type RuntimeTabs } from '../common/tabs.tsx';
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
+import { ConfirmDialog } from '../common/confirm-dialog.tsx';
 import type { QueryRead } from '../../../../src/loading/latest-query.ts';
 import type { CatalogueSettingsEntry, CatalogueSettingsPage } from '../../../../src/product-settings/colors/contracts.ts';
 import type { DictionaryPage, DictionarySeason, DictionarySizeGroup, ProductSettingTab } from '../../../../src/product-settings/size-groups/contracts.ts';
 import type { CatalogueMaintenanceCommand, CatalogueMaintenanceResult } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
 import type { CataloguePageOptions } from './entry.tsx';
-import { EntryEditor, Head, MaintenanceNotice, Pager, ReadNotice, SourceModal, maintenanceUnavailable, tabs, useRead } from './source-controls.tsx';
+import { EntryEditor, Head, MaintenanceNotice, Pager, ReadNotice, maintenanceUnavailable, tabs, useRead } from './source-controls.tsx';
 
 type Query = { search: string; page: number; pageSize: 20 | 50 | 100 };
 type Page = CatalogueSettingsPage<CatalogueSettingsEntry> | DictionaryPage<DictionarySeason> | DictionaryPage<DictionarySizeGroup>;
@@ -27,7 +29,7 @@ function Settings({ options }: { options: CataloguePageOptions }) {
   return <div className="pc-workbench pc-settings-page"><Head title="商品设置" /><section className="pc-settings">
     {group.header}
     <Dictionary panel={group.panel} key={tab} options={options} tab={tab} pageSize={pageSizes[tab]??20} rememberSize={size=>setPageSizes(sizes=>({...sizes,[tab]:size}))} guard={receiveGuard} />
-    {deferred && <SourceModal title="有未保存的修改" close={() => setDeferred(null)} footer={<><button className="btn" onClick={() => setDeferred(null)}>继续编辑</button><button className="btn primary" disabled={locked} onClick={() => { setTab(deferred); setDeferred(null); }}>放弃修改并离开</button></>}><p>离开后，本次未保存的修改将丢失。</p></SourceModal>}
+    {deferred && <ConfirmDialog title={unsavedChanges.discardTitle} className="sale-confirm" onCancel={() => setDeferred(null)} confirmDisabled={locked} onConfirm={() => { setTab(deferred); setDeferred(null); }}><p>{unsavedChanges.discardBody}</p></ConfirmDialog>}
   </section></div>;
 }
 function Dictionary({ options, tab, guard, pageSize, rememberSize, panel }: { panel: RuntimeTabs['panel']; pageSize:Query['pageSize']; rememberSize:(size:Query['pageSize'])=>void; options: CataloguePageOptions; tab: ProductSettingTab; guard: (value: (() => boolean) | null, locked?: boolean) => void }) {

@@ -77,6 +77,7 @@
 #page .sale-editor .sale-lines-table td :is(input,select){box-sizing:border-box;max-width:100%;vertical-align:middle}
 #page .sale-editor .sale-lines-table td:nth-child(5) input,#page .sale-editor .sale-lines-table td:nth-child(8) input{width:100%;text-align:right}
 #page .sale-editor .sale-lines-table .sale-identity-edit td{background:#f7faff}
+#page .sale-editor .sale-lines-table .sale-identity-edit > td.ui-action-cell{background-color:#f7faff!important}
 #page .sale-editor .sale-lines-table .sale-identity-edit td:first-child{box-shadow:inset 3px 0 var(--ca-primary)}
 #page .sale-editor .sale-lines-table .sale-identity-edit .mx-original-hint{display:block;margin-top:3px;font-size:11px;line-height:15px}
 #page .sale-editor .sale-lines-table .sale-identity-trigger{max-width:100%}
@@ -106,16 +107,21 @@
 #page .sale-editor .sale-lines-table .sale-product-layout{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;min-width:0;white-space:normal}
 #page .sale-editor .sale-lines-table .sale-product-layout .sale-product-input{flex:1 0 100%;width:100%;min-width:0;max-width:100%;text-align:left}
 #page .sale-editor .sale-lines-table .sale-product-layout .sale-entry-name{display:block;flex:1 1 0;min-width:0;max-width:100%;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ca-ink-2);font-size:12px;line-height:18px}
+/* The populated new-document search and name follow the 8877 Demo's 58/42 split. */
+#page .sale-editor .sale-lines-table .sale-product-layout-inline .sale-product-input{flex:0 1 58%;width:58%;min-width:0}
 #page .sale-editor .sale-lines-table .sale-product-layout .sale-product-identity{justify-content:flex-start;height:20px;min-height:20px;padding:0;border:0;background:none;color:var(--ca-ink);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #page .sale-editor .sale-lines-table .sale-product-layout .sale-product-code{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #page .sale-editor .sale-lines-table .sale-product-layout .sale-product-identity:focus-visible{outline:2px solid var(--ca-control-focus-border);outline-offset:2px}
 #page .sale-editor .sale-lines-table .sale-product-layout .mx-original-hint{flex-basis:100%;min-width:0}
 #page .sale-editor .sale-lines-table .sale-product-layout .sale-gift{flex:none}
 
-/* One row for direction + exact signed quantity. The extra40px belongs only
- * to the combined return/exchange quantity column, not SALE or other selects. */
-#page .sale-editor .sale-lines-table.sale-return-exchange-table{min-width:1230px}
+/* Fund the wider return quantity cell from the product column, not the table.
+ * A wider table would slide its last amount under the pinned action column. */
+#page .sale-editor .sale-lines-table.sale-return-exchange-table col:first-child{width:230px!important}
 #page .sale-editor .sale-lines-table .sale-quantity-control{display:flex;align-items:center;gap:4px;width:100%;min-width:0;min-height:32px}
 #page .sale-editor .sale-lines-table .sale-quantity-control>[data-line-direction]{flex:0 0 58px;width:58px;min-width:0;margin:0}
 #page .sale-editor .sale-lines-table .sale-quantity-control>input[aria-label="本行数量"]{flex:1 1 0;width:0;min-width:0;height:32px;min-height:32px;padding:4px;text-align:right;font-variant-numeric:tabular-nums}
 
+
+#page .sale-editor .sale-lines-table .sale-product-layout .sale-identity-trigger{display:flex;flex:1;min-width:0;text-align:left}
+#page .sale-editor .sale-lines-table .sale-product-layout .sale-identity-trigger .mx-spec-edit-value{display:flex;align-items:center;gap:6px;min-width:0}

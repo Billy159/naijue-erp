@@ -1,4 +1,6 @@
-import { Button, Input, Modal, Switch } from '@arco-design/web-react';
+import { uncertainOperation } from '../common/dialog-copy.ts';
+import { SettingsDialog } from './settings-dialog.tsx';
+import { Button, Input, Switch } from '@arco-design/web-react';
 import { useEffect, useRef, useSyncExternalStore, type ReactNode } from 'react';
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import type { LatestQuery } from '../../../../src/loading/latest-query.ts';
@@ -25,9 +27,9 @@ function Detail(props: Props & { detail: NonNullable<Props['detail']> }) {
   const state = useSyncExternalStore(props.detail.subscribe, props.detail.getSnapshot, props.detail.getSnapshot);
   const delivered = useRef(false);
   useEffect(() => { if (!delivered.current && state.phase === 'success' && state.success?.data.item) { delivered.current = true; props.onRecord(state.success.data.item); } }, [state, props.onRecord]);
-  return <Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={`编辑${names[props.kind]}`} maskClosable={false} autoFocus={false} footer={<Button onClick={props.close}>取消</Button>} onCancel={props.close}>
-    {state.phase === 'loading' || state.phase === 'idle' ? <p role="status">正在读取资料…</p> : state.phase === 'error' ? <p className="bs-error" role="alert">{readMessage(state.error)}<Button type="text" onClick={() => { if (state.request) void props.detail.run(state.request.parameters); }}>重试</Button></p> : <p role="status">{state.success?.data.item ? '正在准备编辑…' : '当前资料不存在或已不可用。'}</p>}
-  </Modal>;
+  return <SettingsDialog visible className="bs-modal iw-arco-modal iw-arco-controls" title={`编辑${names[props.kind]}`} autoFocus={false} footer={<Button onClick={props.close}>取消</Button>} onCancel={props.close}>
+    {state.phase === 'loading' || state.phase === 'idle' ? <p role="status">正在加载…</p> : state.phase === 'error' ? <p className="bs-error" role="alert">{readMessage(state.error)}<Button type="text" onClick={() => { if (state.request) void props.detail.run(state.request.parameters); }}>重试</Button></p> : <p role="status">{state.success?.data.item ? '正在打开…' : '找不到这条资料。'}</p>}
+  </SettingsDialog>;
 }
 function Editor(props: Props & { editor: StoreMaintenanceController }) {
   const { editor, kind } = props;
@@ -36,16 +38,16 @@ function Editor(props: Props & { editor: StoreMaintenanceController }) {
   if (state.disposed || !state.draft) return null;
   const draft = state.draft, editing = editor.record !== null, locked = editor.locked;
   const cancel = () => { if (editor.discard()) props.close(); };
-  return <Modal className="bs-modal iw-arco-modal iw-arco-controls runtime-settings" visible title={`${editing ? '编辑' : '新增'}${names[kind]}`} onCancel={cancel} onOk={() => { void editor.submit(); }} confirmLoading={state.write.phase === 'submitting' || state.write.phase === 'recovering'}
-    okText="确定" cancelText="取消" maskClosable={false} autoFocus={false} okButtonProps={{ disabled: !editor.writesEnabled || locked }}>
+  return <SettingsDialog className="bs-modal iw-arco-modal iw-arco-controls runtime-settings" visible title={`${editing ? '编辑' : '新增'}${names[kind]}`} onCancel={cancel} onOk={() => { void editor.submit(); }} confirmLoading={state.write.phase === 'submitting' || state.write.phase === 'recovering'}
+    okText="保存" autoFocus={false} okButtonProps={{ disabled: !editor.writesEnabled || locked }}>
     <div className="bs-form-fields iw-form-fields"><Field title="名称" required error={state.errors.name}><Input className="iw-arco-input" aria-label="名称" value={draft.name} autoComplete="off" disabled={locked} onChange={name => editor.update({ name })}/></Field>
       {kind === 'stores' ? <><Field title="默认零售客户" error={state.errors.customer}><ReferenceSelect scope={props.scope} reader={props.directory} kind="customers" label="默认零售客户" selected={draft.customer} disabled={locked} onChange={customer => editor.update({ customer })}/></Field>
-        <Field title="默认出库仓" error={state.errors.warehouse}><ReferenceSelect scope={props.scope} reader={props.directory} kind="warehouses" label="默认出库仓" selected={draft.warehouse} hallId={editor.record?.id ?? null} disabled={locked || !editing} onChange={warehouse => editor.update({ warehouse })}/>{!editing && <small>先创建营业厅及其仓库，再设置默认出库仓。</small>}</Field></>
+        <Field title="默认出库仓" error={state.errors.warehouse}><ReferenceSelect scope={props.scope} reader={props.directory} kind="warehouses" label="默认出库仓" selected={draft.warehouse} hallId={editor.record?.id ?? null} disabled={locked || !editing} onChange={warehouse => editor.update({ warehouse })}/>{!editing && <small>先添加营业厅和仓库，再选默认出库仓。</small>}</Field></>
         : <Field title="所属营业厅" required error={state.errors.hall}><ReferenceSelect scope={props.scope} reader={props.directory} kind="halls" label="所属营业厅" selected={draft.hall} required disabled={locked} onChange={hall => editor.update({ hall })}/></Field>}
       {editing && <Field title="使用状态"><div className="bs-switch"><Switch aria-label="使用状态" checked={draft.enabled} disabled={locked} onChange={enabled => editor.update({ enabled })}/><span>{draft.enabled ? '正常' : '已停用'}</span></div></Field>}
     </div>
-    {!editor.writesEnabled && <p className="runtime-settings-note" role="status">维护保存尚未接入，填写内容不会提交。</p>}
+    {!editor.writesEnabled && <p className="runtime-settings-note" role="status">这里暂时不能保存。</p>}
     {state.write.phase === 'rejected' && <p className="bs-error" role="alert">{storeRejectionMessage(state.write.error?.code ?? '')}</p>}
-    {(state.write.phase === 'uncertain' || state.write.phase === 'recovering') && <div className="bs-error" role="alert">提交结果尚未确认，输入和原操作身份已保留。确认前不能重新提交或丢弃。<Button type="text" loading={state.write.phase === 'recovering'} disabled={state.write.phase === 'recovering'} onClick={() => { void editor.recover(); }}>查询提交结果</Button></div>}
-  </Modal>;
+    {(state.write.phase === 'uncertain' || state.write.phase === 'recovering') && <div className="bs-error" role="alert">{uncertainOperation.body}<Button type="text" loading={state.write.phase === 'recovering'} disabled={state.write.phase === 'recovering'} onClick={() => { void editor.recover(); }}>{uncertainOperation.check}</Button></div>}
+  </SettingsDialog>;
 }

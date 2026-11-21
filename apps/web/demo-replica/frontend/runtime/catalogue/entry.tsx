@@ -17,6 +17,7 @@ export interface CatalogueRuntimeOptions {
   readonly commandOwners?: Partial<Record<'CATEGORY' | 'COLOR' | 'FIT', CatalogueEditorController>>;
   readonly onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void;
   readonly onCanLeaveChange: (guard: (() => boolean) | null) => void;
+  readonly onCanDiscardChange?: (guard: (() => boolean) | null) => void;
   /** Current product consumers invalidate their own affected directory reads. */
   readonly onChanged: (kind: 'CATEGORY' | 'COLOR' | 'FIT') => void;
   /** Legacy host slot retained for C's other callers; catalogue now consumes the

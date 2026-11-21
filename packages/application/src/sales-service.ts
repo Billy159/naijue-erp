@@ -16,6 +16,11 @@ import type { DocumentInventoryPriorEvidence } from "../../domain/src/document-i
 import { sameSalesLine, sameSalesSettlementFacts } from "./sales-change-evidence.ts";
 import { salesChangeEvidence } from "./sales-change-evidence.ts";
 
+function isLegacyExchange(document: SalesDocument | undefined): boolean {
+  return document?.header.businessType === 'EXCHANGE'
+    || (document?.header.businessType === 'RETURN' && document.lines.some(line => line.isCurrent && line.quantity > 0n));
+}
+
 function validateDraft(draft: SalesDraft, previous?: SalesDocument, retainUnknownFacts = true, historical = false, draftIncomplete = false): void {
   requireDomain(draft.header.hallId !== null || historical && previous?.header.hallId === null && previous.header.warehouseId === draft.header.warehouseId, 'SALES_REFERENCE_UNAVAILABLE', 'Unknown hall may only be retained unchanged on stored historical sales');
   requireDomain(draft.header.number.length > 0, "INVALID_NUMBER", "Document number cannot be empty");
@@ -129,6 +134,10 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
         const entryIds: EntityId<"ledger">[] = [];
         if (command.action === "SAVE") {
           requireDomain(!previous || previous.header.status === "DRAFT", "INVALID_STATE", "Only a draft can be edited; approved documents must first be unapproved");
+          requireDomain(!isLegacyExchange(previous)
+            && command.draft.header.businessType !== "EXCHANGE"
+            && !(command.draft.header.businessType === "RETURN" && command.draft.lines.some(line => line.quantity >= 0n)),
+            "INVALID_BUSINESS_TYPE", "Current sales SAVE accepts only sales or negative-quantity returns; legacy exchanges are read-only");
           validateDraft(command.draft, previous, true, stored?.stockBasis==='CUTOFF_HISTORY', true);
           await rules.assertDraftChange(previous, command.draft, tx, stored?.stockBasis);
           if (previous) requireDomain(command.draft.header.number === previous.header.number,
@@ -148,9 +157,11 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
           const nextDocumentVersion = nextVersion(previous.header.version);
           if (command.action === "APPROVE") {
             requireDomain(previous.header.status === "DRAFT", "INVALID_STATE", "Only a draft can be approved");
-            const history = (needsRetainedSalesApproval(previous) || stored?.stockBasis === 'CUTOFF_HISTORY') && tx.getRetainedSalesApprovalHistory
+            const legacyExchange = isLegacyExchange(previous);
+            const history = (legacyExchange || needsRetainedSalesApproval(previous) || stored?.stockBasis === 'CUTOFF_HISTORY') && tx.getRetainedSalesApprovalHistory
               ? await tx.getRetainedSalesApprovalHistory(salesId, previous.header.version) : undefined;
             const retained = history ? certifyRetainedSalesApproval(previous, history, tx) : undefined;
+            requireDomain(!legacyExchange || retained, 'INVALID_BUSINESS_TYPE', 'Only an unchanged, proven previously approved legacy exchange can be restored');
             if(stored?.stockBasis==='CUTOFF_HISTORY' && needsRetainedSalesApproval(previous)) {
               requireDomain(history,'UNKNOWN_PRICING_FACTS','Bound historical pricing audit is required');
               assertHistoricalUnknownRowsUnchanged(previous,history);

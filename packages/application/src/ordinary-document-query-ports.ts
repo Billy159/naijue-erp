@@ -5,7 +5,7 @@ export interface OrdinaryDocumentIdentity {
   readonly dataset: 'LIVE'; readonly batchId: null; readonly documentId: string; readonly effectiveVersion: number;
   readonly productSummary: DocumentProductSummary; readonly categorySummary: DocumentCategorySummary;
 }
-export type OrdinarySalesSummary = SalesSummary & OrdinaryDocumentIdentity;
+export type OrdinarySalesSummary = SalesSummary & OrdinaryDocumentIdentity & { readonly currentPureReturn?: true };
 export type OrdinaryTransferSummary = TransferSummary & OrdinaryDocumentIdentity;
 export interface OrdinaryDocumentPage<T> {
   readonly profile: 'ORDINARY_DOCUMENT_LIST_V1'; readonly page: number; readonly pageSize: number;

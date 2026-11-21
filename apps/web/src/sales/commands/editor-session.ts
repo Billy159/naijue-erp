@@ -1,3 +1,4 @@
+import { isLegacyExchangeSale } from '../../current-form/sales-business-mode.ts';
 import { SalesExistingDocumentSession } from '../../current-form/sales-existing-document.ts';
 import type { SalesExistingPreparation } from '../../current-form/existing-document-preparation.ts';
 import type { createCurrentFormHttpReader } from '../../current-form/http-reader.ts';
@@ -133,7 +134,7 @@ export class SalesEditorSession {
     const { editor, disposed } = this.#state.command, principal = this.#options.principal;
     if (disposed || !editor || !['ADMIN', 'WAREHOUSE', 'SALESPERSON'].includes(principal.role)) return false;
     const header = editor.detail?.document.header ?? editor.draft?.header;
-    if (!header) return false;
+    if (!header || action === 'SAVE' && editor.detail && isLegacyExchangeSale(editor.detail.document)) return false;
     if (principal.role !== 'SALESPERSON') return true;
     if (principal.hallId === null || principal.hallId !== header.hallId || action === 'UNAPPROVE') return false;
     return action !== 'APPROVE' || editor.detail?.document.header.createdByAccountId === principal.accountId;

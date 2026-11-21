@@ -1,14 +1,15 @@
 import { DomainError } from '../../../packages/domain/src/errors.ts';
 /** Opt-in extensions preserve legacy exact rows and category-v1 exact summaries. */
-export function documentListWire(value:unknown,version:unknown,profile?: 'ordinary-v1',negotiation?:unknown):unknown {
+export function documentListWire(value:unknown,version:unknown,profile?: 'ordinary-v1',negotiation?:unknown,salesReturnDisplay?:unknown):unknown {
  if(profile==='ordinary-v1'||(value&&typeof value==='object'&&'profile'in value&&value.profile==='ORDINARY_DOCUMENT_LIST_V1')) {
   requireOrdinaryDocumentProfile(negotiation);
   if(!value||typeof value!=='object')throw new Error('Invalid ordinary page');
   const row=value as Record<string,unknown>;
   if(row.profile!=='ORDINARY_DOCUMENT_LIST_V1'||!revision(row.readRevision)||!Array.isArray(row.items)||row.items.some(item=>!item||typeof item!=='object'||item.dataset!=='LIVE'||item.batchId!==null))throw new Error('Invalid ordinary page');
   const {page,pageSize,exactTotal,readRevision,items}=row;
+  const projected = salesReturnDisplay === 'pure-return-v1' ? items : items.map(({currentPureReturn:_,...item})=>item);
   // Select only the ordinary envelope; never leak history coverage or per-page totals.
-  return categoryListWire({profile:'ORDINARY_DOCUMENT_LIST_V1',page,pageSize,exactTotal,readRevision,items},version);
+  return categoryListWire({profile:'ORDINARY_DOCUMENT_LIST_V1',page,pageSize,exactTotal,readRevision,items:projected},version);
  }
 
  return categoryListWire(value,version);

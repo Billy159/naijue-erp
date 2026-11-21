@@ -128,12 +128,12 @@ export function EntryEditor({ options, capability, entry, resumeCommand, close, 
     setError(''); try { await controller.submit(draft); } catch (value) { setError(value instanceof Error ? value.message : '请求未发送'); }
   };
   const cancel = () => { if (!busy) close(); };
-  return <SourceModal title={confirm ? `确认删除${title}` : `${entry ? '编辑' : '新增'}${title}`} close={cancel} footer={<>
+  return <SourceModal title={confirm ? `删除${title}？` : `${entry ? '编辑' : '新增'}${title}`} close={cancel} footer={<>
     {!confirm && entry && capability.allowedActions.includes('DELETE') && <button className="btn ghost pc-danger pc-delete-left" disabled={busy} onClick={() => setConfirm(true)}>删除</button>}
     <button className="btn" disabled={busy} onClick={() => confirm && entry ? setConfirm(false) : cancel()}>取消</button>
-    <button className={`btn ${confirm ? 'pc-danger-solid' : 'primary'}`} disabled={busy || !capability.allowedActions.includes(confirm ? 'DELETE' : entry ? 'EDIT' : 'CREATE')} onClick={() => void submit(confirm)}>{confirm ? '确认删除' : '确定'}</button>
+    <button className={`btn ${confirm ? 'pc-danger-solid' : 'primary'}`} disabled={busy || !capability.allowedActions.includes(confirm ? 'DELETE' : entry ? 'EDIT' : 'CREATE')} onClick={() => void submit(confirm)}>{confirm ? '确定' : '保存'}</button>
   </>}>
-    {confirm ? <p>删除该{title}后无法恢复，确定继续吗？</p> : <form id="pc-dict-form" onSubmit={event => { event.preventDefault(); void submit(); }}>
+    {confirm ? <p>还在使用的{title}不能删，删掉后也不能再选。</p> : <form id="pc-dict-form" onSubmit={event => { event.preventDefault(); void submit(); }}>
       <div className="field"><span className="pc-field-caption">{title}名称</span><div id="pc-dict-name"><Input name="name" value={name} maxLength={40} disabled={busy || !capability.allowedActions.includes(entry ? 'EDIT' : 'CREATE')} onChange={setName} /></div></div>
       <div className="field"><span className="pc-field-caption">{title}代码</span><div id="pc-dict-code"><Input name="code" value={code} maxLength={12} disabled={busy || !capability.allowedActions.includes(entry ? 'EDIT' : 'CREATE')} onChange={setCode} /></div></div>
     </form>}

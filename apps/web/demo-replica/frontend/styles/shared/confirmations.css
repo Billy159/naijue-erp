@@ -14,3 +14,10 @@
 :is(#tc-dialog.tc-confirm,#sale-dialog.sale-confirm,#pc-dialog.pc-confirm,.ui-discard) :focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}
 @media (max-width:480px){:is(#tc-dialog.tc-confirm,#sale-dialog.sale-confirm,#pc-dialog.pc-confirm,.ui-discard)>header{padding:16px 16px 0}:is(#tc-dialog.tc-confirm>.tc-dialog-body,#sale-dialog.sale-confirm>.sale-dialog-body,#pc-dialog.pc-confirm>.pc-modal-body,.ui-discard>.ui-confirm-body){padding:8px 16px 16px}:is(#tc-dialog.tc-confirm,#sale-dialog.sale-confirm,#pc-dialog.pc-confirm,.ui-discard)>footer{padding:0 16px 16px}}
 
+
+/* Frozen product/category leave layout; document destructive styling stays separate. */
+#tc-dialog.tc-confirm.pc-leave-confirm{width:min(480px,calc(100vw - 32px));border-radius:4px}
+#tc-dialog.tc-confirm.pc-leave-confirm>header{position:relative;justify-content:center;min-height:48px;padding:0 48px;border-bottom:1px solid var(--ca-line)}
+#tc-dialog.tc-confirm.pc-leave-confirm>header .btn{position:absolute;inset-inline-end:12px}
+#tc-dialog.tc-confirm.pc-leave-confirm>.tc-dialog-body{padding:27px 30px}
+#tc-dialog.tc-confirm.pc-leave-confirm>footer{padding:9px 14px;border-top:1px solid var(--ca-line)}

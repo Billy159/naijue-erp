@@ -1,4 +1,4 @@
-import type { CurrentFormAuthorization, CurrentFormContext, CurrentFormIntent } from "./current-form-ports.ts";
+import type { CurrentFormAuthorization, CurrentFormLineContext, CurrentFormBarcodeContext, CurrentFormIntent } from "./current-form-ports.ts";
 import { activeCurrentFormRead, checkedCurrentFormActor, parseCurrentFormProductQuery,
   parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery, parseCurrentSalesReferenceQuery,
   parseCurrentTransferWarehouseQuery, parseCurrentFormBarcodeQuery } from "./current-form-validation.ts";
@@ -12,7 +12,7 @@ function record(value: unknown, keys: readonly string[]): Record<string, unknown
   return value as Record<string, unknown>;
 }
 /** Validate the complete intent, not just a discriminator that could hide a malformed context. */
-function formContext(intent: CurrentFormIntent): CurrentFormContext | null {
+function formContext(intent: CurrentFormIntent): CurrentFormLineContext | CurrentFormBarcodeContext | null {
   record(intent, ["kind", "parameters"]);
   switch (intent.kind) {
     case "sales-references": {
@@ -52,8 +52,8 @@ export function createSourceConfirmedCurrentFormAuthorization(): CurrentFormAuth
       if (hallId !== actor.hallId || (identity.role !== "ADMIN" && identity.role !== "WAREHOUSE" && identity.role !== "SALESPERSON")
         || (identity.role === "SALESPERSON" && hallId === null)) denied();
       const target = formContext(intent);
-      if (identity.role !== "SALESPERSON" || target?.kind === "TRANSFER") return Object.freeze({ kind: "all" as const });
-      if (hallId === null || (target !== null && target.hallId !== hallId)) denied();
+      if (identity.role !== "SALESPERSON" || (target?.kind === "TRANSFER" || target?.kind === "TRANSFER_DRAFT")) return Object.freeze({ kind: "all" as const });
+      if (hallId === null || (target?.kind === "SALES" && target.hallId !== hallId)) denied();
       return Object.freeze({ kind: "halls" as const, hallIds: Object.freeze([hallId]) });
     } catch { return denied(); }
   } });

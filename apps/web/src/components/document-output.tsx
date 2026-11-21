@@ -211,14 +211,14 @@ export function DocumentOutputActions({ sourceKey, getDocument, unavailableReaso
   const printButton=preview?<UIButton type="button" className="iw-button iw-primary" disabled={!ready} onClick={() => {
         if (!current.current.getDocument || current.current.sourceKey !== preview.key || !ready) return;
         try { if (!frame.current?.contentWindow) throw new Error(); frame.current.contentWindow.focus(); frame.current.contentWindow.print(); } catch { setError(true); }
-      }}>浏览器打印</UIButton>:null;
+      }}>打开打印窗口</UIButton>:null;
   return <><UIButton type="button" className="iw-text-button" disabled={!getDocument} title={!getDocument ? unavailableReason : undefined} onClick={download}>导出</UIButton>
     <UIButton type="button" className="iw-text-button" disabled={!getDocument} title={!getDocument ? unavailableReason : undefined} onClick={() => {
       if (!current.current.getDocument) return;
       try { const data = current.current.getDocument(); setReady(false); setPreview({ key: sourceKey, html: createDocumentPrintHtml(data), kind: data.kind }); setError(false); } catch { setError(true); }
     }}>打印</UIButton>
     {error && <span className="document-output-error" role="alert">单据输出未完成，请检查当前单据后重试。</span>}
-    {visible && preview && <StandardOverlay title={preview.kind==='transfer'?'调拨单打印预览':'已保存单据打印预览'} footer={preview.kind==='sales'?printButton:undefined} label="单据打印预览" closeLabel="关闭打印预览" width={1180} close={() => { setPreview(null); setReady(false); }}>
+    {visible && preview && <StandardOverlay title={preview.kind==='transfer'?'调拨单打印预览':'销货单打印预览'} footer={preview.kind==='sales'?printButton:undefined} label="单据打印预览" closeLabel="关闭打印预览" width={1180} close={() => { setPreview(null); setReady(false); }}>
       {preview.kind==='transfer'&&<div className="document-output-toolbar"><span>横向纸张 552 × 241 mm · 已保存内容</span>{printButton}</div>}
       <iframe ref={frame} className="document-output-frame" title="已保存单据打印内容" sandbox="allow-same-origin allow-modals" srcDoc={preview.html} onLoad={() => { if (current.current.sourceKey === preview.key && current.current.getDocument) setReady(true); }} />
     </StandardOverlay>}

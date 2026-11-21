@@ -1,3 +1,4 @@
+import { documentSpecOptions } from '../../../../src/current-form/document-fit-default.ts';
 import { isValidElement, cloneElement, useRef, useLayoutEffect, useState, type ReactNode, type ComponentType } from 'react';
 import Select from '@arco-design/web-react/es/Select';
 import type { SelectProps } from '@arco-design/web-react/es/Select';
@@ -28,11 +29,11 @@ export function ProposalReference(p:{session:SalesProposalSession;picker:SalesPr
  {grouped?[<Select.OptGroup key="recommended" label={customer?'推荐客户':p.account?'推荐':'当前用户（推荐）'}>{choices.filter(isRecommended).map(row=><Select.Option key={row.id} value={row.id}>{label(row)}</Select.Option>)}</Select.OptGroup>,<Select.OptGroup key="other" label={customer?'全部客户':p.account?'全部账户':'全部人员'}>{choices.filter(x=>!isRecommended(x)).map(row=><Select.Option key={row.id} value={row.id} disabled={!items.includes(row)}>{label(row)}</Select.Option>)}</Select.OptGroup>]:choices.map(row=><Select.Option key={row.id} value={row.id} disabled={!items.some(x=>x.id===row.id)}>{label(row)}</Select.Option>)}
  </ReferenceSelect>}</SourceControl>;
 }
-export function ProposalPopup(p:{session:SalesProposalSession;picker:NonNullable<SalesProposalSnapshot['picker']>;spec?:'color'|'fit'|'size';selection?:Pick<SalesProposalEntry,'color'|'fit'|'size'>;scope:ReadScope;productReader:ProductReadOnlyReader;denied:(error:HttpQueryError)=>void;choose:(id:string)=>void}) {
+export function ProposalPopup(p:{session:SalesProposalSession;picker:NonNullable<SalesProposalSnapshot['picker']>;spec?:'color'|'fit'|'size';selection?:Pick<SalesProposalEntry,'color'|'fit'|'size'|'defaultFit'>;scope:ReadScope;productReader:ProductReadOnlyReader;denied:(error:HttpQueryError)=>void;choose:(id:string)=>void}) {
  const [preview,setPreview]=useState<string|null>(null),picker=p.picker,products=(picker.result?.items??[]).flatMap(item=>'code'in item&&'retailPrice'in item?[item as CurrentFormProduct]:[]);
  const activeProduct=products.find(row=>row.id===preview)??products[0];
  const skus=picker.specSkus??[],groups=p.session.getSnapshot().sizeGroups.groups;
- const options: {id:string;name:string}[]=p.spec==='size'?groups.flatMap(group=>group.sizes.map(size=>({id:size.id,name:size.name}))) : p.spec?[...new Map<string,{id:string;name:string}>(skus.filter(row=>p.spec==='color'||row.colorId===p.selection?.color?.id).map(row=>p.spec==='color'?[row.colorId,{id:row.colorId,name:row.colorName}]:[row.fitId,{id:row.fitId,name:row.fitName}])).values()]:[];
+ const options: {id:string;name:string}[]=p.spec==='size'?groups.flatMap(group=>group.sizes.map(size=>({id:size.id,name:size.name}))) : p.spec?[...new Map<string,{id:string;name:string}>(documentSpecOptions(skus,p.spec,p.selection).map(row=>p.spec==='color'?[row.colorId,{id:row.colorId,name:row.colorName}]:[row.fitId,{id:row.fitId,name:row.fitName}])).values()]:[];
  const keydown=(event:React.KeyboardEvent<HTMLDivElement>)=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();p.session.closePicker();}if(event.key==='ArrowDown'||event.key==='ArrowUp'){const buttons=Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('[data-sale-candidate]')),index=buttons.indexOf(event.target as HTMLButtonElement);if(buttons.length){event.preventDefault();buttons[(index+(event.key==='ArrowDown'?1:buttons.length-1)+buttons.length)%buttons.length]?.focus();}}};
  // Keep the spec menu in Arco's layout flow; Demo's fixed positioning hides
  // its height from Trigger and prevents viewport flipping near lower rows.

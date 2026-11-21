@@ -66,7 +66,7 @@ export function createSalesQueryHttpPlugin(options: SalesQueryHttpOptions): Fast
         if (!actor || !state) throw new Error("Missing trusted sales query context");
         if (options.listProfile === 'ordinary-v1' && (url === '/sales/query' || url === '/sales/totals/query')) requireOrdinaryDocumentProfile(request.headers['x-naijue-document-list']);
         const result=await read(actor, request.body, state.controller.signal);
-        return reply.type("application/json").send(exactJson(url==='/sales/query'?documentListWire(result,request.headers['x-naijue-document-summary'],options.listProfile,request.headers['x-naijue-document-list']):url==='/sales/totals/query'?ordinaryDocumentTotalsWire(result):url==='/sales/detail/query'?salesDetailWire(result,request.headers['x-naijue-document-summary']):result));
+        return reply.type("application/json").send(exactJson(url==='/sales/query'?documentListWire(result,request.headers['x-naijue-document-summary'],options.listProfile,request.headers['x-naijue-document-list'],request.headers['x-naijue-sales-return-display']):url==='/sales/totals/query'?ordinaryDocumentTotalsWire(result):url==='/sales/detail/query'?salesDetailWire(result,request.headers['x-naijue-document-summary']):result));
       });
     }
   };

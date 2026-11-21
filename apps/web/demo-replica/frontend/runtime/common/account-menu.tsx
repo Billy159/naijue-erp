@@ -78,7 +78,7 @@ export function ChangeOwnPasswordDialogView({ visible, submitting, fields, error
   };
   return <Modal className="account-password-modal iw-arco-modal iw-arco-controls" visible={visible} title="修改密码"
     onCancel={onCancel} onOk={onSubmit} confirmLoading={submitting}
-    okText={submitting ? '修改中…' : '确认修改'} cancelText="取消" closable={!submitting} escToExit={!submitting}
+    okText={submitting ? '保存中…' : '保存'} cancelText="取消" closable={!submitting} escToExit={!submitting}
     cancelButtonProps={{ disabled: submitting }} maskClosable={false} unmountOnExit
     afterOpen={onAfterOpen}>
     <div className="account-password-fields">

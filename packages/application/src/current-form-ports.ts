@@ -11,6 +11,8 @@ export interface CurrentFormPage<T> {
 }
 export type CurrentFormContext = { readonly kind: "SALES"; readonly hallId: EntityId<"hall"> }
   | { readonly kind: "TRANSFER" };
+/** Catalogue identity only, detached from header selection or write authority. */
+export type CurrentFormLineContext = CurrentFormContext | { readonly kind: "SALES_DRAFT" };
 export interface CurrentFormSearch { readonly search: string; readonly page: number; readonly pageSize: 20 }
 /** Only account lookup carries a selected method; omission is not an all-method grant. */
 export type CurrentSalesReferenceQuery = CurrentFormSearch & (
@@ -36,7 +38,7 @@ export interface CurrentTransferWarehouse {
   readonly id: EntityId<"warehouse">; readonly name: string; readonly hallId: EntityId<"hall">; readonly hallName: string;
   readonly enabled: boolean; readonly hallEnabled: boolean; readonly hasNonzeroInventory: boolean;
 }
-export interface CurrentFormProductQuery extends CurrentFormSearch { readonly context: CurrentFormContext }
+export interface CurrentFormProductQuery extends CurrentFormSearch { readonly context: CurrentFormLineContext }
 export interface CurrentFormProduct {
   readonly id: EntityId<"product">; readonly code: string; readonly name: string;
   /** Actual native hard-bound product group, independent of SKU existence.
@@ -49,7 +51,7 @@ export interface CurrentFormProduct {
   readonly category?: { readonly id: EntityId<"category">; readonly label: string | null };
 }
 export interface CurrentFormProductSkuQuery {
-  readonly context: CurrentFormContext; readonly productId: EntityId<"product">; readonly page: number; readonly pageSize: 20;
+  readonly context: CurrentFormLineContext; readonly productId: EntityId<"product">; readonly page: number; readonly pageSize: 20;
 }
 export const CURRENT_FORM_MAX_TARGET_SKUS = 200;
 export interface CurrentFormSkuBatchQuery { readonly context: CurrentFormContext; readonly skuIds: readonly EntityId<"sku">[] }
@@ -85,7 +87,8 @@ export interface CurrentFormSavedEditSkuBatchWireV2 {
   readonly version: 2; readonly skus: readonly CurrentFormSavedEditSkuTupleV2[]; readonly products: readonly CurrentFormSavedEditProductTupleV2[];
 }
 export type CurrentFormBarcodeContext = { readonly kind: "SALES"; readonly hallId: EntityId<"hall">; readonly warehouseId: EntityId<"warehouse"> }
-  | { readonly kind: "TRANSFER"; readonly fromWarehouseId: EntityId<"warehouse">; readonly toWarehouseId: EntityId<"warehouse"> };
+  | { readonly kind: "TRANSFER"; readonly fromWarehouseId: EntityId<"warehouse">; readonly toWarehouseId: EntityId<"warehouse"> }
+  | { readonly kind: "SALES_DRAFT" } | { readonly kind: "TRANSFER_DRAFT" };
 export interface CurrentFormBarcodeQuery { readonly context: CurrentFormBarcodeContext; readonly barcode: string }
 export type CurrentFormBarcodeResult = { readonly state: "FOUND"; readonly barcode: string;
   readonly binding: { readonly id: string; readonly kind: "MAIN" | "CONFIRMED_OLD" }; readonly sku: CurrentFormSku }

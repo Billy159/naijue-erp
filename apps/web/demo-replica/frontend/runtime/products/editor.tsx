@@ -1,3 +1,4 @@
+import { unsavedChanges } from '../common/dialog-copy.ts';
 import { useRuntimeTabs } from '../common/tabs.tsx';
 import { productRequiredFeedback } from '../../../../src/products/product-required-feedback.ts';
 import { ProductEditorPrices } from '../../../../src/products/product-editor-prices.tsx';
@@ -7,7 +8,7 @@ import { ProductEditorController,actualSpecSelection } from '../../../../src/pro
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { useProductRead,ReadNotice } from './read.tsx';
 import { productTabs,priceFields,SchemeConsumer } from './detail.tsx';
-import { SourceModal } from '../catalogue/source-controls.tsx';
+import { ConfirmDialog } from '../common/confirm-dialog.tsx';
 import { useEditorMedia } from './editor-media.tsx';
 import { GroupMembers } from './editor-size-group.tsx';
 import { EditorBarcodes } from './editor-barcodes.tsx';
@@ -15,8 +16,24 @@ import { DraftEditorBarcodes } from './editor-draft-barcodes.tsx';
 import { EditorStock } from './editor-stock.tsx';
 import { InlineCatalogueEntry } from './inline-catalogue.tsx';
 import { EditorChoice,SpecSelection } from './editor-fields.tsx';
+import { productThicknessOptions,productCollarOptions,productTrouserOptions,productShapeOptions } from './attribute-options.ts';
 import type { SourceProductEditorOptions } from './editor-entry.tsx';
-const currentSchemeId='0e70e45e-1a51-4d44-afe8-0002cf3fb7ef';
+import { BARCODE_SCHEMES } from '../../../../../../packages/application/src/barcode-generation.ts';
+const currentSchemeId=BARCODE_SCHEMES.y2026, priorSchemeId=BARCODE_SCHEMES.y2023;
+const suitCategories=new Set(['西服','西裤']);
+const thicknessChoices=productThicknessOptions.map(name=>[name,name] as const);
+const thicknessLabels=new Map<string,string>(thicknessChoices),shapeLabels=new Map<string,string>(productShapeOptions);
+// Canonical labels from the same approved category mapping; a known native
+// path is never inferred from numeric IDs or from a matching substring.
+const collarRoots=new Set(['T恤','衬衫','卫衣','毛衫','夹克','风衣','派克','大衣','西服','保暖服装','皮革服装','毛皮服装']);
+const trouserRoots=new Set(['长裤','短裤','中裤']);
+function shapeChoices(path:readonly string[]){
+ const root=path[0],leaf=path.at(-1);
+ if(!root)return productShapeOptions;
+ if(trouserRoots.has(root)||(root==='西服'&&leaf==='西裤'))return productTrouserOptions;
+ if(collarRoots.has(root)||(root==='内着'&&leaf==='内衣'))return productCollarOptions;
+ return [];
+}
 const newValues=():ProductWriteValuesV2=>({productCode:'',name:'',categoryId:'',supplierId:null,seasonIds:[],sizeGroupId:'',year:null,systemItemCode:null,thickness:null,collarPantsType:null,defaultBarcodeSchemeId:null,enabled:true,prices:Object.fromEntries(priceFields.map(([key])=>[key,null])) as ProductWriteValuesV2['prices']});
 export function ProductEditor(p:SourceProductEditorOptions){
  const [session,setSession]=useState<{revision:number;baseline?:ProductMaintenanceDetailV2}>({revision:0});
@@ -38,13 +55,34 @@ function ProductEditorSession(p:SourceProductEditorOptions&{initialBaseline:Prod
  const [visited,setVisited]=useState<ReadonlySet<string>>(()=>new Set([p.initialTab??'base']));
  // Default A must be resolved by the trusted server transaction, never an RLS-filtered candidate list.
  const schemeTouched=useRef(false);
- const defaultScheme=useProductRead(scope,cap.barcodeSchemeReader?.readBarcodeScheme,{schemeId:currentSchemeId},!p.productId&&!originalCommand,p.onAccessFailure);
- useEffect(()=>{const d=defaultScheme.snapshot.success?.data;if(p.productId||originalCommand||controller.getSnapshot().command||schemeTouched.current||!d||d.id!==currentSchemeId||d.status!=='CURRENT')return;setValues(old=>old.defaultBarcodeSchemeId===null?{...old,defaultBarcodeSchemeId:d.id}:old);setLabels(old=>new Map([...old,[d.id,d.name]]));},[defaultScheme.snapshot.success,p.productId,originalCommand]);
+ const categoryTree=useProductRead(scope,p.catalogueOptions?.catalogue.readCategories,{},!p.productId&&!originalCommand&&!!p.catalogueOptions,p.onAccessFailure);
+ const [selectedCategoryNames,setSelectedCategoryNames]=useState<readonly string[]>([]);
+ const categoryRows=categoryTree.snapshot.success?.data.items;
+ const ancestors:string[]=[];
+ for(let id:string|null=values.categoryId;id&&ancestors.length<3;){
+  const row=categoryRows?.find(item=>item.id===id);if(!row)break;
+  ancestors.push(row.name);id=row.parentId;
+ }
+ const shapePath=ancestors.length?[...ancestors].reverse():selectedCategoryNames.length?selectedCategoryNames:base?.values.categoryId===values.categoryId?base.references.categoryPath.map(row=>row.name):[];
+ const categoryVerified=!values.categoryId||!p.catalogueOptions||ancestors.length>0;
+ const preferredScheme:string=(ancestors.length?ancestors:selectedCategoryNames).some(name=>suitCategories.has(name))?currentSchemeId:priorSchemeId;
+
+ const defaultScheme=useProductRead(scope,cap.barcodeSchemeReader?.readBarcodeScheme,{schemeId:preferredScheme},false,p.onAccessFailure);
+ useEffect(()=>{if(!p.productId&&!originalCommand&&cap.barcodeSchemeReader&&!schemeTouched.current&&categoryVerified)void defaultScheme.query.run({schemeId:preferredScheme});},[preferredScheme,categoryVerified,p.productId,originalCommand,cap.barcodeSchemeReader,defaultScheme.query]);
+ const effectiveScheme=defaultScheme.snapshot.success?.data;
+ useEffect(()=>{
+  if(p.productId||originalCommand||controller.getSnapshot().command||schemeTouched.current||!categoryVerified)return;
+  setValues(old=>old.defaultBarcodeSchemeId===preferredScheme?old:{...old,defaultBarcodeSchemeId:preferredScheme});
+  const label=effectiveScheme?.id===preferredScheme?effectiveScheme.name:preferredScheme===currentSchemeId?'2026年条码方案':'2023年条码方案';
+  setLabels(old=>old.get(preferredScheme)===label?old:new Map([...old,[preferredScheme,label]]));
+ },[preferredScheme,categoryVerified,effectiveScheme,p.productId,originalCommand,controller]);
  const changeTab=(next:string)=>{setVisited(old=>new Set([...old,next]));setTab(next);};
  const needsBaseline=write.phase==='rejected'&&!!p.productId&&write.error?.code==='VERSION_CONFLICT';
  const writeBusy=!['idle','rejected'].includes(write.phase),busy=writeBusy,ready=!p.productId||!!base||!!restoredDraft&&writeBusy;
  const canMaintain=cap.allowedActions.includes(p.productId?'EDIT':'CREATE');
- const waitingForDefault=false; // Optional fit lookup must not prevent a zero-SKU save.
+ const newProduct=!p.productId&&!originalCommand;
+ const requiredMark=newProduct?<span className="ui-required" aria-hidden="true"> *</span>:null;
+ const waitingForDefault=!p.productId&&!originalCommand&&!schemeTouched.current&&!!values.categoryId&&!categoryVerified&&categoryTree.snapshot.phase==='loading';
  const media=useEditorMedia({scope,productId:p.productId,version:base?.version??null,capability:cap,controller,active:tab==='images'&&!busy&&ready,locked:busy||!ready||!canMaintain,changed:()=>setDirty(true),denied:p.onAccessFailure});
  const specsActive=!busy&&!!p.productId&&(tab==='specs'||tab==='images'||tab==='barcodes');
  const specs=useProductRead(scope,cap.productReader.readProductSpecifications,{productId:p.productId??''},specsActive,p.onAccessFailure),specsVersion=useRef<number|null>(null);
@@ -68,7 +106,12 @@ function ProductEditorSession(p:SourceProductEditorOptions&{initialBaseline:Prod
   }finally{if(baselineReading.current===command.requestKey)baselineReading.current=null;}
  };
  useEffect(()=>{if(write.phase==='rejected'&&p.productId&&write.command&&rejectedKey.current!==write.command.requestKey){rejectedKey.current=write.command.requestKey;if(write.command.action==='DELETE')setModal(null);if(needsBaseline)void reloadRejectedBaseline();}},[write]);
- useEffect(()=>{p.onCanLeaveChange(()=>!dirty&&!writeBusy&&(!childGuard.current||childGuard.current()));return()=>p.onCanLeaveChange(null);},[dirty,writeBusy,p.onCanLeaveChange]);
+ const safeToLeave=()=>scope.active&&['idle','rejected'].includes(controller.getSnapshot().phase)&&!media.isUploading()&&(childGuard.current?.()??true);
+ useEffect(()=>{
+  p.onCanLeaveChange(()=>!dirty&&safeToLeave());
+  p.onCanDiscardChange?.(()=>dirty&&safeToLeave());
+  return()=>{p.onCanLeaveChange(null);p.onCanDiscardChange?.(null);};
+ },[dirty,p.onCanLeaveChange,p.onCanDiscardChange]);
  const confirmSaved=async()=>{
   if(write.phase!=='committed'||!write.result||!write.command||finished.current||finishing.current||!scope.active)return;
   finishing.current=true;setConfirmation('reading');setError('');
@@ -102,18 +145,31 @@ function ProductEditorSession(p:SourceProductEditorOptions&{initialBaseline:Prod
  const change=(patch:Partial<ProductWriteValuesV2>)=>{setValues(old=>({...old,...patch}));setDirty(true);};
  const submit=async(deleting=false)=>{if(busy||needsBaseline||waitingForDefault)return;setError('');let attempted:ProductEditorDraft|undefined;try{if(deleting){if(base&&cap.allowedActions.includes('DELETE'))await controller.submit({action:'DELETE',id:base.productId,expectedVersion:base.version});return;}const action=base?'EDIT':'CREATE';if(!cap.allowedActions.includes(action))return;
  if(media.pending){setError('请等待图片准备完成，或移除失败的图片。');return;}
- const common={...(media.changes.length?{imageChanges:media.changes}:{}),values,skus:base?.skus??restoredDraft?.skus??[],barcodes:[...(base?.barcodes??restoredDraft?.barcodes??[]),...barcodeDraft],skuSelection:{colorIds:selection.colors,fitIds:selection.fits}};
- const draft:ProductEditorDraft=base?{...common,...(generateSkuIds.length?{generateBarcodeSkuIds:generateSkuIds}:{}),action:'EDIT',id:base.productId,expectedVersion:base.version}:{...common,action:'CREATE',values:{...values,seasonIds:values.seasonIds??[]}};
+ const automatic=!p.productId&&!originalCommand&&!schemeTouched.current;
+ if(automatic&&values.categoryId&&!categoryVerified){setError('未能确认商品分类。请重试读取分类，或在条码页手动选择方案。');return;}
+ const schemeId=automatic?preferredScheme:values.defaultBarcodeSchemeId;
+ if(newProduct){
+  const specMissing=[!selection.colors.length&&'颜色（规格页）',!values.sizeGroupId&&'尺码组（规格页）',!selection.fits.length&&'版型（规格页）'].filter(Boolean);
+  if(specMissing.length||!schemeId){
+   const baseMissing=[!values.productCode.trim()&&'款号',!values.name.trim()&&'商品名称',!values.categoryId&&'商品分类',values.year===null&&'年份',!values.supplierId&&'供应商',!values.systemItemCode?.trim()&&'系统货号'].filter(Boolean);
+   setError('请补全必填资料：'+[...baseMissing,...specMissing,...(!schemeId?['主条码默认方案（条码页）']:[])].join('、')+'。未发送保存请求。');
+   changeTab(baseMissing.length?'base':specMissing.length?'specs':'barcodes');
+   return;
+  }
+ }
+ const common={...(media.changes.length?{imageChanges:media.changes}:{}),values:automatic?{...values,defaultBarcodeSchemeId:schemeId}:values,skus:base?.skus??restoredDraft?.skus??[],barcodes:[...(base?.barcodes??restoredDraft?.barcodes??[]),...barcodeDraft],skuSelection:{colorIds:selection.colors,fitIds:selection.fits}};
+ const draft:ProductEditorDraft=base?{...common,...(generateSkuIds.length?{generateBarcodeSkuIds:generateSkuIds}:{}),action:'EDIT',id:base.productId,expectedVersion:base.version}:{...common,action:'CREATE',values:{...common.values,seasonIds:values.seasonIds??[]}};
  attempted=draft;await controller.submit(draft);
  }catch(e){setError(productRequiredFeedback(attempted,e)??(e instanceof Error?e.message:'商品保存失败。'));}};
- const choice=(kind:Parameters<typeof EditorChoice>[0]['kind'],label:string,value:string|string[]|null,update:(ids:string[])=>void,disabled=false,multiple=false)=><EditorChoice scope={scope} reader={cap.reader} kind={kind} label={label} value={value} labels={labels} change={update} onLabels={names=>setLabels(old=>new Map([...old,...names]))} {...(kind==='categories'&&base?{categoryPath:base.references.categoryPath.map(x=>x.id)}:{})} disabled={disabled||busy||!ready} multiple={multiple} denied={p.onAccessFailure}/>;
+ const choice=(kind:Parameters<typeof EditorChoice>[0]['kind'],label:string,value:string|string[]|null,update:(ids:string[])=>void,disabled=false,multiple=false,onCategorySelection?:(ids:string[],names:string[])=>void)=><EditorChoice scope={scope} reader={cap.reader} kind={kind} label={label} value={value} labels={labels} change={update} required={newProduct&&(kind==='size-groups'||kind==='barcode-schemes')}
+  {...(kind==='thicknesses'?{localOptions:thicknessChoices,optionLabels:thicknessLabels}:kind==='collar-pants-types'?{localOptions:shapeChoices(shapePath),optionLabels:shapeLabels}:{})} {...(onCategorySelection?{onCategorySelection,...(categoryRows?{categoryRows}:{})}:{})} onLabels={names=>setLabels(old=>new Map([...old,...names]))} {...(kind==='categories'&&base?{categoryPath:base.references.categoryPath.map(x=>x.id)}:{})} disabled={disabled||busy||!ready} multiple={multiple} denied={p.onAccessFailure}/>;
  const field=(name:string,child:React.ReactNode)=><div className="field" key={name}><span className="pc-field-caption">{name.replace(/\s*\*$/,'')}{name.endsWith('*')&&<span className="ui-required"> *</span>}</span>{child}</div>;
- const close=()=>{if(writeBusy)return;if(dirty)setModal('discard');else p.onClose();};
+ const close=()=>{if(p.onRequestClose){p.onRequestClose();return;}if(!safeToLeave())return;if(dirty)setModal('discard');else p.onClose();};
  const tabs = useRuntimeTabs({ label: '商品编辑', items: productTabs, selected: tab, onSelect: changeTab, className: 'tabs' });
  if(!scope.active)return null;
  return <div className="pc-detail-workbench"><div className="pc-detail-sticky"><div className="gold-head iw-head pc-page-head"><h1>{values.productCode||(p.productId?'商品资料':'新增商品')} · {values.name||'未命名'}</h1><div className="actions iw-head-actions">{base&&cap.allowedActions.includes('DELETE')&&<button type="button" className="btn ghost pc-danger" disabled={busy} onClick={()=>setModal('delete')}>删除商品</button>}<button type="button" className="btn" disabled={writeBusy} onClick={close}>取消</button><button type="button" className="btn primary" disabled={busy||needsBaseline||waitingForDefault||!ready||!cap.allowedActions.includes(base?'EDIT':'CREATE')} onClick={()=>void submit()}>保存</button></div></div>{tabs.header}</div>
  {!canMaintain&&<p role="status">当前未提供商品保存能力。填写内容仅保留在本页，保存和图片上传暂不可用。</p>}
- {!p.productId&&!originalCommand&&<>{defaultScheme.snapshot.phase==='loading'?<p role="status">正在读取新建商品的2026条码方案；未读取完成也可保存空码…</p>:defaultScheme.snapshot.phase==='success'?(defaultScheme.snapshot.success?.data?.id!==currentSchemeId||defaultScheme.snapshot.success.data.status!=='CURRENT')&&<p role="alert">未取得已确认的当前2026条码方案，未自动设置默认方案。</p>:<p role="alert">2026条码方案读取未完成，未自动设置默认方案。<button type="button" className="btn ghost" disabled={writeBusy} onClick={()=>{if(!writeBusy)void defaultScheme.query.run({schemeId:currentSchemeId});}}>重试读取2026方案</button></p>}</>}
+
  <div id="pc-editor-error" className="inline-error" role="alert">{error||write.error?.message}</div>{write.phase==='submitting'&&<p role="status">正在保存…</p>}{(write.phase==='uncertain'||write.phase==='checking')&&<p role="alert">保存结果尚未确认，请先查回原请求。<button type="button" className="btn" disabled={write.phase==='checking'} onClick={()=>void controller.recover()}>查回结果</button>{write.phase==='uncertain'&&write.recovery==='absent'&&<button type="button" className="btn" disabled={!write.command||!cap.allowedActions.includes(write.command.action)} onClick={()=>{if(write.command&&cap.allowedActions.includes(write.command.action))void controller.retryOriginal();}}>按原请求重试</button>}</p>}
  {write.phase==='committed'&&write.command?.action!=='DELETE'&&<p role={confirmation==='error'?'alert':'status'}>{confirmation==='error'?'保存已提交，最新资料读取未完成。':finished.current?'保存已确认。':'保存已提交，正在确认最新商品资料…'}{confirmation==='error'&&<button type="button" className="btn" onClick={()=>void confirmSaved()}>重新读取商品</button>}</p>}
  {barcodeFeedback&&<div role="alert" className="inline-error"><p>{barcodeFeedback.emptySpecs?'商品资料已保存，当前暂无规格/条码。':<>商品资料和规格已保存；本次新增或明确勾选补码的规格中有 {barcodeFeedback.missing.length} 项在已确认的商品详情中没有主条码或没有启用的主条码。</>}</p><p>{barcodeFeedback.reason}</p>{!barcodeFeedback.emptySpecs&&<p>未生成主码的规格：{barcodeFeedback.missing.join('、')}</p>}<p>原主码、兼容码和停用状态保持不变。请勿重复提交同一保存请求；需要扫码的规格应先确认已有可用条码。</p><button type="button" className="btn" onClick={()=>p.onSaved(barcodeFeedback.targetId)}>查看已保存商品</button></div>}
@@ -121,16 +177,16 @@ function ProductEditorSession(p:SourceProductEditorOptions&{initialBaseline:Prod
  {p.productId&&!base&&write.phase==='idle'&&<ReadNotice phase={detail.snapshot.phase} retry={()=>void detail.query.run({productId:p.productId!})} cancel={()=>detail.query.cancel()}/>}
  {ready&&specsActive&&<ReadNotice phase={specs.snapshot.phase} retry={()=>void specs.query.run({productId:p.productId!})} cancel={()=>specs.query.cancel()}/>}
  <section {...tabs.panel}><fieldset disabled={busy||!ready} className="pc-editor-body pc-detail-body" style={{border:0,margin:0,minWidth:0}}>
- {!selection.fits.length&&<p role="status">未选版型时，历史方案由服务端确认唯一有效的A版（旧A或数字5）；无法确认则保留空规格/条码，不影响保存，不改写已有非A规格。</p>}
- {tab==='base'&&<div className="pc-form-grid pc-base-grid">{field('款号 *',<input aria-label="款号" value={values.productCode} readOnly={!!base} maxLength={40} onChange={e=>change({productCode:e.target.value})}/>)}{field('商品名称 *',<input aria-label="商品名称" value={values.name} maxLength={80} onChange={e=>change({name:e.target.value})}/>)}{field('商品分类 *',choice('categories','商品分类',values.categoryId,ids=>change({categoryId:ids[0]??''})))}{field(base?'年份':'年份 *',choice('years','年份',values.year===null?null:String(values.year),ids=>change({year:ids[0]?Number(ids[0]):null})))}{field('季节',choice('seasons','季节',values.seasonIds===null?null:[...values.seasonIds],ids=>change({seasonIds:ids}),false,true))}{field(base?'供应商':'供应商 *',choice('suppliers','供应商',values.supplierId,ids=>change({supplierId:ids[0]??null})))}{field('厚薄（可选）',choice('thicknesses','厚薄',values.thickness,ids=>change({thickness:ids[0]??null})))}{field('领型 / 裤型（可选）',choice('collar-pants-types','领型 / 裤型',values.collarPantsType,ids=>change({collarPantsType:ids[0]??null})))}{field(base?'系统货号':'系统货号 *',<input aria-label="系统货号" aria-required={!base} placeholder={base?'不以款号代填':'请手工填写，不以款号代填'} value={values.systemItemCode??''} onChange={e=>change({systemItemCode:e.target.value||null})}/>)}</div>}
- {visited.has('specs')&&<GroupMembers key={'specs:'+ (values.sizeGroupId||'unset')} active={tab==='specs'} scope={scope} reader={cap.dictionaryReader} id={values.sizeGroupId} name={labels.get(values.sizeGroupId)??''} denied={p.onAccessFailure}>{members=><div className="pc-spec-stack">{(['colors','fits'] as const).slice(0,1).map(kind=><section className="pc-spec-section" key={kind}><div className="pc-section-line"><h3>颜色</h3><button type="button" className="btn ghost" onClick={()=>setModal(kind)}>编辑颜色</button></div><div className="pc-spec-values">{selection.colors.map(id=><span className="pc-spec-value" key={id}>{labels.get(id)??id}</span>)}{!selection.colors.length&&<span className="hint">未设置</span>}</div></section>)}<section className="pc-spec-section"><div className="pc-section-line"><h3>尺码组</h3></div><div className="pc-spec-group"><span>选择尺码组</span>{choice('size-groups','尺码组',values.sizeGroupId,ids=>change({sizeGroupId:ids[0]??''}),!!base)}</div>{values.sizeGroupId&&members}</section><section className="pc-spec-section"><div className="pc-section-line"><h3>版型</h3><button type="button" className="btn ghost" onClick={()=>setModal('fits')}>编辑版型</button></div><div className="pc-spec-values">{selection.fits.map(id=><span className="pc-spec-value" key={id}>{labels.get(id)??id}</span>)}{!selection.fits.length&&<span className="hint">未设置</span>}</div></section></div>}</GroupMembers>}
+ {!!p.productId&&!selection.fits.length&&<p role="status">未选版型时，历史方案由服务端确认唯一有效的A版（旧A或数字5）；无法确认则保留空规格/条码，不影响保存，不改写已有非A规格。</p>}
+ {tab==='base'&&<div className="pc-form-grid pc-base-grid">{field('款号 *',<input aria-label="款号" value={values.productCode} readOnly={!!base} maxLength={40} onChange={e=>change({productCode:e.target.value})}/>)}{field('商品名称 *',<input aria-label="商品名称" value={values.name} maxLength={80} onChange={e=>change({name:e.target.value})}/>)}{field('商品分类 *',choice('categories','商品分类',values.categoryId,ids=>change({categoryId:ids[0]??''}),false,false,(ids,names)=>{const categoryId=ids.at(-1)??'';setSelectedCategoryNames(names);change({categoryId});}))}{field(base?'年份':'年份 *',choice('years','年份',values.year===null?null:String(values.year),ids=>change({year:ids[0]?Number(ids[0]):null})))}{field('季节',choice('seasons','季节',values.seasonIds===null?null:[...values.seasonIds],ids=>change({seasonIds:ids}),false,true))}{field(base?'供应商':'供应商 *',choice('suppliers','供应商',values.supplierId,ids=>change({supplierId:ids[0]??null})))}{field('厚薄（可选）',choice('thicknesses','厚薄',values.thickness,ids=>change({thickness:ids[0]??null})))}{field('领型 / 裤型（可选）',choice('collar-pants-types','领型 / 裤型',values.collarPantsType,ids=>change({collarPantsType:ids[0]??null})))}{field(base?'系统货号':'系统货号 *',<input aria-label="系统货号" aria-required={!base} placeholder={base?'不以款号代填':'请手工填写，不以款号代填'} value={values.systemItemCode??''} onChange={e=>change({systemItemCode:e.target.value||null})}/>)}</div>}
+ {visited.has('specs')&&<GroupMembers key={'specs:'+ (values.sizeGroupId||'unset')} active={tab==='specs'} scope={scope} reader={cap.dictionaryReader} id={values.sizeGroupId} name={labels.get(values.sizeGroupId)??''} denied={p.onAccessFailure}>{members=><div className="pc-spec-stack">{(['colors','fits'] as const).slice(0,1).map(kind=><section className="pc-spec-section" key={kind}><div className="pc-section-line"><h3>颜色{requiredMark}</h3><button type="button" className="btn ghost" aria-describedby={newProduct?'pc-required-color':undefined} onClick={()=>setModal(kind)}>编辑颜色</button>{newProduct&&<span id="pc-required-color" className="sr-only">新增商品必填</span>}</div><div className="pc-spec-values">{selection.colors.map(id=><span className="pc-spec-value" key={id}>{labels.get(id)??id}</span>)}{!selection.colors.length&&<span className="hint">未设置</span>}</div></section>)}<section className="pc-spec-section"><div className="pc-section-line"><h3>尺码组{requiredMark}</h3></div><div className="pc-spec-group"><span>选择尺码组</span>{choice('size-groups','尺码组',values.sizeGroupId,ids=>change({sizeGroupId:ids[0]??''}),!!base)}</div>{values.sizeGroupId&&members}</section><section className="pc-spec-section"><div className="pc-section-line"><h3>版型{requiredMark}</h3><button type="button" className="btn ghost" aria-describedby={newProduct?'pc-required-fit':undefined} onClick={()=>setModal('fits')}>编辑版型</button>{newProduct&&<span id="pc-required-fit" className="sr-only">新增商品必填</span>}</div><div className="pc-spec-values">{selection.fits.map(id=><span className="pc-spec-value" key={id}>{labels.get(id)??id}</span>)}{!selection.fits.length&&<span className="hint">未设置</span>}</div></section></div>}</GroupMembers>}
  {tab==='prices'&&<ProductEditorPrices values={values} disabled={busy||!ready} change={change} setError={setError}/>}
- {tab==='barcodes'&&<><div className="pc-barcode-tools">{field('主条码默认方案',choice('barcode-schemes','主条码默认方案',values.defaultBarcodeSchemeId,ids=>{schemeTouched.current=true;change({defaultBarcodeSchemeId:ids[0]??null});}))}<button type="button" className="btn ghost" disabled={!values.defaultBarcodeSchemeId} onClick={()=>setScheme(values.defaultBarcodeSchemeId)}>查看方案</button></div><small className="hint">修改方案只影响以后新生成的条码，已有条码保持不变。</small></>}{visited.has('barcodes')&&!p.productId&&!originalCommand&&<DraftEditorBarcodes key={'draft-barcodes:'+ (values.sizeGroupId||'unset')} active={tab==='barcodes'} scope={scope} reader={cap.dictionaryReader} groupId={values.sizeGroupId} groupName={labels.get(values.sizeGroupId)??''} colorIds={selection.colors} fitIds={selection.fits} names={labels} denied={p.onAccessFailure}/>}
+ {tab==='barcodes'&&<><div className="pc-barcode-tools">{field(newProduct?'主条码默认方案 *':'主条码默认方案',choice('barcode-schemes','主条码默认方案',values.defaultBarcodeSchemeId,ids=>{schemeTouched.current=true;change({defaultBarcodeSchemeId:ids[0]??null});}))}<button type="button" className="btn ghost" disabled={!values.defaultBarcodeSchemeId} onClick={()=>setScheme(values.defaultBarcodeSchemeId)}>查看方案</button></div>{!p.productId&&!originalCommand&&!schemeTouched.current&&cap.barcodeSchemeReader&&!!values.categoryId&&!categoryVerified&&<p role="alert">默认条码方案读取失败。<button type="button" className="btn ghost" onClick={()=>{if(!categoryVerified)void categoryTree.query.run({});else void defaultScheme.query.run({schemeId:preferredScheme});}}>重试读取方案</button></p>}<small className="hint">修改方案只影响以后新生成的条码，已有条码保持不变。</small></>}{visited.has('barcodes')&&!p.productId&&!originalCommand&&<DraftEditorBarcodes key={'draft-barcodes:'+ (values.sizeGroupId||'unset')} active={tab==='barcodes'} scope={scope} reader={cap.dictionaryReader} groupId={values.sizeGroupId} groupName={labels.get(values.sizeGroupId)??''} colorIds={selection.colors} fitIds={selection.fits} names={labels} denied={p.onAccessFailure}/>}
  {visited.has('barcodes')&&(!!p.productId||!!originalCommand)&&<EditorBarcodes active={tab==='barcodes'} canSupplement={!!base&&cap.allowedActions.includes('EDIT')&&!busy} skus={base?.skus??restoredDraft?.skus??[]} barcodes={base?.barcodes??restoredDraft?.barcodes??[]} draft={barcodeDraft} names={labels} generateSkuIds={generateSkuIds} changeGenerateSkuIds={ids=>{setGenerateSkuIds(ids);setDirty(true);}} change={rows=>{setBarcodeDraft(rows);setDirty(true);}}/>}
  {tab==='images'&&(p.productId&&!base?<p role="status">尚未取得商品资料，暂不能读取图片。请先通过上方入口读取商品资料。</p>:media.render(selection.colors.map(id=>({id,label:labels.get(id)??id}))))}{base&&<EditorStock active={tab==='stock'} scope={scope} product={{id:base.productId,label:base.values.productCode+' · '+base.values.name}} reader={cap.stock} denied={p.onAccessFailure} open={p.onOpenInventory}/>} {tab==='stock'&&!base&&<div className="empty">{p.productId?'尚未取得商品资料，暂不能显示库存。':'新商品保存后可查看库存。'}</div>}
  </fieldset></section>
  {(modal==='colors'||modal==='fits')&&<SpecSelection createUnavailableReason={cap.catalogueMaintenance?.[modal]?'当前账号未获新增'+(modal==='colors'?'颜色':'版型')+'权限':'当前入口未接通新增'+(modal==='colors'?'颜色':'版型')+'能力'} scope={scope} reader={cap.reader} kind={modal} denied={p.onAccessFailure} value={selection[modal]} labels={labels} {...(p.catalogueOptions&&cap.catalogueMaintenance?.[modal]?.allowedActions.includes('CREATE')?{create:(closeChild,savedChild)=><InlineCatalogueEntry options={p.catalogueOptions!} scope={scope} capability={cap.catalogueMaintenance![modal]!} close={closeChild} guard={guard=>{childGuard.current=guard;}} accept={savedChild}/>}:{})} close={()=>setModal(null)} save={(ids,names)=>{setSelection(old=>({...old,[modal]:ids}));setLabels(names);setDirty(true);setModal(null);}}/>}
- {(modal==='delete'||modal==='discard'||modal==='reload')&&<SourceModal title={modal==='delete'?'确认删除商品':modal==='reload'?'放弃修改并载入最新资料':'有未保存的修改'} close={()=>setModal(null)} footer={<><button type="button" className="btn" onClick={()=>setModal(null)}>{modal==='discard'?'继续编辑':'取消'}</button><button type="button" className={modal==='discard'?'btn primary':'btn pc-danger-solid'} onClick={()=>{const action=modal;setModal(null);if(action==='delete')void submit(true);else if(action==='reload'){if(pendingBaseline)p.reload(pendingBaseline);}else p.onClose();}}>{modal==='discard'?'放弃修改并离开':'确认'}</button></>}><p>{modal==='delete'?'确定删除该商品吗？':'未保存的修改将被放弃。'}</p></SourceModal>}
+ {(modal==='delete'||modal==='discard'||modal==='reload')&&<ConfirmDialog title={modal==='delete'?'删除商品？':modal==='reload'?'重新读取商品？':unsavedChanges.leaveTitle} className={modal==='discard'?'sale-confirm':'sale-confirm sale-danger'} onCancel={()=>setModal(null)} onConfirm={()=>{const action=modal;setModal(null);if(action==='delete')void submit(true);else if(action==='reload'){if(pendingBaseline)p.reload(pendingBaseline);}else if(safeToLeave())p.onClose();}}><p>{modal==='delete'?'删除后，商品列表里就看不到这件商品了。':modal==='reload'?'重新读取后，没保存的修改会丢失。':unsavedChanges.leaveBody}</p></ConfirmDialog>}
 
  {scheme&&<SchemeConsumer scope={scope} http={p.http} onAccessFailure={p.onAccessFailure} schemeId={scheme} close={()=>setScheme(null)}/>}
  </div>;
