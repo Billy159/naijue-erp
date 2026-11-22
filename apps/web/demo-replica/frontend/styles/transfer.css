@@ -22,6 +22,7 @@
 
 /* Same readonly product drawer used by inventory; document sheet remains active. */
 @import "./shared/product-detail.css";
+@import "./shared/list-page-spacing.css";
 
 /* Keep the replacement-row tint on sticky cells as well as regular cells. */
 .transfer-editor .mx-section .mx-table tbody > .mx-inline-replacement > td {
@@ -29,4 +30,41 @@
 }
 .transfer-editor .mx-section .mx-table tbody > .mx-inline-replacement > .ui-action-cell {
   background-color: #f7faff !important;
+}
+
+/* The entry row stays white; its sticky action cell must match on row hover. */
+.transfer-editor #tc-lines .mx-draft-row:hover > .ui-action-cell {
+  background-color: #fff !important;
+}
+
+/* Both filter rows share tracks, so the number field ends at the end-date edge. */
+#tc-list-filter.tc-filters-two-row {
+  display: grid;
+  grid-template-columns: var(--tc-list-filter-columns);
+  min-width: var(--tc-list-filter-min-width);
+}
+#tc-list-filter > .tc-filter-row {
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  min-width: 0;
+}
+#tc-list-filter .tc-filter-secondary > .tc-number-field {
+  grid-column: 1 / 3;
+}
+
+/* Keep routine guidance quiet and the list rows compact. */
+#page > .tc-list:has(> #tc-list-filter) > .ui-query-note[data-pending="false"] {
+  color: var(--ca-ink-2);
+}
+#page > .tc-list:has(> #tc-list-filter) .tc-list-scroll th {
+  height: 36px !important;
+}
+#page > .tc-list:has(> #tc-list-filter) .tc-list-scroll td {
+  height: 40px !important;
+}
+
+/* Short saved documents end at the summary; long details still scroll. */
+.transfer-editor:not(.transfer-proposal-editor) #tc-lines {
+  flex: 0 1 auto;
+  max-height: min(55dvh, 560px);
 }

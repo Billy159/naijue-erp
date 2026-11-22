@@ -1,4 +1,31 @@
 import {salesInputMoney} from '../../../../src/sales/commands/form-model.ts';
+import type {SalesDetailDto} from '../../../../src/sales/contracts.ts';
+import type {SalesProposalSnapshot} from '../../../../src/current-form/sales-proposal.ts';
+
+/** A complete authenticated aggregate is usable only for the exact original
+ * contributing rows. It is not a mapping from products/SKUs to categories. */
+export function unchangedSalesCategorySummary(detail:SalesDetailDto|undefined,state:Pick<SalesProposalSnapshot,'draft'|'entries'|'lineEdit'>){
+ const summary=detail?.categorySummary;
+ if(!detail||detail.stockBasis!=='RUNTIME_LEDGER'||detail.document.header.businessType!=='SALE'||state.draft.businessType!=='SALE'||
+   !summary||summary.basis!=='CURRENT'||summary.metric!=='QUANTITY'||summary.hasMore||summary.categoryCount!==String(summary.items.length))return undefined;
+ // Bare search text is not a selected product and does not enter the category totals.
+ if(Object.values(state.entries).some(entries=>entries.some(row=>row.product||row.sku||row.color||row.fit||row.size)))return undefined;
+ const saved=new Map<string,SalesDetailDto['document']['lines'][number]>(detail.document.lines.map(line=>[line.id,line]));
+ if(saved.size!==detail.document.lines.length||saved.size!==state.draft.lines.length)return undefined;
+ const edit=state.lineEdit;
+ if(edit&&!state.draft.lines.some(row=>row===edit.original&&row.key===edit.key))return undefined;
+ for(const row of state.draft.lines){
+  const original=saved.get(row.key);
+  if(!original||original.isCurrent!==true||original.isGift===null||row.sourceLine?.id!==original.id||row.sourceLine.skuId!==original.skuId||
+    row.sku?.id!==original.skuId||row.sku.productId!==row.product.id||row.quantity!==original.quantity||row.isGift!==original.isGift)return undefined;
+  if(edit?.key===row.key&&(!edit.sku||edit.sku.id!==original.skuId||edit.sku.productId!==row.sku.productId||edit.product.id!==row.product.id||
+    edit.color?.id!==row.sku.colorId||edit.fit?.id!==row.sku.fitId||edit.size?.id!==row.sku.sizeId||
+    edit.quantity!==original.quantity||edit.isGift!==original.isGift))return undefined;
+  saved.delete(row.key);
+ }
+ return summary;
+}
+
 /** Display-only exact signed quantities. Gifts count as units, not return/exchange flows. */
 export function salesQuantitySummary(rows:readonly {readonly quantity:string;readonly isGift:boolean|null}[]|null){
  if(rows===null||rows.some(row=>row.isGift===null))return null;let quantity=0n,giftQuantity=0n,incoming=0n,outgoing=0n;

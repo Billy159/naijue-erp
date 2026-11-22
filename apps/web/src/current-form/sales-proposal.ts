@@ -8,7 +8,7 @@ import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { createCurrentFormHttpReader } from './http-reader.ts';
 import { currentBusinessDate } from './business-date.ts';
-import { defaultDocumentFit, documentSpecOptions, readDefaultDocumentFitIds } from './document-fit-default.ts';
+import { defaultDocumentFit, documentDefaultFitSkus, documentSpecOptions, readDefaultDocumentFitIds } from './document-fit-default.ts';
 import { DocumentScanController } from '../components/document-scan-controller.ts';
 import { salesBusinessMode, salesBusinessType, type SalesBusinessMode } from './sales-business-mode.ts';
 import { parseNativeSalesSaveProposal, type NativeSalesSaveProposal } from '../../../../packages/application/src/native-sales-preparation.ts';
@@ -36,6 +36,7 @@ export interface SalesProposalEntry {
   readonly product: CurrentFormProduct | null; readonly sku: CurrentFormSku | null;
   readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly size: SalesSpecChoice | null; readonly sizeGroup: SalesSpecChoice | null; readonly skuPage: number;
   readonly defaultFit?: SalesSpecChoice | null;
+  readonly defaultFitIds?: readonly string[];
   readonly query: string; readonly quantity: string; readonly dealPrice: string;
 }
 const emptyEntry = (direction: 'IN' | 'OUT', key: string): SalesProposalEntry => ({ key, order: null, product: null, sku: null, color: null, fit: null, size: null, sizeGroup: null, skuPage: 1, query: '', quantity: direction === 'IN' ? '-1' : '1', dealPrice: '', pricingRule: 'UNIT_PRICE', discount: '', isGift: false, zeroConfirmed: false });
@@ -91,7 +92,7 @@ export function salesProposalHasMixedQuantities(lines: readonly { readonly quant
   for (const row of lines) { try { const value = quantity(row.quantity); incoming ||= value < 0n; outgoing ||= value > 0n; } catch { /* Invalid input remains invalid at SAVE. */ } }
   return incoming && outgoing;
 }
-export const mixedSalesDiscountNotice = '正负明细混合单不使用整单优惠／抹零，明细保持同一单据。';
+export const mixedSalesDiscountNotice = '销售单只录正数量。换货请先开退货单，再另开销售单。';
 /** Display projection only. Missing/invalid input stays unknown, never a saved
  * zero, price authority or an approval decision. Uses the same integer money rules. */
 export function salesProposalMoney(draft: Omit<SalesProposal, 'lines'> & { readonly lines: readonly SalesProposalPricingLine[] }): { readonly grossMinor: string; readonly netDueMinor: string; readonly orderDiscountMinor: string;
@@ -156,6 +157,8 @@ export class SalesProposalSession {
   #seeded = false;
   readonly #defaultFitRequests = new Map<string, AbortController>();
   #savedSignedSale = false;
+  #storedSignedRows = false;
+  get allowsSignedSaleRows(): boolean { return this.#savedSignedSale || this.#storedSignedRows; }
   #savedDiscount: string | null = null;
   get preservesHistoricalSale(): boolean { return this.#savedSignedSale; }
   #salespersonDefaultClosed = false;
@@ -201,6 +204,7 @@ export class SalesProposalSession {
     for (const line of draft.lines) if (line.sku && line.sourceSnapshot) this.#savedLines.set(line.key, Object.freeze({ skuId: line.sku.id, snapshot: line.sourceSnapshot, product: line.product }));
     if (draft.historicalSaleOrigin && (draft.businessType !== 'SALE' || draft.historicalSaleOrigin.kind !== 'SIGNED_SALE' || !/^(?:0|[1-9]\d*)$/.test(draft.historicalSaleOrigin.originalOrderDiscount) || BigInt(draft.historicalSaleOrigin.originalOrderDiscount) !== amount(draft.orderDiscount))) return false;
     this.#savedSignedSale = draft.businessType === 'SALE' && draft.historicalSaleOrigin?.kind === 'SIGNED_SALE';
+    this.#storedSignedRows = draft.businessType === 'SALE' && draft.lines.some(row => row.quantity.startsWith('-'));
     this.#savedDiscount = this.#savedSignedSale ? draft.orderDiscount : null;
     this.#seeded = true; this.#savedWarehouse = draft.hall && draft.warehouse ? { hallId: draft.hall.id, warehouseId: draft.warehouse.id } : null; this.#revision++;
     this.#publish({ draft, dirty, entries: emptyEntries(), lineEdit: null, errors: [], notice: null, totals: null }); return true;
@@ -342,7 +346,7 @@ export class SalesProposalSession {
     const entry = this.#entry(direction, key); if (this.#state.disposed || !entry || direction === 'OUT' && this.#state.draft.businessType === 'RETURN') return;
     if (patch.quantity !== undefined && this.#state.draft.businessType === 'RETURN') patch = { ...patch, quantity: returnQuantity(patch.quantity) };
     if (patch.query !== undefined && patch.query !== entry.product?.code) this.#defaultFitRequests.get(entry.key)?.abort();
-    this.#replaceEntry(direction, { ...entry, ...patch, ...(patch.query !== undefined && patch.query !== entry.product?.code ? { product: null, sku: null, color: null, fit: null, defaultFit: null, size: null, sizeGroup: null, skuPage: 1 } : {}) });
+    this.#replaceEntry(direction, { ...entry, ...patch, ...(patch.query !== undefined && patch.query !== entry.product?.code ? { product: null, sku: null, color: null, fit: null, defaultFit: null, defaultFitIds: [], size: null, sizeGroup: null, skuPage: 1 } : {}) });
   }
   clearEntry(direction: 'IN' | 'OUT', key?: string): void {
     const entry = this.#entry(direction, key); if (this.#state.disposed || !entry) return;
@@ -376,7 +380,7 @@ export class SalesProposalSession {
     const selection = edit ?? (target ? this.#entry(target.direction, target.key) : null);
     if (this.#state.disposed || picker?.kind !== 'sku' || picker.phase !== 'ready' || !selection?.product || picker.product?.id !== selection.product.id) return false;
     const rows = picker.specSkus ?? picker.result!.items as readonly CurrentFormSku[];
-    let patch: Partial<Pick<SalesProposalEntry, 'color' | 'fit' | 'size' | 'sizeGroup' | 'sku'>>;
+    let patch: Partial<Pick<SalesProposalEntry, 'color' | 'fit' | 'defaultFit' | 'size' | 'sizeGroup' | 'sku'>>;
     if (kind === 'size') {
       const legacy = rows.find(row => row.id === id || row.sizeId === id);
       const sizeId = legacy?.sizeId ?? id;
@@ -392,13 +396,20 @@ export class SalesProposalSession {
     } else {
       const row = documentSpecOptions(rows, kind, selection).find(row => kind === 'color' ? row.colorId === id : row.fitId === id);
       if (!row) return false;
-      const entryDefault = !edit && 'defaultFit' in selection ? selection.defaultFit : undefined;
-      const fit = selection.fit ?? entryDefault ?? null;
-      patch = kind === 'color' ? {
-        color: { id: row.colorId, name: row.colorName },
-        fit: fit && rows.some(sku => sku.colorId === row.colorId && sku.fitId === fit.id) ? fit : null,
-        size: null, sizeGroup: null, sku: null
-      } : { fit: { id: row.fitId, name: row.fitName }, size: null, sizeGroup: null, sku: null };
+      if (kind === 'color') {
+        const entry = !edit && target ? this.#entry(target.direction, target.key) : null;
+        const manualFit = !entry?.defaultFit && selection.fit && rows.some(sku => sku.colorId === row.colorId && sku.fitId === selection.fit!.id) ? selection.fit : null;
+        const automaticFit = !manualFit && entry?.defaultFitIds?.length && picker.specSkus
+          ? defaultDocumentFit(documentDefaultFitSkus(picker.specSkus, new Set(entry.defaultFitIds)), row.colorId) : null;
+        patch = {
+          color: { id: row.colorId, name: row.colorName },
+          fit: manualFit ?? automaticFit,
+          ...(entry ? { defaultFit: automaticFit } : {}),
+          size: null, sizeGroup: null, sku: null,
+        };
+      } else {
+        patch = { fit: { id: row.fitId, name: row.fitName }, ...(!edit ? { defaultFit: null } : {}), size: null, sizeGroup: null, sku: null };
+      }
     }
     if (edit) this.#publish({ lineEdit: { ...edit, ...patch, skuPage: picker.page } });
     else if (target) { const entry = this.#entry(target.direction, target.key); if (entry) this.#replaceEntry(target.direction, { ...entry, ...patch, skuPage: picker.page }); }
@@ -631,13 +642,16 @@ export class SalesProposalSession {
       const { items } = await readCompleteSkuPages(this.#skuPool, signal,
         (page, operationSignal) => this.#reader.readProductSkus({ context, productId: product.id, page, pageSize: 20 }, operationSignal),
         1, product.id, product.sizeGroupId);
-      const defaultFit = defaultDocumentFit(items, ids);
-      if (!defaultFit || signal.aborted || this.#state.disposed || this.#state.draft.hall?.id !== hall?.id) return;
+      if (signal.aborted || !this.#scope.active || this.#state.disposed || this.#state.draft.hall?.id !== hall?.id) return;
       for (const direction of ['IN', 'OUT'] as const) {
         const entry = this.#entry(direction, key);
-        if (entry?.product?.id !== product.id || entry.fit || entry.sku) continue;
-        const compatible = !entry.color || items.some(sku => sku.colorId === entry.color!.id && sku.fitId === defaultFit.id);
-        this.#replaceEntry(direction, { ...entry, defaultFit, fit: compatible ? defaultFit : null });
+        if (entry?.product !== product || entry.fit || entry.sku) continue;
+        const defaultFit = defaultDocumentFit(documentDefaultFitSkus(items, ids), entry.color?.id);
+        // Keep the IDs even if the whole product is ambiguous. The next color
+        // uses its own complete, current SKU proof rather than this first choice.
+        const next = { ...entry, defaultFitIds: [...ids], defaultFit, fit: defaultFit };
+        if (defaultFit) this.#replaceEntry(direction, next);
+        else this.#publish({ entries: { ...this.#state.entries, [direction]: this.#state.entries[direction].map(row => row === entry ? next : row) } });
         break;
       }
     } catch (error) {
@@ -658,7 +672,7 @@ export class SalesProposalSession {
       else if (target) {
         const entry = this.#entry(target.direction, target.key); if (!entry) return false;
         if (this.#state.draft.lines.length + Object.values(this.#state.entries).flat().filter(row => row.product || row.query.trim()).length > 200) { this.#publish({ notice: '已达 200 行上限。请修改现有行。' }); return false; }
-        this.#replaceEntry(target.direction, { ...entry, product, query: product.code, sku: null, color: null, fit: null, defaultFit: null, size: null, sizeGroup: null, skuPage: 1 });
+        this.#replaceEntry(target.direction, { ...entry, product, query: product.code, sku: null, color: null, fit: null, defaultFit: null, defaultFitIds: [], size: null, sizeGroup: null, skuPage: 1 });
       }
       this.closePicker();
       if (target && !this.#state.lineEdit) await this.#loadEntryDefaultFit(target.key, product);
@@ -775,8 +789,7 @@ export class SalesProposalSession {
       }
       const businessType = salesBusinessType(salesBusinessMode(draft.businessType));
       if (businessType === 'RETURN' && lines.some(row => !row.quantity.startsWith('-'))) throw Error();
-      if (businessType === 'SALE' && !this.#savedSignedSale && lines.every(row => row.quantity.startsWith('-'))) { this.#publish({ errors: ['仅有负数明细时请选择退货类型。'], notice: '保存资料未通过校验，原输入已保留，未发送保存。' }); return null; }
-      if (!this.#savedSignedSale && salesProposalHasMixedQuantities(lines) && amount(draft.orderDiscount) !== 0n) { this.#publish({ errors: [mixedSalesDiscountNotice + '请清除整单优惠后保存。'], notice: '保存资料未通过校验，原输入已保留，未发送保存。' }); return null; }
+      if (businessType === 'SALE' && !this.allowsSignedSaleRows && lines.some(row => row.quantity.startsWith('-'))) { this.#publish({ errors: [mixedSalesDiscountNotice], notice: '保存资料未通过校验，原输入已保留，未发送保存。' }); return null; }
       if (!salesProposalMoney({ ...draft, businessType, lines: pricing })) throw Error();
       const proposal = parseNativeSalesSaveProposal({ salesId, businessType, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note,
         hallId: draft.hall.id, customerId: draft.customer.id, salespersonId: draft.salesperson?.id ?? null, warehouseId: draft.warehouse.id, orderDiscount: yuan(draft.orderDiscount), lines,
@@ -812,10 +825,10 @@ export class SalesProposalSession {
     }
     const mixed = salesProposalHasMixedQuantities(draft.lines);
     if (draft.businessType === 'RETURN' && draft.lines.some(row => !row.quantity.startsWith('-'))) errors.push('退货明细数量必须为负整数。');
-    if (draft.businessType === 'SALE' && !this.#savedSignedSale && draft.lines.length && draft.lines.every(row => row.quantity.startsWith('-'))) errors.push('仅有负数明细时请选择退货类型。');
+    if (draft.businessType === 'SALE' && !this.allowsSignedSaleRows && draft.lines.some(row => row.quantity.startsWith('-'))) errors.push(mixedSalesDiscountNotice);
     let discount = 0n, settled = 0n;
     try { discount = amount(draft.orderDiscount); if (this.#savedSignedSale) { if (discount !== amount(this.#savedDiscount!)) throw Error(); } else if (mixed || draft.businessType !== 'SALE') { if (discount !== 0n) throw Error(); } else if (gross.length === draft.lines.length) allocateSalesDiscount(gross.map(value => minorAmount(value.toString())), minorAmount(discount.toString())); }
-    catch { errors.push(mixed && !this.#savedSignedSale ? mixedSalesDiscountNotice + '请清除整单优惠后保存。' : draft.businessType === 'SALE' ? '整单优惠须为非负两位金额，且不超过商品金额。' : '独立退货／换货整单优惠必须为零。'); }
+    catch { errors.push(mixed && !this.#savedSignedSale ? mixedSalesDiscountNotice : draft.businessType === 'SALE' ? '整单优惠须为非负两位金额，且不超过商品金额。' : '独立退货／换货整单优惠必须为零。'); }
     const settlementErrors = this.#settlementErrors();
     errors.push(...settlementErrors);
     if (!settlementErrors.length) for (const row of draft.settlements) settled += (row.direction === 'RECEIVE' ? 1n : -1n) * amount(row.amount);

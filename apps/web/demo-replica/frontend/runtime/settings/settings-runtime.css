@@ -4,3 +4,14 @@
 .runtime-settings-note{margin:8px 0;color:var(--secondary);font-size:13px;line-height:1.5}
 .bs-tab-panel{display:flex;flex-direction:column;flex:1;min-height:0}
 .bs-tab-panel>.bs-pager{flex:none;margin-top:auto;padding-top:var(--ca-space-2);background:var(--surface)}
+
+/* Disabled maintenance controls should not look like active links or CTAs. */
+#basic-settings-v2 [data-settings-area="parties"] :is(.bs-head-actions,.bs-row-actions) button:disabled,
+#basic-settings-v2 [data-settings-area="staff"] :is(.bs-head-actions,.bs-row-actions) button:disabled{
+  color:var(--ca-ink-3);
+  opacity:1;
+}
+#basic-settings-v2 :is([data-settings-area="parties"],[data-settings-area="staff"]) .bs-head-actions button.arco-btn-primary:disabled{
+  background:var(--ca-surface-muted);
+  border-color:var(--ca-line);
+}

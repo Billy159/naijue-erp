@@ -40,7 +40,10 @@ export function createProductQueryService(dependencies: ProductQueryDependencies
   return Object.freeze({
     readBasics(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const parameters = parseProductQuery(input);
-      return read(actor, parameters, { kind: "basics", parameters }, signal, reader.readBasics.bind(reader));
+      return read(actor, parameters, { kind: "basics", parameters }, signal, async scoped => {
+        const result = await reader.readBasics(scoped);
+        return result !== null && scoped.grant.hideSupplier ? Object.freeze({ ...result, supplierLabel: null }) : result;
+      });
     },
     readSpecifications(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const parameters = parseProductQuery(input);

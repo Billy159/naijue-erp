@@ -1,0 +1,16 @@
+/* Align the sales document with the list while leaving values and totals alone. */
+.main #page:has(> .sale-editor) {
+  padding-block-start: 12px;
+  padding-inline: var(--ui-page-space);
+}
+
+#page .sale-editor .sale-head.tc-head {
+  min-height: 32px;
+}
+
+/* The first two payment controls follow the staff and customer tracks above. */
+@media (min-width: 1101px) {
+  #page .sale-editor .sale-payment-row {
+    grid-template-columns: repeat(2, minmax(0, calc((100% - 16px) / 3))) minmax(0, 1fr) 72px;
+  }
+}

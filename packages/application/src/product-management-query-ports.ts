@@ -39,10 +39,11 @@ export type ProductManagementReadIntent = { readonly kind: "list"; readonly para
   | { readonly kind: "candidates"; readonly parameters: ProductManagementCandidateQuery };
 /** Current trusted policy must explicitly grant catalogue access. No role, route, selected ID,
  * trading-candidate permission or drawer permission implies a catalogue grant. Stock visibility is
- * separate: all-warehouses is deliberate global stock authority, NEVER a warehouse subset. */
+ * separate: all-warehouses is deliberate global stock authority, NEVER a warehouse subset.
+ * The supplier restriction is independent and only set by trusted current policy. */
 export type ProductManagementReadGrant =
-  | { readonly kind: "all"; readonly totalStock: "unavailable" | "all-warehouses" }
-  | { readonly kind: "products"; readonly productIds: readonly string[]; readonly totalStock: "unavailable" | "all-warehouses" };
+  | { readonly kind: "all"; readonly totalStock: "unavailable" | "all-warehouses"; readonly hideSupplier?: true }
+  | { readonly kind: "products"; readonly productIds: readonly string[]; readonly totalStock: "unavailable" | "all-warehouses"; readonly hideSupplier?: true };
 export interface ProductManagementQueryAuthorization {
   authorize(actor: ActorContext, intent: ProductManagementReadIntent, signal: AbortSignal): Promise<ProductManagementReadGrant>;
 }

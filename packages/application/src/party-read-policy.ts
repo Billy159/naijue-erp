@@ -7,7 +7,7 @@ export function createSourcePartyReadAuthorization(): PartyReadAuthorization {
   const policy: PartyReadAuthorization = { async authorize(actor, intent, signal) {
     activePartyRead(signal); const current = checkedPartyActor(actor), kind = partyKind(intent.kind);
     requireDomain(["LIST", "DETAIL", "CANDIDATES"].includes(intent.operation), "FORBIDDEN", "Only party reads may be authorized");
-    requireDomain(intent.operation === "CANDIDATES" || current.role === "ADMIN" || current.role === "WAREHOUSE", "FORBIDDEN", "Party directory role required");
+    requireDomain((kind === "CUSTOMER" && intent.operation === "CANDIDATES") || current.role === "ADMIN" || current.role === "WAREHOUSE", "FORBIDDEN", "Party directory role required");
     return Object.freeze({ kind, operation: intent.operation, targetId: intent.operation === "DETAIL" ? intent.id : null });
   } };
   return Object.freeze(policy);

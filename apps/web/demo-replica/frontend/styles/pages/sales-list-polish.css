@@ -1,0 +1,24 @@
+/* Routine help is neutral; a draft filter that has not been applied stays a
+ * warning. Keep document state colors and interactive controls intact. */
+#page [data-document-list="sales"] > .ui-query-note[data-pending="false"] {
+  color: var(--ca-ink-2);
+}
+
+#page [data-document-list="sales"] .tc-list-scroll th {
+  height: 36px !important;
+}
+
+#page [data-document-list="sales"] .tc-list-scroll td {
+  height: 40px !important;
+}
+
+/* Category counts are merchandise metadata, not extra buttons. The actual
+ * overflow button keeps its outline and focus affordance. */
+#page [data-document-list="sales"] .tc-list-scroll .tc-product-tags {
+  gap: 8px;
+}
+
+#page [data-document-list="sales"] .tc-list-scroll span.tc-product-tag {
+  padding: 0;
+  background: transparent;
+}

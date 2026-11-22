@@ -15,13 +15,14 @@ export const editorControlCss = singleCss + `
 .arco-select-multiple .arco-input-tag-tag{height:23px;line-height:23px;background:var(--ca-surface);color:var(--ca-ink);border:0}
 .arco-select-popup .arco-checkbox-checked .arco-checkbox-mask{background:var(--ca-primary);border-color:var(--ca-primary)}
 .arco-trigger-popup{max-width:calc(100vw - 24px)}
-.pc-category-options{box-sizing:border-box;width:min(480px,calc(100vw - 24px));padding:4px;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);background:var(--ca-popover-bg)}
+.pc-category-options{box-sizing:border-box;width:100%;min-width:0;padding:4px;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);background:var(--ca-popover-bg)}
 .pc-category-options .arco-cascader-popup-inner{display:flex;align-items:flex-start;min-width:0;overflow-x:auto}
 .pc-category-options .arco-cascader-list,.pc-category-options .arco-cascader-list-search{max-height:min(288px,calc(100dvh - 120px));max-width:100%;min-width:0!important}
 .pc-category-options .arco-cascader-list-search{flex:1}
-.pc-category-options .arco-cascader-list-column{box-sizing:border-box;flex:1 0 min(150px,56vw);max-width:100%;min-width:0;scrollbar-gutter:stable}
-.pc-category-options .arco-cascader-list-item,.pc-category-options .arco-cascader-list-search-item{box-sizing:border-box;height:30px;min-height:30px;line-height:30px;color:var(--ca-ink);border-radius:var(--ca-radius-control);font-size:13px;font-weight:400}
+.pc-category-options .arco-cascader-list-column{box-sizing:border-box;flex:1 1 0;max-width:100%;min-width:0;scrollbar-gutter:stable}
+.pc-category-options .arco-cascader-list-item,.pc-category-options .arco-cascader-list-search-item{box-sizing:border-box;min-width:0;height:30px;min-height:30px;line-height:30px;color:var(--ca-ink);border-radius:var(--ca-radius-control);font-size:13px;font-weight:400}
 .pc-category-options .arco-cascader-list-item:hover,.pc-category-options .arco-cascader-list-item-active,.pc-category-options .arco-cascader-list-search-item:hover{background:var(--ca-popover-hover)}
+.pc-category-options :is(.arco-cascader-list-item-label,.arco-cascader-list-search-item-label){min-width:0;overflow:hidden;text-overflow:ellipsis;padding-inline:clamp(5px,5%,12px) clamp(18px,14%,34px)}
 .pc-category-options .arco-cascader-list-empty{max-width:100%;padding:0}
 .pc-option-notice{box-sizing:border-box;display:flex;align-items:center;gap:8px;min-height:34px;padding:6px 8px;color:var(--ca-ink-2);font-size:13px;text-align:left}
 .pc-option-footer{min-height:34px;display:flex;align-items:center;padding:3px 8px;border-top:1px solid var(--ca-line)}

@@ -1,6 +1,6 @@
 import { SalesSettlementMismatchError } from '../../domain/src/sales-settlement-error.ts';
 import { loadHistoricalSaleOrigin, isHistoricalSignedSale, assertHistoricalUnknownRowsUnchanged, certifyRetainedSalesApproval, needsRetainedSalesApproval, retainedSalesApprovalSnapshot } from './sales-retained-approval.ts';
-import { parseNativeSalesSaveProposal, prepareNativeSalesOnTransaction } from './native-sales-preparation.ts';
+import { assertActiveSalesWrite, isRetiredSalesExchange, parseNativeSalesSaveProposal, prepareNativeSalesOnTransaction } from './native-sales-preparation.ts';
 import { sourceConfirmedCreateDocumentNumber } from './source-confirmed-document-number.ts';
 import { businessDate } from '../../domain/src/values.ts';
 import { applyInventoryEntry, assertPostingCoverage } from "./inventory-posting.ts";
@@ -15,11 +15,6 @@ import { planDocumentInventoryTransition } from "../../domain/src/document-inven
 import type { DocumentInventoryPriorEvidence } from "../../domain/src/document-inventory-effects.ts";
 import { sameSalesLine, sameSalesSettlementFacts } from "./sales-change-evidence.ts";
 import { salesChangeEvidence } from "./sales-change-evidence.ts";
-
-function isLegacyExchange(document: SalesDocument | undefined): boolean {
-  return document?.header.businessType === 'EXCHANGE'
-    || (document?.header.businessType === 'RETURN' && document.lines.some(line => line.isCurrent && line.quantity > 0n));
-}
 
 function validateDraft(draft: SalesDraft, previous?: SalesDocument, retainUnknownFacts = true, historical = false, draftIncomplete = false): void {
   requireDomain(draft.header.hallId !== null || historical && previous?.header.hallId === null && previous.header.warehouseId === draft.header.warehouseId, 'SALES_REFERENCE_UNAVAILABLE', 'Unknown hall may only be retained unchanged on stored historical sales');
@@ -105,6 +100,10 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
             note:proposal.note,orderDiscount:minorAmount('0'),grossAmount:minorAmount('0'),netDue:minorAmount('0')},lines:[],settlements:[]};
           await authorization.assertAllowed(submitted.actor,'SAVE',previous??proposed,tx);
           if(previous)await authorization.assertAllowed(submitted.actor,'SAVE',proposed,tx);
+          // Historical SALE edits are checked against their original audit in preparation.
+          if (proposal.businessType !== 'SALE' || resolvedStored?.stockBasis !== 'CUTOFF_HISTORY') {
+            assertActiveSalesWrite(proposal.businessType, proposal.lines, previous);
+          }
           preparedAt=now();requireDomain(Number.isFinite(Date.parse(preparedAt))&&/(?:Z|[+-]\d{2}:\d{2})$/.test(preparedAt),'INVALID_ACTION_TIME','Actual trusted time required');
           preparedOperationId=newId('operation');
           const selections=proposal.lines.map(l=>'spec' in l?{spec:l.spec!}:{skuId:l.skuId!});
@@ -122,9 +121,13 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
         // Updating an accessible source does not authorize moving its proposed data
         // into a different hall/warehouse/customer/payment-account scope.
         if (previous && command.action === "SAVE") await authorization.assertAllowed(command.actor, "SAVE", command.draft, tx);
+        // A published receipt was already handled above. Only fresh mutations
+        // are blocked; original reads and authorized receipt retries stay intact.
+        if (command.action !== "SAVE") requireDomain(!isRetiredSalesExchange(previous), "INVALID_BUSINESS_TYPE", "Legacy exchanges are read-only");
         // Only economic edits and approval need historical pricing/settlement proof.
         // Reversal uses posting provenance; void preserves economics unchanged.
         if(previous && (command.action === "SAVE" || command.action === "APPROVE"))await loadHistoricalSaleOrigin(previous,stored?.stockBasis,tx);
+        if (command.action === "SAVE") assertActiveSalesWrite(command.draft.header.businessType, command.draft.lines, previous, isHistoricalSignedSale(previous, stored?.stockBasis, tx));
         const timestamp = preparedAt ?? now();
         requireDomain(!Number.isNaN(Date.parse(timestamp)) && /(?:Z|[+-]\d{2}:\d{2})$/.test(timestamp), "INVALID_ACTION_TIME", "A real time with timezone is required");
         const operationId = preparedOperationId ?? newId("operation");
@@ -134,10 +137,6 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
         const entryIds: EntityId<"ledger">[] = [];
         if (command.action === "SAVE") {
           requireDomain(!previous || previous.header.status === "DRAFT", "INVALID_STATE", "Only a draft can be edited; approved documents must first be unapproved");
-          requireDomain(!isLegacyExchange(previous)
-            && command.draft.header.businessType !== "EXCHANGE"
-            && !(command.draft.header.businessType === "RETURN" && command.draft.lines.some(line => line.quantity >= 0n)),
-            "INVALID_BUSINESS_TYPE", "Current sales SAVE accepts only sales or negative-quantity returns; legacy exchanges are read-only");
           validateDraft(command.draft, previous, true, stored?.stockBasis==='CUTOFF_HISTORY', true);
           await rules.assertDraftChange(previous, command.draft, tx, stored?.stockBasis);
           if (previous) requireDomain(command.draft.header.number === previous.header.number,
@@ -157,11 +156,9 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
           const nextDocumentVersion = nextVersion(previous.header.version);
           if (command.action === "APPROVE") {
             requireDomain(previous.header.status === "DRAFT", "INVALID_STATE", "Only a draft can be approved");
-            const legacyExchange = isLegacyExchange(previous);
-            const history = (legacyExchange || needsRetainedSalesApproval(previous) || stored?.stockBasis === 'CUTOFF_HISTORY') && tx.getRetainedSalesApprovalHistory
+            const history = (needsRetainedSalesApproval(previous) || stored?.stockBasis === 'CUTOFF_HISTORY') && tx.getRetainedSalesApprovalHistory
               ? await tx.getRetainedSalesApprovalHistory(salesId, previous.header.version) : undefined;
             const retained = history ? certifyRetainedSalesApproval(previous, history, tx) : undefined;
-            requireDomain(!legacyExchange || retained, 'INVALID_BUSINESS_TYPE', 'Only an unchanged, proven previously approved legacy exchange can be restored');
             if(stored?.stockBasis==='CUTOFF_HISTORY' && needsRetainedSalesApproval(previous)) {
               requireDomain(history,'UNKNOWN_PRICING_FACTS','Bound historical pricing audit is required');
               assertHistoricalUnknownRowsUnchanged(previous,history);

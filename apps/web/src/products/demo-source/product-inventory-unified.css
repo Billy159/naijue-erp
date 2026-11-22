@@ -103,3 +103,5 @@ body:has(.products-workspace) .pc-products:has(#pc-filter .pc-more-filters) .pc-
  :where(.products-workspace,.product-source-ui) .pc-categories .pc-category-detail,:where(.product-source-ui).pc-categories .pc-category-detail{height:auto;min-height:180px}
  :where(.products-workspace,.product-source-ui) .pc-products .pc-pagination.iw-pagination,:where(.product-source-ui).pc-products .pc-pagination.iw-pagination{flex-wrap:wrap}
 }
+/* Retail price and total stock share the numeric cells' right edge. */
+.products-workspace .pc-products .pc-list-table .pc-data-table thead th:is(:nth-last-child(2),:nth-last-child(3)){text-align:right;font-variant-numeric:tabular-nums}

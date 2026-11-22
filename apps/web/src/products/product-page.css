@@ -62,6 +62,11 @@
 .product-page-missing,.product-page-availability{color:var(--ca-ink-2);padding:12px;background:var(--ca-surface-subtle);border:1px solid var(--ca-line);font-size:12px}
 .product-page-availability p{margin:4px 0}.product-page-missing{margin-top:16px}
 .product-editor-select,.product-editor-select .erp-select-host,.product-editor-category,.product-editor-category>.arco-cascader{display:block;width:100%;min-width:0}
+.product-editor-category-menu{box-sizing:border-box;width:100%;min-width:0}
+.product-editor-category-menu .arco-cascader-popup-inner{display:flex;min-width:0}
+.product-editor-category-menu .arco-cascader-list-column{flex:1 1 0;min-width:0;max-width:100%}
+.product-editor-category-menu :is(.arco-cascader-list,.arco-cascader-list-item,.arco-cascader-list-search-item){min-width:0}
+.product-editor-category-menu :is(.arco-cascader-list-item-label,.arco-cascader-list-search-item-label){min-width:0;overflow:hidden;text-overflow:ellipsis;padding-inline:clamp(5px,5%,12px) clamp(18px,14%,34px)}
 .product-editor-candidate-pages{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px;font-size:12px}
 .product-editor-recovery{padding:12px;background:var(--ca-primary-soft);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .product-editor-fields{display:flex;flex-direction:column;gap:16px}

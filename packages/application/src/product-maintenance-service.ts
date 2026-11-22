@@ -234,6 +234,12 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
       }
       requireDomain(contractVersion !== 2 || dependencies.unitOfWork.seasonContract === "product-season-array-v1", "PRODUCT_SEASON_NOT_READY", "Verified season array contract is unavailable");
       requireDomain(contractVersion !== 1 || !full || dependencies.unitOfWork.seasonContract === undefined, "PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED", "Use the multi-season editor contract");
+      if (command.action === "CREATE") {
+        requireDomain(command.values.defaultBarcodeSchemeId !== null, "PRODUCT_SCHEME_REQUIRED", "新商品必须选择默认条码方案");
+        const selection = "skuSelection" in command ? command.skuSelection : undefined;
+        const completeSpecs = selection ? selection.colorIds.length > 0 && selection.fitIds.length > 0 : command.skus.some(sku => sku.enabled);
+        requireDomain(completeSpecs, "PRODUCT_SPEC_REQUIRED", "新商品必须选择颜色、版型和尺码组");
+      }
       if (mediaCommand !== null) {
         requireDomain(dependencies.imageStage?.profile === "PRIVATE_PRODUCT_MEDIA_STAGE_V1" && typeof dependencies.imageStage.consume === "function"
           && typeof tx.assertImageWriteReady === "function" && typeof tx.assertImagesPrepared === "function" && typeof tx.loadImages === "function" && typeof tx.writeImages === "function"

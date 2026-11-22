@@ -17,3 +17,116 @@
 @import "./pages/products-4.css";
 @import "./shared/product-detail.css";
 @import "./shared/approved-header-navigation.css";
+@import "./shared/list-page-spacing.css";
+
+/* Keep the product identity prominent and let descriptive fields recede. */
+#page > .pc-products .pc-data-table .pc-product-code {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+#page > .pc-products .pc-data-table td:nth-child(n + 4):nth-last-child(n + 4) {
+  color: var(--ca-ink-2);
+}
+#page > .pc-products .pc-data-table tbody tr:last-child > td {
+  border-bottom: 0;
+}
+
+/* Product pages only: a single primary save action; the drawer keeps its own layout. */
+#page > .pc-detail-workbench .pc-detail-sticky .actions > .btn:not(.primary):not(.pc-danger) {
+  border-color: transparent;
+  background: transparent;
+  color: var(--ca-ink-2);
+}
+#page > .pc-detail-workbench .pc-detail-sticky .actions > .btn:not(.primary):not(.pc-danger):hover:not(:disabled) {
+  background: var(--ca-surface-subtle);
+  color: var(--ca-primary-ink);
+}
+
+/* Required inputs are marked in the editor, not repeated on read-only facts. */
+#page > .pc-detail-workbench > section.pc-detail-body .pc-base-grid .ui-required {
+  display: none;
+}
+#page > .pc-detail-workbench > section.pc-detail-body .pc-base-grid .pc-read-value {
+  color: var(--ca-ink);
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+#page > .pc-detail-workbench .pc-spec-section .pc-section-line:has(> .btn) {
+  justify-content: flex-start;
+}
+#page > .pc-detail-workbench .pc-spec-section:last-of-type {
+  border-bottom: 0;
+}
+#page > .pc-detail-workbench .pc-spec-group > span:first-child {
+  display: none; /* The section title and the named input already say 尺码组. */
+}
+#page > .pc-detail-workbench .pc-spec-value {
+  padding: 0;
+  background: transparent;
+}
+#page > .pc-detail-workbench .pc-price-table tbody th {
+  background: var(--ca-surface);
+}
+
+.pc-arco-modal .pc-spec-picker-hint {
+  margin: 0 0 8px;
+  color: var(--ca-ink-2);
+}
+.pc-arco-modal .pc-spec-picker {
+  width: 100%;
+}
+.pc-arco-modal .pc-spec-picker .arco-input-tag-inner {
+  max-height: 104px;
+  overflow-y: auto;
+}
+.pc-arco-modal .pc-spec-picker .arco-input-tag input:focus {
+  border-color: transparent;
+  outline: 0;
+  box-shadow: none;
+}
+.pc-arco-modal .pc-spec-picker-space {
+  height: min(236px, 30vh);
+}
+.pc-arco-modal .pc-spec-picker-options {
+  max-height: min(200px, max(90px, calc(30vh - 36px)));
+}
+.pc-arco-modal .pc-spec-picker-count {
+  display: block;
+  padding: 6px 10px;
+  border-top: 1px solid var(--ca-line);
+  color: var(--ca-ink-2);
+  font-size: 12px;
+}
+
+/* Category facts should not resemble the editable name field beside them. */
+#page > .pc-categories .pc-category-facts .pc-text-block {
+  padding-inline: 0;
+  color: var(--ca-ink);
+  background: transparent;
+}
+
+/* Put the read-only explanation beside the action it affects. */
+#page > .pc-settings-page .pc-settings-body .pc-section-line > .hint {
+  margin-inline-start: auto;
+  color: var(--ca-ink-2);
+  text-align: end;
+}
+#page > .pc-settings-page .pc-settings-body .pc-section-line > .btn {
+  flex: none;
+}
+#page > .pc-settings-page .pc-settings-body td .btn:disabled {
+  color: var(--ca-disabled-ink);
+}
+#page > .pc-settings-page .pc-settings-body td .btn:disabled:hover {
+  background: transparent;
+  text-decoration: none;
+}
+
+/* Keep the scheme explanation within a readable measure on wide screens. */
+#page > .pc-schemes-page .pc-scheme-note {
+  padding-inline-end: max(12px, calc(100% - 940px));
+  color: var(--ca-ink-2);
+  line-height: 1.7;
+}

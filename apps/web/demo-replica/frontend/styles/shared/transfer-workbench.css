@@ -18,7 +18,7 @@ body.tc-mode .sidebar-note,body.tc-mode .proto-tag{visibility:hidden}
 .tc-list-scroll table{width:100%;font-size:13px}
 .tc-list-scroll th,.tc-list-scroll td{height:32px;padding:4px 10px;white-space:nowrap;border-bottom:1px solid var(--border);font-weight:400}
 .tc-list-scroll th{position:sticky;top:0;background:var(--ca-table-head);text-align:left}
-.tc-list-scroll td.tc-num{text-align:right}
+.tc-list-scroll .tc-num{text-align:right;font-variant-numeric:tabular-nums}
 .tc-workbench .tc-link{color:var(--primary);border:0;background:transparent;padding:0;min-height:24px}
 .tc-editor{display:flex;flex-direction:column;min-height:0}
 .tc-editor .tc-head{flex:none}

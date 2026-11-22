@@ -1,3 +1,4 @@
+import { canViewProductSupplier } from '../products/product-supplier-visibility.ts';
 import { InventoryOutputBudget } from './output-budget.ts';
 import type { InventoryFilter, InventoryOutputData, InventoryOutputReader, InventoryOutputChunk, InventoryProduct, StockTotal, StockCell } from './contracts.ts';
 import type { InventoryDisplaySettings } from './inventory-matrix.tsx';
@@ -148,8 +149,8 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
 
 const escape = (value: string) => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]!);
 const filterNames = { products: '商品', categories: '商品分类', warehouses: '仓库', suppliers: '供应商', fits: '版型', seasons: '季节' };
-export function inventoryOutputScope(filter: InventoryFilter, data: Pick<InventoryOutputData,'warehouseLabels'>): string {
-  return (Object.keys(filterNames) as (keyof InventoryFilter)[]).map(key => {
+export function inventoryOutputScope(filter: InventoryFilter, data: Pick<InventoryOutputData,'warehouseLabels'>, showSupplier = true): string {
+  return (Object.keys(filterNames) as (keyof InventoryFilter)[]).filter(key => showSupplier || key !== 'suppliers').map(key => {
     const labels = key === 'warehouses' ? data.warehouseLabels : filter[key].map(item => item.label);
     return `${filterNames[key]}：${labels.length ? labels.join('、') : key === 'warehouses' ? '无可用仓库' : '全部'}`;
   }).join(' · ');
@@ -179,18 +180,18 @@ function* workbookProductRows(product: InventoryProduct, settings: InventoryDisp
 }
 
 /** Frozen inventory-matrix-experiment.js report(): native full-scope rows, not a DOM/page export. */
-function* workbookRows(data:InventoryOutputData,filter:InventoryFilter,settings:InventoryDisplaySettings):Generator<readonly string[]>{
-  yield ['奈爵服饰 库存状况'];yield ['查询范围',inventoryOutputScope(filter,data)];
+function* workbookRows(data:InventoryOutputData,filter:InventoryFilter,settings:InventoryDisplaySettings,showSupplier:boolean):Generator<readonly string[]>{
+  yield ['奈爵服饰 库存状况'];yield ['查询范围',inventoryOutputScope(filter,data,showSupplier)];
   for (const products of sections(data)) {
     yield* workbookSectionHeader(products[0]!, settings);
     for (const product of products) yield* workbookProductRows(product, settings);
   }
 }
-export function inventoryWorkbookRows(data: InventoryOutputData, filter: InventoryFilter, settings: InventoryDisplaySettings): readonly (readonly string[])[] {return Array.from(workbookRows(data,filter,settings));}
+export function inventoryWorkbookRows(data: InventoryOutputData, filter: InventoryFilter, settings: InventoryDisplaySettings, showSupplier = true): readonly (readonly string[])[] {return Array.from(workbookRows(data,filter,settings,showSupplier));}
 /** Pull one full-model row at a time after complete authorized EOF, never DOM rows. */
-export async function* inventoryWorkbookRowsAsync(data:InventoryOutputData,filter:InventoryFilter,settings:InventoryDisplaySettings,signal:AbortSignal):AsyncGenerator<readonly string[]>{
+export async function* inventoryWorkbookRowsAsync(data:InventoryOutputData,filter:InventoryFilter,settings:InventoryDisplaySettings,signal:AbortSignal,showSupplier=true):AsyncGenerator<readonly string[]>{
   const checkpoint=outputCheckpoint(signal);await checkpoint(true);
-  for(const row of workbookRows(data,filter,settings)){await checkpoint();yield row;}
+  for(const row of workbookRows(data,filter,settings,showSupplier)){await checkpoint();yield row;}
 }
 
 /** Preserve original global size-group order even when the server stream is
@@ -213,7 +214,7 @@ export async function* inventoryWorkbookRowsStream(reader:InventoryOutputReader,
    for(const row of workbookProductRows(product,settings)){budget.reserveRow(row);group.push(JSON.stringify(row));await checkpoint();}
   }
   if(!summary||!complete)return invalid();await checkpoint();
-  const heading=['奈爵服饰 库存状况'],scopeRow=['查询范围',inventoryOutputScope(read.parameters,summary)];budget.reserveRow(heading);budget.reserveRow(scopeRow);yield heading;yield scopeRow;
+  const heading=['奈爵服饰 库存状况'],scopeRow=['查询范围',inventoryOutputScope(read.parameters,summary,canViewProductSupplier(read.identity))];budget.reserveRow(heading);budget.reserveRow(scopeRow);yield heading;yield scopeRow;
   for(const [key,rows] of groups){for(let index=0;index<rows.length;index++){await checkpoint();const encoded=rows[index]!;rows[index]='';yield JSON.parse(encoded) as string[];}rows.length=0;groups.delete(key);}
  }finally{for(const rows of groups.values())rows.length=0;groups.clear();}
 }
@@ -231,7 +232,7 @@ export async function createInventoryPrintHtmlStream(reader:InventoryOutputReade
    // The last yielded fragment closes the section; close once after all products.
   }
   if(!summary||!complete)return invalid();const parts:string[]=[];for(const [key,group] of groups){parts.push(group.head,group.parts.join(''),'</tbody></table></section>');group.parts.length=0;groups.delete(key);await checkpoint();}
-  budget.reserveXml(printDocument(summary,read.parameters,detailRows,''));const html=printDocument(summary,read.parameters,detailRows,parts.join(''));parts.length=0;await checkpoint();return html;
+  const showSupplier=canViewProductSupplier(read.identity);budget.reserveXml(printDocument(summary,read.parameters,detailRows,'',showSupplier));const html=printDocument(summary,read.parameters,detailRows,parts.join(''),showSupplier);parts.length=0;await checkpoint();return html;
  }finally{for(const group of groups.values())group.parts.length=0;groups.clear();}
 }
 
@@ -258,21 +259,21 @@ function* printTables(data:InventoryOutputData,settings:InventoryDisplaySettings
   }
   return detailRows;
 }
-function printDocument(data:Omit<InventoryOutputData,'products'>,filter:InventoryFilter,detailRows:number,tables:string):string{
-  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><title>库存状况打印</title><style>@page{size:A4 landscape;margin:9mm}body{font:11px Arial,"PingFang SC",sans-serif;color:#263440}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:4px;overflow-wrap:break-word;border:1px solid #dce1e5;text-align:right}th{background:#f3f5f7}thead{display:table-header-group}tr{break-inside:avoid}.mx-product,.mx-color,.mx-warehouse,.mx-sum-label{text-align:left}.mx-product strong{white-space:nowrap}.mx-product span{display:block}.mx-color,.mx-warehouse{word-break:keep-all}.mx-meta{display:block;color:#52616f}.mx-section h3{font-size:12px}.mx-section{break-inside:auto;margin-bottom:12px}.mx-subtotal,.mx-total{background:#f3f5f7}small{font-weight:normal}</style></head><body><h1>库存状况</h1><p>${escape(inventoryOutputScope(filter, data))}</p><p>共 ${detailRows} 条数据行 · 全量库存 ${escape(outputTotal(data.allMatchesTotal))}。遵循颜色小计、商品合计及尺码组说明设置；打印全部展开。</p>${tables}</body></html>`;
+function printDocument(data:Omit<InventoryOutputData,'products'>,filter:InventoryFilter,detailRows:number,tables:string,showSupplier:boolean):string{
+  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><title>库存状况打印</title><style>@page{size:A4 landscape;margin:9mm}body{font:11px Arial,"PingFang SC",sans-serif;color:#263440}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:4px;overflow-wrap:break-word;border:1px solid #dce1e5;text-align:right}th{background:#f3f5f7}thead{display:table-header-group}tr{break-inside:avoid}.mx-product,.mx-color,.mx-warehouse,.mx-sum-label{text-align:left}.mx-product strong{white-space:nowrap}.mx-product span{display:block}.mx-color,.mx-warehouse{word-break:keep-all}.mx-meta{display:block;color:#52616f}.mx-section h3{font-size:12px}.mx-section{break-inside:auto;margin-bottom:12px}.mx-subtotal,.mx-total{background:#f3f5f7}small{font-weight:normal}</style></head><body><h1>库存状况</h1><p>${escape(inventoryOutputScope(filter, data, showSupplier))}</p><p>共 ${detailRows} 条数据行 · 全量库存 ${escape(outputTotal(data.allMatchesTotal))}。遵循颜色小计、商品合计及尺码组说明设置；打印全部展开。</p>${tables}</body></html>`;
 }
 
-export function createInventoryPrintHtml(data: InventoryOutputData, filter: InventoryFilter, settings: InventoryDisplaySettings): string {
+export function createInventoryPrintHtml(data: InventoryOutputData, filter: InventoryFilter, settings: InventoryDisplaySettings, showSupplier = true): string {
   const iterator=printTables(data,settings),parts:string[]=[];let next=iterator.next();
   while(!next.done){parts.push(next.value);next=iterator.next();}
-  return printDocument(data,filter,next.value,parts.join(''));
+  return printDocument(data,filter,next.value,parts.join(''),showSupplier);
 }
-export async function createInventoryPrintHtmlAsync(data:InventoryOutputData,filter:InventoryFilter,settings:InventoryDisplaySettings,signal:AbortSignal):Promise<string>{
+export async function createInventoryPrintHtmlAsync(data:InventoryOutputData,filter:InventoryFilter,settings:InventoryDisplaySettings,signal:AbortSignal,showSupplier=true):Promise<string>{
   const checkpoint=outputCheckpoint(signal);await checkpoint(true);
   const iterator=printTables(data,settings),parts:string[]=[];let finished=false;
   try{
     let next=iterator.next();
     while(!next.done){parts.push(next.value);await checkpoint();next=iterator.next();}
-    await checkpoint();finished=true;return printDocument(data,filter,next.value,parts.join(''));
+    await checkpoint();finished=true;return printDocument(data,filter,next.value,parts.join(''),showSupplier);
   }finally{if(!finished){iterator.return(0);parts.length=0;}}
 }

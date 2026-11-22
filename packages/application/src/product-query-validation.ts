@@ -28,9 +28,12 @@ export function checkedProductActor(actor: ActorContext): ActorContext {
 }
 export function checkedProductGrant(value: ProductReadGrant, target: ProductQuery): ProductReadGrant {
   try {
-    const row = record(value, ["productId"]); const granted = productId(row.productId);
+    const hidden = value !== null && typeof value === "object" && Object.hasOwn(value, "hideSupplier");
+    const row = record(value, hidden ? ["productId", "hideSupplier"] : ["productId"]);
+    if (hidden && row.hideSupplier !== true) invalidProductQuery();
+    const granted = productId(row.productId);
     if (granted !== target.productId) throw new DomainError("FORBIDDEN", "No grant for the requested product");
-    return Object.freeze({ productId: granted });
+    return Object.freeze({ productId: granted, ...(hidden ? { hideSupplier: true as const } : {}) });
   } catch (error) {
     if (error instanceof DomainError && error.code === "FORBIDDEN") throw error;
     throw new Error("Invalid trusted product grant");

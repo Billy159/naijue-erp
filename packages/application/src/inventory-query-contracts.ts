@@ -129,6 +129,8 @@ export interface InventoryAuthorizedWarehouse {
 export interface InventoryReadScope {
   readonly hallIds: readonly EntityId<"hall">[];
   readonly warehouses: readonly InventoryAuthorizedWarehouse[];
+  /** Internal restriction from fresh trusted role; not a client query field. */
+  readonly hideSupplier?: true;
 }
 export interface InventoryQueryAuthorization {
   authorize(actor: ActorContext, intent: InventoryReadIntent, signal: AbortSignal): Promise<InventoryReadScope>;

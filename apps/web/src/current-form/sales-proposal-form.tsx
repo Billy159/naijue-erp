@@ -12,7 +12,7 @@ import { SourceDocumentDialog } from '../components/standard-overlay.tsx';
 import { DocumentScan } from '../components/document-scan.tsx';
 import type { DocumentScanController } from '../components/document-scan-controller.ts';
 import { UIDate } from '../components/standard-controls.tsx';
-import { forwardRef, useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { forwardRef, useEffect, useId, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import { SalesProposalSession, salesProposalMoney, salesProposalHasMixedQuantities, mixedSalesDiscountNotice, salesProposalMoneyInputDisplay, salesProposalLineSelection, type SalesProposalEntry, type SalesProposalLine, type SalesProposalPicker, type SalesProposalSnapshot } from './sales-proposal.ts';
 import { salesInputMoney } from '../sales/commands/form-model.ts';
 import { discountUnitPrice } from '../../../../packages/domain/src/sales-money.ts';
@@ -42,8 +42,9 @@ function linePrice(row: SalesPriceRow): string | null {
     return salesInputMoney(discountUnitPrice(minorAmount(cents(row.product.retailPrice).toString()), Number(whole) * 10 + Number(fraction)).toString());
   } catch { return null; }
 }
-function previewAmount(row: SalesPriceRow & Pick<SalesProposalLine, 'quantity'>): string {
-  try { if (!/^-?[1-9]\d{0,18}$/.test(row.quantity)) throw Error(); const price = linePrice(row); return price === null ? '待填写' : salesInputMoney((BigInt(row.quantity) * cents(price)).toString()); } catch { return '待填写'; }
+function previewAmount(row: SalesPriceRow & Pick<SalesProposalLine, 'quantity'>, blankUnknown: boolean): string {
+  const unknown = blankUnknown ? '' : '待填写';
+  try { if (!/^-?[1-9]\d{0,18}$/.test(row.quantity)) throw Error(); const price = linePrice(row); return price === null ? unknown : salesInputMoney((BigInt(row.quantity) * cents(price)).toString()); } catch { return unknown; }
 }
 function displayedDiscount(row: SalesPriceRow): string {
   if (row.pricingRule === 'DISCOUNT') return row.discount;
@@ -59,6 +60,8 @@ function quantitySummary(rows: readonly SalesProposalLine[], absolute = false): 
   return rows.reduce((sum, row) => { const n = BigInt(row.quantity); return sum + (absolute && n < 0n ? -n : n); }, 0n).toString();
 }
 type SpecKind = 'color' | 'fit' | 'size';
+type IdentityPart = 'product' | SpecKind;
+const specLabels = { color: '颜色', fit: '版型', size: '尺码' };
 /** Frozen sales-current.js modal()/close(): route-owned native top layer. */
 function SalesModeConfirmation({ cancel, confirm }: { readonly cancel: () => void; readonly confirm: () => void }) {
   return <SourceDocumentDialog className="sale-source-dialog" title="切换业务类型" label="切换业务类型" closeLabel="关闭业务类型确认" close={cancel} footer={<><button type="button" className="btn" onClick={cancel}>取消</button><button type="button" className="btn primary" onClick={confirm}>确定</button></>}>
@@ -230,7 +233,9 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   const businessField = useRef<HTMLDivElement>(null), [businessPopupWidth, setBusinessPopupWidth] = useState(300);
   const modeToConfirm = useRef<SalesBusinessMode | null>(null);
   const [scanner, setScanner] = useState<{ controller: DocumentScanController; direction: 'IN' | 'OUT' } | null>(null);
-  const [anchor, setAnchor] = useState<string | null>(null);
+  const [anchor, setAnchor] = useState<string | null>(null), [activeIdentityRow, setActiveIdentityRow] = useState<string | null>(null);
+  const formOwner = useId(), rowPicker = useRef<string | null>(null);
+  const newProposal = !saved;
   const [zeroLine, setZeroLine] = useState<string | null>(null), [focusedPayment, setFocusedPayment] = useState<number | null>(null);
   const formRef = useRef<HTMLElement>(null), triggerRef = useRef<HTMLElement | null>(null);
   const productKeys = useRef(new Map<string, CurrentProductFinderHandle>());
@@ -241,6 +246,34 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     measure(); view.addEventListener('resize', measure);
     return () => view.removeEventListener('resize', measure);
   }, [businessMenuOpen, state.disposed]);
+  useLayoutEffect(() => {
+    const doc = formRef.current?.ownerDocument;
+    if (!doc || state.disposed || !newProposal) return;
+    let mounted = true;
+    const track = (target: EventTarget | null) => {
+      const node = target instanceof Element ? target.closest<HTMLElement>('[data-native-sale-row]') : null;
+      const key = node?.dataset.nativeSaleOwner === formOwner ? node.dataset.nativeSaleRow ?? null : null;
+      setActiveIdentityRow(active => active === key ? active : null);
+      // Leave affects only the visual identity panel and its own picker, never
+      // the row's tentative specification or the entered quantities/prices.
+      if (rowPicker.current !== null && rowPicker.current !== key) {
+        rowPicker.current = null; session.closePicker(); setAnchor(null);
+      }
+    };
+    const update = (event: Event) => track(event.target);
+    const lost = (event: FocusEvent) => {
+      if (event.relatedTarget === null) queueMicrotask(() => { if (mounted) track(doc.activeElement); });
+    };
+    doc.addEventListener('focusin', update);
+    doc.addEventListener('pointerdown', update, true);
+    doc.addEventListener('focusout', lost);
+    return () => {
+      mounted = false;
+      doc.removeEventListener('focusin', update);
+      doc.removeEventListener('pointerdown', update, true);
+      doc.removeEventListener('focusout', lost);
+    };
+  }, [formOwner, newProposal, session, state.disposed]);
   if (state.disposed) return <SalesDocumentPresentation status={<p role="status">草稿已关闭，当前身份资料已清除。</p>} />;
   const { draft, picker } = state, combined = draft.businessType !== 'SALE', pricingLines = session.pricingLines;
   // Frozen chooseEntry adds selected work to doc.lines; an unselected query
@@ -249,15 +282,26 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     ...Object.values(state.entries).flat().sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
       .flatMap(entry => entry.product ? [{ ...entry, product: entry.product }] : [])];
   const displayedType = salesBusinessType(salesBusinessMode(draft.businessType)), totals = salesProposalMoney({ ...draft, businessType: displayedType, lines: displayedLines });
+  const visibleTotals = !newProposal || displayedLines.length > 0 ? totals : null;
   const pendingPricing = displayedLines.filter(row => linePrice(row) === null).length;
   const restorePickerFocus = () => {
     const live = triggerRef.current?.isConnected ? triggerRef.current : Array.from(formRef.current?.querySelectorAll<HTMLElement>('[data-entry-control]') ?? []).find(node => node.dataset.entryControl === anchor);
     live?.focus({ preventScroll: true });
   };
-  const dismissPicker = (restore = false) => { session.closePicker(); setAnchor(null); if (restore) restorePickerFocus(); };
-  const candidate = (id: string, label: string, value: ReactNode, open: () => void, disabled = false, spec?: SpecKind, selection?: { color: { id: string } | null; fit: { id: string } | null; size?: { id: string } | null; sku?: { id: string } | null }, input?: { value: string; change: (value: string) => void; placeholder: string; openUsesInputValue?: boolean }) => {
+  const dismissPicker = (restore = false) => { rowPicker.current = null; session.closePicker(); setAnchor(null); if (restore) restorePickerFocus(); };
+  const openIdentityControl = (key: string, id: string, origin: HTMLElement, open: () => void) => {
+    setActiveIdentityRow(key); rowPicker.current = key; setAnchor(id); triggerRef.current = origin; open();
+    requestAnimationFrame(() => {
+      const doc = formRef.current?.ownerDocument;
+      if (!doc || scope?.active === false || (doc.activeElement !== origin && doc.activeElement !== doc.body)) return;
+      Array.from(formRef.current?.querySelectorAll<HTMLElement>('[data-entry-control]') ?? []).find(node => node.dataset.entryControl === id)?.focus({ preventScroll: true });
+    });
+  };
+  const compactIdentity = (id: string, label: string, value: ReactNode, open: (source: HTMLElement) => void, disabled = false) =>
+    <button type="button" className="btn sale-identity-trigger mx-spec-edit sale-compact-identity" data-entry-control={id} aria-label={label} disabled={disabled} onClick={event => open(event.currentTarget)}><span className="mx-spec-edit-value">{value}</span><span className="sale-edit-mark mx-spec-edit-mark" aria-hidden="true">改</span></button>;
+  const candidate = (key: string, id: string, label: string, value: ReactNode, open: () => void, disabled = false, spec?: SpecKind, selection?: { color: { id: string } | null; fit: { id: string } | null; size?: { id: string } | null; sku?: { id: string } | null }, input?: { value: string; change: (value: string) => void; placeholder: string; openUsesInputValue?: boolean }) => {
     const visible = anchor === id && !!picker;
-    const show = (target?: HTMLElement) => { if (disabled) return; if (target) triggerRef.current = target; setAnchor(id); open(); };
+    const show = (target?: HTMLElement) => { if (disabled) return; if (target) triggerRef.current = target; setActiveIdentityRow(key); rowPicker.current = key; setAnchor(id); open(); };
     const keyboard = (event: React.KeyboardEvent<HTMLElement>) => {
       if (event.nativeEvent.isComposing || event.keyCode === 229) return;
       if (visible && picker?.kind === 'product' && ['ArrowDown', 'ArrowUp', 'Enter', 'Escape', 'Tab'].includes(event.key)) {
@@ -268,19 +312,19 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     };
     const getAnchor = () => Array.from(formRef.current?.querySelectorAll<HTMLElement>('[data-entry-control]') ?? []).find(node => node.dataset.entryControl === id) ?? (triggerRef.current?.isConnected ? triggerRef.current : null);
     return <SalesCandidateTrigger {...(spec ? { sourceSpecAnchor: getAnchor } : {})} getPopupContainer={node => node.closest('.demo-ui') ?? formRef.current ?? node.parentElement ?? node} trigger="click" position="bl" {...(spec ? { popupStyle: { width: 250, maxWidth: 'calc(100vw - 16px)' } } : {})} popupVisible={visible} escToClose updateOnScroll autoFitPosition unmountOnExit
-      onVisibleChange={next => { if (next) { if (!visible) show(); } else if (visible) dismissPicker(); }}
-      popup={() => picker && visible ? <CandidatePopup getAnchor={getAnchor} session={session} picker={picker} keyboardRef={handle => { if (handle) productKeys.current.set(id, handle); else productKeys.current.delete(id); }} {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} {...(spec ? { spec } : {})} {...(selection ? { selection } : {})} close={restore => dismissPicker(restore ?? true)} choose={selected => {
+      onVisibleChange={next => { if (next) { if (!visible) show(); } else if (visible && session.getSnapshot().picker === picker) dismissPicker(); }}
+      popup={() => picker && visible ? <div data-native-sale-row={key} data-native-sale-owner={formOwner}><CandidatePopup getAnchor={getAnchor} session={session} picker={picker} keyboardRef={handle => { if (handle) productKeys.current.set(id, handle); else productKeys.current.delete(id); }} {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} {...(spec ? { spec } : {})} {...(selection ? { selection } : {})} close={restore => dismissPicker(restore ?? true)} choose={selected => {
         if (session.getSnapshot().picker !== picker) return;
         if (spec) { session.selectSpec(spec, selected); setAnchor(null); restorePickerFocus(); }
-        else { void session.select(selected).then(() => { if (!session.getSnapshot().picker) { setAnchor(null); restorePickerFocus(); } }); }
-      }} /> : <span />}>
+        else { void session.select(selected).then(() => { if (rowPicker.current === key && !session.getSnapshot().picker) { setAnchor(null); restorePickerFocus(); } }); }
+      }} /></div> : <span />}>
       {input ? <input className="sale-product-input" data-entry-control={id} spellCheck={false} aria-label={label} role="combobox" aria-autocomplete="list" aria-expanded={visible} autoComplete="off" placeholder={input.placeholder} value={input.value} disabled={disabled}
         onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }} onChange={event => { const value = event.currentTarget.value;  triggerRef.current = event.currentTarget; input.change(value); if (!visible) { show(); if (!input.openUsesInputValue) void session.search(value); } else void session.search(value);  }} />
         : <SalesCandidateButton type="button" className={"btn " + (`sale-select-trigger${spec ? ` mx-spec-picker${selection?.[spec === 'size' ? 'size' : spec] ? ' has-value' : ''}` : ''}`)} data-entry-control={id} aria-label={label} aria-haspopup={spec ? 'listbox' : 'dialog'} aria-expanded={visible} disabled={disabled} onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }}><span>{value}</span>{spec ? <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" /></svg> : <span aria-hidden="true">⌄</span>}</SalesCandidateButton>}
     </SalesCandidateTrigger>;
   };
   const reference = (id: string, label: string, placeholder: string, selected: { readonly id: string; readonly name: string } | null, open: () => void, disabled = false, clear?: () => void) => <SalesReferenceField session={session} picker={anchor === id ? picker : null} visible={anchor === id && !!picker} label={label} value={placeholder} selected={selected} disabled={disabled} account={id.startsWith('account-')}
-    {...(clear ? { clear } : {})} open={() => { setAnchor(id); open(); }} close={() => { if (anchor === id) dismissPicker(); }} />;
+    {...(clear ? { clear } : {})} open={() => { rowPicker.current = null; setAnchor(id); open(); }} close={() => { if (anchor === id) dismissPicker(); }} />;
   const cancelMode = () => { modeToConfirm.current = null; setPendingMode(null); };
   const chooseMode = (mode: SalesBusinessMode) => {
     if (mode === salesBusinessMode(draft.businessType) || state.lineEdit) return;
@@ -311,7 +355,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   const pendingRows = (['IN', 'OUT'] as const).flatMap(direction => state.entries[direction].filter(entry => entry.product || entry.query.trim()).map(entry => ({ direction, entry }))).sort((a, b) => a.entry.order! - b.entry.order!);
   const entryRows: { readonly direction: 'IN' | 'OUT'; readonly entry: SalesProposalEntry }[] = [...pendingRows, { direction: entryDirection, entry: state.entries[entryDirection].find(entry => !entry.product && !entry.query.trim())! }];
   const paymentRows = draft.settlements.length ? draft.settlements : [{ key: null, method: null, account: null, direction: 'RECEIVE' as const, amount: '' }];
-  const mixedDiscountBlocked = !session.preservesHistoricalSale && salesProposalHasMixedQuantities(displayedLines);
+  const mixedDiscountBlocked = !session.allowsSignedSaleRows && salesProposalHasMixedQuantities(displayedLines);
   const zero = pricingLines?.find(row => row.key === zeroLine);
   const confirmZero = () => {
     if (!zero) return;
@@ -335,8 +379,8 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       {(['hall', 'salesperson', 'customer', 'warehouse'] as const).map(kind => <div className="tc-gold-field" key={kind}><span className="sale-field-label">{labels[kind]}{kind !== 'salesperson' && <span className="ui-required"> *</span>}</span>{reference(kind, `选择${labels[kind]}`, `请选择${labels[kind]}`, draft[kind], () => { void session.openPicker(kind); }, !!state.lineEdit || kind !== 'hall' && !draft.hall, kind === 'salesperson' && draft.salesperson ? () => session.clearSalesperson() : undefined)}</div>)}
       <label className="tc-gold-field tc-gold-meta sale-number-field"><span className="sale-field-label">单号</span><strong className="sale-number-value">{saved?.number ?? '保存后生成'}</strong></label>
       <DocumentResponsibilityFields {...(scope ? { scope } : {})} saved={!!saved} {...(identity?.creatorName !== undefined ? { creatorName: identity.creatorName } : {})} value={draft.responsible ?? identity?.responsible ?? null} {...(identity?.capability ? { capability: identity.capability } : {})} readOnly={preparation?.disabled === true || preparation?.preparing === true} valueClassName="sale-read-value" onChange={value => session.selectResponsibleStaff(value)} {...(identity?.onAccessFailure ? { onAccessFailure: identity.onAccessFailure } : {})} />
-      <label className="tc-gold-field sale-discount-field"><span className="sale-field-label">整单优惠 / 抹零</span>{combined || session.preservesHistoricalSale ? <span className="sale-read-value">{session.preservesHistoricalSale ? salesProposalMoneyInputDisplay(draft.orderDiscount) : null}</span> : <input data-document-adjustment aria-label="整单优惠" disabled={mixedDiscountBlocked} inputMode="decimal" value={draft.orderDiscount} onChange={event => { const value = event.currentTarget.value; return session.setHeader({ orderDiscount: value }); }} />}{mixedDiscountBlocked && <small role="status">{mixedSalesDiscountNotice}{salesProposalMoneyInputDisplay(draft.orderDiscount) !== '0.00' && <button type="button" className="btn sale-link" onClick={() => session.setHeader({ orderDiscount: '0.00' })}>清除整单优惠</button>}</small>}</label>
-      <label className="tc-gold-field sale-due-field"><span className="sale-field-label">应结金额</span><strong className="sale-due-value" data-sale-due>{totals ? `${totals.netDueMinor.startsWith('-') ? '-¥' : '¥'}${salesInputMoney(totals.netDueMinor.replace(/^-/, ''))}` : '待填写'}</strong></label>
+      <label className="tc-gold-field sale-discount-field"><span className="sale-field-label">整单优惠 / 抹零</span>{combined || session.preservesHistoricalSale ? <span className="sale-read-value">{session.preservesHistoricalSale ? salesProposalMoneyInputDisplay(draft.orderDiscount) : null}</span> : <input data-document-adjustment aria-label="整单优惠" disabled={mixedDiscountBlocked} inputMode="decimal" value={draft.orderDiscount} onChange={event => { const value = event.currentTarget.value; return session.setHeader({ orderDiscount: value }); }} />}{mixedDiscountBlocked && <small role="status">{mixedSalesDiscountNotice}</small>}</label>
+      <label className="tc-gold-field sale-due-field"><span className="sale-field-label">应结金额</span><strong className="sale-due-value" data-sale-due>{visibleTotals ? `${visibleTotals.netDueMinor.startsWith('-') ? '-¥' : '¥'}${salesInputMoney(visibleTotals.netDueMinor.replace(/^-/, ''))}` : newProposal ? null : '待填写'}</strong></label>
       <div className="tc-gold-field sale-payment-field" data-funds-field aria-label="本单收退明细"><span className="sale-field-label">收款</span><div className="sale-payment-rows">
         {paymentRows.map((row, index) => <div className="sale-payment-row" data-funds-row={index} key={index === 0 ? 'source-first-funds-row' : row.key!}>
           {reference(`method-${index}`, `付款方式 ${index + 1}`, '支付方式', row.method, () => { void session.openPaymentPicker(row.key, 'paymentMethod'); }, !!state.lineEdit, row.key && paymentRows.length === 1 ? () => { dismissPicker(); session.removeSettlement(row.key!); } : undefined)}
@@ -355,35 +399,53 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
         {active && <button type="button" className="btn sale-link" disabled={!session.canScan || preparation?.preparing || !!state.lineEdit} title={session.canScan ? undefined : '扫码暂不可用'} onClick={() => { dismissPicker(); setScanner({ controller: session.createScanner(section.key), direction: section.key }); }}>扫码录入</button>}
       </div></div><div id="sale-lines" className="sale-lines"><table className="sale-lines-table" aria-label={section.title}><SalesDocumentColumns /><SalesDocumentColumnHead incoming={false} /><tbody>
       {section.rows.map(row => {
-        const editing = state.lineEdit?.key === row.key ? state.lineEdit : null, product = editing?.product ?? row.product, selection = salesProposalLineSelection(row);
+        const editing = state.lineEdit?.key === row.key ? state.lineEdit : null, editingIdentity = !newProposal || activeIdentityRow === row.key ? editing : null;
+        const product = editing?.product ?? row.product, selection = salesProposalLineSelection(row);
+        const specValue = (kind: SpecKind) => editing ? editing[kind]?.name ?? '' : (kind === 'color' ? row.sourceSnapshot?.colorName : kind === 'fit' ? row.sourceSnapshot?.fitName : row.sourceSnapshot?.sizeName) ?? selection[kind].name;
         const rowLabel = row.sku?.skuCode ?? `${row.product.code} / ${selection.size.name}`;
         const editOpen = (kind: 'product' | 'sku') => { void session.openLinePicker(row.key, kind); };
         const identity = (part: 'product' | SpecKind, value: ReactNode) => !active ? value : <button type="button" className="btn sale-identity-trigger mx-spec-edit" data-line-identity={row.key} aria-label={`修改${part === 'product' ? '商品' : { color: '颜色', fit: '版型', size: '尺码' }[part]} ${rowLabel}`} disabled={!active || !!state.lineEdit} onClick={event => {
           triggerRef.current = event.currentTarget;
           if (!session.beginLineEdit(row.key)) return;
-          setAnchor(null);
+          setActiveIdentityRow(row.key); setAnchor(null);
           requestAnimationFrame(() => { const doc = formRef.current?.ownerDocument; if (doc?.activeElement === doc?.body) formRef.current?.querySelector<HTMLElement>(`[data-entry-control="edit-${row.key}-${part}"]`)?.focus({ preventScroll: true }); }); }}><span className="mx-spec-edit-value">{value}</span><span className="sale-edit-mark mx-spec-edit-mark" aria-hidden="true">改</span></button>;
+        const resumeIdentity = (part: IdentityPart, label: string, value: ReactNode, disabled = false) => {
+          const id = `edit-${row.key}-${part}`;
+          return compactIdentity(id, label, value, origin => openIdentityControl(row.key, id, origin, () => editOpen(part === 'product' ? 'product' : 'sku')), disabled);
+        };
         const editablePrice = editing ?? row;
         const rawPrice = editablePrice.isGift ? '0.00' : editablePrice.pricingRule === 'DISCOUNT' ? linePrice(editablePrice) ?? '' : editablePrice.dealPrice;
-        return <tr key={row.key} className={editing ? 'sale-identity-editing sale-identity-edit mx-replacing mx-inline-replacement' : ''}>
-          <td>{editing ? <>{candidate(`edit-${row.key}-product`, '修改商品款号 / 名称', `${product.code} · ${product.name}`, () => editOpen('product'), false, undefined, undefined, { value: anchor === `edit-${row.key}-product` && picker?.kind === 'product' ? picker.search : product.code, change: () => {}, placeholder: '款号 / 名称 · 条码请扫码录入' })}<small className="mx-original-hint">原：{row.sourceSnapshot?.productCode ?? row.product.code} / {row.sourceSnapshot?.colorName ?? selection.color.name} / {row.sourceSnapshot?.fitName ?? selection.fit.name} / {row.sourceSnapshot?.sizeName ?? selection.size.name} · {row.quantity}</small></> : <div className="sale-product-cell">{identity('product', <><strong>{row.sourceSnapshot?.productCode ?? row.product.code}</strong><span className="sale-product-name">{row.sourceSnapshot?.productName ?? row.product.name}</span></>)}{row.isGift && <span className="sale-gift">赠品</span>}</div>}</td>
-          {(['color', 'fit', 'size'] as const).map(kind => <td key={kind}>{editing ? candidate(`edit-${row.key}-${kind}`, `修改${{ color: '颜色', fit: '版型', size: '尺码' }[kind]}`, kind === 'color' ? editing.color?.name ?? '颜色' : kind === 'fit' ? editing.fit?.name ?? '版型' : editing.size?.name ?? editing.sku?.sizeName ?? '尺码', () => editOpen('sku'), kind === 'fit' && !editing.color || kind === 'size' && (!editing.color || !editing.fit), kind, editing) : identity(kind, kind === 'color' ? row.sourceSnapshot?.colorName ?? selection.color.name : kind === 'fit' ? row.sourceSnapshot?.fitName ?? selection.fit.name : row.sourceSnapshot?.sizeName ?? selection.size.name)}</td>)}
+        return <tr key={row.key} data-native-sale-row={row.key} data-native-sale-owner={formOwner} className={editingIdentity ? 'sale-identity-editing sale-identity-edit mx-replacing mx-inline-replacement' : ''}>
+          <td>{editingIdentity ? <>{candidate(row.key, `edit-${row.key}-product`, '修改商品款号 / 名称', `${product.code} · ${product.name}`, () => editOpen('product'), false, undefined, undefined, { value: anchor === `edit-${row.key}-product` && picker?.kind === 'product' ? picker.search : product.code, change: () => {}, placeholder: '款号 / 名称 · 条码请扫码录入' })}<small className="mx-original-hint">原：{row.sourceSnapshot?.productCode ?? row.product.code} / {row.sourceSnapshot?.colorName ?? selection.color.name} / {row.sourceSnapshot?.fitName ?? selection.fit.name} / {row.sourceSnapshot?.sizeName ?? selection.size.name} · {row.quantity}</small></> : <div className="sale-product-cell">{editing ? resumeIdentity('product', `修改商品 ${rowLabel}`, <><strong>{product.code}</strong><span className="sale-product-name">{product.name}</span></>) : identity('product', <><strong>{row.sourceSnapshot?.productCode ?? row.product.code}</strong><span className="sale-product-name">{row.sourceSnapshot?.productName ?? row.product.name}</span></>)}{row.isGift && <span className="sale-gift">赠品</span>}</div>}</td>
+          {(['color', 'fit', 'size'] as const).map(kind => {
+            const label = `修改${specLabels[kind]}`, value = specValue(kind);
+            const disabled = !!editing && (kind === 'fit' && !editing.color || kind === 'size' && (!editing.color || !editing.fit));
+            return <td key={kind}>{editingIdentity ? candidate(row.key, `edit-${row.key}-${kind}`, label, value || specLabels[kind], () => editOpen('sku'), disabled, kind, editingIdentity)
+              : editing ? resumeIdentity(kind, `${label} ${rowLabel}`, value, disabled) : identity(kind, value)}</td>;
+          })}
           <td>{combined && <span data-line-direction>退货</span>}<input data-proposal-quantity={row.key} aria-label={`${rowLabel} 数量`} className={(editing?.quantity ?? row.quantity).startsWith('-') ? 'negative' : ''} inputMode="numeric" value={editing?.quantity ?? row.quantity} onChange={event => { const patch = { quantity: event.currentTarget.value }; if (editing) session.updateLineEdit(patch); else session.updateLine(row.key, patch); }} /></td>
           <td className="sale-num sale-muted">{product.retailPrice ?? '未记录'}</td>
           <td>{product.retailPrice !== null && !row.isGift && (active ? <span className="sale-discount-control"><input aria-label={`${rowLabel} 折扣`} inputMode="decimal" value={displayedDiscount(editablePrice)} placeholder="折扣" disabled={!active} onChange={event => { const patch = { pricingRule: 'DISCOUNT' as const, discount: event.currentTarget.value, zeroConfirmed: false }; if (editing) session.updateLineEdit(patch); else session.updateLine(row.key, patch); }} /><span>折</span></span> : displayedDiscount(row) ? `${displayedDiscount(row)}折` : '')}</td>
           <td>{active ? <input aria-label={`${rowLabel} 单价`} placeholder="待填写" inputMode="decimal" value={rawPrice} disabled={!active || editablePrice.isGift === true} onChange={event => { const patch = { pricingRule: 'UNIT_PRICE' as const, dealPrice: event.currentTarget.value, zeroConfirmed: false }; if (editing) session.updateLineEdit(patch); else session.updateLine(row.key, patch); }} onBlur={() => { if (!editing && !row.isGift && !row.zeroConfirmed && linePrice(row) === '0.00') setZeroLine(row.key); }} /> : linePrice(row) ?? '待填写'}</td>
-          <td className="sale-num">{previewAmount(editablePrice)}</td><td className="ui-action-cell"><div className="sale-row-actions">{editing ? <><button type="button" className="btn sale-link" disabled={!session.canConfirmLineEdit || !!picker} onClick={() => finishIdentity(row.key, true)}>确认</button><button type="button" className="btn sale-link" onClick={() => finishIdentity(row.key, false)}>取消</button></> : <><button type="button" className="btn sale-link" disabled={!openProduct || !draft.hall} title={openProduct ? undefined : '商品只读页尚未接入'} onClick={() => { if (draft.hall) openProduct?.(row.sku?.id ?? null, draft.hall.id, { id: row.product.id, label: `${row.product.code} · ${row.product.name}` }); }}>查看</button>{active && <><button type="button" className="btn sale-link" onClick={() => session.updateLine(row.key, { isGift: !row.isGift })}>{row.isGift ? '取消赠品' : '赠品'}</button><button type="button" className="btn sale-link sale-remove-line" aria-label={`删除 ${rowLabel}`} onClick={() => session.removeLine(row.key)}>删除</button></>}</>}</div></td>
+          <td className="sale-num">{previewAmount(editablePrice, newProposal)}</td><td className="ui-action-cell"><div className="sale-row-actions">{editing ? <><button type="button" className="btn sale-link" disabled={!session.canConfirmLineEdit || !!picker} onClick={() => finishIdentity(row.key, true)}>确认</button><button type="button" className="btn sale-link" onClick={() => finishIdentity(row.key, false)}>取消</button></> : <><button type="button" className="btn sale-link" disabled={!openProduct || !draft.hall} title={openProduct ? undefined : '商品只读页尚未接入'} onClick={() => { if (draft.hall) openProduct?.(row.sku?.id ?? null, draft.hall.id, { id: row.product.id, label: `${row.product.code} · ${row.product.name}` }); }}>查看</button>{active && <><button type="button" className="btn sale-link" onClick={() => session.updateLine(row.key, { isGift: !row.isGift })}>{row.isGift ? '取消赠品' : '赠品'}</button><button type="button" className="btn sale-link sale-remove-line" aria-label={`删除 ${rowLabel}`} onClick={() => session.removeLine(row.key)}>删除</button></>}</>}</div></td>
         </tr>;
       })}
       {entryRows.map(({ direction, entry }) => {
         const id = `entry-${entry.key}`, empty = !entry.product && !entry.query.trim(), priceRow = entry.product ? { ...entry, product: entry.product } : null;
         const ready = session.canAppendEntry(direction, entry.key) && /^-?[1-9]\d{0,18}$/.test(entry.quantity) && !!priceRow && linePrice(priceRow) !== null;
         const entryOpen = (kind: 'product' | 'sku') => { void session.openEntryPicker(direction, kind, entry.key); };
-        return <tr key={entry.key} className="sale-entry-row" data-entry-row={entry.key} data-entry-direction={direction} {...(empty ? { 'data-entry-empty': direction } : {})}>
-          <td>{active ? candidate(`${id}-product`, `${section.title}款号 / 名称`, entry.product ? `${entry.product.code} · ${entry.product.name}` : '商品款号 / 名称', () => entryOpen('product'), !!state.lineEdit || !!preparation?.preparing || scope?.active === false, undefined, undefined, { value: entry.query, openUsesInputValue: true, change: value => session.updateEntry(direction, { query: value }, entry.key), placeholder: '款号 / 名称 · 条码请扫码录入' }) : <strong>{entry.product?.code ?? entry.query}</strong>}{entry.product && <span className="sale-entry-name" title={entry.product.name}>{entry.product.name}</span>}{entry.isGift && <span className="sale-gift">赠品</span>}</td>
+        const compact = newProposal && !!entry.product && activeIdentityRow !== entry.key;
+        const editEntry = (part: IdentityPart, label: string, value: ReactNode, disabled: boolean) => {
+          const control = `${id}-${part}`;
+          return compactIdentity(control, label, value, origin => openIdentityControl(entry.key, control, origin, () => entryOpen(part === 'product' ? 'product' : 'sku')), disabled);
+        };
+        return <tr key={entry.key} className="sale-entry-row" data-native-sale-row={entry.key} data-native-sale-owner={formOwner} data-entry-row={entry.key} data-entry-direction={direction} {...(empty ? { 'data-entry-empty': direction } : {})}>
+          <td>{active ? compact ? editEntry('product', `${section.title}款号 / 名称`, entry.product?.code, !!state.lineEdit || !!preparation?.preparing || scope?.active === false) : candidate(entry.key, `${id}-product`, `${section.title}款号 / 名称`, entry.product ? `${entry.product.code} · ${entry.product.name}` : '商品款号 / 名称', () => entryOpen('product'), !!state.lineEdit || !!preparation?.preparing || scope?.active === false, undefined, undefined, { value: entry.query, openUsesInputValue: true, change: value => session.updateEntry(direction, { query: value }, entry.key), placeholder: '款号 / 名称 · 条码请扫码录入' }) : <strong>{entry.product?.code ?? entry.query}</strong>}{entry.product && <span className="sale-entry-name" title={entry.product.name}>{entry.product.name}</span>}{entry.isGift && <span className="sale-gift">赠品</span>}</td>
           {(['color', 'fit', 'size'] as const).map(kind => {
             const value = kind === 'color' ? entry.color?.name : kind === 'fit' ? entry.fit?.name : entry.size?.name ?? entry.sku?.sizeName;
-            return <td key={kind}>{active ? candidate(`${id}-${kind}`, `${section.title}${{ color: '颜色', fit: '版型', size: '尺码' }[kind]}`, value ?? { color: '颜色', fit: '版型', size: '尺码' }[kind], () => entryOpen('sku'), !entry.product || !!state.lineEdit || kind === 'fit' && !entry.color || kind === 'size' && (!entry.color || !entry.fit), kind, entry) : value}</td>;
+            const label = `${section.title}${specLabels[kind]}`, disabled = !entry.product || !!state.lineEdit || kind === 'fit' && !entry.color || kind === 'size' && (!entry.color || !entry.fit);
+            return <td key={kind}>{active ? compact ? editEntry(kind, label, value ?? '', disabled)
+              : candidate(entry.key, `${id}-${kind}`, label, value ?? specLabels[kind], () => entryOpen('sku'), disabled, kind, entry) : value}</td>;
           })}
           <td>{combined && entry.product && <span data-line-direction>退货</span>}{active ? <input data-entry={entry.key} data-entry-field="quantity" aria-label={`${section.title}本行数量`} className={entry.quantity.startsWith('-') ? 'negative' : ''} inputMode="numeric" value={entry.product ? entry.quantity : ''} disabled={!entry.product || !!state.lineEdit} onChange={event => { const value = event.currentTarget.value; return session.updateEntry(direction, { quantity: value }, entry.key); }} onKeyDown={event => {
             if (event.nativeEvent.isComposing || event.key !== 'Enter') return;
@@ -396,13 +458,13 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
             if (event.key === 'Enter') { event.preventDefault(); completeEntry(direction, entry.key); }
             else if (event.key === 'Tab' && !event.shiftKey && ready && completeEntry(direction, entry.key)) event.preventDefault();
           }} /> : priceRow ? linePrice(priceRow) ?? '待填写' : ''}</td>
-          <td className="sale-num">{priceRow ? previewAmount({ ...priceRow, quantity: entry.quantity }) : ''}</td>
+          <td className="sale-num">{priceRow ? previewAmount({ ...priceRow, quantity: entry.quantity }, newProposal) : ''}</td>
           <td className="ui-action-cell">{entry.product && <div className="tc-row-actions sale-row-actions"><button type="button" className="btn sale-link" disabled={!openProduct || !draft.hall} title={openProduct ? undefined : '商品只读页尚未接入'} onClick={() => { if (draft.hall && entry.product) openProduct?.(entry.sku?.id ?? null, draft.hall.id, { id: entry.product!.id, label: `${entry.product!.code} · ${entry.product!.name}` }); }}>查看</button>{active && <><button type="button" className="btn sale-link" disabled={!!state.lineEdit} onClick={() => session.updateEntry(direction, { isGift: !entry.isGift }, entry.key)}>{entry.isGift ? '取消赠品' : '赠品'}</button><button type="button" className="btn sale-link sale-remove-entry" disabled={!!state.lineEdit} aria-label={`删除待录商品 ${entry.product.code}`} onClick={() => session.clearEntry(direction, entry.key)}>删除</button></>}</div>}</td>
         </tr>;
       })}
       </tbody></table></div></section>;
     })}</>}
-    summary={<SalesDocumentSummary returnOnly={combined} businessType={displayedType} lines={displayedLines.map(row => ({ quantity: row.quantity, isGift: row.isGift, styleKey: row.product.id, ...(row.product.category ? { category: row.product.category } : {}) }))} grossMinor={totals?.grossMinor ?? null} discountMinor={totals?.orderDiscountMinor ?? null} netDueMinor={totals?.netDueMinor ?? null} extra={!combined && pendingPricing > 0 ? <span>{pendingPricing}条待定价</span> : undefined} />}
+    summary={<SalesDocumentSummary blankUnknownMoney={newProposal} returnOnly={combined} businessType={displayedType} lines={displayedLines.map(row => ({ quantity: row.quantity, isGift: row.isGift, styleKey: row.product.id, ...(row.product.category ? { category: row.product.category } : {}) }))} grossMinor={visibleTotals?.grossMinor ?? null} discountMinor={visibleTotals?.orderDiscountMinor ?? null} netDueMinor={visibleTotals?.netDueMinor ?? null} extra={!combined && pendingPricing > 0 ? <span>{pendingPricing}条待定价</span> : undefined} />}
     afterSummary={<>
     {scanner && <DocumentScan controller={scanner.controller} title={scanner.direction === 'IN' ? '退回商品扫码录入' : '销货扫码录入'} rows={draft.lines.filter((row): row is Extract<SalesProposalLine, { readonly sku: CurrentFormSku }> => row.sku !== null && row.quantity.startsWith('-') === (scanner.direction === 'IN'))} close={() => setScanner(null)} update={(key, value) => session.updateLine(key, { quantity: value })} remove={key => session.removeLine(key)} />}
     {zero && <SourceDocumentDialog className="source-confirm-dialog" title="确认普通零价商品" label="确认普通零价商品" closeLabel="关闭弹窗" close={() => setZeroLine(null)} initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setZeroLine(null)}>取消</button><button type="button" className="btn primary" onClick={confirmZero}>确认零价</button></>}><div className="ui-confirm-body"><p>此行单价为0.00元，不标为赠品，审核时仍按业务类型处理商品数量。</p></div></SourceDocumentDialog>}

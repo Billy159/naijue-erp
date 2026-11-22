@@ -19,6 +19,7 @@ import { categoryCss,filterCss,productCss } from '../inventory/source-control-cs
 import { ProductCandidatePreview } from './preview.tsx';
 export const filterLabels={product:'商品',category:'商品分类',year:'年份',season:'季节',supplier:'供应商',fit:'版型',thickness:'厚薄',shape:'领型 / 裤型'};
 interface Props {notify?:(message:string)=>void;intentRevision?:number;kind:ProductManagementCandidateKind;value:readonly Selection[]|null;scope:ReadScope;reader:ProductManagementReader;productReader:ProductReadOnlyReader;change:(value:readonly Selection[]|null)=>void;denied:(e:HttpQueryError)=>void}
+import { categoryFilterRoots, useVerifiedCategoryParents } from '../inventory/category-parent-verification.ts';
 import { ALL_FILTER_VALUE as ALL,checkedFilterValues,resolveFilterSelection,assertSelectionBudget,pasteCodes,SelectionBudgetError } from '../inventory/filter-selection.ts';
 /** Original productFilterBridges consumers; server pages replace local directory arrays. */
 export function ProductFilter(p:Props){return <SourceControl css={p.kind==='product'?productCss:p.kind==='category'?categoryCss:filterCss}>{(portal,host)=><Control {...p} portal={portal} host={host}/>}</SourceControl>;}
@@ -43,8 +44,9 @@ function Control(p:Props&{portal:HTMLElement;host:HTMLElement}){
  useEffect(()=>{if(!open||p.kind==='product'&&!search.trim())return;setItems([]);setLoaded(null);const timer=setTimeout(()=>void run(),search?180:0);return()=>{clearTimeout(timer);query.cancel();};},[open,search]);
  useEffect(()=>{if(state.phase==='success'&&state.success?.parameters.search===searchRef.current){const data=state.success.data;setItems(old=>data.page===1?data.items:[...new Map([...old,...data.items].map(x=>[x.id,x])).values()]);setLoaded({search:state.success.parameters.search,page:data.page,total:data.exactTotal});}if(state.phase==='error'&&state.error instanceof HttpQueryError&&(state.error.kind==='forbidden'||state.error.kind==='unauthenticated')){p.denied(state.error);p.scope.dispose();}},[state]);
  useLayoutEffect(()=>{const ro=new ResizeObserver(()=>setWidth(p.host.getBoundingClientRect().width));ro.observe(p.host);setWidth(p.host.getBoundingClientRect().width);return()=>ro.disconnect();},[p.host]);
+ const verifiedParents=useVerifiedCategoryParents({scope:p.scope,items,active:open&&p.kind==='category'&&loaded?.search===search,intent:search,denied:p.denied,lookup:(parent,page,signal)=>p.reader.readCandidates({parameters:{kind:'category',search:'',page,pageSize:20,selectedIds:[parent.id]},signal,identity:p.scope.identity,routeInstanceId:p.scope.routeInstanceId,entityId:null})});
  const selected=p.value??[],allLabel=p.kind==='category'?'全部分类':'全部'+filterLabels[p.kind];
- const names=new Map([[ALL,allLabel],...items.map(x=>[x.id,x.label] as const),...selected.map(x=>[x.id,x.label] as const)]);
+ const names=new Map([[ALL,allLabel],...items.map(x=>[x.id,x.label] as const),...verifiedParents.map(x=>[x.id,x.label] as const),...selected.map(x=>[x.id,x.label] as const)]);
  const count=useMemo(()=>{const c=document.createElement('canvas').getContext('2d');if(!c)return 1;c.font='13px Arial';const widths=selected.slice(0,3).map(x=>Math.min(c.measureText(x.label).width+37,width-50));for(let n=Math.min(3,selected.length);n>1;n--)if(widths.slice(0,n).reduce((a,b)=>a+b,0)+(n-1)*4+(selected.length>n?92:42)<=width)return n;return 1;},[p.value,width]);
  const change=(raw:unknown)=>{invalidatePaste();const ids=(Array.isArray(raw)?raw:[]).map(x=>typeof x==='string'?x:(x as {value:string}).value).filter(x=>x!==ALL);const known=new Map([...items,...selected].map(x=>[x.id,x]));const next=ids.map(id=>known.get(id)).filter((x):x is Selection=>!!x).map(x=>({id:x.id,label:p.kind==='product'&&'code'in x&&typeof x.code==='string'?x.code:x.label}));try{assertSelectionBudget(next,PRODUCT_MANAGEMENT_MAX_SELECTIONS);}catch(e){notify((e as Error).message);return;}p.change(p.kind==='product'&&!next.length?null:next);if(p.kind==='product')remember(next.map(x=>x.label));setSearch('');requestAnimationFrame(()=>select.current?.focus());};
  const saveHistory=(rows:string[])=>{setHistory(rows);try{localStorage.setItem(historyKey,JSON.stringify(rows));}catch{}};
@@ -58,8 +60,7 @@ function Control(p:Props&{portal:HTMLElement;host:HTMLElement}){
     {!search.trim()?(history.length?history.map((text,index)=><Select.Option key={text} value={'__recent__'+index}><span className="inv-recent"><span title={text}>{text}</span><button type="button" aria-label={'删除最近搜索 '+text} onMouseDown={e=>{e.preventDefault();e.stopPropagation();}} onClick={e=>{e.stopPropagation();saveHistory(history.filter(x=>x!==text));}}>×</button></span></Select.Option>):<Select.Option disabled value="__recent_empty__">暂无最近搜索</Select.Option>):items.map(item=><Select.Option key={item.id} value={item.id} onMouseEnter={()=>setPreview(item.id)}><span className="inv-option-row"><span className="inv-option-code">{item.code}</span><span className="inv-option-name">{item.name}</span></span></Select.Option>)}
    </Select>;
  }
- type Node={key:string;value:string;title:string;disabled?:boolean;children?:Node[]};const byId=new Map<string,Node>(items.map(x=>[x.id,{key:x.id,value:x.id,title:x.label}]));const roots:Node[]=[];
- for(const item of items){const node=byId.get(item.id)!;if(p.kind==='category'&&item.parentId){let parent=byId.get(item.parentId);if(!parent){parent={key:item.parentId,value:item.parentId,title:item.parentLabel??'',disabled:true,children:[]};byId.set(parent.key,parent);roots.push(parent);}parent.children??=[];parent.children.push(node);}else roots.push(node);}
+ const roots=categoryFilterRoots(items,verifiedParents,p.kind==='category');
  const completeCandidates=loaded?.search===search&&!search.trim()&&items.length===loaded.total;
  const checked=checkedFilterValues(p.value,items,completeCandidates,p.kind==='category'),allSelected=checked.includes(ALL);
  // choose owns clearing the search after its async selection commits; Arco's
@@ -68,7 +69,7 @@ function Control(p:Props&{portal:HTMLElement;host:HTMLElement}){
   invalidatePaste();
   selectionRequest.current?.abort();const own=new AbortController();selectionRequest.current=own;const signal=AbortSignal.any([own.signal,p.scope.signal]);setSelecting(true);
   try{
-   const result=await resolveFilterSelection(p.value,items,next,extra,async()=>{
+   const result=await resolveFilterSelection(p.value,verifiedParents.length?[...items,...verifiedParents]:items,next,extra,async()=>{
     const result:ProductManagementCandidatePage['items'][number][]=[];for(let page=1;;page++){if(signal.aborted)throw new DOMException('已取消','AbortError');const data=await p.reader.readCandidates({parameters:{kind:p.kind,search:'',page,pageSize:20,selectedIds:[]},signal,identity:p.scope.identity,routeInstanceId:p.scope.routeInstanceId,entityId:null});result.push(...data.items);if(new Set(result.filter(item=>!('disabled'in item&&item.disabled)).map(item=>item.id)).size>PRODUCT_MANAGEMENT_MAX_SELECTIONS+1)throw new SelectionBudgetError(PRODUCT_MANAGEMENT_MAX_SELECTIONS);if(page*20>=data.exactTotal)return result;}
    },completeCandidates,PRODUCT_MANAGEMENT_MAX_SELECTIONS,p.kind==='category');
    if(!signal.aborted&&selectionRequest.current===own){p.change(result);setSearch('');}

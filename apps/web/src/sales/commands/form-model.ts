@@ -93,8 +93,7 @@ export function compileSalesForm(base: SalesDraftDto, input: SalesFormInput): Sa
   });
   const nextSignedSale = base.header.businessType === 'SALE' && lines.some(line => line.quantity.startsWith('-'));
   if (nextSignedSale && !signedSale) {
-    if (!lines.some(line => BigInt(line.quantity) > 0n)) errors.form = '仅有负数明细时请选择退货／换货类型。';
-    else if (orderDiscount !== '0') errors.orderDiscount = '正负明细混合单不使用整单优惠／抹零，请清除整单优惠。';
+    errors.form = '销售单只录正数量。换货请先开退货单，再另开销售单。';
   }
   const settlements = retainedSettlements.map((row, index) => {
     const raw = input.settlements[index]!; let value = row.amount;

@@ -75,7 +75,7 @@ function checkedParameters(value: InventoryQuery): InventoryQuery {
 function inventoryScope(scope: InventoryReadScope, parameters: InventoryQuery): InventoryReadScope {
   const checked = checkedInventoryScope(scope);
   requireDomain(parameters.filter.warehouseIds.every(id => checked.warehouses.some(warehouse => warehouse.id === id)), "FORBIDDEN", "Requested warehouse is outside authorized inventory scope");
-  return parameters.filter.warehouseIds.length === 0 ? checked : checkedInventoryScope({ hallIds: checked.hallIds,
+  return parameters.filter.warehouseIds.length === 0 ? checked : checkedInventoryScope({ ...checked,
     warehouses: checked.warehouses.filter(warehouse => parameters.filter.warehouseIds.includes(warehouse.id)) });
 }
 

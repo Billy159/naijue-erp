@@ -1,5 +1,6 @@
 import type { ActorContext } from "./ports.ts";
 import type { ProductManagementQueryDependencies } from "./product-management-query-ports.ts";
+import { requireDomain } from "../../domain/src/errors.ts";
 import { checkedProductActor } from "./product-query-validation.ts";
 import { activeProductManagementRead, checkedProductManagementCandidatePage, checkedProductManagementGrant,
   checkedProductManagementListPage, parseProductManagementCandidateQuery, parseProductManagementListQuery } from "./product-management-query-validation.ts";
@@ -12,16 +13,18 @@ export function createProductManagementQueryService(dependencies: ProductManagem
     async readList(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const parameters = parseProductManagementListQuery(input), trustedActor = checkedProductActor(actor); activeProductManagementRead(signal);
       const grant = checkedProductManagementGrant(await dependencies.authorization.authorize(trustedActor, Object.freeze({ kind: "list", parameters }), signal)); activeProductManagementRead(signal);
+      requireDomain(!grant.hideSupplier || parameters.filter.supplierIds.length === 0, "FORBIDDEN", "Supplier filters are not available to the current role");
       const value = await dependencies.reader.readList(Object.freeze({ actor: trustedActor, grant, parameters, signal })); activeProductManagementRead(signal);
       let result;
       try { result = checkedProductManagementListPage(value); } catch { throw new Error("Invalid trusted product management response"); }
       if (result.page !== parameters.page || result.pageSize !== parameters.pageSize || result.items.some(item => grant.kind === "products" && !grant.productIds.includes(item.id))
         || result.items.some(item => grant.totalStock === "unavailable" && item.totalStock !== null)) throw new Error("Mismatched trusted product management response");
-      return result;
+      return grant.hideSupplier ? Object.freeze({ ...result, items: Object.freeze(result.items.map(item => Object.freeze({ ...item, supplierLabel: null }))) }) : result;
     },
     async readCandidates(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const parameters = parseProductManagementCandidateQuery(input), trustedActor = checkedProductActor(actor); activeProductManagementRead(signal);
       const grant = checkedProductManagementGrant(await dependencies.authorization.authorize(trustedActor, Object.freeze({ kind: "candidates", parameters }), signal)); activeProductManagementRead(signal);
+      requireDomain(!grant.hideSupplier || parameters.kind !== "supplier", "FORBIDDEN", "Supplier filters are not available to the current role");
       const value = await dependencies.reader.readCandidates(Object.freeze({ actor: trustedActor, grant, parameters, signal })); activeProductManagementRead(signal);
       let result;
       try { result = checkedProductManagementCandidatePage(value, parameters.kind); } catch { throw new Error("Invalid trusted product management candidates"); }

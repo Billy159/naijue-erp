@@ -3,14 +3,12 @@ import { useEffect,useState,type ComponentType } from 'react';
 import Select from '@arco-design/web-react/es/Select';
 import type { SelectProps } from '@arco-design/web-react/es/Select';
 import Cascader from '@arco-design/web-react/es/Cascader';
-import Transfer from '@arco-design/web-react/es/Transfer';
 import type { ProductMaintenanceCandidateKind,ProductMaintenanceCandidatePage,ProductMaintenanceReader } from '../../../../src/products/product-editor-contracts.ts';
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { useProductRead } from './read.tsx';
 import { SourceControl } from '../common/ui/source-control.tsx';
 import { SourceModal } from '../catalogue/source-controls.tsx';
-function SpecModal(p:{title:string;close:()=>void;footer:React.ReactNode;children:React.ReactNode}){return <SourceModal wide {...p}/>;}
 import { editorControlCss } from './editor-control-css.ts';
 interface Props {scope:ReadScope;reader:ProductMaintenanceReader;kind:ProductMaintenanceCandidateKind;denied:(e:HttpQueryError)=>void}
 const ClearableChoice=Select as unknown as ComponentType<Omit<SelectProps,'value'>&{value:SelectProps['value']|undefined}>;
@@ -79,7 +77,7 @@ export function EditorChoice(p:Props&{label:string;value:string|string[]|null;la
   visible(false);
  }}><SourceControl css={editorControlCss}>{portal=>p.kind==='categories'
   ?<Cascader aria-label={p.label} aria-required={p.required} options={roots} changeOnSelect expandTrigger="click" allowClear showSearch={{retainInputValueWhileSelect:false}} disabled={p.disabled??false} placeholder="选择商品分类" value={categoryValue} renderFormat={()=>categoryCaption}
-   getPopupContainer={()=>portal} dropdownMenuClassName="pc-category-options" triggerProps={{position:'br',autoFitPosition:true,boundaryDistance:{right:12,bottom:12}}}
+   getPopupContainer={()=>portal} dropdownMenuClassName="pc-category-options" triggerProps={{position:'bl',autoAlignPopupWidth:true,autoFitPosition:true,updateOnScroll:true,boundaryDistance:{bottom:12}}}
    onVisibleChange={visible} {...(!completeCategoryTree?{onSearch:setSearch}:{})}
    onChange={raw=>{const path=(Array.isArray(raw)?raw:[raw]).filter(value=>value!=null&&value!=='').map(String);if(p.onCategorySelection)p.onCategorySelection(path,path.map(id=>categoryName(id)??''));else p.change(path.length?[path.at(-1)!]:[]);}}
    notFoundContent={notice} dropdownRender={menu=><>{menu}{footer}</>}
@@ -96,11 +94,48 @@ export function EditorChoice(p:Props&{label:string;value:string|string[]|null;la
   >{[...items].map(([id,name])=><Select.Option key={id} value={id}>{name}</Select.Option>)}</ClearableChoice>}</SourceControl></div>;
 }
 export function SpecSelection(p:Props&{value:readonly string[];labels:ReadonlyMap<string,string>;close:()=>void;save:(ids:string[],labels:ReadonlyMap<string,string>)=>void;create?:(close:()=>void,saved:(item:CatalogueSettingsEntry)=>void)=>React.ReactNode;createUnavailableReason?:string}){
- const [creating,setCreating]=useState(false),[search,setSearch]=useState(''),[selected,setSelected]=useState([...p.value]),[createNotice,setCreateNotice]=useState(''),[items,setItems]=useState<ProductMaintenanceCandidatePage['items']>([]);
- const parameters={kind:p.kind,search,page:1,pageSize:100 as const};const {query,snapshot}=useProductRead(p.scope,read=>p.reader.readCandidates(read),parameters,false,p.denied);
- useEffect(()=>{const timer=setTimeout(()=>void query.run(parameters),search?180:0);return()=>{clearTimeout(timer);query.cancel();};},[search]);
- useEffect(()=>{if(snapshot.phase==='success'&&snapshot.success)setItems(old=>[...new Map([...old,...snapshot.success!.data.items].map(x=>[x.id,x])).values()]);},[snapshot.success]);
- const data=snapshot.success?.data,names=new Map([...p.labels,...items.map(x=>[x.id,x.name] as const)]);const rows=[...items.map(x=>({key:x.id,value:x.name})),...selected.filter(id=>!items.some(x=>x.id===id)).map(id=>({key:id,value:names.get(id)??id}))];const codeById=new Map(items.map(x=>[x.id,x.code??'']));const label=p.kind==='colors'?'颜色':'版型';
- if(creating&&p.create)return p.create(()=>setCreating(false),item=>{if(item.enabled){setSelected(old=>[...new Set([...old,item.id])]);setItems(old=>[...old.filter(row=>row.id!==item.id),{...item,parentId:null}]);setCreateNotice('');}else{setItems(old=>old.filter(row=>row.id!==item.id));setCreateNotice('已新增，但该'+label+'现已停用，未加入已选。');}setCreating(false);void query.run(parameters);});
- return <SpecModal title={'选择'+label} close={p.close} footer={<><button type="button" className="btn ghost pc-create-left" disabled={!p.create} title={!p.create?(p.createUnavailableReason??'当前入口未提供新增'+label+'能力'):undefined} onClick={()=>{if(p.create)setCreating(true);}}>新增{label}</button><button type="button" className="btn" onClick={p.close}>取消</button><button type="button" className="btn primary" onClick={()=>p.save(selected,names)}>确定</button></>}><p className="hint">选好后，记得回商品页保存。</p>{createNotice&&<p role="status">{createNotice}</p>}<Transfer className="pc-spec-transfer" dataSource={rows} targetKeys={selected} onChange={keys=>setSelected(keys.map(String))} showSearch={{className:'iw-arco-input iw-search-input',size:'default'}} searchPlaceholder={['搜索名称或编码','搜索已选']} titleTexts={['系统可用'+label,'当前商品已用'+label]} onSearch={(text,type)=>{if(type==='source')setSearch(text);}} operationTexts={['加入已选','移除已选']} filterOption={(text,item)=>`${item.value} ${codeById.get(String(item.key))??''}`.toLocaleLowerCase().includes(text.toLocaleLowerCase())}/>{data&&data.page*data.pageSize<data.total&&<button type="button" className="btn ghost" disabled={snapshot.phase==='loading'} onClick={()=>{if(snapshot.phase!=='loading')void query.run({...parameters,page:data.page+1});}}>加载更多</button>}{snapshot.phase==='loading'&&<p role="status">正在读取…</p>}{snapshot.phase==='error'&&<p role="alert">读取失败 <button type="button" onClick={()=>void query.run(parameters)}>重试</button></p>}</SpecModal>;
+ const [creating,setCreating]=useState(false),[search,setSearch]=useState(''),[selected,setSelected]=useState([...p.value]),[createNotice,setCreateNotice]=useState(''),[opened,setOpened]=useState(false);
+ const [known,setKnown]=useState<ReadonlyMap<string,string>>(()=>new Map(p.labels));
+ const [loaded,setLoaded]=useState<{search:string;data:ProductMaintenanceCandidatePage}|null>(null);
+ const term=search.trim(),parameters={kind:p.kind,search:term,page:1,pageSize:100 as const};
+ const {query,snapshot}=useProductRead(p.scope,read=>p.reader.readCandidates(read),parameters,false,p.denied);
+ useEffect(()=>{const timer=setTimeout(()=>void query.run(parameters),term?180:0);return()=>{clearTimeout(timer);query.cancel();};},[term]);
+ useEffect(()=>{
+  const result=snapshot.success;
+  if(!result||result.parameters.search!==term)return;
+  setLoaded(old=>({search:term,data:{...result.data,items:result.data.page>1&&old?.search===term
+    ?[...new Map([...old.data.items,...result.data.items].map(row=>[row.id,row])).values()]:result.data.items}}));
+ },[snapshot.success]);
+ const list=loaded?.search===term?loaded.data:null;
+ const items=list?.items??[],names=new Map([...p.labels,...known,...items.map(row=>[row.id,row.name] as const)]);
+ const request=snapshot.request?.parameters.search===term?snapshot.request.parameters:null;
+ const failed=!!request&&snapshot.phase==='error';
+ const pending=!failed&&(!list||!request||snapshot.phase==='loading');
+ const hasMore=!!list&&list.page*list.pageSize<list.total;
+ const label=p.kind==='colors'?'颜色':'版型';
+ const more=()=>{
+  const current=query.getSnapshot();
+  if(!list||!hasMore||pending||failed||current.phase==='loading'||current.success?.data.page!==list.page||current.success.parameters.search!==term)return;
+  void query.run({...parameters,page:list.page+1});
+ };
+ if(creating&&p.create)return p.create(()=>setCreating(false),item=>{
+  if(item.enabled){setSelected(old=>[...new Set([...old,item.id])]);setKnown(old=>new Map([...old,[item.id,item.name]]));setCreateNotice('');}
+  else setCreateNotice('已新增，但该'+label+'现已停用，未加入已选。');
+  setCreating(false);
+  void query.run(parameters);
+ });
+ return <SourceModal title={'选择'+label} close={p.close} footer={<><button type="button" className="btn ghost pc-create-left" disabled={!p.create} title={!p.create?(p.createUnavailableReason??'当前入口未提供新增'+label+'能力'):undefined} onClick={()=>{if(p.create)setCreating(true);}}>新增{label}</button><button type="button" className="btn" onClick={p.close}>取消</button><button type="button" className="btn primary" onClick={()=>p.save(selected,names)}>确定</button></>}>
+  <p className="hint pc-spec-picker-hint">选好后，记得回商品页保存。</p>
+  {createNotice&&<p role="status">{createNotice}</p>}
+  <Select className="pc-spec-picker" mode="multiple" showSearch aria-label={label+'，可多选'} placeholder={'搜索'+label+'名称或编码'} filterOption={false} inputValue={search} onInputValueChange={setSearch} value={selected} onVisibleChange={visible=>{if(visible)setOpened(true);}}
+   getPopupContainer={trigger=>trigger.closest<HTMLElement>('[role="dialog"]')??document.body} triggerProps={{position:'bl',autoAlignPopupWidth:true,autoFitPosition:true,updateOnScroll:true}}
+   onChange={(ids:string[])=>{setSelected(ids);setKnown(old=>new Map([...old,...ids.map(id=>[id,names.get(id)??id] as const)]));}}
+   renderFormat={(_,id)=>names.get(String(id))??String(id)}
+   onPopupScroll={(node:HTMLElement)=>{if(node.scrollHeight-node.scrollTop-node.clientHeight<=32)more();}}
+   notFoundContent={<span role="status">{pending?'正在读取…':failed?'读取失败':term?'没有匹配的'+label:'暂无'+label+'选项'}</span>}
+   dropdownMenuClassName="pc-spec-picker-options" dropdownRender={menu=><>{menu}{(hasMore||pending&&items.length>0)&&<span className="pc-spec-picker-count" role="status">{pending?'正在读取…':`已显示 ${items.length} / ${list?.total} 项，继续下滑`}</span>}</>}
+  >{items.map(row=><Select.Option key={row.id} value={row.id}>{row.name}</Select.Option>)}</Select>
+  {opened&&<div className="pc-spec-picker-space" aria-hidden="true"/>}
+  {failed&&<p className="inline-error" role="alert">{label}读取失败。<button type="button" className="btn ghost" onClick={()=>void query.run(request??parameters)}>重试</button></p>}
+ </SourceModal>;
 }

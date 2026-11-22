@@ -1,0 +1,85 @@
+/* 商品信息 in both hosts uses one set of tracks for the four filter fields.
+ * On tighter workspaces only the actions move; fields still line up in pairs. */
+#pc-filter.pc-master-filters.pc-aligned-filters.iw-query{
+  container:product-filter/inline-size;
+  overflow:visible;
+}
+#pc-filter.pc-aligned-filters>.pc-filter-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.85fr) minmax(0,1.15fr) repeat(2,minmax(0,1fr)) auto;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  min-width:0;
+}
+#pc-filter.pc-aligned-filters>.pc-filter-grid>.pc-filter-row{
+  display:grid;
+  grid-column:1/-1;
+  grid-template-columns:subgrid;
+  align-items:center;
+  gap:8px;
+  width:auto;
+  min-width:0;
+  margin:0;
+}
+#pc-filter.pc-aligned-filters>.pc-filter-grid>.pc-more-filters{
+  grid-column:1/5;
+}
+#pc-filter.pc-aligned-filters .pc-more-filters[data-supplier-hidden]>:last-child{
+  grid-column:span 2;
+}
+#pc-filter.pc-aligned-filters .pc-filter-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  gap:8px;
+  min-width:0;
+}
+#pc-filter.pc-aligned-filters .pc-filter-actions>.btn{
+  box-sizing:border-box;
+  min-width:64px;
+  height:32px;
+  min-height:32px;
+  margin:0;
+  padding:4px 8px;
+  font-size:13px;
+  white-space:nowrap;
+}
+#pc-filter.pc-aligned-filters .pc-filter-actions>.pc-more-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  border:0;
+  background:transparent;
+  color:var(--ca-ink-2);
+  font-weight:400;
+}
+#pc-filter.pc-aligned-filters .pc-filter-actions>.pc-more-toggle:hover{
+  background:var(--ca-surface-subtle);
+  color:var(--ca-primary-ink);
+}
+#pc-filter.pc-aligned-filters .pc-filter-actions>[data-pc="reset-filter"]{
+  border:1px solid var(--ca-control-border);
+  background:var(--ca-surface);
+  color:var(--ca-ink);
+}
+#pc-filter.pc-aligned-filters .pc-filter-actions>[data-pc="reset-filter"]:hover{
+  background:var(--ca-surface-subtle);
+  border-color:var(--ca-control-border-hover);
+}
+@container product-filter (max-width:850px){
+  #pc-filter.pc-aligned-filters>.pc-filter-grid{
+    grid-template-columns:minmax(0,1.85fr) minmax(0,1.15fr) repeat(2,minmax(0,1fr));
+  }
+  #pc-filter.pc-aligned-filters>.pc-filter-grid>.pc-more-filters,
+  #pc-filter.pc-aligned-filters .pc-filter-actions{
+    grid-column:1/-1;
+  }
+}
+@container product-filter (max-width:480px){
+  #pc-filter.pc-aligned-filters>.pc-filter-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}

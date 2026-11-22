@@ -1,5 +1,7 @@
+import { ExpandCaret } from '../demo-controls/expand-caret.tsx';
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useId, useSyncExternalStore, type CSSProperties, type KeyboardEvent, type ReactNode, type RefObject } from 'react';
 import type { InventoryActions, InventoryCellTarget, InventoryColorFit, InventoryPage, InventoryProduct, InventoryRow, InventorySize, StockTotal } from './contracts.ts';
+import { inventoryMatrixDimensions } from './matrix-geometry.ts';
 import { cellLabel, totalLabel } from './model.ts';
 import { identifiedDisplaySources, projectInventoryColors, type InventoryDisplayColor, type InventoryDisplayRow, type InventoryIdentifiedDisplaySource } from './display-projection.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
@@ -86,6 +88,7 @@ function InventorySourceChoice(p:{readonly choices:readonly InventoryCellTarget[
 }
 
 function EagerInventoryMatrix(props: MatrixProps) {
+  const {compact,fixedColumns: [product, color, warehouse, total, action], fixedWidth, minimumSizeWidth}=inventoryMatrixDimensions(props.settings);
   const sections = new Map<string, InventoryProduct[]>();
   for (const product of props.data.products) {
     const key = JSON.stringify([product.sizeGroup.id, product.sizes.map(size => [size.id, size.label])]);
@@ -94,11 +97,11 @@ function EagerInventoryMatrix(props: MatrixProps) {
   }
   return <>{[...sections].map(([key, products]) => {
     const first = products[0]!;
-    const width = 300 + 116 + 152 + first.sizes.length * 76 + 76 + 70;
-    return <section key={key} className="mx-section" data-size-system={first.sizeGroup.id} style={{ '--mx-table-width': `${width}px` } as CSSProperties} aria-label={`${first.sizeGroup.label}库存矩阵`}>
+    const width = fixedWidth + first.sizes.length * minimumSizeWidth;
+    return <section key={key} className="mx-section" data-matrix-compact={compact||undefined} data-size-system={first.sizeGroup.id} style={{ '--mx-table-width': `${width}px`, '--iw-matrix-identity': product+'px' } as CSSProperties} aria-label={`${first.sizeGroup.label}库存矩阵`}>
       <h3 hidden={!props.settings.sizeDescription}>{first.sizeGroup.label} <small>{first.sizes.map(size=>size.label).join(' / ')}</small></h3>
       <table className="mx-table"><caption className="sr-only">{first.sizeGroup.label}，商品、颜色、版型、仓库及尺码库存；— 表示不存在此规格，合法规格无库存显示 0。</caption>
-        <colgroup><col style={{ width: 300 }} /><col style={{ width: 116 }} /><col style={{ width: 152 }} />{first.sizes.map(size => <col key={size.id} style={{ width: 76 }} />)}<col style={{ width: 76 }} /><col style={{ width: 70 }} /></colgroup>
+        <colgroup><col style={{ width: product }} /><col style={{ width: color }} /><col style={{ width: warehouse }} />{first.sizes.map(size => <col key={size.id} style={{ width: minimumSizeWidth }} />)}<col style={{ width: total }} /><col style={{ width: action }} /></colgroup>
         <thead><tr><th scope="col" className="mx-product">款号／商品名称</th><th scope="col" className="mx-color">颜色</th><th scope="col" className="mx-warehouse">仓库</th>{first.sizes.map(size => <th scope="col" key={size.id} className="mx-size" data-size-id={size.id}>{size.label}</th>)}<th scope="col" className="mx-total-cell">合计</th><th scope="col" className="ui-action-cell">操作</th></tr></thead>
         <tbody>{products.map(product => <MemoProductRows key={product.id} product={product} {...props} />)}</tbody>
       </table>
@@ -107,7 +110,7 @@ function EagerInventoryMatrix(props: MatrixProps) {
 }
 const spacer = <span className="mx-fold-spacer" aria-hidden="true" />;
 function Fold(props: { readonly expanded: boolean; readonly label: string; readonly toggle: () => void }) {
-  return <button type="button" className="mx-fold" aria-expanded={props.expanded} aria-label={`${props.expanded ? '折叠' : '展开'}${props.label}`} onClick={props.toggle}>{props.expanded ? '▾' : '▸'}</button>;
+  return <button type="button" className="mx-fold" aria-expanded={props.expanded} aria-label={`${props.expanded ? '折叠' : '展开'}${props.label}`} onClick={props.toggle}><ExpandCaret direction={props.expanded ? 'down' : 'right'} /></button>;
 }
 function Indent(props: { readonly control: ReactNode; readonly children: ReactNode }) {
   return <div className="mx-indent">{props.control}{props.children}</div>;
@@ -117,7 +120,7 @@ function ProductIdentity(props:{readonly product:InventoryProduct;readonly setti
  const {product,settings}=props;
  const fields=[['category','分类',product.categoryLabel],['supplier','供应商',product.supplierLabel],['fit','版型',props.fit],['sizeGroup','尺码组',product.sizeGroup.label],['season','季节',product.seasonLabel]]as const;
  const extras=fields.filter(([key])=>settings[key]&&(key!=='fit'||props.fit!==undefined));
- return <><div className="mx-product-identity"><strong>{product.code}</strong><span title={product.name}>{product.name}</span></div>{props.showMeta&&extras.length>0&&<div className="mx-meta">{extras.map(([key,label,value])=><span key={key}><em>{label}</em> {value??'未提供'}</span>)}</div>}</>;
+ return <><div className="mx-product-identity"><strong title={product.code}>{product.code}</strong><span title={product.name}>{product.name}</span></div>{props.showMeta&&extras.length>0&&<div className="mx-meta">{extras.map(([key,label,value])=><span key={key}><em>{label}</em> {value??'未提供'}</span>)}</div>}</>;
 }
 
 function ViewProduct(props: { readonly product: InventoryProduct; readonly actions: InventoryActions }) {
@@ -259,12 +262,15 @@ function MeasuredInventoryMatrix(props:MatrixProps&{readonly windowing:Inventory
  },[props.data,props.settings,revision,sections,viewport?.width,props.windowing.element,props.windowing.scope.signal]);
  const scroll=useCallback((position:{scrollTop:number;scrollLeft:number})=>{const element=props.windowing.element.current;if(element&&!props.windowing.scope.signal.aborted){element.scrollTop=position.scrollTop;element.scrollLeft=position.scrollLeft;updateViewport();}},[props.windowing.element,props.windowing.scope.signal,updateViewport]);
  const invalid=useCallback(()=>{setMeasured(null);setRevision(value=>value+1);},[]);
+ const {compact,fixedColumns:[productWidth,colorWidth,warehouseWidth,totalWidth,actionWidth],fixedWidth,minimumSizeWidth}=inventoryMatrixDimensions(props.settings);
+ const fittedSizeWidth=(count:number)=>compact?Math.max(minimumSizeWidth,((viewport?.width??props.windowing.element.current?.clientWidth??0)-fixedWidth)/Math.max(1,count)):minimumSizeWidth;
  if(current&&viewport)return <WindowedInventoryMatrix {...props} windowing={{scope:props.windowing.scope,layout:current.layout,fixedWidths:current.fixed,sectionWidths:current.sections,continuity,sectionGap:current.gap,viewport:{...viewport,fixedLeadingWidth:current.fixed[0]+current.fixed[1]+current.fixed[2],fixedTrailingWidth:current.fixed[3]+current.fixed[4]},onScrollRequest:scroll,onInvalidGeometry:invalid}}/>;
- return <><div ref={probe} aria-hidden="true" inert data-inventory-measuring="" style={{position:'absolute',left:0,top:0,width:'100%',visibility:'hidden',pointerEvents:'none'}}>{sections.map(([key,products],sectionIndex)=>{const first=products[0]!;const probes=new Map<string,{product:InventoryProduct;fit?:InventoryColorFit['fit']}>();for(const product of products){const fits=props.settings.fit?[...new Map(product.colorFits.map(g=>[g.fit.id,g.fit])).values()]:[];for(const fit of [null,...fits]){const name=metadataMeasureKey(key,product,props.settings,fit?.label);if(!probes.has(name))probes.set(name,{product,...(fit?{fit}:{})});}}const metadata=[...probes].map(([name,{product,fit}])=><MatrixMeasureRow key={name} name={name} product={product} settings={props.settings} actions={props.actions} meta fold {...(fit?{fit:fit.label}:{})}/>);return <section key={key} className="mx-section" data-measure-section={key} style={{'--mx-table-width':`${714+first.sizes.length*76}px`} as CSSProperties}>{props.settings.sizeDescription&&<h3>{first.sizeGroup.label}<small>{first.sizes.map(size=>size.label).join(' / ')}</small></h3>}<table className="mx-table"><colgroup><col style={{width:300}}/><col style={{width:116}}/><col style={{width:152}}/>{first.sizes.map(size=><col key={size.id} style={{width:76}}/>)}<col style={{width:76}}/><col style={{width:70}}/></colgroup><thead><tr><th className="mx-product">款号／商品名称</th><th className="mx-color">颜色</th><th className="mx-warehouse">仓库</th>{first.sizes.map(size=><th className="mx-size" key={size.id}>{size.label}</th>)}<th className="mx-total-cell">合计</th><th className="ui-action-cell">操作</th></tr></thead><tbody>{sectionIndex===0&&<><MatrixMeasureRow name="warehouse" product={first} settings={props.settings} actions={props.actions}/><MatrixMeasureRow name="warehouse-fold" product={first} settings={props.settings} actions={props.actions} fold/><MatrixMeasureRow name="color-total" product={first} settings={props.settings} actions={props.actions} total="color"/><MatrixMeasureRow name="product-total" product={first} settings={props.settings} actions={props.actions} total="product"/></>}{metadata}</tbody></table></section>;})}</div><div className="iw-state" role="status" style={{height:continuity.current?.height??viewport?.height??1}}>正在整理库存…</div></>;
+ return <><div ref={probe} aria-hidden="true" inert data-inventory-measuring="" style={{position:'absolute',left:0,top:0,width:'100%',visibility:'hidden',pointerEvents:'none'}}>{sections.map(([key,products],sectionIndex)=>{const first=products[0]!;const probes=new Map<string,{product:InventoryProduct;fit?:InventoryColorFit['fit']}>();for(const product of products){const fits=props.settings.fit?[...new Map(product.colorFits.map(g=>[g.fit.id,g.fit])).values()]:[];for(const fit of [null,...fits]){const name=metadataMeasureKey(key,product,props.settings,fit?.label);if(!probes.has(name))probes.set(name,{product,...(fit?{fit}:{})});}}const metadata=[...probes].map(([name,{product,fit}])=><MatrixMeasureRow key={name} name={name} product={product} settings={props.settings} actions={props.actions} meta fold {...(fit?{fit:fit.label}:{})}/>);const sizeWidth=fittedSizeWidth(first.sizes.length);return <section key={key} className="mx-section" data-matrix-compact={compact||undefined} data-measure-section={key} style={{'--mx-table-width':`${fixedWidth+first.sizes.length*sizeWidth}px`,'--iw-matrix-identity':productWidth+'px'} as CSSProperties}>{props.settings.sizeDescription&&<h3>{first.sizeGroup.label}<small>{first.sizes.map(size=>size.label).join(' / ')}</small></h3>}<table className="mx-table"><colgroup><col style={{width:productWidth}}/><col style={{width:colorWidth}}/><col style={{width:warehouseWidth}}/>{first.sizes.map(size=><col key={size.id} style={{width:sizeWidth}}/>)}<col style={{width:totalWidth}}/><col style={{width:actionWidth}}/></colgroup><thead><tr><th className="mx-product">款号／商品名称</th><th className="mx-color">颜色</th><th className="mx-warehouse">仓库</th>{first.sizes.map(size=><th className="mx-size" key={size.id}>{size.label}</th>)}<th className="mx-total-cell">合计</th><th className="ui-action-cell">操作</th></tr></thead><tbody>{sectionIndex===0&&<><MatrixMeasureRow name="warehouse" product={first} settings={props.settings} actions={props.actions}/><MatrixMeasureRow name="warehouse-fold" product={first} settings={props.settings} actions={props.actions} fold/><MatrixMeasureRow name="color-total" product={first} settings={props.settings} actions={props.actions} total="color"/><MatrixMeasureRow name="product-total" product={first} settings={props.settings} actions={props.actions} total="product"/></>}{metadata}</tbody></table></section>;})}</div><div className="iw-state" role="status" style={{height:continuity.current?.height??viewport?.height??1}}>正在整理库存…</div></>;
 }
 
 function WindowedInventoryMatrix(props: MatrixProps & { readonly windowing: InventoryMatrixWindowing }) {
   const { windowing } = props;
+  const { compact } = inventoryMatrixDimensions(props.settings);
   const aborted = useSyncExternalStore(callback => {
     windowing.scope.signal.addEventListener('abort', callback);
     return () => windowing.scope.signal.removeEventListener('abort', callback);
@@ -375,7 +381,7 @@ function WindowedInventoryMatrix(props: MatrixProps & { readonly windowing: Inve
       const fixed=windowing.sectionWidths?.get(entry.section.key)??windowing.fixedWidths??[300,116,152,76,70];
       const tableWidth = fixed.reduce((sum,width)=>sum+width,0) + entry.section.sizeExtent;
       const rowWindow = (row: InventoryWindowRow): RowWindow => ({ columns: entry.columns, row, sectionStart: entry.section.headerRow, bindCell,projectedFocus });
-      return <section key={entry.section.key} className="mx-section" data-size-system={first.sizeGroup.id} style={{ '--mx-table-width': `${tableWidth}px`, position: 'absolute', top: entry.top, margin: 0 } as CSSProperties} aria-label={`${first.sizeGroup.label}库存矩阵`}>
+      return <section key={entry.section.key} className="mx-section" data-matrix-compact={compact||undefined} data-size-system={first.sizeGroup.id} style={{ '--mx-table-width': `${tableWidth}px`, ...(windowing.sectionWidths ? {'--iw-matrix-identity':fixed[0]+'px'} : {}), position: 'absolute', top: entry.top, margin: 0 } as CSSProperties} aria-label={`${first.sizeGroup.label}库存矩阵`}>
         {props.settings.sizeDescription && <h3 data-window-row-height={entry.section.headerTop - entry.section.top}>{first.sizeGroup.label}<small>{first.sizes.map(size => size.label).join(' / ')}</small></h3>}
         <table className="mx-table" aria-rowcount={entry.section.endRow - entry.section.headerRow} aria-colcount={first.sizes.length + 5}><caption className="sr-only">{first.sizeGroup.label}，商品、颜色、版型、仓库及尺码库存；— 表示不存在此规格，合法规格无库存显示 0。</caption>
           <colgroup><col style={{ width: fixed[0] }} /><col style={{ width: fixed[1] }} /><col style={{ width: fixed[2] }} />{entry.columns.map(part => part.kind === 'gap' ? <col key={`gap-${part.start}`} span={part.count} style={{ width: part.width / part.count }} /> : <col key={part.column.size.id} style={{ width: part.column.width }} />)}<col style={{ width: fixed[3] }} /><col style={{ width: fixed[4] }} /></colgroup>

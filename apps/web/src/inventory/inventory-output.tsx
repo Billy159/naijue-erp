@@ -3,6 +3,7 @@ import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { InventoryFilter, InventoryOutputCapability } from './contracts.ts';
 import type { InventoryDisplaySettings } from './inventory-matrix.tsx';
+import { canViewProductSupplier } from '../products/product-supplier-visibility.ts';
 import { createInventoryPrintHtmlAsync, inventoryWorkbookRowsAsync } from './output-adapter.ts';
 
 export interface InventoryOutputContentProps {
@@ -27,15 +28,16 @@ export function InventoryOutputContent(props: InventoryOutputContentProps) {
     const own = { controller: new AbortController(), sequence: ++sequence.current };
     operation.current = own; setBusy(true); setError(false); setPreview(null); setReady(false);
     const signal = AbortSignal.any([props.scope.signal, own.controller.signal]);
+    const showSupplier = canViewProductSupplier(props.scope.identity);
     const current = () => attached.current && props.scope.active && !signal.aborted && sequence.current === own.sequence;
     try {
       const data = await props.capability.reader.readOutput({ parameters: props.filter, signal, identity: props.scope.identity, routeInstanceId: props.scope.routeInstanceId, entityId: null });
       if (!current()) return;
-      if (props.kind === 'print') { const html=await createInventoryPrintHtmlAsync(data,props.filter,props.settings,signal);if(current())setPreview({html,sequence:own.sequence}); }
+      if (props.kind === 'print') { const html=await createInventoryPrintHtmlAsync(data,props.filter,props.settings,signal,showSupplier);if(current())setPreview({html,sequence:own.sequence}); }
       else {
         const { createWorkbookRowsAsync } = await import('../components/document-output.tsx');
         if (!current()) return;
-        const bytes = await createWorkbookRowsAsync(inventoryWorkbookRowsAsync(data, props.filter, props.settings,signal),{signal});
+        const bytes = await createWorkbookRowsAsync(inventoryWorkbookRowsAsync(data, props.filter, props.settings,signal,showSupplier),{signal});
         if (!current()) return;
         const url = URL.createObjectURL(new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
         const link = document.createElement('a'); link.href = url; link.download = '库存状况.xlsx'; link.hidden = true; document.body.append(link);

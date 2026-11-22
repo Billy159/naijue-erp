@@ -5,6 +5,7 @@ import { ProductCandidatePreview } from '../components/product-candidate-preview
 import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
 import { ReadScope } from '../loading/read-scope.ts';
 import { guardedProductPageReader } from '../products/product-page-reader.ts';
+import { canViewProductSupplier } from '../products/product-supplier-visibility.ts';
 import type { ProductFullPageConfiguration } from '../products/product-page-contracts.ts';
 export interface ProductFinderPreviewCapability { readonly configuration: ProductFullPageConfiguration; readonly onUnauthorized?: () => void }
 import './product-finder.css';
@@ -40,7 +41,7 @@ function CandidateProductData({ product, scope, capability }: { readonly product
   const current = owned && owned.parent === scope && owned.capability === capability && owned.productId === product.id && owned.scope.active ? owned : null;
   if (denied) return <aside className="pf-preview" role="alert">商品资料暂不可读取。</aside>;
   if (current) return <aside className="pf-preview"><ProductCandidatePreview parent={current.scope} productId={product.id} reader={current.reader} /></aside>;
-  return <aside className="pf-preview" aria-label="当前候选商品资料"><div className="pf-transfer-title">商品资料</div><div className="pf-transfer-no-photo">图片资料未提供</div><div className="pf-transfer-info">{[['款号', product.code], ['商品名称', product.name], ['颜色', '未提供'], ['商品分类', product.category?.label ?? '未知分类'], ['季节', '未提供'], ['版型', '未提供'], ['供应商', '未提供'], ['零售价', product.retailPrice ?? '未提供']].map(([label, value]) => <span key={label}><small>{label}</small> {value}</span>)}</div></aside>;
+  return <aside className="pf-preview" aria-label="当前候选商品资料"><div className="pf-transfer-title">商品资料</div><div className="pf-transfer-no-photo">图片资料未提供</div><div className="pf-transfer-info">{[['款号', product.code], ['商品名称', product.name], ['颜色', '未提供'], ['商品分类', product.category?.label ?? '未知分类'], ['季节', '未提供'], ['版型', '未提供'], ...(canViewProductSupplier(scope?.identity) ? [['供应商', '未提供']] : []), ['零售价', product.retailPrice ?? '未提供']].map(([label, value]) => <span key={label}><small>{label}</small> {value}</span>)}</div></aside>;
 }
 /** Frozen product-finder.js paint/highlight/key + golden-consistency.css finder
  * structure. Arco Trigger owns positioning in the caller; raw search stays in

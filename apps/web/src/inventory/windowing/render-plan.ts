@@ -32,8 +32,8 @@ export function inventoryDOMScrollTop(model: InventoryWindowModel, top: number, 
 }
 
 /** A native-table plan: visible rows/columns plus at most one retained focus. */
-export function createInventoryRenderPlan(model: InventoryWindowModel, viewport: InventoryWindowViewport, sectionGap: number, focus: InventoryLogicalCell | null = null): InventoryRenderPlan {
-  const window = model.window(inventoryModelViewport(model, viewport, sectionGap));
+export function createInventoryRenderPlan(model: InventoryWindowModel, viewport: InventoryWindowViewport, sectionGap: number, focus: InventoryLogicalCell | null = null, options?: { readonly clampSectionsX?: boolean }): InventoryRenderPlan {
+  const window = model.window(inventoryModelViewport(model, viewport, sectionGap), options?.clampSectionsX);
   const focused = focus ? model.resolveCell(focus) : null;
   const sectionIndices = new Set(window.sections.map(entry => entry.section.index));
   if (focused?.rowIndex !== null && focused?.rowIndex !== undefined) sectionIndices.add(focused.sectionIndex);

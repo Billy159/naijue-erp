@@ -3,6 +3,8 @@ export interface ReadIdentity {
   readonly accountId: string;
   readonly sessionRevision: string;
   readonly permissionRevision: string;
+  /** Authenticated presentation context; authorization is still enforced by the server. */
+  readonly role?: string;
 }
 
 /** A single mounted route, drawer or entity. Dispose before replacing its target. */
@@ -67,6 +69,7 @@ function validatedIdentity(identity: ReadIdentity): ReadIdentity {
     accountId: identity.accountId,
     sessionRevision: identity.sessionRevision,
     permissionRevision: identity.permissionRevision,
+    ...(identity.role === undefined ? {} : { role: identity.role }),
   });
 }
 

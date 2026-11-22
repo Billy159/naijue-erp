@@ -8,7 +8,11 @@ export type ProductReadIntent =
   | { readonly kind: "basics" | "specifications" | "images"; readonly parameters: ProductQuery }
   | { readonly kind: "image"; readonly parameters: ProductImageQuery };
 /** A fresh, explicit target grant, never a client role or an implicit global catalogue grant. */
-export interface ProductReadGrant { readonly productId: EntityId<"product"> }
+export interface ProductReadGrant {
+  readonly productId: EntityId<"product">;
+  /** Internal restriction from fresh trusted role; not a client query field. */
+  readonly hideSupplier?: true;
+}
 export interface ProductQueryAuthorization {
   authorize(actor: ActorContext, intent: ProductReadIntent, signal: AbortSignal): Promise<ProductReadGrant>;
 }

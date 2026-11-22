@@ -1,4 +1,4 @@
-import { defaultDocumentFit, readDefaultDocumentFitIds } from './document-fit-default.ts';
+import { defaultDocumentFit, documentDefaultFitSkus, readDefaultDocumentFitIds, type DocumentFitSku } from './document-fit-default.ts';
 import { BoundedReadPool,readCompleteSkuPages } from '../loading/bounded-read-pool.ts';
 import type { DictionaryListQuery, DictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import { TRANSFER_PREPARE_MAX_LINES, TRANSFER_PREPARE_MAX_NOTE_LENGTH } from '../../../../packages/application/src/transfer-payload-budget.ts';
@@ -36,6 +36,7 @@ export interface TransferPendingEntry {
   readonly query: string; readonly product: CurrentFormProduct | null;
   readonly color: { readonly id: string; readonly name: string } | null; readonly fit: { readonly id: string; readonly name: string } | null;
   readonly defaultFit?: NonNullable<TransferPendingEntry['fit']> | null;
+  readonly defaultFitSkus?: readonly DocumentFitSku[];
   readonly skus: readonly CurrentFormSku[]; readonly page: number; readonly exactTotal: bigint | null;
   readonly sizeQuantities: Readonly<Record<string, string>>;
   readonly phase: 'idle' | 'loading' | 'ready' | 'error'; readonly quantities: Readonly<Record<string, string>>;
@@ -75,7 +76,6 @@ export class TransferProposalSession {
   #request: AbortController | null = null; #sequence = 0; #revision = 0;
   #seeded = false;
   #responsibleDefaultClosed = false;
-  #fitIntentRevision = 0;
   readonly #savedLines = new Map<string, { readonly skuId: string; readonly snapshot: TransferDraftDto['lines'][number]['snapshot'] }>();
   readonly #sizeGroups = new Map<string, DictionarySizeGroup>();
   #skuRead: AbortController | null = null; #skuSequence = 0;
@@ -264,11 +264,12 @@ export class TransferProposalSession {
       for (const sku of now.skus) if (now.quantities[sku.id] || this.#state.draft.lines.some(row => row.sku?.id === sku.id)) known.set(sku.id, sku);
       for (const sku of all) { if (sku.productId !== product.id) throw new TypeError('Foreign product SKU.'); known.set(sku.id, sku); }
       for (const sku of now.skus) if (known.size < TRANSFER_PREPARE_MAX_LINES) known.set(sku.id, sku);
-      const next = { ...now, phase: 'ready' as const, skus: [...known.values()], page, exactTotal: result.exactTotal };
+      const refreshDefault = !this.#seeded && !this.#state.replacement && !now.userEdited && (!now.fit || !!now.defaultFit);
+      const next = { ...now, ...(refreshDefault ? { fit: null, defaultFit: null, defaultFitSkus: [] } : {}), phase: 'ready' as const, skus: [...known.values()], page, exactTotal: result.exactTotal };
       this.#publish({ pending: this.#mapReplacement(next) });
-      // Only a fresh entry may default. Existing/replacement Y and explicit user
-      // choices are never replaced, even if this read finishes later.
-      if (!this.#seeded && !this.#state.replacement && this.#state.pending.fit === null) await this.#defaultAFromCurrentFits(product.id, sequence, signal);
+      // Only a fresh entry may default. Use the freshly completed pages, not
+      // retained SKU rows kept above to preserve earlier quantity input.
+      if (refreshDefault) await this.#defaultAFromCurrentFits(product.id, all, sequence, signal);
     } catch (error) {
       if (signal.aborted || this.#state.disposed || sequence !== this.#skuSequence) return;
       if (error instanceof HttpQueryError && ['unauthenticated', 'forbidden'].includes(error.kind)) { this.#scope.dispose(); try { this.#onAccessFailure?.(error); } catch { /* cleared first */ } return; }
@@ -291,23 +292,21 @@ export class TransferProposalSession {
   /** Canonical A comes from the existing fit dictionary code, never a display
    * name, SKU-code substring or a fabricated default ID. Only a fit present in
    * this product's fully read genuine SKU set can become the initial default. */
-  async #defaultAFromCurrentFits(productId: string, sequence: number, signal: AbortSignal): Promise<void> {
-    const read = this.#reader.readFits, intentRevision = this.#fitIntentRevision;
+  async #defaultAFromCurrentFits(productId: string, skus: readonly CurrentFormSku[], sequence: number, signal: AbortSignal): Promise<void> {
+    const read = this.#reader.readFits;
     if (!read) return;
     const current = () => !signal.aborted && this.#scope.active && !this.#state.disposed
       && sequence === this.#skuSequence && !this.#state.replacement
       && this.#state.pending.product?.id === productId && this.#state.pending.phase === 'ready'
-      && this.#state.pending.fit === null && this.#fitIntentRevision === intentRevision;
+      && !this.#state.pending.userEdited && (!this.#state.pending.fit || !!this.#state.pending.defaultFit);
     if (!current()) return;
     try {
       const ids = await readDefaultDocumentFitIds(read, signal);
       if (!current()) return;
       if (!ids) { this.#publish({ notice: '默认A版资料未完整读取，请手工选择版型。' }); return; }
-      const pending = this.#state.pending, defaultFit = defaultDocumentFit(pending.skus, ids);
-      if (defaultFit) {
-        const compatible = !pending.color || pending.skus.some(sku => sku.colorId === pending.color!.id && sku.fitId === defaultFit.id);
-        this.#publish({ pending: { ...pending, defaultFit, fit: compatible ? defaultFit : null } });
-      }
+      const pending = this.#state.pending, defaultFitSkus = documentDefaultFitSkus(skus, ids);
+      const defaultFit = defaultDocumentFit(defaultFitSkus, pending.color?.id);
+      this.#publish({ pending: { ...pending, defaultFitSkus, defaultFit, fit: defaultFit } });
     } catch (error) {
       if (!current()) return;
       if (error instanceof HttpQueryError && error.kind === 'unauthenticated') {
@@ -318,14 +317,14 @@ export class TransferProposalSession {
   selectPendingSpec(kind: 'color' | 'fit', id: string): boolean {
     const pending = this.#state.pending;
     if (this.#state.disposed || !pending.product || pending.phase !== 'ready') return false;
+    const fresh = !this.#seeded && !this.#state.replacement;
     const sku = pending.skus.find(sku => kind === 'color' ? sku.colorId === id : sku.fitId === id);
     if (!sku) return false;
     if ([...Object.values(pending.quantities), ...Object.values(pending.sizeQuantities)].some(raw => raw !== '') && pending.userEdited) { this.#publish({ notice: '已有尚未完成的数量输入，请先完成、清除或取消当前改选。' }); return false; }
-    if (kind === 'fit') this.#fitIntentRevision++;
-    const preferredFit = pending.fit ?? pending.defaultFit ?? null;
-    const fit = preferredFit && preferredFit === pending.defaultFit && !pending.skus.some(row => row.colorId === sku.colorId && row.fitId === preferredFit.id) ? null : preferredFit;
-    const next = kind === 'color' ? { ...pending, color: { id: sku.colorId, name: sku.colorName }, fit, quantities: {}, sizeQuantities: {}, userEdited: false }
-      : { ...pending, fit: { id: sku.fitId, name: sku.fitName }, quantities: {}, sizeQuantities: {}, userEdited: false };
+    const manualFit = pending.defaultFit ? null : pending.fit;
+    const defaultFit = fresh && kind === 'color' && !manualFit ? defaultDocumentFit(pending.defaultFitSkus ?? [], sku.colorId) : null;
+    const next = kind === 'color' ? { ...pending, color: { id: sku.colorId, name: sku.colorName }, fit: fresh ? manualFit ?? defaultFit : pending.fit, defaultFit, quantities: {}, sizeQuantities: {}, userEdited: false }
+      : { ...pending, fit: { id: sku.fitId, name: sku.fitName }, defaultFit: null, quantities: {}, sizeQuantities: {}, userEdited: false };
     this.#pending(this.#mapReplacement(next)); this.closePicker(); return true;
   }
   setPendingQuantity(skuId: string, raw: string): boolean {

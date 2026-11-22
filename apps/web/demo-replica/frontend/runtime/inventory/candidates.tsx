@@ -15,6 +15,7 @@ import type { Candidate, CandidateKind, CandidatePage, CandidateParameters, Inve
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import type { ProductReadOnlyReader } from '../../../../src/inventory/product-contracts.ts';
 import { ProductCandidatePreview } from '../products/preview.tsx';
+import { categoryFilterRoots, useVerifiedCategoryParents } from './category-parent-verification.ts';
 import { productCss, categoryCss, filterCss } from './source-control-css.ts';
 
 import { ALL_FILTER_VALUE as ALL,checkedFilterValues,resolveFilterSelection,assertSelectionBudget,pasteCodes,SelectionBudgetError } from './filter-selection.ts';
@@ -57,9 +58,10 @@ function CandidateContent(p:CandidateSelectProps&{portal:HTMLElement;host:HTMLEl
  useEffect(()=>{if(!open||p.kind==='product'&&!input.trim())return;setItems([]);setLoaded(null);const timer=setTimeout(()=>{void run(1);},input.trim()?180:0);return()=>{clearTimeout(timer);query.cancel();};},[open,signature]);
  const mounted=useRef(false);useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;if(previewFrame.current!==null)cancelAnimationFrame(previewFrame.current);query.cancel();paste.current?.abort();selectionRequest.current?.abort();queueMicrotask(()=>{if(!mounted.current)query.dispose();});};},[query]);
  useEffect(()=>{if(state.phase==='success'&&state.success){const {parameters,data}=state.success;const own=JSON.stringify([parameters.search,parameters.categoryIds]);if(own!==signatureRef.current)return;setItems(previous=>parameters.page===1?data.items:[...new Map([...previous,...data.items].map(item=>[item.id,item])).values()]);setLoaded({signature:own,page:data.page,total:data.exactTotal});}if(state.phase==='error'&&state.error instanceof HttpQueryError&&(state.error.kind==='forbidden'||state.error.kind==='unauthenticated')){refs.current.onAccessFailure(state.error);p.scope.dispose();}},[state]);
+ const verifiedParents=useVerifiedCategoryParents({scope:p.scope,items,active:open&&p.kind==='category'&&loaded?.signature===signature,intent:signature,denied:p.onAccessFailure,lookup:(parent,page,signal)=>p.reader.readCandidates({parameters:{kind:'category',search:parent.label,page,pageSize:20,selectedIds:[],categoryIds:[...p.categoryIds]},signal,identity:p.scope.identity,routeInstanceId:p.scope.routeInstanceId,entityId:null})});
  const allLabel=p.kind==='category'?'全部分类':'全部'+labels[p.kind];
  const selected=p.value??[];
- const names=useMemo(()=>new Map([[ALL,allLabel],...items.map(x=>[x.id,x.label] as const),...selected.map(x=>[x.id,x.label] as const)]),[items,p.value,p.kind]);
+ const names=useMemo(()=>new Map([[ALL,allLabel],...items.map(x=>[x.id,x.label] as const),...verifiedParents.map(x=>[x.id,x.label] as const),...selected.map(x=>[x.id,x.label] as const)]),[items,verifiedParents,p.value,p.kind]);
  const tagLimit=useMemo(()=>{const canvas=document.createElement('canvas').getContext('2d');if(!canvas)return 1;canvas.font='13px Arial';const values=selected.slice(0,3).map(x=>Math.min(canvas.measureText(x.label).width+37,geometry.width-50));for(let n=Math.min(3,selected.length);n>1;n--)if(values.slice(0,n).reduce((a,b)=>a+b,0)+(n-1)*4+(selected.length>n?92:42)<=geometry.width)return n;return 1;},[selectionSignature,geometry.width]);
  const busy=state.phase==='loading';
  const more=()=>{if(query.getSnapshot().phase!=='loading'&&loaded?.signature===signature&&items.length<loaded.total)void run(loaded.page+1);};
@@ -82,11 +84,7 @@ function CandidateContent(p:CandidateSelectProps&{portal:HTMLElement;host:HTMLEl
     {!input.trim()?(history.length?history.map((code,index)=><Select.Option key={code} value={'__recent__'+index}><span className="inv-recent"><span title={code}>{code}</span><button type="button" aria-label={'删除最近搜索 '+code} onMouseDown={e=>{e.preventDefault();e.stopPropagation();}} onClick={e=>{e.stopPropagation();saveHistory(history.filter(x=>x!==code));}}>×</button></span></Select.Option>):<Select.Option value="__recent_empty__" disabled>暂无最近搜索</Select.Option>):items.map(item=><Select.Option key={item.id} value={item.id} disabled={!!item.disabled} onMouseEnter={()=>setPreviewId(item.id)}><span className="inv-option-row"><span className="inv-option-code">{item.code}</span><span className="inv-option-name">{item.name}</span></span></Select.Option>)}
    </Select>;
  }
- type Node={key:string;value:string;title:string;disabled?:boolean;children?:Node[]};
- const nodes:Node[]=items.map(item=>({key:item.id,value:item.id,title:item.label,...(item.disabled?{disabled:true}:{})}));
- const roots:Node[]=[];const byId=new Map(nodes.map(n=>[n.key,n]));
- if(p.kind==='category')for(const item of items){const node=byId.get(item.id)!;if(item.parentId){let parent=byId.get(item.parentId);if(!parent){parent={key:item.parentId,value:item.parentId,title:item.parentLabel??'',disabled:true,children:[]};byId.set(parent.key,parent);roots.push(parent);}parent.children??=[];parent.children.push(node);}else roots.push(node);}
- else roots.push(...nodes);
+ const roots=categoryFilterRoots(items,verifiedParents,p.kind==='category');
  const completeCandidates=loaded?.signature===signature&&!input.trim()&&items.length===loaded.total;
  const checked=checkedFilterValues(p.value,items,completeCandidates,p.kind==='category'),allSelected=checked.includes(ALL);
  // Commit async selection before clearing its search; optionChecked is an
@@ -95,7 +93,7 @@ function CandidateContent(p:CandidateSelectProps&{portal:HTMLElement;host:HTMLEl
   invalidatePaste();
   selectionRequest.current?.abort();const own=new AbortController();selectionRequest.current=own;const signal=AbortSignal.any([own.signal,p.scope.signal]);setSelecting(true);
   try{
-   const result=await resolveFilterSelection(p.value,items,next,extra,async()=>{
+   const result=await resolveFilterSelection(p.value,verifiedParents.length?[...items,...verifiedParents]:items,next,extra,async()=>{
     const result:Candidate[]=[];for(let page=1;;page++){if(signal.aborted)throw new DOMException('已取消','AbortError');const data=await p.reader.readCandidates({parameters:{kind:p.kind,search:'',page,pageSize:20,selectedIds:[],categoryIds:[...p.categoryIds]},signal,identity:p.scope.identity,routeInstanceId:p.scope.routeInstanceId,entityId:null});result.push(...data.items);if(new Set(result.filter(item=>!('disabled'in item&&item.disabled)).map(item=>item.id)).size>INVENTORY_MAX_SELECTIONS+1)throw new SelectionBudgetError(INVENTORY_MAX_SELECTIONS);if(page*20>=data.exactTotal)return result;}
    },completeCandidates,INVENTORY_MAX_SELECTIONS,p.kind==='category');
    if(!signal.aborted&&selectionRequest.current===own){p.onChange(result);setInput('');}

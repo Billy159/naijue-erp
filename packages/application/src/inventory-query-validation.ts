@@ -75,7 +75,8 @@ export function parseInventoryCandidateQuery(value: unknown): InventoryCandidate
 }
 export function checkedInventoryScope(value: InventoryReadScope): InventoryReadScope {
   const reject = rejectInventoryResponse;
-  const scope = record(value, ["hallIds", "warehouses"], [], reject);
+  const scope = record(value, ["hallIds", "warehouses"], ["hideSupplier"], reject);
+  if (Object.hasOwn(scope, "hideSupplier") && scope.hideSupplier !== true) reject();
   const hallIds = arrayValue(scope.hallIds, INVENTORY_SCOPE_MAX_ITEMS, reject).map(id => idValue("hall", id, reject));
   const warehouses = arrayValue(scope.warehouses, INVENTORY_SCOPE_MAX_ITEMS, reject).map(item => {
     const row = record(item, ["id", "hallId", "label"], [], reject);
@@ -84,7 +85,7 @@ export function checkedInventoryScope(value: InventoryReadScope): InventoryReadS
   if (new Set(hallIds).size !== hallIds.length || new Set(warehouses.map(row => row.id)).size !== warehouses.length
     || warehouses.some(row => !hallIds.includes(row.hallId))) reject();
   if (!hallIds.length || !warehouses.length) throw new DomainError("FORBIDDEN", "No authorized inventory scope");
-  return Object.freeze({ hallIds: Object.freeze(hallIds), warehouses: Object.freeze(warehouses) });
+  return Object.freeze({ hallIds: Object.freeze(hallIds), warehouses: Object.freeze(warehouses), ...(scope.hideSupplier === true ? { hideSupplier: true as const } : {}) });
 }
 export function exactInteger(value: unknown, cell: boolean): bigint {
   const text = textValue(value, rejectInventoryResponse, false, INVENTORY_TOTAL_MAX_CHARS);

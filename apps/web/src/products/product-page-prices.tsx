@@ -7,6 +7,6 @@ export function View({ scope, reader }: ProductPageTabProps) {
   const { snapshot, read, cancel, cancelled } = useProductRead(scope, value => reader.prices!.read(value), productPricesResponse);
   const data = snapshot.success?.data;
   return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>
-    {data && <ProductPriceSourceBody value={key=><span className="pc-read-value product-readonly-price-value">{data.prices[key]??'—'}</span>}/>}
+    {data && <ProductPriceSourceBody value={key=><span className="pc-read-value product-readonly-price-value">{data.prices[key]??''}</span>}/>}
   </ProductReadState>;
 }

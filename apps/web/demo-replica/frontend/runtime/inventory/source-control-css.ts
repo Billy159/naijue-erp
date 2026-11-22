@@ -78,6 +78,7 @@ export const productCss = `
 .inv-no-result{padding:12px;color:var(--ca-ink-2);font-size:13px}
 @media(max-width:740px){.inv-menu-grid{grid-template-columns:1fr;gap:4px}}
 `;
+const filterToolsCss = `.inv-filter-tools{display:flex;align-items:center;gap:8px;padding:5px 8px 7px;border-bottom:1px solid var(--ca-line);color:var(--ca-ink-2);font-size:12px}`;
 export const categoryCss = `
 :host{display:block;width:100%;min-width:0;font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink);--arcoblue-6:var(--ca-primary-rgb);--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2);--color-border-2:var(--ca-control-border)}
 #root{width:100%;min-width:0}
@@ -104,6 +105,7 @@ export const categoryCss = `
 .arco-tree-select-popup .arco-tree-node-title{font-size:13px;color:var(--ca-ink)}
 .arco-tree-select-popup .arco-tree-node-selected .arco-tree-node-title,.arco-tree-select-popup .arco-tree-node:hover .arco-tree-node-title{background:var(--ca-popover-hover);color:var(--ca-ink)}
 .arco-tree-select-popup .arco-checkbox-checked .arco-checkbox-mask,.arco-tree-select-popup .arco-checkbox-indeterminate .arco-checkbox-mask{background:var(--ca-primary);border-color:var(--ca-primary)}
+${filterToolsCss}
 `;
 export const filterCss = `
 :host{display:block;width:100%;min-width:0;font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink);--arcoblue-6:var(--ca-primary-rgb);--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2);--color-border-2:var(--ca-control-border)}
@@ -131,7 +133,7 @@ export const filterCss = `
 .arco-tree-select-popup .arco-tree-node-selected,.arco-tree-select-popup .arco-tree-node:hover{background:var(--ca-popover-hover)}
 .arco-tree-select-popup .arco-tree-node-selected .arco-tree-node-title,.arco-tree-select-popup .arco-tree-node:hover .arco-tree-node-title{background:transparent;color:var(--ca-ink)}
 .arco-tree-select-popup .arco-checkbox-checked .arco-checkbox-mask,.arco-tree-select-popup .arco-checkbox-indeterminate .arco-checkbox-mask{background:var(--ca-primary);border-color:var(--ca-primary)}
-.inv-filter-tools{display:flex;align-items:center;gap:8px;padding:5px 8px 7px;border-bottom:1px solid var(--ca-line);color:var(--ca-ink-2);font-size:12px}
+${filterToolsCss}
 .inv-filter-empty{padding:10px;color:var(--ca-ink-2);font-size:13px}
 `;
 

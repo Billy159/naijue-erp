@@ -56,11 +56,15 @@ export function parseProductManagementCandidateQuery(value: unknown): ProductMan
 export function checkedProductManagementGrant(value: unknown): ProductManagementReadGrant {
   try {
     if (!value || typeof value !== "object" || !("kind" in value)) throw new Error();
-    const row = productManagementRecord(value, value.kind === "all" ? ["kind", "totalStock"] : ["kind", "productIds", "totalStock"]);
+    const keys = value.kind === "all" ? ["kind", "totalStock"] : ["kind", "productIds", "totalStock"];
+    const hidden = Object.hasOwn(value, "hideSupplier");
+    const row = productManagementRecord(value, hidden ? [...keys, "hideSupplier"] : keys);
+    if (hidden && row.hideSupplier !== true) invalidProductManagementQuery();
+    const restriction = hidden ? { hideSupplier: true as const } : {};
     if ((row.kind !== "all" && row.kind !== "products") || (row.totalStock !== "unavailable" && row.totalStock !== "all-warehouses")) throw new Error();
-    if (row.kind === "all") return Object.freeze({ kind: "all", totalStock: row.totalStock });
+    if (row.kind === "all") return Object.freeze({ kind: "all", totalStock: row.totalStock, ...restriction });
     const productIds = values(row.productIds, value => id("product", value), 10_000); if (!productIds.length) throw new Error();
-    return Object.freeze({ kind: "products", productIds, totalStock: row.totalStock });
+    return Object.freeze({ kind: "products", productIds, totalStock: row.totalStock, ...restriction });
   } catch { throw new DomainError("FORBIDDEN", "No explicit product management grant"); }
 }
 export function activeProductManagementRead(signal: AbortSignal): void {

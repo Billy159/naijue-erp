@@ -29,7 +29,7 @@ function Settings({ options }: { options: CataloguePageOptions }) {
   return <div className="pc-workbench pc-settings-page"><Head title="商品设置" /><section className="pc-settings">
     {group.header}
     <Dictionary panel={group.panel} key={tab} options={options} tab={tab} pageSize={pageSizes[tab]??20} rememberSize={size=>setPageSizes(sizes=>({...sizes,[tab]:size}))} guard={receiveGuard} />
-    {deferred && <ConfirmDialog title={unsavedChanges.discardTitle} className="sale-confirm" onCancel={() => setDeferred(null)} confirmDisabled={locked} onConfirm={() => { setTab(deferred); setDeferred(null); }}><p>{unsavedChanges.discardBody}</p></ConfirmDialog>}
+    {deferred && <ConfirmDialog title={unsavedChanges.discardTitle} tone="danger" onCancel={() => setDeferred(null)} confirmDisabled={locked} onConfirm={() => { setTab(deferred); setDeferred(null); }}><p>{unsavedChanges.discardBody}</p></ConfirmDialog>}
   </section></div>;
 }
 function Dictionary({ options, tab, guard, pageSize, rememberSize, panel }: { panel: RuntimeTabs['panel']; pageSize:Query['pageSize']; rememberSize:(size:Query['pageSize'])=>void; options: CataloguePageOptions; tab: ProductSettingTab; guard: (value: (() => boolean) | null, locked?: boolean) => void }) {

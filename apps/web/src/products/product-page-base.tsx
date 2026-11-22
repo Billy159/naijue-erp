@@ -2,14 +2,15 @@ import type { ReactNode } from 'react';
 import type { ProductBasics } from '../inventory/product-contracts.ts';
 import { assertProductBasics } from '../inventory/product-model.ts';
 import { ProductReadState, useProductRead } from '../inventory/product-tab-state.tsx';
+import { canViewProductSupplier } from './product-supplier-visibility.ts';
 import type { ProductPageTabProps } from './product-page-view.tsx';
 export function View({ scope, reader }: ProductPageTabProps) {
   const { snapshot, read, cancel, cancelled } = useProductRead(scope, value => reader.base!.read(value), assertProductBasics);
   const data = snapshot.success?.data;
-  return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{data&&<ProductReadOnlyBaseSource data={data}/>}</ProductReadState>;
+  return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{data&&<ProductReadOnlyBaseSource data={data} showSupplier={canViewProductSupplier(scope.identity)}/>}</ProductReadState>;
 }
 /** readonlyEditor keeps source captions; readonlyDrawerBody removes required marks. */
-export function ProductReadOnlyBaseSource({data,inDrawer=false}:{readonly data:ProductBasics;readonly inDrawer?:boolean}){
+export function ProductReadOnlyBaseSource({data,inDrawer=false,showSupplier=true}:{readonly data:ProductBasics;readonly inDrawer?:boolean;readonly showSupplier?:boolean}){
  const fields=[
   {label:'款号',value:data.code,required:true},{label:'商品名称',value:data.name,required:true},
   {label:'商品分类',value:data.categoryLabel,required:false,control:'category'},{label:'年份',value:data.yearLabel,required:true,control:'year'},
@@ -17,7 +18,7 @@ export function ProductReadOnlyBaseSource({data,inDrawer=false}:{readonly data:P
   {label:'厚薄（可选）',value:data.thickness??null,required:false,control:'thickness'},{label:'领型 / 裤型（可选）',value:data.collarPantsType??null,required:false,control:'shape'},
   {label:'系统货号',value:data.systemCode,required:false},
  ];
- return <ProductBaseSourceGrid className={inDrawer?'pd-source-base':'product-base-grid product-readonly-base-grid'} fields={fields.map(field=>({...field,required:!inDrawer&&field.required,content:['款号','商品名称','系统货号'].includes(field.label)?<span className="pc-read-value">{field.value??'未提供'}</span>:<div id={`pc-detail-${field.control}`} className="pc-arco-host" data-control={field.control}><span className="pc-read-value">{field.value??'未提供'}</span></div>}))}/>;
+ return <ProductBaseSourceGrid className={inDrawer?'pd-source-base':'product-base-grid product-readonly-base-grid'} fields={fields.filter(field=>showSupplier||field.control!=='supplier').map(field=>({...field,required:!inDrawer&&field.required,content:['款号','商品名称','系统货号'].includes(field.label)?<span className="pc-read-value">{field.value??'未提供'}</span>:<div id={`pc-detail-${field.control}`} className="pc-arco-host" data-control={field.control}><span className="pc-read-value">{field.value??'未提供'}</span></div>}))}/>;
 }
 
 export interface ProductBaseSourceField {readonly label:string;readonly required:boolean;readonly content:ReactNode}

@@ -1,7 +1,7 @@
 import { loadHistoricalSaleOrigin, isHistoricalSignedSale } from './sales-retained-approval.ts';
 import { preservesHistoricalSignedSale, allocateCurrentSalesDiscount, sameSalesLinePricingFacts } from "./sales-business-rules.ts";
 import { SALES_PREPARE_MAX_REQUEST_BYTES, SALES_PREPARE_MAX_LINES, SALES_PREPARE_MAX_NOTE_LENGTH, salesJsonByteLength, salesPreparedDraftFitsSaveBudget } from "./sales-payload-budget.ts";
-import type { SalesDraft, SalesLineRow } from "../../domain/src/documents.ts";
+import type { SalesDocument, SalesDraft, SalesLineRow } from "../../domain/src/documents.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import { discountUnitPrice } from "../../domain/src/sales-money.ts";
 import { businessDate, decimalToMinor, entityId, minorAmount, multiplyMoney, quantity } from "../../domain/src/values.ts";
@@ -13,10 +13,22 @@ import type { DocumentSkuSelection } from './document-specification.ts';
 import type { StoredSales } from './ports.ts';
 import type { EntityId } from '../../domain/src/values.ts';
 
-/** Manual sales/independent-return/exchange proposal: IDs and explicit pricing intent, never labels,
+/** Current sales/return writes carry IDs and explicit pricing intent, never labels,
  * barcode, reference/minimum-price authority, calculated totals or document IDs.
- * RETURN/EXCHANGE reuse independent signed economics: nonzero ± rows, no original
- * sale association, zero whole discount/allocation. Settlement equality is APPROVE-only. */
+ * The legacy command shape still parses EXCHANGE for settled receipt replay. */
+export function isRetiredSalesExchange(document: SalesDocument | undefined): boolean {
+  return document?.header.businessType === "EXCHANGE"
+    || (document?.header.businessType === "RETURN" && document.lines.some(line => line.isCurrent && line.quantity > 0n));
+}
+export function assertActiveSalesWrite(businessType: SalesDraft["header"]["businessType"], lines: readonly { readonly quantity: bigint | string }[], previous?: SalesDocument, historicalSigned = false): void {
+  requireDomain(!isRetiredSalesExchange(previous) && businessType !== "EXCHANGE"
+    && (businessType !== "RETURN" || lines.every(line => (typeof line.quantity === "string" ? quantity(line.quantity) : line.quantity) < 0n)),
+    "INVALID_BUSINESS_TYPE", "Current returns require negative quantities; legacy exchanges are read-only");
+  if (businessType === "SALE" && !historicalSigned && !(previous?.header.businessType === "SALE" && previous.lines.some(row => row.isCurrent && row.quantity < 0n))) {
+    requireDomain(lines.every(row => (typeof row.quantity === "string" ? quantity(row.quantity) : row.quantity) > 0n),
+      "INVALID_SALES_QUANTITY", "销售数量必须为正。换货请先开退货单，再另开销售单。");
+  }
+}
 export interface NativeSalesCreateProposal {
   readonly businessType: "SALE" | "RETURN" | "EXCHANGE"; readonly businessDate: string; readonly note: string | null;
   readonly hallId: string; readonly customerId: string; readonly salespersonId: string | null; readonly warehouseId: string;
@@ -103,6 +115,7 @@ export function createNativeSalesPreparation(dependencies: SalesDependencies) {
       && Array.isArray(proposal.lines) && proposal.lines.length > 0 && proposal.lines.length <= NATIVE_SALES_PREPARE_MAX_LINES
       && Array.isArray(proposal.settlements) && proposal.settlements.length <= SALES_PREPARE_MAX_LINES, "INVALID_HTTP_INPUT", "Bounded native sales proposal required");
     requireDomain(salesJsonByteLength(proposal) <= SALES_PREPARE_MAX_REQUEST_BYTES, "SALES_PAYLOAD_TOO_LARGE", "Preparation exceeds request budget");
+    assertActiveSalesWrite(proposal.businessType, proposal.lines);
     const used = new Set<string>();
     const nextId: SalesDependencies["newId"] = kind => {
       const value = entityId(kind, dependencies.newId(kind));
@@ -114,7 +127,7 @@ export function createNativeSalesPreparation(dependencies: SalesDependencies) {
       salespersonId: proposal.salespersonId === null ? null : entityId("staff", proposal.salespersonId), warehouseId: entityId("warehouse", proposal.warehouseId),
       note: proposal.note, orderDiscount: money(proposal.orderDiscount), grossAmount: zero, netDue: zero };
     requireDomain(header.businessType === "SALE" || header.orderDiscount === 0n, "INDEPENDENT_RETURN_DISCOUNT",
-      "Independent return/exchange requires zero whole-document discount");
+      "Independent return requires zero whole-document discount");
     const lines: SalesLineRow[] = proposal.lines.map((line, index) => {
       requireDomain(line && (line.pricingRule === "UNIT_PRICE" || line.pricingRule === "DISCOUNT")
         && typeof line.isGift === "boolean" && typeof line.zeroConfirmed === "boolean", "UNKNOWN_PRICING_FACTS", "Explicit pricing intent required");
@@ -294,6 +307,7 @@ export async function prepareNativeSalesOnTransaction(dependencies:SalesDependen
   requireDomain(!previous||previous.header.status==='DRAFT','INVALID_STATE','Only actual drafts can be edited');
   requireDomain(skuIds.length===proposal.lines.length,'INVALID_LINES','Resolved selections must retain current rows');
   if(stored)await loadHistoricalSaleOrigin(stored.document,stored.stockBasis,tx);
+  assertActiveSalesWrite(proposal.businessType, proposal.lines, previous, isHistoricalSignedSale(previous, stored?.stockBasis, tx));
   const preserved=retainedHistoricalProposal(proposal,stored,skuIds);
   if(preserved){requireDomain(salesPreparedDraftFitsSaveBudget(preserved),'SALES_PAYLOAD_TOO_LARGE','Retained draft exceeds SAVE budget');await assertPreparedDraft(dependencies, previous, preserved, tx, stored?.stockBasis);return preserved;}
   const header={id:entityId('sales',documentId),number:previous?.header.number??sourceConfirmedCreateDocumentNumber('SALE',entityId('sales',documentId)),
@@ -388,6 +402,7 @@ export function createNativeSalesExistingPreparation(dependencies: SalesDependen
         requireDomain(previous.header.status === "DRAFT", "INVALID_STATE", "Only an existing draft may be prepared for SAVE");
         requireDomain(previous.header.version === proposal.expectedVersion, "VERSION_CONFLICT", "Existing document version changed");
         await loadHistoricalSaleOrigin(previous,stored.stockBasis,tx);
+        assertActiveSalesWrite(proposal.businessType, proposal.lines, previous, isHistoricalSignedSale(previous, stored.stockBasis, tx));
         const preserved=retainedHistoricalProposal(proposal,stored,proposal.lines.map(l=>l.skuId));
         if(preserved){requireDomain(salesPreparedDraftFitsSaveBudget(preserved),'SALES_PAYLOAD_TOO_LARGE','Retained draft exceeds SAVE budget');await dependencies.authorization.assertAllowed(actor,'SAVE',preserved,tx);await assertPreparedDraft(dependencies, previous, preserved, tx, stored.stockBasis);scope.finish();return {expectedVersion:previous.header.version,draft:preserved};}
         for (const row of [...previous.lines, ...previous.settlements]) used.add(row.id);

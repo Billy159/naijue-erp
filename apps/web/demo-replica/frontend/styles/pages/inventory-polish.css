@@ -1,0 +1,19 @@
+/* The stock matrix stays the focus; put facts and secondary commands on a
+ * quiet shared baseline without changing the matrix or filter structure. */
+main[data-replica-modes~="inventory-workbench"] .iw-workbench > .iw-result-tools .iw-stats {
+  color: var(--ca-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+main[data-replica-modes~="inventory-workbench"] .iw-workbench > .iw-result-tools .iw-stats strong {
+  color: var(--ca-ink);
+}
+
+main[data-replica-modes~="inventory-workbench"] .iw-workbench > .iw-result-tools .iw-result-actions {
+  gap: 4px;
+}
+
+main[data-replica-modes~="inventory-workbench"] .iw-workbench > .iw-result-tools :is(.iw-scope-link, .iw-plain-action) {
+  height: 28px;
+  min-height: 28px;
+}

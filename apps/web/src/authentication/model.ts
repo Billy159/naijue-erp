@@ -195,7 +195,7 @@ export function readContextAuthenticationLifecycle(context: ReadContext): (chang
   return change => {
     const principal = change.principal;
     const identity: ReadIdentity | null = principal ? { accountId: principal.accountId, sessionRevision: change.sessionRevision,
-      permissionRevision: JSON.stringify([principal.authVersion, principal.staffId, principal.role, principal.hallId]) } : null;
+      permissionRevision: JSON.stringify([principal.authVersion, principal.staffId, principal.role, principal.hallId]), role: principal.role } : null;
     context.replaceIdentity(identity);
   };
 }

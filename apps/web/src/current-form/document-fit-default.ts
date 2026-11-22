@@ -2,26 +2,28 @@ import type { CurrentFormSku } from '../../../../packages/application/src/curren
 import type { createCurrentFormHttpReader } from './http-reader.ts';
 
 export type DocumentFitChoice = { readonly id: string; readonly name: string };
+export type DocumentFitSku = Pick<CurrentFormSku, 'colorId' | 'fitId' | 'fitName'>;
 type FitsReader = ReturnType<typeof createCurrentFormHttpReader>['readFits'];
 
-// The current catalogue uses numeric code 5; older catalogues use literal A.
+// In the catalogue dictionary, exact code 5 is A版（标准）.
 export async function readDefaultDocumentFitIds(read: FitsReader, signal: AbortSignal): Promise<ReadonlySet<string> | null> {
   const ids = new Set<string>();
-  for (const code of ['5', 'A']) {
-    let complete = false;
-    for (let page = 1; page <= 50; page++) {
-      const result = await read({ search: code, page, pageSize: 20 }, signal);
-      signal.throwIfAborted();
-      for (const fit of result.items) if (fit.enabled && fit.code === code) ids.add(fit.id);
-      if (page * 20 >= result.total) { complete = true; break; }
-    }
-    if (!complete) return null;
+  for (let page = 1; page <= 50; page++) {
+    const result = await read({ search: '5', page, pageSize: 20 }, signal);
+    signal.throwIfAborted();
+    for (const fit of result.items) if (fit.enabled && fit.code === '5') ids.add(fit.id);
+    if (page * 20 >= result.total) return ids;
   }
-  return ids;
+  return null;
 }
 
-export function defaultDocumentFit(skus: readonly CurrentFormSku[], ids: ReadonlySet<string>, colorId?: string): DocumentFitChoice | null {
-  const choices = new Map(skus.filter(sku => ids.has(sku.fitId) && (!colorId || sku.colorId === colorId))
+export function documentDefaultFitSkus(skus: readonly DocumentFitSku[], ids: ReadonlySet<string>): readonly DocumentFitSku[] {
+  return skus.filter(sku => ids.has(sku.fitId)).map(({ colorId, fitId, fitName }) => ({ colorId, fitId, fitName }));
+}
+
+export function defaultDocumentFit(skus: readonly DocumentFitSku[], colorId?: string): DocumentFitChoice | null {
+  if (!colorId) return null;
+  const choices = new Map(skus.filter(sku => sku.colorId === colorId)
     .map(sku => [sku.fitId, { id: sku.fitId, name: sku.fitName }]));
   return choices.size === 1 ? choices.values().next().value ?? null : null;
 }

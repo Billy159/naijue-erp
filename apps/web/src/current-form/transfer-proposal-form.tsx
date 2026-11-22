@@ -1,3 +1,4 @@
+import { documentSpecOptions } from './document-fit-default.ts';
 import { DocumentResponsibilityFields, type DocumentIdentityPresentation } from '../components/document-responsibility.tsx';
 import { Trigger, Select, type SelectProps } from '@arco-design/web-react';
 import { useDocumentLeave } from '../demo-presentation/document-navigation.tsx';
@@ -128,7 +129,8 @@ export function TransferProposalForm({ session, close, preparation, scope, produ
   const quantityKey = (event: React.KeyboardEvent<HTMLInputElement>, skuId: string | undefined, sizeId: string, replacing: boolean) => { if (event.nativeEvent.isComposing || event.keyCode === 229 || replacing || !['Enter', 'Tab'].includes(event.key)) return; event.preventDefault(); const fields = Array.from(form.current?.querySelectorAll<HTMLInputElement>('[data-transfer-entry-size]:not(:disabled)') ?? []), next = fields[fields.indexOf(event.currentTarget) + (event.shiftKey ? -1 : 1)]; if (/^[1-9]\d*$/.test(event.currentTarget.value)) commit(false, next?.dataset.transferEntrySku ?? skuId, next?.dataset.transferEntrySize ?? sizeId); else if (next) { next.focus(); next.select(); } else focusProduct(); };
   const renderPendingRow = (p: TransferPendingEntry, groupId: string, sizes: readonly TransferDisplaySize[], id: string, readOnly = false, openProduct?: (skuId: string | null, hallId: string, target?: { readonly id: string; readonly label: string }) => void) => {
     const selected = p.skus.filter(sku => sku.productId === p.product?.id && sku.colorId === p.color?.id && sku.fitId === p.fit?.id);
-    const colors = [...new Map(p.skus.map(sku => [sku.colorId, { value: sku.colorId, label: sku.colorName }])).values()], fits = [...new Map(p.skus.map(sku => [sku.fitId, { value: sku.fitId, label: sku.fitName }])).values()];
+    const available = (kind: 'color' | 'fit') => saved || id === 'replacement-product' ? p.skus : documentSpecOptions(p.skus, kind, p);
+    const colors = [...new Map(available('color').map(sku => [sku.colorId, { value: sku.colorId, label: sku.colorName }])).values()], fits = [...new Map(available('fit').map(sku => [sku.fitId, { value: sku.fitId, label: sku.fitName }])).values()];
     const specPopup = { getPopupContainer: (node: HTMLElement) => node.closest('.demo-ui') ?? form.current ?? node.parentElement ?? node, triggerProps: { className: 'transfer-spec-popup', position: 'bl' as const, autoAlignPopupWidth: false, popupStyle: { width: 250, maxWidth: 'calc(100vw - 16px)' } } };
     const viewSku = p.skus.find(sku => sku.productId === p.product?.id), values = [...Object.values(p.quantities), ...Object.values(p.sizeQuantities)].filter(raw => raw !== '');
     const original = id === 'replacement-product' ? replacement?.originals[0] : undefined, sourceChanged = id === 'replacement-product' && !!replacement?.originals.some(row => !draft.lines.includes(row));

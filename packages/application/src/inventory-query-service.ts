@@ -28,6 +28,9 @@ export function createInventoryQueryService(dependencies: InventoryQueryDependen
     active(signal);
     const scope = checkedInventoryScope(await authorize(actor, Object.freeze(intent), signal));
     active(signal);
+    if (scope.hideSupplier && (intent.kind === "inventory" ? intent.parameters.filter.supplierIds.length !== 0 : intent.parameters.kind === "supplier")) {
+      throw new DomainError("FORBIDDEN", "Supplier filters are not available to the current role");
+    }
     return scope;
   }
   return Object.freeze({
@@ -35,7 +38,7 @@ export function createInventoryQueryService(dependencies: InventoryQueryDependen
       const trustedActor = checkedInventoryActor(actor), parameters = parseInventoryOutputQuery(input);
       let scope = await scopeFor(trustedActor, { kind: "inventory", parameters }, signal);
       if (parameters.filter.warehouseIds.some(id => !scope.warehouses.some(w => w.id === id))) throw new DomainError("FORBIDDEN", "Requested output warehouse is outside authorized scope");
-      if (parameters.filter.warehouseIds.length) scope = Object.freeze({ hallIds: scope.hallIds, warehouses: Object.freeze(scope.warehouses.filter(w => parameters.filter.warehouseIds.includes(w.id))) });
+      if (parameters.filter.warehouseIds.length) scope = Object.freeze({ ...scope, warehouses: Object.freeze(scope.warehouses.filter(w => parameters.filter.warehouseIds.includes(w.id))) });
       if (!readOutput) throw new DomainError("INVENTORY_NOT_READY", "Complete inventory output provider is unavailable");
       for await (const frame of checkedInventoryOutputFrames(readOutput(Object.freeze({ actor: trustedActor, scope, parameters, signal })), parameters, scope)) { active(signal); yield frame; active(signal); }
     },
@@ -45,7 +48,7 @@ export function createInventoryQueryService(dependencies: InventoryQueryDependen
       if (parameters.filter.warehouseIds.some(id => !scope.warehouses.some(warehouse => warehouse.id === id))) {
         throw new DomainError("FORBIDDEN", "Requested warehouse is outside authorized scope");
       }
-      if (parameters.filter.warehouseIds.length) scope = Object.freeze({ hallIds: scope.hallIds,
+      if (parameters.filter.warehouseIds.length) scope = Object.freeze({ ...scope,
         warehouses: Object.freeze(scope.warehouses.filter(warehouse => parameters.filter.warehouseIds.includes(warehouse.id))) });
       const response = await readInventory(Object.freeze({ actor: trustedActor, scope, parameters, signal }));
       active(signal);

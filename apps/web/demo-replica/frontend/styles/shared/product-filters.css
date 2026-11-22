@@ -1,3 +1,4 @@
+@import '../../../../src/products/product-filter-layout.css';
 /* Shared authoritative rule sequence. Keep import order in page entries. */
 main[data-replica-modes~="pc-mode"] #pc-filter.pc-master-filters{box-sizing:border-box;display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;min-width:0;margin:0;padding:0 0 8px;border:0;background:transparent;overflow-x:auto;overflow-y:visible}
 main[data-replica-modes~="pc-mode"] #pc-filter .pc-filter-row{box-sizing:border-box;display:grid;grid-template-columns:minmax(300px,1fr) 190px 160px 160px 112px 72px 72px;align-items:center;width:100%;min-width:1114px}

@@ -116,7 +116,10 @@ export function createSourceConfirmedPostgresReadAuthorization(pool: PgReadAutho
     inventory: Object.freeze<InventoryQueryAuthorization>({ async authorize(actor, intent, signal) {
       const trusted = checkedInventoryActor(actor);
       if (intent?.kind !== "inventory" && intent?.kind !== "candidates") throw new TypeError("Unsupported inventory read intent");
-      return snapshot(trusted, signal, activeInventoryRead, async (_identity, query) => allInventoryWarehouses(query));
+      return snapshot(trusted, signal, activeInventoryRead, async (identity, query) => {
+        const scope = await allInventoryWarehouses(query);
+        return identity.role === "SALESPERSON" ? Object.freeze({ ...scope, hideSupplier: true as const }) : scope;
+      });
     } }),
     sales: Object.freeze<SalesQueryAuthorization>({ async authorize(actor, intent, signal) {
       const trusted = checkedInventoryActor(actor);
@@ -133,7 +136,8 @@ export function createSourceConfirmedPostgresReadAuthorization(pool: PgReadAutho
       const target = intent.kind === "image" ? parseProductImageQuery(intent.parameters) : parseProductQuery(intent.parameters);
       // Product existence/image ownership are enforced by the existing exact-target native reader.
       // Shared product facts have no product-hall ownership and do not require stock presence.
-      return snapshot(trusted, signal, activeProductRead, async () => Object.freeze({ productId: target.productId }));
+      return snapshot(trusted, signal, activeProductRead, async identity => Object.freeze({ productId: target.productId,
+        ...(intent.kind === "basics" && identity.role === "SALESPERSON" ? { hideSupplier: true as const } : {}) }));
     } })
   });
 }

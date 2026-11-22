@@ -111,7 +111,7 @@ function product(value: unknown, scope: InventoryReadScope, query: InventoryQuer
   for (const [index, sizeId] of sizeIds.entries()) checkedTotal(sizeTotals[sizeId]!, productSizeSums[index]!, productSizeUnknown[index]!);
   const total = checkedTotal(stockTotal(row.total), productSum, productUnknown);
   return Object.freeze({ id, code: textValue(row.code, reject), name: textValue(row.name, reject),
-    categoryLabel: textValue(row.categoryLabel, reject, true), supplierLabel: textValue(row.supplierLabel, reject, true),
+    categoryLabel: textValue(row.categoryLabel, reject, true), supplierLabel: scope.hideSupplier ? "" : textValue(row.supplierLabel, reject, true),
     seasonLabel: textValue(row.seasonLabel, reject, true), sizeGroup: selection("sizeGroup", row.sizeGroup), sizes,
     colorFits: Object.freeze(colorFits), sizeTotals, total });
 }

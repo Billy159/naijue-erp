@@ -351,7 +351,7 @@ export interface SourceConfirmedApplicationReadAuthorization {
   readonly productDetails: ProductDetailsQueryAuthorization;
 }
 /** Explicit operation policies, based on formal server/security/policies.ts:
- * masters.list=>ADMIN/WAREHOUSE, masters.candidates=>all current roles,
+ * party directories and supplier candidates=>ADMIN/WAREHOUSE, customer candidates=>all current roles,
  * productMasters.list/barcodes.scheme=>all, products.list/detail and inventory
  * =>all. Each tab/directory/HISTORY grant is constructed separately here.
  * HISTORY sales uses exact current hall; restricted transfer remains closed. */
@@ -386,8 +386,8 @@ export function createSourceConfirmedApplicationReadAuthorization(pool: PgReadAu
       return { kind: intent.kind, operation: intent.operation, scope: { kind: "ALL" }, references: "REFERENCES", targetId: intent.operation === "detail" ? intent.parameters.id : null };
     } }),
     productManagement: Object.freeze<ProductManagementQueryAuthorization>({ async authorize(actor, intent, signal) {
-      allowed(intent.kind === "list" || intent.kind === "candidates"); await current(actor, signal);
-      return { kind: "all", totalStock: "all-warehouses" };
+      allowed(intent.kind === "list" || intent.kind === "candidates"); const role = await current(actor, signal);
+      return { kind: "all", totalStock: "all-warehouses", ...(role === "SALESPERSON" ? { hideSupplier: true as const } : {}) };
     } }),
     catalogueSettings: Object.freeze<CatalogueSettingsReadAuthorization>({ async authorize(actor, intent, signal) {
       allowed(intent.kind === "categories" ? intent.operation === "tree" : (intent.kind === "colors" || intent.kind === "fits") && intent.operation === "list");
@@ -400,7 +400,7 @@ export function createSourceConfirmedApplicationReadAuthorization(pool: PgReadAu
     } }),
     party: Object.freeze<PartyReadAuthorization>({ async authorize(actor, intent, signal) {
       allowed((intent.kind === "CUSTOMER" || intent.kind === "SUPPLIER") && ["LIST", "DETAIL", "CANDIDATES"].includes(intent.operation));
-      const role = await current(actor, signal); allowed(intent.operation === "CANDIDATES" || role !== "SALESPERSON");
+      const role = await current(actor, signal); allowed(role !== "SALESPERSON" || (intent.kind === "CUSTOMER" && intent.operation === "CANDIDATES"));
       return { kind: intent.kind, operation: intent.operation, targetId: intent.operation === "DETAIL" ? intent.id : null };
     } }),
     importedHistory: Object.freeze<ImportedHistoryReadAuthorization>({ async authorize(actor, intent, signal) {

@@ -8,7 +8,7 @@ import { SalesEditorSession } from '../sales/commands/editor-session.ts';
 import type { SalesDraftDto } from '../sales/commands/contracts.ts';
 import { validateSalesDraft, frozenSnapshot } from '../sales/commands/validation.ts';
 import { salesInputMoney } from '../sales/commands/form-model.ts';
-import { SalesProposalSession, salesProposalHasMixedQuantities, type SalesProposal } from './sales-proposal.ts';
+import { SalesProposalSession, type SalesProposal } from './sales-proposal.ts';
 export interface SalesCreatePreparation { prepareCreate(proposal: NativeSalesCreateProposal, signal: AbortSignal): Promise<SalesDraftDto> }
 function moneyMinor(raw: string): string {
   if (typeof raw !== 'string' || raw.length > 102 || !/^\d+(?:\.\d{1,2})?$/.test(raw.trim())) throw new TypeError('Invalid explicit yuan amount.');
@@ -45,7 +45,7 @@ function checkedIntent(input: NativeSalesCreateProposal): NativeSalesCreatePropo
     if (row.pricingRule === 'UNIT_PRICE') { if (row.discountTenths !== null || row.dealPrice === null || yuan(row.dealPrice) !== row.dealPrice || row.isGift && row.dealPrice !== '0.00') throw new TypeError('Ambiguous direct price.'); }
     else if (row.pricingRule !== 'DISCOUNT' || row.dealPrice !== null || !Number.isInteger(row.discountTenths) || row.discountTenths! < 0 || row.discountTenths! > 100) throw new TypeError('Ambiguous discount intent.');
   }
-  if (value.businessType === 'SALE' && value.lines.every(row => row.quantity.startsWith('-')) || salesProposalHasMixedQuantities(value.lines) && moneyMinor(value.orderDiscount) !== '0') throw new TypeError('Mixed sales require zero order discount; pure negative lines require return/exchange.');
+  if (value.businessType === 'SALE' && value.lines.some(row => row.quantity.startsWith('-'))) throw new TypeError('销售单只录正数量。换货请先开退货单，再另开销售单。');
   for (const row of value.settlements) {
     keys(row, ['paymentAccountId', 'paymentMethodId', 'direction', 'amount']); entityId('paymentAccount', row.paymentAccountId); entityId('paymentMethod', row.paymentMethodId);
     if (!['RECEIVE', 'REFUND'].includes(row.direction) || yuan(row.amount) !== row.amount) throw new TypeError('Invalid settlement intent.');

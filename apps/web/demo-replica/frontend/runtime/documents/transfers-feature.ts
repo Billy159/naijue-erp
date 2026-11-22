@@ -15,7 +15,7 @@ export function createTransfersFeature(options:ReadyPageOptions,navigate:Navigat
       const [module,factory,products]=await Promise.all([import('./transfers-entry.tsx'),import('./transfers-session.ts'),import('../../../../src/transport/product-http-reader.ts')]);
       if(!scope.active)return {dispose:()=>{},canLeave:()=>true};
       if(route==='transfer/new'&&transfers?.scope.active&&transfers.workspace.getSnapshot().editor&&factory.transferCanLeave(transfers)){transfers.dispose();transfers=null;}
-      if(!transfers?.scope.active)transfers=factory.createReplicaTransferSession(session,{instanceId:'replica-transfer-owner',newRequestKey:options.newRequestKey,...(config.documentListProfile ? {documentListProfile: config.documentListProfile} : {}),responsibleReady:config.documentResponsibleReady===true});
+      if(!transfers?.scope.active)transfers=factory.createReplicaTransferSession(session,{instanceId:'replica-transfer-owner',newRequestKey:options.newRequestKey,...(config.documentListProfile ? {documentListProfile: config.documentListProfile} : {}),responsibleReady:config.documentResponsibleReady===true,...((options.previewTransferResponsible || config.newTransferResponsibleReady === true) ? {newTransferResponsibleReady:true} : {})});
       if (!transferViewScope?.active) {
         transferViewScope = session.reads.createScope('replica-transfer-list-view');
         transferView = module.newTransferListViewState();

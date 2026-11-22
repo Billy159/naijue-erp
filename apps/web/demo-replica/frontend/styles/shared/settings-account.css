@@ -114,7 +114,8 @@
 .ui-form-note,.ui-query-note{font-size:12px;color:var(--secondary);line-height:1.6}
 .ui-form-note{margin:10px 0}
 .ui-query-note{margin:0;padding:6px 0 8px;min-height:28px}
-.ui-query-note[data-pending=true]{font-weight:600;color:var(--primary)}
+/* Search instructions match inventory; list totals and system notices stay neutral. */
+.ui-query-note[data-pending]{padding:0;min-height:22px;line-height:22px;font-weight:400;color:var(--ca-warning)}
 .ui-required,.ui-field-error{color:var(--error)}
 .ui-field-error{display:block;font-size:12px;line-height:18px;margin-top:3px}
 [aria-invalid=true]{border-color:var(--error)!important}

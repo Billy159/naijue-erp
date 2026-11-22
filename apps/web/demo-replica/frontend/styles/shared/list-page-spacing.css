@@ -1,0 +1,37 @@
+/* Use the inventory workbench's gutters on these top-level pages only.
+ * Editors, drawers, dialogs and the inner layouts of settings are unchanged. */
+.main #page:has(
+  > :is(.tc-list, .pc-products, .pc-categories, .pc-settings-page, .pc-schemes-page, .bs-page),
+  > :where(#basic-settings-v2) > .bs-page
+) {
+  padding-block-start: 12px;
+  padding-inline: var(--ui-page-space);
+}
+
+#page > .tc-list > .tc-head {
+  min-height: 32px;
+}
+
+#page > .tc-list > .tc-filters.tc-filters-two-row {
+  margin-block-end: 4px;
+}
+
+/* Move the search instruction closer to the filters while keeping room for
+ * both the normal and unapplied-condition hints (including wrapping). */
+#page > .tc-list > .ui-query-note[data-pending] {
+  box-sizing: border-box;
+  min-height: 28px;
+  padding-block: 4px;
+  line-height: 20px;
+}
+
+/* A product list without a message gets one small breathing space, not a
+ * reserved blank status row. When present, keep 4px on each side of the hint. */
+#page > .pc-products > #pc-filter.iw-query {
+  margin-block-end: 8px;
+}
+
+#page > .pc-products > #pc-filter.iw-query:has(> .iw-query-note) {
+  margin-block-end: 4px;
+  row-gap: 4px;
+}

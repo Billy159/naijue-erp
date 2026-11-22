@@ -4,7 +4,7 @@ import { productRequiredFeedback } from '../../../../src/products/product-requir
 import { ProductEditorPrices } from '../../../../src/products/product-editor-prices.tsx';
 import { useEffect,useRef,useState,useSyncExternalStore } from 'react';
 import type { ProductMaintenanceDetail,ProductMaintenanceDetailV2,ProductWriteValuesV2,ProductEditorDraft,ProductBarcodeInput } from '../../../../src/products/product-editor-contracts.ts';
-import { ProductEditorController,actualSpecSelection } from '../../../../src/products/product-editor-state.ts';
+import { ProductEditorController,actualSpecSelection,hasUnresolvedSpecSelection } from '../../../../src/products/product-editor-state.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { useProductRead,ReadNotice } from './read.tsx';
 import { productTabs,priceFields,SchemeConsumer } from './detail.tsx';
@@ -157,7 +157,7 @@ function ProductEditorSession(p:SourceProductEditorOptions&{initialBaseline:Prod
    return;
   }
  }
- const common={...(media.changes.length?{imageChanges:media.changes}:{}),values:automatic?{...values,defaultBarcodeSchemeId:schemeId}:values,skus:base?.skus??restoredDraft?.skus??[],barcodes:[...(base?.barcodes??restoredDraft?.barcodes??[]),...barcodeDraft],skuSelection:{colorIds:selection.colors,fitIds:selection.fits}};
+ const common={...(media.changes.length?{imageChanges:media.changes}:{}),values:automatic?{...values,defaultBarcodeSchemeId:schemeId}:values,skus:base?.skus??restoredDraft?.skus??[],barcodes:[...(base?.barcodes??restoredDraft?.barcodes??[]),...barcodeDraft],...(!base||hasUnresolvedSpecSelection(selection,base.skus)?{skuSelection:{colorIds:selection.colors,fitIds:selection.fits}}:{})};
  const draft:ProductEditorDraft=base?{...common,...(generateSkuIds.length?{generateBarcodeSkuIds:generateSkuIds}:{}),action:'EDIT',id:base.productId,expectedVersion:base.version}:{...common,action:'CREATE',values:{...common.values,seasonIds:values.seasonIds??[]}};
  attempted=draft;await controller.submit(draft);
  }catch(e){setError(productRequiredFeedback(attempted,e)??(e instanceof Error?e.message:'商品保存失败。'));}};
@@ -186,7 +186,7 @@ function ProductEditorSession(p:SourceProductEditorOptions&{initialBaseline:Prod
  {tab==='images'&&(p.productId&&!base?<p role="status">尚未取得商品资料，暂不能读取图片。请先通过上方入口读取商品资料。</p>:media.render(selection.colors.map(id=>({id,label:labels.get(id)??id}))))}{base&&<EditorStock active={tab==='stock'} scope={scope} product={{id:base.productId,label:base.values.productCode+' · '+base.values.name}} reader={cap.stock} denied={p.onAccessFailure} open={p.onOpenInventory}/>} {tab==='stock'&&!base&&<div className="empty">{p.productId?'尚未取得商品资料，暂不能显示库存。':'新商品保存后可查看库存。'}</div>}
  </fieldset></section>
  {(modal==='colors'||modal==='fits')&&<SpecSelection createUnavailableReason={cap.catalogueMaintenance?.[modal]?'当前账号未获新增'+(modal==='colors'?'颜色':'版型')+'权限':'当前入口未接通新增'+(modal==='colors'?'颜色':'版型')+'能力'} scope={scope} reader={cap.reader} kind={modal} denied={p.onAccessFailure} value={selection[modal]} labels={labels} {...(p.catalogueOptions&&cap.catalogueMaintenance?.[modal]?.allowedActions.includes('CREATE')?{create:(closeChild,savedChild)=><InlineCatalogueEntry options={p.catalogueOptions!} scope={scope} capability={cap.catalogueMaintenance![modal]!} close={closeChild} guard={guard=>{childGuard.current=guard;}} accept={savedChild}/>}:{})} close={()=>setModal(null)} save={(ids,names)=>{setSelection(old=>({...old,[modal]:ids}));setLabels(names);setDirty(true);setModal(null);}}/>}
- {(modal==='delete'||modal==='discard'||modal==='reload')&&<ConfirmDialog title={modal==='delete'?'删除商品？':modal==='reload'?'重新读取商品？':unsavedChanges.leaveTitle} className={modal==='discard'?'sale-confirm':'sale-confirm sale-danger'} onCancel={()=>setModal(null)} onConfirm={()=>{const action=modal;setModal(null);if(action==='delete')void submit(true);else if(action==='reload'){if(pendingBaseline)p.reload(pendingBaseline);}else if(safeToLeave())p.onClose();}}><p>{modal==='delete'?'删除后，商品列表里就看不到这件商品了。':modal==='reload'?'重新读取后，没保存的修改会丢失。':unsavedChanges.leaveBody}</p></ConfirmDialog>}
+ {(modal==='delete'||modal==='discard'||modal==='reload')&&<ConfirmDialog title={modal==='delete'?'删除商品？':modal==='reload'?'重新读取商品？':unsavedChanges.leaveTitle} tone="danger" onCancel={()=>setModal(null)} onConfirm={()=>{const action=modal;setModal(null);if(action==='delete')void submit(true);else if(action==='reload'){if(pendingBaseline)p.reload(pendingBaseline);}else if(safeToLeave())p.onClose();}}><p>{modal==='delete'?'删除后，商品列表里就看不到这件商品了。':modal==='reload'?'重新读取后，没保存的修改会丢失。':unsavedChanges.leaveBody}</p></ConfirmDialog>}
 
  {scheme&&<SchemeConsumer scope={scope} http={p.http} onAccessFailure={p.onAccessFailure} schemeId={scheme} close={()=>setScheme(null)}/>}
  </div>;

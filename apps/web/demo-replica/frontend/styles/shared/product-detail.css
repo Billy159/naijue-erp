@@ -33,6 +33,8 @@ body.pc-mode #page:has(.pc-detail-workbench){padding:12px var(--ui-page-space) 1
 .pc-price-table{width:100%;border:1px solid var(--ca-line);border-collapse:collapse}
 .pc-price-table th,.pc-price-table td{box-sizing:border-box;height:38px;padding:3px 10px;border-bottom:1px solid var(--ca-table-grid);font-size:13px}
 .pc-price-table thead th{height:34px;background:var(--ca-table-head);color:var(--ca-ink-2);font-size:12px;text-align:left}
+.pc-price-table thead th:nth-child(2),.pc-price-table tbody td:nth-child(2){text-align:right;font-variant-numeric:tabular-nums}
+.pc-price-table.product-price-table thead th:nth-child(2){padding-inline-end:19px} /* 10px cell padding + 8px input padding + 1px border */
 .pc-price-table tbody th{width:60%;color:var(--ca-ink);font-weight:400;text-align:left}
 .pc-price-table input{box-sizing:border-box;width:100%;height:29px!important;min-height:29px!important;padding:3px 8px!important;border:1px solid var(--ca-control-border)!important;background:var(--ca-surface)!important;text-align:right;font-variant-numeric:tabular-nums}
 .pc-price-table input:hover{border-color:var(--ca-control-border-hover)!important}

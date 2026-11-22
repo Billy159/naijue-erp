@@ -37,4 +37,5 @@ main[data-replica-modes~="pc-mode"] .pc-products:has(#pc-filter .pc-more-filters
 .pc-products .pc-list-table th:last-child{background:var(--ca-table-head)}
 .pc-products .pc-list-table .empty{min-height:180px;display:flex;align-items:center;justify-content:center;color:var(--ca-ink-2);font-size:13px}
 .pc-categories .pc-category-layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:0;min-height:0;height:calc(100dvh - var(--ui-topbar) - 94px);border-top:1px solid var(--ca-line);background:transparent}
-
+/* Retail price and total stock share the numeric cells' right edge. */
+.pc-products .pc-list-table .pc-data-table thead th:is(:nth-last-child(2),:nth-last-child(3)){text-align:right;font-variant-numeric:tabular-nums}

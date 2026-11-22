@@ -238,7 +238,7 @@ export class InventoryWindowModel {
     this.metadata = Object.freeze({ productCount: data.products.length, groupCount: groups.size, indexedWarehouseRows, rowCount: rows.length, columnCount, allocatedCellDescriptors: 0 });
   }
 
-  window(viewport: InventoryWindowViewport): InventoryViewportWindow {
+  window(viewport: InventoryWindowViewport, clampSectionsX = false): InventoryViewportWindow {
     validateViewport(viewport);
     const range = axisWindow(this.#rowOffsets, viewport.scrollTop, viewport.height, viewport.overscanRows);
     const rows = this.rows.slice(range.start, range.end);
@@ -247,7 +247,8 @@ export class InventoryWindowModel {
     if (pinned) sectionIds.add(pinned.section.index);
     const sections = [...sectionIds].sort((a, b) => a - b).map(index => {
       const entry = this.#sectionIndices[index]!;
-      const range = axisWindow(entry.offsets, viewport.scrollLeft, Math.max(0, viewport.width - viewport.fixedLeadingWidth - viewport.fixedTrailingWidth), viewport.overscanColumns);
+      const scrollLeft = clampSectionsX ? inventorySectionScrollLeft(viewport, entry.section.sizeExtent) : viewport.scrollLeft;
+      const range = axisWindow(entry.offsets, scrollLeft, Math.max(0, viewport.width - viewport.fixedLeadingWidth - viewport.fixedTrailingWidth), viewport.overscanColumns);
       const columns: InventoryWindowColumn[] = [];
       for (let index = range.start; index < range.end; index++) columns.push({ index, size: entry.section.sizes[index]!, left: entry.offsets[index]!, width: entry.offsets[index + 1]! - entry.offsets[index]! });
       return { section: entry.section, range, columns, fixedLeadingWidth: viewport.fixedLeadingWidth, fixedTrailingWidth: viewport.fixedTrailingWidth };
@@ -387,6 +388,12 @@ export class InventoryWindowModel {
     if (!section || position < section.headerTop || position >= section.top + section.height || viewport.height === 0) return null;
     return { row: this.rows[section.headerRow]!, section, top: Math.min(viewport.stickyHeaderOffset, section.top + section.height - viewport.scrollTop - section.headerHeight) };
   }
+}
+
+/** Ignore global horizontal overflow after a shorter section's last real size. */
+export function inventorySectionScrollLeft(viewport: InventoryWindowViewport, sizeExtent: number): number {
+  const available = Math.max(0, viewport.width - viewport.fixedLeadingWidth - viewport.fixedTrailingWidth);
+  return Math.min(viewport.scrollLeft, Math.max(0, sizeExtent - available));
 }
 
 export type InventoryWindowRowContent = InventoryWindowRow extends infer Row ? Row extends InventoryWindowRow ? Omit<Row, keyof RowBase> & Pick<Row, 'key'> : never : never;

@@ -1,5 +1,5 @@
 import type { NativeSalesCreateProposal } from "../../../packages/application/src/native-sales-preparation.ts";
-import { parseNativeSalesExistingProposal } from "../../../packages/application/src/native-sales-preparation.ts";
+import { assertActiveSalesWrite, parseNativeSalesExistingProposal } from "../../../packages/application/src/native-sales-preparation.ts";
 import type { NativeSalesExistingProposal } from "../../../packages/application/src/native-sales-preparation.ts";
 import { SALES_PREPARE_MAX_LINES, SALES_PREPARE_MAX_NOTE_LENGTH } from "../../../packages/application/src/sales-payload-budget.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
@@ -18,7 +18,7 @@ export function parseSalesCreateProposal(input: unknown): NativeSalesCreatePropo
   requireDomain((row.businessType === "SALE" || row.businessType === "RETURN" || row.businessType === "EXCHANGE") && Array.isArray(row.lines) && row.lines.length > 0 && row.lines.length <= SALES_PREPARE_MAX_LINES
     && Array.isArray(row.settlements) && row.settlements.length <= 3, "INVALID_HTTP_INPUT", "Bounded sales input required");
   const note = nullable(row.note); requireDomain(note === null || note.length <= SALES_PREPARE_MAX_NOTE_LENGTH, "INVALID_HTTP_INPUT", "Note exceeds limit");
-  return { businessType: row.businessType, businessDate: text(row.businessDate), note, hallId: text(row.hallId), customerId: text(row.customerId),
+  const proposal: NativeSalesCreateProposal = { businessType: row.businessType, businessDate: text(row.businessDate), note, hallId: text(row.hallId), customerId: text(row.customerId),
     salespersonId: nullable(row.salespersonId), warehouseId: text(row.warehouseId), orderDiscount: text(row.orderDiscount),
     lines: row.lines.map(value => {
       const line = object(value, ["skuId", "quantity", "dealPrice", "pricingRule", "discountTenths", "isGift", "zeroConfirmed"]);
@@ -32,7 +32,12 @@ export function parseSalesCreateProposal(input: unknown): NativeSalesCreatePropo
       requireDomain(settlement.direction === "RECEIVE" || settlement.direction === "REFUND", "INVALID_HTTP_INPUT", "Explicit direction required");
       return { paymentAccountId: text(settlement.paymentAccountId), paymentMethodId: text(settlement.paymentMethodId), direction: settlement.direction, amount: text(settlement.amount) };
     }) };
+  assertActiveSalesWrite(proposal.businessType, proposal.lines);
+  return proposal;
 }
 export function parseSalesExistingProposal(input: unknown): NativeSalesExistingProposal {
-  return parseNativeSalesExistingProposal(input);
+  const proposal = parseNativeSalesExistingProposal(input);
+  // Signed sales require the original stored document before deciding edit eligibility.
+  if (proposal.businessType !== "SALE") assertActiveSalesWrite(proposal.businessType, proposal.lines);
+  return proposal;
 }
