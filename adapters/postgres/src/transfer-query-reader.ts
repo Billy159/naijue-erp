@@ -121,11 +121,12 @@ async function readCatalog(query: ReadQuery, lines: readonly TransferLineRow[], 
   const unknownCategories: import("../../../packages/application/src/sales-query-ports.ts").DocumentCategorySummary = {basis:'UNKNOWN',metric:'PRODUCT_COUNT',items:[],hasMore:false,categoryCount:null};
   if (!lines.length) return {catalog:{skus:[],sizeGroups:[]},categorySummary:stockBasis==='CUTOFF_HISTORY'?unknownCategories:{basis:'CURRENT',metric:'PRODUCT_COUNT',items:[],hasMore:false,categoryCount:0n}};
   const actualSkuIds = [...new Set(lines.map(line => line.skuId))];
+  const currentCategories = stockBasis !== 'CUTOFF_HISTORY';
   const rows = (await query(`SELECT s.id AS sku_id, s.product_id, p.product_code, p.name AS product_name, s.color_id, c.name AS color_name,
-    s.fit_id, f.name AS fit_name, s.size_id, p.size_group_id,pc.id AS category_id,pc.name AS category_name FROM naijue_erp.sku s
+    s.fit_id, f.name AS fit_name, s.size_id, p.size_group_id${currentCategories ? ',pc.id AS category_id,pc.name AS category_name' : ''} FROM naijue_erp.sku s
     JOIN (SELECT DISTINCT product_id, color_id, fit_id FROM naijue_erp.sku WHERE id = ANY($1::uuid[])) present
       ON present.product_id = s.product_id AND present.color_id = s.color_id AND present.fit_id = s.fit_id
-    JOIN naijue_erp.product p ON p.id = s.product_id LEFT JOIN naijue_erp.product_category pc ON pc.id=p.category_id JOIN naijue_erp.color c ON c.id = s.color_id JOIN naijue_erp.fit f ON f.id = s.fit_id
+    JOIN naijue_erp.product p ON p.id = s.product_id${currentCategories ? ' LEFT JOIN naijue_erp.product_category pc ON pc.id=p.category_id' : ''} JOIN naijue_erp.color c ON c.id = s.color_id JOIN naijue_erp.fit f ON f.id = s.fit_id
     ORDER BY s.product_id, s.color_id, s.fit_id, s.size_id, s.id LIMIT $2`, [actualSkuIds, TRANSFER_DETAIL_MAX_CATALOG_SKUS + 1])).rows;
   requireDomain(rows.length <= TRANSFER_DETAIL_MAX_CATALOG_SKUS, "TRANSFER_READ_TOO_LARGE", "Transfer native SKU availability exceeds bounded response limit");
   const skus = rows.map(decodeCatalogSku); const bySku = new Map(skus.map(sku => [sku.skuId, sku]));
@@ -317,9 +318,9 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
       const paging = p.page(parameters.page, parameters.pageSize);
       const rows = (await query(`SELECT a.id, a.operation_id, a.actor_account_id, a.action, ${stamp("a.occurred_at")} AS occurred_at,
         a.old_version, a.new_version ${source} ORDER BY a.occurred_at DESC, a.id DESC ${paging}`, p.values)).rows;
-      requireDomain(rows.length <= parameters.pageSize && (rows.length === 0
-        || BigInt((parameters.page - 1) * parameters.pageSize) + BigInt(rows.length) <= exactTotal),
-        "INVALID_DATABASE_VALUE", "Transfer history exceeds exact authorized page");
+      const remaining = exactTotal - (BigInt(parameters.page) - 1n) * BigInt(parameters.pageSize);
+      const expected = remaining < 0n ? 0n : remaining > BigInt(parameters.pageSize) ? BigInt(parameters.pageSize) : remaining;
+      requireDomain(BigInt(rows.length) === expected, "INVALID_DATABASE_VALUE", "Transfer history differs from exact authorized page");
       const items = rows.map(row => ({ id: id("audit", row.id), operationId: id("operation", row.operation_id),
         actorAccountId: id("account", row.actor_account_id), action: choice(row.action, ["SAVE", "APPROVE", "UNAPPROVE", "VOID"]),
         occurredAt: stringValue(row.occurred_at), oldVersion: row.old_version === null ? null : versionFromSql(row.old_version), newVersion: versionFromSql(row.new_version) }));

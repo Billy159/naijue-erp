@@ -81,16 +81,17 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
       return entityId("sku", stringValue(row.id));
     });
     requireDomain(new Set(skuIds).size === skuIds.length, "INVALID_DATABASE_VALUE", "Duplicate SKU page target");
+    // One rank per SKU/kind: enabled MAIN first; confirmed-old keeps its code/id order.
     const summaries = skuIds.length === 0 ? [] : (await query(`WITH ranked AS (
-      SELECT b.*, row_number() OVER (PARTITION BY b.sku_id,b.barcode_kind ORDER BY b.barcode COLLATE "C",b.id) AS kind_order,
-        row_number() OVER (PARTITION BY b.sku_id,b.barcode_kind,b.enabled ORDER BY b.barcode COLLATE "C",b.id) AS state_order
+      SELECT b.*, row_number() OVER (PARTITION BY b.sku_id,b.barcode_kind
+          ORDER BY CASE WHEN b.barcode_kind='MAIN' THEN b.enabled END DESC NULLS LAST,b.barcode COLLATE "C",b.id) AS kind_order
       FROM naijue_erp.sku_barcode b WHERE b.sku_id=ANY($1::uuid[]))
       SELECT sku_id,count(*)::text AS binding_count,
         (count(*) FILTER (WHERE barcode_kind='MAIN' AND enabled))::text AS enabled_main_count,
         (count(*) FILTER (WHERE barcode_kind='MAIN' AND NOT enabled))::text AS disabled_main_count,
         (count(*) FILTER (WHERE barcode_kind='CONFIRMED_OLD'))::text AS confirmed_old_count,
         (jsonb_agg(jsonb_build_object('id',id,'barcode',barcode,'kind',barcode_kind,'schemeId',scheme_id,'enabled',enabled))
-          FILTER (WHERE barcode_kind='MAIN' AND enabled AND state_order=1))->0 AS enabled_main,
+          FILTER (WHERE barcode_kind='MAIN' AND enabled AND kind_order=1))->0 AS enabled_main,
         (jsonb_agg(jsonb_build_object('id',id,'barcode',barcode,'kind',barcode_kind,'schemeId',scheme_id,'enabled',enabled))
           FILTER (WHERE barcode_kind='CONFIRMED_OLD' AND kind_order=1))->0 AS first_confirmed_old
       FROM ranked GROUP BY sku_id ORDER BY sku_id`, [skuIds])).rows;

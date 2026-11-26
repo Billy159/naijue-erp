@@ -353,10 +353,14 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
       const paging = p.page(parameters.page, parameters.pageSize);
       const rows = (await query(`SELECT a.id, a.operation_id, a.actor_account_id, a.action, ${stamp("a.occurred_at")} AS occurred_at,
         a.old_version, a.new_version ${source} ORDER BY a.occurred_at DESC, a.id DESC ${paging}`, p.values)).rows;
-      requireDomain(rows.length <= parameters.pageSize && BigInt(rows.length) <= exactTotal, "INVALID_DATABASE_VALUE", "Sales history exceeds exact scope");
-      return { salesId: parameters.salesId, ...parametersPage(parameters), exactTotal, items: rows.map(row => ({ id: id("audit", row.id), operationId: id("operation", row.operation_id),
+      const remaining = exactTotal - (BigInt(parameters.page) - 1n) * BigInt(parameters.pageSize);
+      const expected = remaining < 0n ? 0n : remaining > BigInt(parameters.pageSize) ? BigInt(parameters.pageSize) : remaining;
+      requireDomain(BigInt(rows.length) === expected, "INVALID_DATABASE_VALUE", "Sales history differs from exact authorized page");
+      const items = rows.map(row => ({ id: id("audit", row.id), operationId: id("operation", row.operation_id),
         actorAccountId: id("account", row.actor_account_id), action: choice(row.action, ["SAVE", "APPROVE", "UNAPPROVE", "VOID"]),
-        occurredAt: stringValue(row.occurred_at), oldVersion: row.old_version === null ? null : versionFromSql(row.old_version), newVersion: versionFromSql(row.new_version) })) };
+        occurredAt: stringValue(row.occurred_at), oldVersion: row.old_version === null ? null : versionFromSql(row.old_version), newVersion: versionFromSql(row.new_version) }));
+      requireDomain(new Set(items.map(item => item.id)).size === items.length, "INVALID_DATABASE_VALUE", "Duplicate sales audit identity");
+      return { salesId: parameters.salesId, ...parametersPage(parameters), exactTotal, items };
     });
   }
   /** Existing LIVE APPROVED account statistics; historical settlements are not

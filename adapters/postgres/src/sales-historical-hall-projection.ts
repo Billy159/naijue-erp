@@ -1,11 +1,53 @@
 import {parseHistoricalSalesHallEvidence,type HistoricalSalesHallEvidence} from '../../../packages/application/src/historical-sales-hall-evidence.ts';
 import {requireDomain} from '../../../packages/domain/src/errors.ts';
 
+const legacyApprovalLookup=`    CROSS JOIN LATERAL (SELECT count(*) AS members,min(ap::text)::jsonb AS item
+     FROM jsonb_array_elements(((roots.root_values->'request'->'payload'->'historical_hall_approval'->>'utf8')::jsonb)->'records') ap
+     WHERE ap->>'target_id'=s.document_id::text) approved`;
+// Keep the original strict JSONB array expansion and matching semantics.
+const detailApprovalLookup=`    CROSS JOIN LATERAL (SELECT count(*) AS members,min(ap::text)::jsonb AS item
+     FROM jsonb_array_elements((selected_approval.utf8::jsonb)->'records') ap
+     WHERE ap->>'target_id'=s.document_id::text) approved`;
+
+const legacyApprovalDigest=`   AND encode(sha256(convert_to(roots.root_values->'request'->'payload'->'historical_hall_approval'->>'utf8','UTF8')),'hex')=roots.root_values->'request'->'payload'->'historical_hall_approval'->>'sha256'`;
+// Extract the root payload bytes once per qualifying proof and reuse them for
+// both the unchanged raw-byte digest and the strict JSONB parser.
+const detailApprovalArchive=` CROSS JOIN LATERAL (
+ SELECT root_approval.value->>'utf8' AS utf8,root_approval.value->>'sha256' AS sha256
+ FROM (SELECT roots.root_values#>'{request,payload,historical_hall_approval}' AS value OFFSET 0) root_approval
+ OFFSET 0
+ ) selected_approval
+`;
+const detailApprovalDigest=`   AND encode(sha256(convert_to(selected_approval.utf8,'UTF8')),'hex')=selected_approval.sha256`;
+
+const legacyCaptureCoverage=`   AND NOT EXISTS(SELECT 1 FROM jsonb_object_keys(c.captures) k WHERE NOT EXISTS(SELECT 1 FROM jsonb_array_elements(s.source_audit_values->'records') x
+    WHERE x->>'id'=k AND x->>'entity_type'='SALES_HEADER' AND x->'historical_hall_evidence'->>'format_version'='HISTORICAL_SALES_HALL_EVIDENCE_V2'
+     AND x->'historical_hall_evidence'->'target_snapshot'->'captured_at'='null'::jsonb))
+   AND NOT EXISTS(SELECT 1 FROM jsonb_array_elements(s.source_audit_values->'records') x WHERE x->>'entity_type'='SALES_HEADER'
+    AND x->'historical_hall_evidence'->>'format_version'='HISTORICAL_SALES_HALL_EVIDENCE_V2'
+    AND x->'historical_hall_evidence'->'target_snapshot'->'captured_at'='null'::jsonb AND NOT(c.captures ? (x->>'id')))`;
+// Match the two legacy existence predicates, with duplicate and SQL NULL
+// record IDs retaining the original set-membership meaning.
+const detailCaptureCoverage=`   AND (WITH eligible_capture_ids AS MATERIALIZED (
+     SELECT DISTINCT x->>'id' AS id FROM jsonb_array_elements(s.source_audit_values->'records') x
+     WHERE x->>'entity_type'='SALES_HEADER'
+      AND x->'historical_hall_evidence'->>'format_version'='HISTORICAL_SALES_HALL_EVIDENCE_V2'
+      AND x->'historical_hall_evidence'->'target_snapshot'->'captured_at'='null'::jsonb
+      AND x->>'id' IS NOT NULL
+   )
+   SELECT NOT EXISTS (
+     SELECT k.id FROM jsonb_object_keys(c.captures) k(id)
+     EXCEPT SELECT id FROM eligible_capture_ids
+   ) AND NOT EXISTS (
+     SELECT id FROM eligible_capture_ids
+     EXCEPT SELECT k.id FROM jsonb_object_keys(c.captures) k(id)
+   ))`;
+
 /** Fixed SQL after header authorization. Existing runtime import_record SELECT
  * and publication RLS locate exact source chunk operation IDs before expansion.
  * Work is bounded by the selected page and its chunks, not the entire batch.
  * No new grant, security-definer or current warehouse inference occurs. */
-const migrationRows=`hall_migration AS MATERIALIZED (
+const migrationRows=(approvalLookup:string,approvalDigest:string,captureCoverage:string,approvalArchive='')=>`hall_migration AS MATERIALIZED (
  SELECT h.id AS document_id,to_jsonb(h)->>'import_batch_id' AS current_batch_id,
   m.*,r.result_data,r.status AS receipt_status,r.actor_account_id AS receipt_actor,r.completed_at,
   m.after_values->'header' AS original_header,m.after_values->>'sourceRecordId' AS source_record_id
@@ -96,12 +138,7 @@ const migrationRows=`hall_migration AS MATERIALIZED (
    AND jsonb_typeof(c.captures)='object' AND c.captures<>'{}'
    AND s.source_audit_values->>'phase'='DOCUMENTS'
    AND s.source_receipt_result->>'historicalHallTargetCapturesSha256'=encode(sha256(convert_to(c.captures::text,'UTF8')),'hex')
-   AND NOT EXISTS(SELECT 1 FROM jsonb_object_keys(c.captures) k WHERE NOT EXISTS(SELECT 1 FROM jsonb_array_elements(s.source_audit_values->'records') x
-    WHERE x->>'id'=k AND x->>'entity_type'='SALES_HEADER' AND x->'historical_hall_evidence'->>'format_version'='HISTORICAL_SALES_HALL_EVIDENCE_V2'
-     AND x->'historical_hall_evidence'->'target_snapshot'->'captured_at'='null'::jsonb))
-   AND NOT EXISTS(SELECT 1 FROM jsonb_array_elements(s.source_audit_values->'records') x WHERE x->>'entity_type'='SALES_HEADER'
-    AND x->'historical_hall_evidence'->>'format_version'='HISTORICAL_SALES_HALL_EVIDENCE_V2'
-    AND x->'historical_hall_evidence'->'target_snapshot'->'captured_at'='null'::jsonb AND NOT(c.captures ? (x->>'id')))
+${captureCoverage}
    AND jsonb_typeof(c.capture)='object'
    AND c.capture-ARRAY['warehouse_source_record_id','warehouse_operation_id','input_source_record_hash','warehouse_id','hall_id','version','captured_at']='{}'
    AND c.capture ?& ARRAY['warehouse_source_record_id','warehouse_operation_id','input_source_record_hash','warehouse_id','hall_id','version','captured_at']
@@ -136,16 +173,14 @@ const migrationRows=`hall_migration AS MATERIALIZED (
     AND roots.root_xmin::text::bigint=mod((roots.root_values->'whole_package_v2'->>'full_xid')::numeric,4294967296)::bigint
    END
    AND roots.root_values->'whole_package_v2'->>'root_operation'=roots.root_operation_id::text
-   AND encode(sha256(convert_to(roots.root_values->'request'->'payload'->'historical_hall_approval'->>'utf8','UTF8')),'hex')=roots.root_values->'request'->'payload'->'historical_hall_approval'->>'sha256'
+${approvalDigest}
    AND EXISTS(
     SELECT 1 FROM naijue_erp.import_record ms
     JOIN naijue_erp.audit_change ma ON ma.operation_id::text=c.capture->>'warehouse_operation_id'
     JOIN naijue_erp.operation_receipt mr ON mr.id=ma.operation_id
     CROSS JOIN LATERAL (SELECT count(*) AS members,min(mi::text)::jsonb AS item
      FROM jsonb_array_elements(ma.after_values->'records') mi WHERE mi->>'id'=ms.id::text) master
-    CROSS JOIN LATERAL (SELECT count(*) AS members,min(ap::text)::jsonb AS item
-     FROM jsonb_array_elements(((roots.root_values->'request'->'payload'->'historical_hall_approval'->>'utf8')::jsonb)->'records') ap
-     WHERE ap->>'target_id'=s.document_id::text) approved
+${approvalLookup}
     WHERE ms.id::text=c.capture->>'warehouse_source_record_id' AND ms.import_batch_id=roots.baseline_batch_id
      AND ms.source_system=s.source_namespace AND ms.status='IMPORTED' AND ms.reviewed_at=mr.completed_at
      AND ms.source_entity_type='WAREHOUSE' AND ms.target_type='WAREHOUSE' AND ms.target_id::text=c.capture->>'warehouse_id'
@@ -185,7 +220,7 @@ const migrationRows=`hall_migration AS MATERIALIZED (
    )
   ) IS TRUE AS capture_verified
  FROM hall_source s JOIN hall_roots roots ON roots.document_id=s.document_id
- CROSS JOIN LATERAL (SELECT s.source_audit_values->'historical_hall_target_captures' AS captures,
+${approvalArchive} CROSS JOIN LATERAL (SELECT s.source_audit_values->'historical_hall_target_captures' AS captures,
   s.source_audit_values->'historical_hall_target_captures'->s.source_record_id AS capture) c
  WHERE s.source_record->'historical_hall_evidence'->>'format_version'='HISTORICAL_SALES_HALL_EVIDENCE_V2'
   AND s.source_record->'historical_hall_evidence'->'target_snapshot'->'captured_at'='null'::jsonb
@@ -249,9 +284,9 @@ const migrationRows=`hall_migration AS MATERIALIZED (
 /** Page scope/pagination precedes immutable record pointers and exact chunk IDs.
  * Each selected source chunk is expanded once; unrelated batch chunks are absent.
  * Query-plan/engine performance still requires separate PostgreSQL acceptance. */
-export const HISTORICAL_SALES_HALL_BATCH_CTES=`authorized_hall_headers AS MATERIALIZED (SELECT * FROM page_headers),${migrationRows}`;
+export const HISTORICAL_SALES_HALL_BATCH_CTES=`authorized_hall_headers AS MATERIALIZED (SELECT * FROM page_headers),${migrationRows(legacyApprovalLookup,legacyApprovalDigest,legacyCaptureCoverage)}`;
 /** Detail use is one authorized header. */
-export const HISTORICAL_SALES_HALL_PROJECTION_SQL=`(WITH authorized_hall_headers AS (SELECT h.*),${migrationRows}
+export const HISTORICAL_SALES_HALL_PROJECTION_SQL=`(WITH authorized_hall_headers AS (SELECT h.*),${migrationRows(detailApprovalLookup,detailApprovalDigest,detailCaptureCoverage,detailApprovalArchive)}
  SELECT coalesce((SELECT historical_hall_proofs FROM hall_results),'[]'::jsonb)) AS historical_hall_proofs`;
 
 /** Provenance is optional for old records. Malformed/present but unverified

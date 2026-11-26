@@ -20,7 +20,33 @@ export default function ReadDocument(p:Options&{id:string}){
  const productRead=useRef<AbortController|null>(null);useEffect(()=>()=>productRead.current?.abort(),[p.scope]);
  const viewSku=async(skuId:string,label:string)=>{if(!p.viewProduct)return;productRead.current?.abort();const own=new AbortController();productRead.current=own;const signal=AbortSignal.any([own.signal,p.scope.signal]),detail=query.getSnapshot().success?.data;if(!detail)return;try{const h=detail.document.header;if(h.hallId===null){setNotice('营业厅归属待核，暂不可按当前厅读取商品资料。');return;}const rows=await p.session.current.readSkuBatch({context:{kind:'SALES',hallId:h.hallId},skuIds:[entityId('sku',skuId)]},signal);if(signal.aborted||!p.scope.active)return;const actual=rows.find(row=>row.id===skuId);if(!actual){setNotice('原规格的当前商品身份尚未取得。');return;}p.viewProduct({id:actual.productId,label});}catch(error){if(signal.aborted||!p.scope.active)return;if(error instanceof HttpQueryError&&['unauthenticated','forbidden'].includes(error.kind))p.denied(error);else setNotice('商品资料未能读取，请重试。');}};
 
- const refresh=async()=>{if(await p.session.editor.commands.readCurrent()&&p.session.editor.adoptCurrent(true)){p.view.reload=true;await query.run({salesId:entityId('sales',p.id)});setNotice('已重新读取服务器单据。');}else setNotice('原操作已确认，当前单据尚未重新读取，请继续读取核实。');};
+ const refresh=async()=>{
+  const active=()=>{
+   const route=p.scope, session=p.session.scope;
+   return route.active&&session.active&&query.getSnapshot().phase!=='disposed'
+    &&route.identity.accountId===session.identity.accountId&&route.identity.sessionRevision===session.identity.sessionRevision
+    &&route.identity.permissionRevision===session.identity.permissionRevision;
+  };
+  if(!active())return;
+  const owner=p.session.editor;
+  const salesId=entityId('sales',p.id);
+  const read=await owner.commands.readCurrent();
+  if(!active())return;
+  const candidate=owner.getSnapshot().command.editor?.current;
+  const shown=query.getSnapshot().success?.data;
+  if(read&&candidate?.document.header.id===salesId&&(!shown||candidate.document.header.version>=shown.document.header.version)
+    &&owner.adoptCurrent(true)&&active()){
+   const adopted=owner.getSnapshot().command.editor?.detail;
+   if(adopted===candidate){
+    // Same active authority, ID and freshly server-validated detail, not a receipt or draft.
+    query.acceptAuthoritative({salesId},adopted);
+    p.view.reload=true;
+    setNotice('已重新读取服务器单据。');
+    return;
+   }
+  }
+  if(active())setNotice('原操作已确认，当前单据尚未重新读取，请继续读取核实。');
+ };
  const submit=async()=>{const intent=action,shown=state.success?.data;setAction(null);if(!intent||!shown)return;const result=await submitDisplayedSalesAction(p.session,shown,intent);if(result==='committed')await refresh();else if(result==='changed'){p.view.reload=true;await query.run({salesId:entityId('sales',p.id)});setNotice('单据已更新，请核对最新内容后再操作。');}else setNotice(p.session.editor.getSnapshot().command.notice??'状态操作尚未完成，请核对当前提示或原回执。');};
  useEffect(()=>{void query.run({salesId:entityId('sales',p.id)});return()=>query.dispose();},[query,p.id]);
  useEffect(()=>{if(state.error instanceof HttpQueryError&&['unauthenticated','forbidden'].includes(state.error.kind))p.denied(state.error);},[state.error]);

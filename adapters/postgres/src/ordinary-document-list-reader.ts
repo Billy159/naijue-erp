@@ -1,4 +1,3 @@
-import {HISTORICAL_SALES_HALL_BATCH_CTES,decodeHistoricalSalesHallProjection} from './sales-historical-hall-projection.ts';
 import { createHash } from 'node:crypto';
 import type { Pool } from 'pg';
 import type { ActorContext } from '../../../packages/application/src/ports.ts';
@@ -112,7 +111,9 @@ function categories(row: Record<string, unknown>, kind: Kind, unknownQuantity: b
 function salesSummary(row: Record<string, unknown>): OrdinarySalesSummary {
   const documentId = id('sales', row.id), version = versionFromSql(row.version), q = quantities(row);
   const currentPureReturn = row.stock_basis === 'RUNTIME_LEDGER' && row.business_type === 'RETURN' && row.pure_return_lines === true;
-  return { ...decodeHistoricalSalesHallProjection(row),id: documentId, number: stringValue(row.number), businessType: choice(row.business_type, ['SALE', 'RETURN', 'EXCHANGE']), businessDate: businessDate(stringValue(row.business_date)),
+  // The list presents the stored document hall and warehouse. Historical
+  // source proof belongs to detail, not to this page's availability.
+  return { id: documentId, number: stringValue(row.number), businessType: choice(row.business_type, ['SALE', 'RETURN', 'EXCHANGE']), businessDate: businessDate(stringValue(row.business_date)),
     hallId: nullableId('hall', row.hall_id), customerId: id('customer', row.customer_id), salespersonId: nullableId('staff', row.salesperson_id), warehouseId: id('warehouse', row.warehouse_id),
     status: choice(row.status, ['DRAFT', 'APPROVED', 'VOID']), version, grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due),
     updatedAt: nullableString(row.updated_at), responsibleStaffId: nullableId('staff', row.responsible_staff_id), responsibleName: nullableString(row.responsible_name), createdByName: nullableString(row.created_by_name),
@@ -192,7 +193,7 @@ function pageSql(kind: Kind, p: Predicate, parameters: Parameters): string {
   const headerColumns = kind === 'sales'
     ? `h.id,h.stock_basis,h.number,h.business_type,to_char(h.business_date,'YYYY-MM-DD') AS business_date,h.hall_id,h.customer_id,h.salesperson_id,h.warehouse_id,h.status,h.version,
        h.responsible_staff_id,responsible.name AS responsible_name,creator.name AS created_by_name,h.gross_amount::text,h.order_discount::text,h.net_due::text,${stamp('h.updated_at')} AS updated_at,
-       hall_result.historical_hall_proofs,hall.name AS hall_name,wh.name AS warehouse_name,c.name AS customer_name,sp.name AS salesperson_name`
+       hall.name AS hall_name,wh.name AS warehouse_name,c.name AS customer_name,sp.name AS salesperson_name`
     : `h.id,h.stock_basis,h.number,to_char(h.business_date,'YYYY-MM-DD') AS business_date,h.from_warehouse_id,h.to_warehouse_id,h.status,h.version,h.created_by_account_id,${stamp('h.created_at')} AS created_at,${stamp('h.updated_at')} AS updated_at,
        h.responsible_staff_id,responsible.name AS responsible_name,creator.name AS created_by_name,approver.name AS approved_by_name,fw.name AS from_warehouse_name,tw.name AS to_warehouse_name,fh.name AS from_hall_name,th.name AS to_hall_name`;
   const headerJoins = kind === 'sales'
@@ -208,7 +209,6 @@ function pageSql(kind: Kind, p: Predicate, parameters: Parameters): string {
     : `page_keys AS MATERIALIZED (SELECT h.id,h.created_at ${authorizedPage}),
        page_headers AS MATERIALIZED (SELECT h.* FROM page_keys k JOIN naijue_erp.${headerTable} h ON h.id=k.id)`;
   return `/* ordinary-document:page:${kind} */ WITH ${pageHeaders},
-    ${kind==='sales'?HISTORICAL_SALES_HALL_BATCH_CTES+',':''}
     page_lines AS MATERIALIZED (SELECT p.id AS document_id,p.stock_basis,l.id AS line_id,l.line_no,l.quantity::numeric AS quantity,${kind === 'sales' ? 'l.is_gift' : 'false'} AS is_gift,
       s.product_id,l.product_code_snapshot,l.product_name_snapshot,cc.id AS category_id,cc.name AS category_name
       FROM page_headers p JOIN naijue_erp.${lineTable} l ON l.${owner}=p.id AND l.is_current
@@ -229,7 +229,7 @@ function pageSql(kind: Kind, p: Predicate, parameters: Parameters): string {
     SELECT ${headerColumns},${quantity},${kind==='sales'?'q.pure_return_lines,':''}CASE WHEN ps.document_id IS NULL THEN '0' ELSE ps.product_count END AS product_count,
       coalesce(ps.product_items,'[]'::jsonb) AS product_items,coalesce(ps.product_has_more,false) AS product_has_more,
       coalesce(cs.category_items,'[]'::jsonb) AS category_items,coalesce(cs.category_count,'0') AS category_count,coalesce(cs.category_has_more,false) AS category_has_more
-    FROM page_headers h ${headerJoins} ${kind==='sales'?'LEFT JOIN hall_results hall_result ON hall_result.document_id=h.id':''} LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id LEFT JOIN naijue_erp.staff creator ON creator.id=h.created_by_staff_id
+    FROM page_headers h ${headerJoins} LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id LEFT JOIN naijue_erp.staff creator ON creator.id=h.created_by_staff_id
       LEFT JOIN page_metrics q ON q.document_id=h.id LEFT JOIN product_summaries ps ON ps.document_id=h.id LEFT JOIN category_summaries cs ON cs.document_id=h.id
     ORDER BY h.created_at DESC NULLS LAST,h.id ASC`;
 }
